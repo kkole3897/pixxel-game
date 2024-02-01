@@ -27,6 +27,7 @@
     "@storybook/addon-interactions": "^7.6.12",
     "@storybook/addon-links": "^7.6.12",
     "@storybook/addon-onboarding": "1.0.11",
+    "@storybook/addon-styling-webpack": "0.0.6",
     "@storybook/blocks": "^7.6.12",
     "@storybook/nextjs": "^7.6.12",
     "@storybook/react": "^7.6.12",
@@ -35,14 +36,24 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@vanilla-extract/next-plugin": "^2.3.5",
+    "@vanilla-extract/webpack-plugin": "^2.3.4",
+    "css-loader": "^6.10.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-storybook": "^0.6.15",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
+    "mini-css-extract-plugin": "^2.7.7",
     "prettier": "3.2.4",
     "storybook": "^7.6.12",
+    "style-loader": "^3.3.4",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@8.14.1",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=8"
+  },
+  "engineStrict": true
 }
