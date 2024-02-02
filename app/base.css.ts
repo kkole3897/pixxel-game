@@ -12,6 +12,7 @@ globalStyle('body, input, textarea, select, button', {
   '@layer': {
     base: {
       fontFamily: 'var(--font-base)',
+      fontSize: '0.875rem',
     },
   },
 });

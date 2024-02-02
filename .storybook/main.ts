@@ -60,6 +60,7 @@ const config: StorybookConfig = {
       from: '../app/fonts',
       to: 'app/fonts',
     },
+    '../public',
   ],
 };
 export default config;
