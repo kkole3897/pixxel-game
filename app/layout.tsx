@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${base.variable} ${serif.variable}`}>
+    <html lang="ko" className={`${base.className} ${serif.className}`}>
       <body>{children}</body>
     </html>
   );

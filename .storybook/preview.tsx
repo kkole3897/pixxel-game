@@ -1,4 +1,8 @@
+import React from 'react';
 import type { Preview } from '@storybook/react';
+
+import '../app/globals.css';
+import { base, serif } from '../app/fonts'
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +14,15 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => {
+      return (
+        <div className={`${base.className} ${serif.className}`}>
+          <Story />
+        </div>
+      )
+    }
+  ],
 };
 
 export default preview;
