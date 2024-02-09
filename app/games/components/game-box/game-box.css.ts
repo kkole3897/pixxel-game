@@ -3,7 +3,6 @@ import { style } from "@vanilla-extract/css";
 export const box = style({
   display: 'flex',
   columnGap: '8px',
-  padding: '8px',
 });
 
 export const thumbnailArea = style({
