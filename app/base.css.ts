@@ -20,6 +20,8 @@ globalStyle('body, input, textarea, select, button', {
 globalStyle('.page', {
   '@layer': {
     base: {
+      display: 'flex',
+      flexDirection: 'column',
       maxWidth: '768px',
       minHeight: '100%',
       margin: '0 auto',
@@ -27,3 +29,12 @@ globalStyle('.page', {
   },
 });
 
+globalStyle('.layout', {
+  '@layer': {
+    base: {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1,
+    },
+  },
+})

@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import './globals.css';
 import { base, serif } from '@/app/fonts';
 import { BaseHeader } from './components/base-header';
+import { BottomNavigation } from './components/bottom-navigation';
 
 export const metadata: Metadata = {
   title: "gamduck",
@@ -26,7 +27,8 @@ export default function RootLayout({
       <body>
         <div className="page">
           <BaseHeader />
-          {children}
+          <div className="layout">{children}</div>
+          <BottomNavigation />
         </div>
       </body>
     </html>
