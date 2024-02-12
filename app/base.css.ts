@@ -23,6 +23,7 @@ globalStyle('.page', {
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '768px',
+      minWidth: '280px',
       minHeight: '100%',
       margin: '0 auto',
     },
