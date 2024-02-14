@@ -1,6 +1,5 @@
-import dayjs from 'dayjs';
 import ImageWithFallback from '@/components/image-with-fallback';
-import { GenreBadge } from '@/app/games/components/genre-badge';
+import { GenreBadge } from '@/app/components/genre-badge';
 import * as styles from './game-box.css';
 import { useGame } from './hooks/useGame';
 import type { AppPreview } from '@/app/types';

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import type { Meta, StoryObj } from '@storybook/react';
-import { GameBox } from '@/app/games/components/game-box';
+import { GameBox } from '@/app/components/game-box';
 import type { AppPreview } from '@/app/types'
 
 const meta: Meta<typeof GameBox> = {
