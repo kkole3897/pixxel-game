@@ -9,6 +9,9 @@ const nextConfig = {
       {
         hostname: 'loremflickr.com',
       },
+      {
+        hostname: 'cdn.cloudflare.steamstatic.com',
+      },
     ],
   },
 };
