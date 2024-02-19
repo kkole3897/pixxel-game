@@ -41,6 +41,7 @@ export default function PriceHistoryChart({ history }: Props) {
             style={{
               fontSize: '0.875rem',
             }}
+            tickCount={6}
           />
           <CartesianGrid vertical={false} strokeDasharray="5 5" />
           <Tooltip
@@ -60,6 +61,7 @@ export default function PriceHistoryChart({ history }: Props) {
             }} 
           />
           <Brush
+            height={35}
             startIndex={history.length - 8}
             endIndex={history.length - 1}
             dataKey="timestamp"

@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
 export const lineChartContainer = style({
-  height: '400px',
+  height: '270px',
 });
 
 export const brushContainer = style({
