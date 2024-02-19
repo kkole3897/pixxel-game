@@ -3,7 +3,7 @@ import { RiSteamFill } from '@remixicon/react';
 
 import * as styles from './store-link.css';
 import type { PriceInfo, GameStore } from '@/app/types';
-import { usePriceInfo } from './hooks/usePriceInfo';
+import { usePriceInfo } from './hooks/use-price-info';
 
 interface Props extends PriceInfo {
   href: string;

@@ -1,7 +1,7 @@
 import ImageWithFallback from '@/components/image-with-fallback';
 import { GenreBadge } from '@/app/components/genre-badge';
 import * as styles from './game-box.css';
-import { useGame } from './hooks/useGame';
+import { useGame } from './hooks/use-game';
 import type { AppPreview } from '@/app/types';
 
 interface Props {
