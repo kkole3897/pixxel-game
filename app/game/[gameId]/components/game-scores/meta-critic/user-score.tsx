@@ -5,7 +5,5 @@ export default function UserScore({ score }: { score: number }) {
   const { grade } = useScoreGrade(score);
   const { scoreText } = useUserScoreFormat(score);
 
-  return (
-    <div className={styles.userScore[grade]}>{scoreText}</div>
-  );
+  return <div className={styles.userScore[grade]}>{scoreText}</div>;
 }

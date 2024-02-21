@@ -2,7 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { RiHome2Line, RiHome2Fill, RiHeartLine, RiHeartFill, RiUser3Line, RiUser3Fill } from '@remixicon/react';
+import {
+  RiHome2Line,
+  RiHome2Fill,
+  RiHeartLine,
+  RiHeartFill,
+  RiUser3Line,
+  RiUser3Fill,
+} from '@remixicon/react';
 
 import * as style from './bottom-navigation.css';
 

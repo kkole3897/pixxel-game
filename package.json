@@ -12,7 +12,7 @@
     "build-storybook": "storybook build"
   },
   "lint-staged": {
-    "{js,jsx,ts,tsx}": [
+    "./**/*.{js,jsx,ts,tsx}": [
       "eslint",
       "prettier --write --ignore-unknown"
     ]

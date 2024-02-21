@@ -9,13 +9,14 @@ interface Props {
 }
 
 export default function GameBox({ game }: Props) {
-  const { releaseDateText, regularPriceText, discountPriceText, discountRate } = useGame(game);
-  const discountPercentText = `${Math.round((discountRate * 100))}%`;
+  const { releaseDateText, regularPriceText, discountPriceText, discountRate } =
+    useGame(game);
+  const discountPercentText = `${Math.round(discountRate * 100)}%`;
 
   return (
     <div className={styles.box}>
       <div className={styles.thumbnailArea}>
-        <ImageWithFallback 
+        <ImageWithFallback
           src={game.thumbnail}
           className={styles.thumbnailImg}
           alt={`${game.name} thumbnail`}
@@ -38,12 +39,14 @@ export default function GameBox({ game }: Props) {
             <div className={styles.finalPrice}>{discountPriceText}원</div>
           </div>
         </div>
-        {game.genres.length > 0 && <div className={styles.genreArea}>
-          {game.genres.map(({ id, description }) => {
-            return <GenreBadge key={id} label={description} />
-          })}
-        </div>}
+        {game.genres.length > 0 && (
+          <div className={styles.genreArea}>
+            {game.genres.map(({ id, description }) => {
+              return <GenreBadge key={id} label={description} />;
+            })}
+          </div>
+        )}
       </div>
     </div>
-  )
+  );
 }

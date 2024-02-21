@@ -1,5 +1,3 @@
 export default function WishPage() {
-  return (
-    <div>wish page</div>
-  );
+  return <div>wish page</div>;
 }

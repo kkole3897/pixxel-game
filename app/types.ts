@@ -56,10 +56,10 @@ export interface AppDetail {
       topCriticScore: number;
       percentRecommended: number;
       tier: OpenCriticTier;
-    }
+    };
   };
   purchases: PurchaseInfo[];
-  language: LanguageInfo[]; 
+  language: LanguageInfo[];
 }
 
 export type AppPreview = Omit<AppDetail, 'scores' | 'language'>;

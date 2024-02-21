@@ -1,11 +1,12 @@
-import { globalStyle } from "@vanilla-extract/css";
+import { globalStyle } from '@vanilla-extract/css';
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
   v2.0 | 20110126
   License: none (public domain)
 */
 
-globalStyle(`
+globalStyle(
+  `
   html,body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -19,29 +20,34 @@ globalStyle(`
   figure, figcaption, footer, header, hgroup, 
   menu, nav, output, ruby, section, summary,
   time, mark, audio, video
-`, {
-  '@layer': {
-    reset: {
-      margin: 0,
-      padding: 0,
-      border: 0,
-      fontSize: '100%',
-      font: 'inherit',
-      verticalAlign: 'baseline',
+`,
+  {
+    '@layer': {
+      reset: {
+        margin: 0,
+        padding: 0,
+        border: 0,
+        fontSize: '100%',
+        font: 'inherit',
+        verticalAlign: 'baseline',
+      },
     },
-  },
-});
+  }
+);
 
-globalStyle(`
+globalStyle(
+  `
   article, aside, details, figcaption, figure, 
   footer, header, hgroup, menu, nav, section
-`, {
-  '@layer': {
-    reset: {
-      display: 'block',
+`,
+  {
+    '@layer': {
+      reset: {
+        display: 'block',
+      },
     },
-  },
-});
+  }
+);
 
 globalStyle('body', {
   '@layer': {
@@ -67,27 +73,33 @@ globalStyle('blockquote, q', {
   },
 });
 
-globalStyle(`
+globalStyle(
+  `
   blockquote:before, blockquote:after,
   q:before, q:after
-`, {
-  '@layer': {
-    reset: {
-      content: '',
+`,
+  {
+    '@layer': {
+      reset: {
+        content: '',
+      },
     },
-  },
-});
+  }
+);
 
-globalStyle(`
+globalStyle(
+  `
   blockquote:before, blockquote:after,
   q:before, q:after
-`, {
-  '@layer': {
-    reset: {
-      content: 'none',
+`,
+  {
+    '@layer': {
+      reset: {
+        content: 'none',
+      },
     },
-  },
-});
+  }
+);
 
 globalStyle('table', {
   '@layer': {

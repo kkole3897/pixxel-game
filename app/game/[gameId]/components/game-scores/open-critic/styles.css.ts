@@ -1,5 +1,5 @@
 import { style, styleVariants, createVar } from '@vanilla-extract/css';
-import {  } from '@vanilla-extract/dynamic';
+import {} from '@vanilla-extract/dynamic';
 
 export const container = style({
   position: 'relative',
@@ -83,8 +83,8 @@ export const gradientStart = styleVariants({
     stopColor: '#478c77',
   },
   Weak: {
-    stopColor: '#80b06a'
-  }
+    stopColor: '#80b06a',
+  },
 });
 
 export const gradientStop = styleVariants({
@@ -99,5 +99,5 @@ export const gradientStop = styleVariants({
   },
   Weak: {
     stopColor: '#638151',
-  }
-})
+  },
+});

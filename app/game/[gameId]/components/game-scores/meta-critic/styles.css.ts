@@ -8,7 +8,7 @@ const baseContainer = style({
   height: '40px',
   fontSize: '1.125rem',
   fontWeight: 'bold',
-  color: '#262626'
+  color: '#262626',
 });
 
 const scoreShape = styleVariants({
@@ -43,12 +43,12 @@ const grades = {
   },
 };
 
-export const metaScore = styleVariants(
-  grades,
-  (grade) => [scoreShape.meta, grade],
-);
+export const metaScore = styleVariants(grades, (grade) => [
+  scoreShape.meta,
+  grade,
+]);
 
-export const userScore = styleVariants(
-  grades,
-  (grade) => [scoreShape.user, grade],
-);
+export const userScore = styleVariants(grades, (grade) => [
+  scoreShape.user,
+  grade,
+]);

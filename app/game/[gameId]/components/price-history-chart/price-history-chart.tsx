@@ -1,7 +1,17 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { LineChart, Line, ResponsiveContainer, XAxis, CartesianGrid, Tooltip, YAxis, Brush, ReferenceLine } from 'recharts';
+import {
+  LineChart,
+  Line,
+  ResponsiveContainer,
+  XAxis,
+  CartesianGrid,
+  Tooltip,
+  YAxis,
+  Brush,
+  ReferenceLine,
+} from 'recharts';
 
 import * as styles from './price-history-chart.css';
 import type { GameStore } from '@/app/types';
@@ -13,16 +23,15 @@ interface Props {
 }
 
 export default function PriceHistoryChart({ history }: Props) {
-  const data = history.map(({ date, ...rest }) => ({ timestamp: dayjs(date).unix(), ...rest }));
+  const data = history.map(({ date, ...rest }) => ({
+    timestamp: dayjs(date).unix(),
+    ...rest,
+  }));
 
   return (
     <div className={styles.lineChartContainer}>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          width={500}
-          height={300}
-          data={data}
-        >
+        <LineChart width={500} height={300} data={data}>
           <XAxis
             dataKey="timestamp"
             style={{
@@ -37,7 +46,9 @@ export default function PriceHistoryChart({ history }: Props) {
             axisLine={false}
             tickLine={false}
             orientation="right"
-            tickFormatter={(value: number) => (value === 0 ? '' : value.toLocaleString())}
+            tickFormatter={(value: number) =>
+              value === 0 ? '' : value.toLocaleString()
+            }
             style={{
               fontSize: '0.875rem',
             }}
@@ -45,7 +56,10 @@ export default function PriceHistoryChart({ history }: Props) {
           />
           <CartesianGrid vertical={false} strokeDasharray="5 5" />
           <Tooltip
-            formatter={(value: string, name) => [`${value.toLocaleString()}원`, name]}
+            formatter={(value: string, name) => [
+              `${value.toLocaleString()}원`,
+              name,
+            ]}
             labelFormatter={(label) => dayjs.unix(label).format('YYYY.MM.DD')}
           />
           <Line
@@ -54,21 +68,29 @@ export default function PriceHistoryChart({ history }: Props) {
             stroke="#1d4ed8"
             strokeWidth={2}
             dot={false}
-            activeDot={{ 
+            activeDot={{
               stroke: '#8884d8',
               strokeWidth: 2,
-              r: 4 
-            }} 
+              r: 4,
+            }}
           />
           <Brush
             height={35}
             startIndex={history.length - 8}
             endIndex={history.length - 1}
             dataKey="timestamp"
-            tickFormatter={(value: number) => dayjs.unix(value).format('YY.MM.DD')}
+            tickFormatter={(value: number) =>
+              dayjs.unix(value).format('YY.MM.DD')
+            }
           >
             <LineChart>
-              <Line dataKey="steam" type="stepAfter" dot={false} isAnimationActive={false} stroke="#1d4ed8" />
+              <Line
+                dataKey="steam"
+                type="stepAfter"
+                dot={false}
+                isAnimationActive={false}
+                stroke="#1d4ed8"
+              />
             </LineChart>
           </Brush>
         </LineChart>

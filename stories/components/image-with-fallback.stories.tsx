@@ -13,7 +13,8 @@ const meta: Meta<typeof ImageWithFallback> = {
     },
     fallback: {
       control: 'text',
-      description: 'src가 비어 있거나 오류가 있을 때 나타낼 대체 이미지의 url 또는 static import',
+      description:
+        'src가 비어 있거나 오류가 있을 때 나타낼 대체 이미지의 url 또는 static import',
     },
     alt: {
       control: 'text',
@@ -32,12 +33,13 @@ const meta: Meta<typeof ImageWithFallback> = {
     },
     fill: {
       control: 'boolean',
-      description: 'false일 경우 또는 static import가 아닌 경우 width, height 값을 반드시 명시해야 함',
+      description:
+        'false일 경우 또는 static import가 아닌 경우 width, height 값을 반드시 명시해야 함',
     },
     loading: {
       control: 'string',
     },
-  }
+  },
 };
 
 export default meta;
@@ -46,8 +48,8 @@ type Story = StoryObj<typeof ImageWithFallback>;
 
 export const DefaultFallback: Story = {
   args: {
-    alt: 'default fallback'
-  }
+    alt: 'default fallback',
+  },
 };
 
 export const StaticImage: Story = {
@@ -62,7 +64,7 @@ export const BrokenImage: Story = {
     src: 'dsdfs',
     width: 128,
     height: 128,
-    fallback: "/images/fallback-image.png",
+    fallback: '/images/fallback-image.png',
     alt: 'broken image',
   },
 };

@@ -38,4 +38,4 @@ globalStyle('.layout', {
       flex: 1,
     },
   },
-})
+});

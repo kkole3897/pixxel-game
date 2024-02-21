@@ -14,11 +14,11 @@ type Story = StoryObj<typeof Rating>;
 export const Mighty: Story = {
   args: {
     tier: 'Mighty',
-  }
+  },
 };
 
-export const Strong: Story = { args: { tier: 'Strong' }};
+export const Strong: Story = { args: { tier: 'Strong' } };
 
-export const Fair: Story = { args:{tier: 'Fair'}};
+export const Fair: Story = { args: { tier: 'Fair' } };
 
-export const Weak: Story = { args: {tier: 'Weak'}};
+export const Weak: Story = { args: { tier: 'Weak' } };

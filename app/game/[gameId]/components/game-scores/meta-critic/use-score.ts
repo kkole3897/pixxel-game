@@ -2,12 +2,12 @@ type ScoreGrade = 'good' | 'normal' | 'bad' | 'default';
 
 const TBD = 'tbd';
 
-const isTbd = (score: number) => (score < 0);
+const isTbd = (score: number) => score < 0;
 
 export function useScoreGrade(score: number) {
   const getGrade = (score: number): ScoreGrade => {
-    const isGood = (score: number) => (score >= 75);
-    const isNormal = (score: number) => (score >= 50);
+    const isGood = (score: number) => score >= 75;
+    const isNormal = (score: number) => score >= 50;
 
     if (isTbd(score)) {
       return 'default';
@@ -18,7 +18,7 @@ export function useScoreGrade(score: number) {
     }
 
     return 'bad';
-  }
+  };
 
   const grade = getGrade(score);
 

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GameBox } from '@/app/components/game-box';
-import type { AppPreview } from '@/app/types'
+import type { AppPreview } from '@/app/types';
 
 const meta: Meta<typeof GameBox> = {
   component: GameBox,
@@ -20,7 +20,7 @@ function createRandomGame(): AppPreview {
   return {
     id: faker.string.uuid(),
     name: faker.commerce.productName(),
-    type: "game",
+    type: 'game',
     genres: [
       { id: '1', description: '액션' },
       { id: '2', description: '어드벤처' },
@@ -28,11 +28,14 @@ function createRandomGame(): AppPreview {
     releaseDate: faker.date.past({ years: 5 }).toString(),
     thumbnail: faker.image.urlLoremFlickr({ width: 640, height: 640 }),
     prices: [
-      { store: 'steam', regular: regularPrice, discount: discountPrice, lowest: lowestPrice }
+      {
+        store: 'steam',
+        regular: regularPrice,
+        discount: discountPrice,
+        lowest: lowestPrice,
+      },
     ],
-    purchases: [
-      { store: 'steam', url: faker.internet.url() }
-    ],
+    purchases: [{ store: 'steam', url: faker.internet.url() }],
   };
 }
 

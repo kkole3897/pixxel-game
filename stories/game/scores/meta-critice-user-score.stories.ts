@@ -43,6 +43,6 @@ export const Worst: Story = {
 
 export const TBD: Story = {
   args: {
-    score: -1
+    score: -1,
   },
 };

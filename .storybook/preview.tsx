@@ -2,7 +2,7 @@ import React from 'react';
 import type { Preview } from '@storybook/react';
 
 import '../app/globals.css';
-import { base, serif } from '../app/fonts'
+import { base, serif } from '../app/fonts';
 
 const preview: Preview = {
   parameters: {
@@ -20,8 +20,8 @@ const preview: Preview = {
         <div className={`${base.className} ${serif.className}`}>
           <Story />
         </div>
-      )
-    }
+      );
+    },
   ],
 };
 

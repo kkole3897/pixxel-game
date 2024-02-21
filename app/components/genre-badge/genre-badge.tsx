@@ -5,7 +5,5 @@ interface GenreBadgeProps {
 }
 
 export default function GenreBadge({ label }: GenreBadgeProps) {
-  return (
-    <div className={styles.badgeContainer}>{label}</div>
-  );
+  return <div className={styles.badgeContainer}>{label}</div>;
 }
