@@ -9,10 +9,20 @@ export function useScoreFormat(score: number) {
     return Math.floor(score).toString();
   }
 
+  function formatPercentText(percent: number): string {
+    if (isTbd(percent)) {
+      return '-';
+    }
+
+    return `${Math.floor(percent)}%`;
+  }
+
   const scoreText = formatScoreText(score);
+  const percentText = formatPercentText(score);
 
   return {
     scoreText,
+    percentText
   };
 }
 

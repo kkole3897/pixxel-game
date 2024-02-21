@@ -41,7 +41,7 @@ export const radial = style({
 
 export const circleDashArray = createVar();
 
-const circle = style({
+export const circle = style({
   strokeDasharray: circleDashArray,
 });
 
@@ -71,3 +71,33 @@ export const colorCircle = styleVariants({
     },
   ],
 });
+
+export const gradientStart = styleVariants({
+  Mighty: {
+    stopColor: '#ffd86f',
+  },
+  Strong: {
+    stopColor: '#ff6ec4',
+  },
+  Fair: {
+    stopColor: '#478c77',
+  },
+  Weak: {
+    stopColor: '#80b06a'
+  }
+});
+
+export const gradientStop = styleVariants({
+  Mighty: {
+    stopColor: '#fc430a',
+  },
+  Strong: {
+    stopColor: '#7873f5',
+  },
+  Fair: {
+    stopColor: '#76c8ff',
+  },
+  Weak: {
+    stopColor: '#638151',
+  }
+})
