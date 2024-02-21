@@ -8,7 +8,8 @@ import WeakMan from '@/public/images/weak-man.webp';
 
 export default function Rating({ tier }: { tier: OpenCriticTier }) {
   const tierImage: { [key in OpenCriticTier]: StaticImageData } = {
-    Mighty: MightyMan, Strong: StrongMan,
+    Mighty: MightyMan, 
+    Strong: StrongMan,
     Fair: FairMan,
     Weak: WeakMan,
   };
