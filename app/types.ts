@@ -33,6 +33,8 @@ export interface LanguageInfo {
   codes: LanguageCode[];
 }
 
+export type OpenCriticTier = 'Mighty' | 'Strong' | 'Fair' | 'Weak';
+
 export interface AppDetail {
   id: string;
   name: string;
@@ -41,7 +43,21 @@ export interface AppDetail {
   releaseDate?: string;
   thumbnail?: string;
   prices: PriceInfo[];
-  scores: ScoreInfo[];
+  scores: {
+    steam: {
+      score: number;
+      totalCount: number;
+    };
+    metaCritic: {
+      metaScore: number;
+      userScore: number;
+    };
+    openCritic: {
+      topCriticScore: number;
+      percentRecommended: number;
+      tier: OpenCriticTier;
+    }
+  };
   purchases: PurchaseInfo[];
   language: LanguageInfo[]; 
 }

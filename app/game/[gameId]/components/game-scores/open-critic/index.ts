@@ -1,3 +1,4 @@
 import Rating from './rating';
+import TopCritic from './top-ciritic';
 
-export { Rating };
+export { Rating, TopCritic };
