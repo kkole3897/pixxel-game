@@ -1,7 +1,7 @@
-import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useScoreFormat, useScoreRadial } from './use-score';
 import * as styles from './styles.css';
 import type { OpenCriticTier } from '@/app/types';
+import { assignInlineVarsServer } from '@/libs/vanilla-extract/dynamic';
 
 export default function TopCritic({
   score,
@@ -21,7 +21,7 @@ export default function TopCritic({
         width={38}
         height={38}
         className={styles.radial}
-        style={assignInlineVars({
+        style={assignInlineVarsServer({
           [styles.radialTransform]: transform,
         })}
       >
@@ -32,7 +32,7 @@ export default function TopCritic({
           stroke="#2e2e2e"
           strokeWidth="32"
           className={styles.colorCircle[tier]}
-          style={assignInlineVars({
+          style={assignInlineVarsServer({
             [styles.circleDashArray]: dashArray,
           })}
         ></circle>

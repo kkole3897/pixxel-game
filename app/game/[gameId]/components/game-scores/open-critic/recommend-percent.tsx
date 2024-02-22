@@ -1,8 +1,8 @@
 import { useId } from 'react';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useScoreFormat, useScoreRadial } from './use-score';
 import * as styles from './styles.css';
 import type { OpenCriticTier } from '@/app/types';
+import { assignInlineVarsServer } from '@/libs/vanilla-extract/dynamic';
 
 export default function RecommendPercent({
   percent,
@@ -23,7 +23,7 @@ export default function RecommendPercent({
         width={38}
         height={38}
         className={styles.radial}
-        style={assignInlineVars({ [styles.radialTransform]: transform })}
+        style={assignInlineVarsServer({ [styles.radialTransform]: transform })}
       >
         <defs>
           <linearGradient id={gradientId}>
@@ -41,7 +41,9 @@ export default function RecommendPercent({
           strokeWidth="32"
           fill={`url(#${gradientId})`}
           className={styles.circle}
-          style={assignInlineVars({ [styles.circleDashArray]: dashArray })}
+          style={assignInlineVarsServer({
+            [styles.circleDashArray]: dashArray,
+          })}
         ></circle>
       </svg>
       <div className={styles.innerOrb}>{percentText}</div>
