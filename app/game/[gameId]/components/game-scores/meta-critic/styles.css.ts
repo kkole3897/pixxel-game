@@ -6,7 +6,6 @@ const baseContainer = style({
   alignItems: 'center',
   width: '40px',
   height: '40px',
-  fontSize: '1.125rem',
   fontWeight: 'bold',
   color: '#262626',
 });
