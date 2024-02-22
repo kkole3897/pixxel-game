@@ -15,10 +15,20 @@ export interface PriceInfo {
   discount: number;
   lowest: number;
 }
-export interface ScoreInfo {
-  store: GameStore;
+export interface SteamScoreInfo {
   totalCount: number;
-  score: number;
+  positive: number;
+}
+
+export interface MetaCriticScoreInfo {
+  metaScore: number;
+  userScore: number;
+}
+
+export interface OpenCriticScoreInfo {
+  topCriticScore: number;
+  percentRecommended: number;
+  tier: OpenCriticTier;
 }
 
 export interface PurchaseInfo {
@@ -44,19 +54,9 @@ export interface AppDetail {
   thumbnail?: string;
   prices: PriceInfo[];
   scores: {
-    steam: {
-      score: number;
-      totalCount: number;
-    };
-    metaCritic: {
-      metaScore: number;
-      userScore: number;
-    };
-    openCritic: {
-      topCriticScore: number;
-      percentRecommended: number;
-      tier: OpenCriticTier;
-    };
+    steam: SteamScoreInfo;
+    metaCritic: MetaCriticScoreInfo;
+    openCritic: OpenCriticScoreInfo;
   };
   purchases: PurchaseInfo[];
   language: LanguageInfo[];
