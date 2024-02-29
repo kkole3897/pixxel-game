@@ -15,5 +15,5 @@ export function composeRefs<T>(...refs: MaybeRef<T>[]) {
 
 export function useComposedRefs<T>(...refs: MaybeRef<T>[]) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  return React.useCallback(() => composeRefs(...refs), refs);
+  return React.useCallback(composeRefs(...refs), refs);
 }
