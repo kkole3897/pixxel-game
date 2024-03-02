@@ -9,6 +9,7 @@ import {
   useMemo,
   useId,
   useState,
+  useCallback,
 } from 'react';
 
 type CarouselContextValue = {
@@ -16,6 +17,7 @@ type CarouselContextValue = {
   isNextDisabled: boolean;
   isPrevDisabled: boolean;
   auto: boolean;
+  slideChangeTrigger(): void;
 };
 
 const CarouselContext = createContext<CarouselContextValue>({
@@ -23,6 +25,7 @@ const CarouselContext = createContext<CarouselContextValue>({
   isNextDisabled: true,
   isPrevDisabled: false,
   auto: false,
+  slideChangeTrigger() {},
 });
 
 interface CarouselProps
@@ -45,19 +48,25 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     } = props;
 
     const slideRefs = useRef(new Set<string>());
+    const [isSlideChanged, setIsSlideChanged] = useState(false);
+    const slideChangeTrigger = useCallback(() => {
+      setIsSlideChanged(true);
+    }, []);
 
-    const [isNextDisabled, setIsNextDisabled] = useState(true);
+    const [isNextDisabled, setIsNextDisabled] = useState(false);
 
-    // TODO: slide 수 변화에 따른 isNextDisabled 변화 최적화 필요
     useEffect(() => {
-      if (loop) {
-        setIsNextDisabled(false);
-      } else if (value < slideRefs.current.size - 1) {
-        setIsNextDisabled(false);
-      } else {
-        setIsNextDisabled(true);
+      if (isSlideChanged) {
+        setIsSlideChanged(false);
+        if (loop) {
+          setIsNextDisabled(false);
+        } else if (value < slideRefs.current.size - 1) {
+          setIsNextDisabled(false);
+        } else {
+          setIsNextDisabled(true);
+        }
       }
-    }, [value, loop]);
+    }, [value, loop, isSlideChanged]);
 
     const isPrevDisabled = useMemo(() => {
       if (loop) {
@@ -77,6 +86,7 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           isNextDisabled,
           isPrevDisabled,
           auto,
+          slideChangeTrigger,
         }}
       >
         <div
@@ -125,11 +135,15 @@ const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
 
     const slideId = useId();
     const context = useContext(CarouselContext);
-    context.slides.add(slideId);
+    const { slides, slideChangeTrigger } = context;
 
     useEffect(() => {
+      slides.add(slideId);
+      slideChangeTrigger();
+
       return () => {
-        context.slides.delete(slideId);
+        slides.delete(slideId);
+        slideChangeTrigger();
       };
     }, []);
 
