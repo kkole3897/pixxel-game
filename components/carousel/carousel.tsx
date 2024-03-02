@@ -1,95 +1,86 @@
 'use client';
 
-import { useComposedRefs } from '@/libs/react';
 import {
   forwardRef,
   createContext,
   useContext,
-  useState,
-  useCallback,
-  useEffect,
   useRef,
-  useId,
+  useEffect,
   useMemo,
+  useId,
+  useState,
 } from 'react';
 
 type CarouselContextValue = {
-  slides: Set<HTMLDivElement>;
-  collectionRef: React.RefObject<HTMLDivElement>;
-  itemMap: Map<string, { ref: React.RefObject<HTMLDivElement> }>;
+  slides: Set<string>;
   isNextDisabled: boolean;
   isPrevDisabled: boolean;
-  onSlideNext(): void;
-  onSlidePrev(): void;
+  auto: boolean;
 };
 
 const CarouselContext = createContext<CarouselContextValue>({
   slides: new Set(),
-  collectionRef: { current: null },
-  itemMap: new Map(),
   isNextDisabled: true,
-  isPrevDisabled: true,
-  onSlideNext: () => {},
-  onSlidePrev: () => {},
+  isPrevDisabled: false,
+  auto: false,
 });
 
-type CarouselProps = React.PropsWithoutRef<React.ComponentProps<'div'>>;
+interface CarouselProps
+  extends React.PropsWithoutRef<React.ComponentProps<'div'>> {
+  role?: 'group' | 'region';
+  loop?: boolean;
+  auto?: boolean;
+  value: number;
+}
 
 const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   (props, forwardedRef) => {
-    const { children, ...carouselProps } = props;
+    const {
+      children,
+      role = 'group',
+      loop = false,
+      auto = false,
+      value,
+      ...carouselProps
+    } = props;
 
-    const slideRefs = useRef<CarouselContextValue['slides']>(new Set());
+    const slideRefs = useRef(new Set<string>());
 
-    const collectionRef = useRef<HTMLDivElement>(null);
-    const itemMapRef = useRef<CarouselContextValue['itemMap']>(new Map());
+    const [isNextDisabled, setIsNextDisabled] = useState(true);
 
-    const [targetIndex, setTargetIndex] = useState(0);
-    const [isNextDisabled, setIsNextDisabled] = useState(false);
-    const [isPrevDisabled, setIsPrevDisabled] = useState(true);
-
-    const handleNext = useCallback(() => {
-      if (targetIndex === slideRefs.current.size - 1) {
-        return;
-      }
-
-      setTargetIndex(targetIndex + 1);
-
-      if (targetIndex === slideRefs.current.size) {
-        setIsNextDisabled(true);
-      } else {
+    // TODO: slide 수 변화에 따른 isNextDisabled 변화 최적화 필요
+    useEffect(() => {
+      if (loop) {
         setIsNextDisabled(false);
-      }
-    }, [targetIndex]);
-
-    const handlePrev = useCallback(() => {
-      if (targetIndex === 0) {
-        return;
-      }
-
-      setTargetIndex(targetIndex - 1);
-
-      if (targetIndex === 0) {
-        setIsPrevDisabled(true);
+      } else if (value < slideRefs.current.size - 1) {
+        setIsNextDisabled(false);
       } else {
-        setIsPrevDisabled(false);
+        setIsNextDisabled(true);
       }
-    }, [targetIndex]);
+    }, [value, loop]);
+
+    const isPrevDisabled = useMemo(() => {
+      if (loop) {
+        return false;
+      }
+      if (value > 0) {
+        return false;
+      }
+
+      return true;
+    }, [loop, value]);
 
     return (
       <CarouselContext.Provider
         value={{
           slides: slideRefs.current,
-          collectionRef,
-          itemMap: itemMapRef.current,
           isNextDisabled,
           isPrevDisabled,
-          onSlideNext: handleNext,
-          onSlidePrev: handlePrev,
+          auto,
         }}
       >
         <div
-          role="group"
+          role={role}
           aria-roledescription="carousel"
           {...carouselProps}
           ref={forwardedRef}
@@ -111,10 +102,13 @@ const CarouselView = forwardRef<HTMLDivElement, CarouselViewProps>(
 
     const context = useContext(CarouselContext);
 
-    const composedRefs = useComposedRefs(forwardedRef, context.collectionRef);
-
     return (
-      <div {...carouselViewProps} ref={composedRefs}>
+      <div
+        {...carouselViewProps}
+        ref={forwardedRef}
+        aria-atomic="false"
+        aria-live={context.auto ? 'off' : 'polite'}
+      >
         {children}
       </div>
     );
@@ -130,68 +124,21 @@ const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     const { children, ...carouselSlideProps } = props;
 
     const slideId = useId();
-    const ref = useRef<HTMLDivElement>(null);
-    const [slide, setSlide] = useState<HTMLDivElement | null>(null);
     const context = useContext(CarouselContext);
-
-    const getItems = useCallback(() => {
-      const collectionNode = context.collectionRef.current;
-      if (!collectionNode) {
-        return [];
-      }
-      const orderedNodes = Array.from(
-        collectionNode.querySelectorAll('[data-collection-item]')
-      );
-      const items = Array.from(context.itemMap.values());
-      const orderedItems = items.sort((a, b) => {
-        const indexA = orderedNodes.indexOf(a.ref.current!);
-        const indexB = orderedNodes.indexOf(b.ref.current!);
-
-        return indexA - indexB;
-      });
-
-      return orderedItems;
-    }, [context.collectionRef, context.itemMap]);
-
-    const index = useMemo(() => {
-      const items = getItems();
-      const _index = slide
-        ? items.findIndex((item) => item.ref.current === slide)
-        : -1;
-
-      return _index;
-    }, [getItems, slide]);
-
-    const composedRefs = useComposedRefs(forwardedRef, ref, (node) =>
-      setSlide(node)
-    );
+    context.slides.add(slideId);
 
     useEffect(() => {
-      context.itemMap.set(slideId, { ref });
-
       return () => {
-        context.itemMap.delete(slideId);
+        context.slides.delete(slideId);
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-      if (slide) {
-        context.slides.add(slide);
-
-        return () => {
-          context.slides.delete(slide);
-        };
-      }
-    }, [slide, context.slides]);
 
     return (
       <div
         role="group"
         aria-roledescription="slide"
         {...carouselSlideProps}
-        ref={composedRefs}
-        data-collection-item
+        ref={forwardedRef}
       >
         {children}
       </div>
@@ -200,19 +147,6 @@ const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
 );
 
 CarouselSlide.displayName = 'CarouselSlide';
-
-function composeEventHandlers<E>(
-  originalEventHandler?: (event: E) => void,
-  myEventHandler?: (event: E) => void
-) {
-  return (event: E) => {
-    originalEventHandler?.(event);
-
-    if (!(event as Event).defaultPrevented) {
-      return myEventHandler?.(event);
-    }
-  };
-}
 
 type CarouselControlProps = React.PropsWithoutRef<
   React.ComponentProps<'button'>
@@ -228,10 +162,6 @@ const CarouselNext = forwardRef<HTMLButtonElement, CarouselControlProps>(
         disabled={carouselContext.isNextDisabled}
         {...carouselControlProps}
         ref={forwardedRef}
-        onClick={composeEventHandlers(
-          carouselControlProps.onClick,
-          carouselContext.onSlideNext
-        )}
       >
         {children}
       </button>
@@ -251,10 +181,6 @@ const CarouselPrev = forwardRef<HTMLButtonElement, CarouselControlProps>(
         disabled={carouselContext.isPrevDisabled}
         {...carouselControlProps}
         ref={forwardedRef}
-        onClick={composeEventHandlers(
-          carouselControlProps.onClick,
-          carouselContext.onSlidePrev
-        )}
       >
         {children}
       </button>

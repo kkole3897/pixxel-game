@@ -15,6 +15,7 @@ type Story = StoryObj<typeof Carousel.Root>;
 
 export const Basic: Story = {
   args: {
+    value: 0,
     children: (
       <>
         <Carousel.Prev className={styles.carouselControl.left}>
