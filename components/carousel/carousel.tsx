@@ -58,13 +58,14 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     useEffect(() => {
       if (isSlideChanged) {
         setIsSlideChanged(false);
-        if (loop) {
-          setIsNextDisabled(false);
-        } else if (value < slideRefs.current.size - 1) {
-          setIsNextDisabled(false);
-        } else {
-          setIsNextDisabled(true);
-        }
+      }
+
+      if (loop) {
+        setIsNextDisabled(false);
+      } else if (value < slideRefs.current.size - 1) {
+        setIsNextDisabled(false);
+      } else {
+        setIsNextDisabled(true);
       }
     }, [value, loop, isSlideChanged]);
 
