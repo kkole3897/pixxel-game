@@ -168,7 +168,12 @@ type CarouselControlProps = React.PropsWithoutRef<
 
 const CarouselNext = forwardRef<HTMLButtonElement, CarouselControlProps>(
   (props, forwardedRef) => {
-    const { children, ...carouselControlProps } = props;
+    const {
+      children,
+      type = 'button',
+      'aria-label': ariaLabel = 'next slide',
+      ...carouselControlProps
+    } = props;
     const carouselContext = useContext(CarouselContext);
 
     return (
@@ -176,6 +181,8 @@ const CarouselNext = forwardRef<HTMLButtonElement, CarouselControlProps>(
         disabled={carouselContext.isNextDisabled}
         {...carouselControlProps}
         ref={forwardedRef}
+        type={type}
+        aria-label={ariaLabel}
       >
         {children}
       </button>
@@ -187,7 +194,12 @@ CarouselNext.displayName = 'CarouselNext';
 
 const CarouselPrev = forwardRef<HTMLButtonElement, CarouselControlProps>(
   (props, forwardedRef) => {
-    const { children, ...carouselControlProps } = props;
+    const {
+      children,
+      type = 'button',
+      'aria-label': ariaLabel = 'prev slide',
+      ...carouselControlProps
+    } = props;
     const carouselContext = useContext(CarouselContext);
 
     return (
@@ -195,6 +207,8 @@ const CarouselPrev = forwardRef<HTMLButtonElement, CarouselControlProps>(
         disabled={carouselContext.isPrevDisabled}
         {...carouselControlProps}
         ref={forwardedRef}
+        type={type}
+        aria-label={ariaLabel}
       >
         {children}
       </button>
