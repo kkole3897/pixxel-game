@@ -16,7 +16,7 @@ type Story = StoryObj<typeof Gallery>;
 function getContents(length: number): { url: string }[] {
   const contents = Array.from({ length }).map(() => {
     return {
-      url: faker.image.url({
+      url: faker.image.urlLoremFlickr({
         height: 1080,
         width: 1200,
       }),
