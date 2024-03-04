@@ -26,7 +26,8 @@
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "recharts": "^2.12.0"
+    "recharts": "^2.12.0",
+    "sanitize-html": "^2.12.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.0",
@@ -42,6 +43,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/sanitize-html": "^2.11.0",
     "@vanilla-extract/next-plugin": "^2.3.5",
     "@vanilla-extract/webpack-plugin": "^2.3.4",
     "css-loader": "^6.10.0",
