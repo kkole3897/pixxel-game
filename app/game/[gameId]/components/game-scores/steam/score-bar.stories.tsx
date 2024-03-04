@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ScoreBar } from '@/app/game/[gameId]/components/game-scores/steam';
+import ScoreBar from './score-bar';
 
 const meta: Meta<typeof ScoreBar> = {
+  title: 'App/Game/[GameId]/GameScores/Steam/ScoreBar',
   component: ScoreBar,
   tags: ['autodocs'],
 };

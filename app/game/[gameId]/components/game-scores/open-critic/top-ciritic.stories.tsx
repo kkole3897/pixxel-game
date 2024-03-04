@@ -1,40 +1,41 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { RecommendPercent } from '@/app/game/[gameId]/components/game-scores/open-critic';
+import TopCritic from './top-ciritic';
 
-const meta: Meta<typeof RecommendPercent> = {
-  component: RecommendPercent,
+const meta: Meta<typeof TopCritic> = {
+  title: 'App/Game/[GameId]/GameScores/OpenCritic/TopCritic',
+  component: TopCritic,
   tags: ['autodocs'],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof RecommendPercent>;
+type Story = StoryObj<typeof TopCritic>;
 
 export const Mighty: Story = {
   args: {
-    percent: 91,
+    score: 90,
     tier: 'Mighty',
   },
 };
 
 export const Strong: Story = {
   args: {
-    percent: 82,
+    score: 80,
     tier: 'Strong',
   },
 };
 
 export const Fair: Story = {
   args: {
-    percent: 68,
+    score: 50,
     tier: 'Fair',
   },
 };
 
 export const Weak: Story = {
   args: {
-    percent: 32,
+    score: 30,
     tier: 'Weak',
   },
 };

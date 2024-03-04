@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { GenreBadge } from '@/app/components/genre-badge';
+import GenreBadge from './/genre-badge';
 
 const meta: Meta<typeof GenreBadge> = {
+  title: 'App/GenreBadge',
   component: GenreBadge,
   tags: ['autodocs'],
 };

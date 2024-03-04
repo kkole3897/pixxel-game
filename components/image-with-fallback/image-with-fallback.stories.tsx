@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import ImageWithFallback from '@/components/image-with-fallback';
+import ImageWithFallback from './image-with-fallback';
 import SampleJpg480 from '@/stories/assets/sample-480x360.jpg';
 
 const meta: Meta<typeof ImageWithFallback> = {
+  title: 'components/ImageWithFallback',
   component: ImageWithFallback,
   tags: ['autodocs'],
   argTypes: {

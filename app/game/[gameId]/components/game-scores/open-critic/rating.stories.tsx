@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Rating } from '@/app/game/[gameId]/components/game-scores/open-critic';
+import Rating from './rating';
 
 const meta: Meta<typeof Rating> = {
+  title: 'App/Game/[GameId]/GameScores/OpenCritic/Rating',
   component: Rating,
   tags: ['autodocs'],
 };

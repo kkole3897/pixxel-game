@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { StoreLink } from '@/app/game/[gameId]/components/store-link';
+import StoreLink from './store-link';
 
 const meta: Meta<typeof StoreLink> = {
+  title: 'app/game/[gameId]/StoreLink',
   component: StoreLink,
   tags: ['autodocs'],
 };

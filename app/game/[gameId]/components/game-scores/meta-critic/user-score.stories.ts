@@ -1,15 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { MetaScore } from '@/app/game/[gameId]/components/game-scores/meta-critic';
+import UserScore from './user-score';
 
-const meta: Meta<typeof MetaScore> = {
-  component: MetaScore,
+const meta: Meta<typeof UserScore> = {
+  title: 'App/Game/[GameId]/GameScores/MetaCritic/UserScore',
+  component: UserScore,
   tags: ['autodocs'],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof MetaScore>;
+type Story = StoryObj<typeof UserScore>;
 
 export const Best: Story = {
   args: {

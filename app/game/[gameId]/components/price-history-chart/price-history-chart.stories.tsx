@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { PriceHistoryChart } from '@/app/game/[gameId]/components/price-history-chart';
+import PriceHistoryChart from './price-history-chart';
 
 const meta: Meta<typeof PriceHistoryChart> = {
+  title: 'app/game/[gameId]/PriceHistoryChart',
   component: PriceHistoryChart,
   tags: ['autodocs'],
 };
