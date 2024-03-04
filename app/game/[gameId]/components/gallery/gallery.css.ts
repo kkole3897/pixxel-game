@@ -55,7 +55,6 @@ export const controlButton = styleVariants({
 export const slide = style({
   position: 'relative',
   flex: '0 0 100%',
-  backgroundColor: 'blue',
   aspectRatio: '16 / 9',
 });
 
