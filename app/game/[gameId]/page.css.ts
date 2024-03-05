@@ -41,3 +41,7 @@ export const reviewSiteScores = style({
 export const reviewSiteLink = style({
   textDecoration: 'none',
 });
+
+export const descriptionContainer = style({
+  marginTop: '24px',
+});
