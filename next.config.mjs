@@ -10,9 +10,17 @@ const nextConfig = {
         hostname: 'loremflickr.com',
       },
       {
-        hostname: 'cdn.cloudflare.steamstatic.com',
+        hostname: '*.steamstatic.com',
       },
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_SERVER}/:path*`,
+      },
+    ];
   },
 };
 

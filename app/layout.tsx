@@ -4,7 +4,6 @@ import './globals.css';
 import { base, serif } from '@/app/fonts';
 import { BaseHeader } from './components/base-header';
 import { BottomNavigation } from './components/bottom-navigation';
-import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'gamduck',
@@ -26,13 +25,11 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${base.variable} ${serif.variable}`}>
       <body>
-        <Providers>
-          <div className="page">
-            <BaseHeader />
-            <div className="layout">{children}</div>
-            <BottomNavigation />
-          </div>
-        </Providers>
+        <div className="page">
+          <BaseHeader />
+          <div className="layout">{children}</div>
+          <BottomNavigation />
+        </div>
       </body>
     </html>
   );
