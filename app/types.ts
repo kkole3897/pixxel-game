@@ -9,12 +9,6 @@ export type Currency = 'KRW';
 
 export type GameStore = 'steam';
 
-export interface PriceInfo {
-  store: GameStore;
-  regular: number;
-  discount: number;
-  lowest: number;
-}
 export interface SteamScoreInfo {
   totalCount: number;
   positive: number;
@@ -45,21 +39,36 @@ export interface LanguageInfo {
 
 export type OpenCriticTier = 'Mighty' | 'Strong' | 'Fair' | 'Weak';
 
+export type PriceInfo = {
+  current: number;
+  regular: number;
+  lowest: number;
+};
+
+export type StoreInfo = {
+  storeId: string;
+  url: string;
+  price?: PriceInfo;
+  releaseDate?: string;
+};
+
 export interface AppDetail {
   id: string;
   name: string;
+  defaultName: string;
   type: AppType;
-  genres: Genre[];
   releaseDate?: string;
   thumbnail?: string;
-  prices: PriceInfo[];
-  scores: {
-    steam: SteamScoreInfo;
-    metaCritic: MetaCriticScoreInfo;
-    openCritic: OpenCriticScoreInfo;
+  score?: {
+    steam?: SteamScoreInfo;
+    metaCritic?: MetaCriticScoreInfo;
+    openCritic?: OpenCriticScoreInfo;
   };
-  purchases: PurchaseInfo[];
-  language: LanguageInfo[];
+  storeInfo?: {
+    steam?: StoreInfo;
+  };
+  genres: Genre[];
+  tags: string[];
 }
 
 export type AppPreview = Omit<AppDetail, 'scores' | 'language'>;

@@ -4,8 +4,8 @@ import { GameBox } from './components/game-box';
 import { getGames } from '@/api/game';
 import * as style from './page.css';
 
-function Games() {
-  const games = getGames();
+async function Games() {
+  const { apps: games } = await getGames();
 
   return (
     <ol className={style.gameList}>

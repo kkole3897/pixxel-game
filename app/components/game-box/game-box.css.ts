@@ -6,6 +6,7 @@ export const box = style({
 });
 
 export const thumbnailArea = style({
+  position: 'relative',
   width: '64px',
   height: '64px',
 });
@@ -13,6 +14,7 @@ export const thumbnailArea = style({
 export const thumbnailImg = style({
   width: '100%',
   height: '100%',
+  objectFit: 'cover',
 });
 
 export const genreArea = style({
