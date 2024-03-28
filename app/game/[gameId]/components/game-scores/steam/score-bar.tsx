@@ -28,7 +28,12 @@ export default function ScoreBar({
         <span>{gradeText}</span>
         <span>({totalCountText})</span>
       </div>
-      <Progress.Root max={max} value={progress} className={styles.progressRoot}>
+      <Progress.Root
+        max={max}
+        value={progress}
+        className={styles.progressRoot}
+        data-state=""
+      >
         <Progress.Indicator
           className={styles.progressIndicator}
           style={assignInlineVars({

@@ -61,7 +61,7 @@ export const collapseControlButton = style({
 });
 
 globalStyle(`${description} h2`, {
-  marginBottom: '12px',
+  marginTop: '12px',
   fontSize: '1rem',
   fontWeight: '600',
   lineHeight: '1.75rem',

@@ -10,19 +10,22 @@ export type Currency = 'KRW';
 export type GameStore = 'steam';
 
 export interface SteamScoreInfo {
-  totalCount: number;
+  total: number;
   positive: number;
+  url: string;
 }
 
 export interface MetaCriticScoreInfo {
-  metaScore: number;
-  userScore: number;
+  url: string;
+  metaScore?: number;
+  userScore?: number;
 }
 
 export interface OpenCriticScoreInfo {
-  topCriticScore: number;
-  percentRecommended: number;
-  tier: OpenCriticTier;
+  url: string;
+  topCriticScore?: number;
+  percentRecommended?: number;
+  tier?: OpenCriticTier;
 }
 
 export interface PurchaseInfo {
@@ -64,11 +67,12 @@ export interface AppDetail {
     metaCritic?: MetaCriticScoreInfo;
     openCritic?: OpenCriticScoreInfo;
   };
-  storeInfo?: {
-    steam?: StoreInfo;
-  };
+  storeInfo?: { [key in GameStore]?: StoreInfo };
   genres: Genre[];
   tags: string[];
+  description: string;
+  summary: string;
+  screenshots: string[];
 }
 
 export type AppPreview = Omit<AppDetail, 'scores' | 'language'>;

@@ -17,7 +17,7 @@ export const Regular: Story = {
     href: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
     store: 'steam',
     regular: 66000,
-    discount: 66000,
+    current: 66000,
     lowest: 58000,
   },
 };
@@ -27,7 +27,7 @@ export const Discount: Story = {
     href: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
     store: 'steam',
     regular: 66000,
-    discount: 58000,
+    current: 58000,
     lowest: 55000,
   },
 };
@@ -37,7 +37,7 @@ export const Lowest: Story = {
     href: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
     store: 'steam',
     regular: 66000,
-    discount: 55000,
+    current: 55000,
     lowest: 55000,
   },
 };

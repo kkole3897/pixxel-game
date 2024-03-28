@@ -62,3 +62,9 @@ export const lowestBadge = style({
   color: '#fff',
   fontSize: '0.875rem',
 });
+
+export const priceNa = style({
+  color: '#c7d5e0',
+  fontSize: '1.125rem',
+  fontWeight: 600,
+});

@@ -1,17 +1,17 @@
 interface PriceInfo {
   regular: number;
-  discount: number;
+  current: number;
   lowest: number;
 }
 
 export function usePriceInfo(priceInfo: PriceInfo) {
-  const { regular, discount, lowest } = priceInfo;
+  const { regular, current, lowest } = priceInfo;
 
-  const isDiscounted = discount < regular;
-  const isLowest = regular === lowest || discount === lowest;
+  const isDiscounted = current < regular;
+  const isLowest = regular === lowest || current === lowest;
 
   const initalPrice = regular;
-  const finalPrice = isDiscounted ? discount : regular;
+  const finalPrice = isDiscounted ? current : regular;
 
   return {
     initalPrice,

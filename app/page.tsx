@@ -1,11 +1,11 @@
 import Link from 'next/link';
 
 import { GameBox } from './components/game-box';
-import { getGames } from '@/api/game';
+import { getApps } from '@/api/apps';
 import * as style from './page.css';
 
 async function Games() {
-  const { apps: games } = await getGames();
+  const { apps: games } = await getApps();
 
   return (
     <ol className={style.gameList}>

@@ -31,9 +31,17 @@ export default function Description({ content }: Props) {
 
   useEffect(() => {
     if (contentRef.current) {
-      if (contentRef.current.offsetHeight <= MAX_HEIGHT) {
-        setIsOverflowed(false);
-      }
+      const resizeObserver = new ResizeObserver(([entry]) => {
+        if (entry.borderBoxSize[0].blockSize > MAX_HEIGHT) {
+          setIsOverflowed(true);
+        } else {
+          setIsOverflowed(false);
+        }
+      });
+
+      resizeObserver.observe(contentRef.current);
+
+      return () => resizeObserver.disconnect();
     }
   }, []);
 
