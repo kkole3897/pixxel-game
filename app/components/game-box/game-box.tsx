@@ -1,5 +1,6 @@
+import { RiArrowDownLine } from '@remixicon/react';
+
 import ImageWithFallback from '@/components/image-with-fallback';
-import { GenreBadge } from '@/app/components/genre-badge';
 import * as styles from './game-box.css';
 import { useGame } from './hooks/use-game';
 import type { AppDetail } from '@/app/types';
@@ -10,7 +11,6 @@ interface Props {
 
 export default function GameBox({ game }: Props) {
   const {
-    releaseDateText,
     regularPriceText,
     discountPriceText,
     discountRate,
@@ -29,18 +29,14 @@ export default function GameBox({ game }: Props) {
           fill
         />
       </div>
-      <div>
+      <div className={styles.summaryArea}>
         <div>
           <div>
             <div className={styles.gameName}>{game.name}</div>
-            <div className={styles.releaseDate}>{releaseDateText}</div>
           </div>
           {isPriceDefined && (
             <div className={styles.priceArea}>
               <div className={styles.initialPriceArea}>
-                {isLowest && discountRate > 0 && (
-                  <span className={styles.lowestPriceBadge}>역대 최저</span>
-                )}
                 {discountRate > 0 && (
                   <>
                     <span className={styles.discountRate}>
@@ -52,17 +48,18 @@ export default function GameBox({ game }: Props) {
                   </>
                 )}
               </div>
-              <div className={styles.finalPrice}>{discountPriceText}원</div>
+              <div className={styles.finalPriceArea}>
+                {isLowest && discountRate > 0 && (
+                  <span className={styles.lowestArea}>
+                    <span className={styles.lowestText}>역대 최저</span>
+                    <RiArrowDownLine size={16} color="#1d4ed8" />
+                  </span>
+                )}
+                <span className={styles.finalPrice}>{discountPriceText}원</span>
+              </div>
             </div>
           )}
         </div>
-        {game.genres.length > 0 && (
-          <div className={styles.genreArea}>
-            {game.genres.map(({ id, description }) => {
-              return <GenreBadge key={id} label={description} />;
-            })}
-          </div>
-        )}
       </div>
     </div>
   );

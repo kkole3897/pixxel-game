@@ -6,11 +6,11 @@ export const link = style({
 });
 
 export const gameList = style({
-  padding: '0 16px',
+  padding: '0',
 });
 
 export const gameListItem = style({
-  padding: '16px 0',
+  padding: '0',
   selectors: {
     '& + &': {
       borderTop: '1px solid #eaedef',
