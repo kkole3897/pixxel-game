@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 import * as styles from './page.css';
 import { GenreBadge } from '@/app/components/genre-badge';
@@ -15,8 +17,13 @@ import { ScoreBar } from './components/game-scores/steam';
 import { Gallery } from './components/gallery';
 import { Description } from './components/description';
 import { getAppDetail } from '@/api/apps';
+import { getAppPriceHistory } from '@/api/apps/price-history';
 import ImageWithFallback from '@/components/image-with-fallback';
 import type { GameStore } from '@/app/types';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Seoul');
 
 export default async function GameDetailPage({
   params,
@@ -24,6 +31,7 @@ export default async function GameDetailPage({
   params: { gameId: string };
 }) {
   const { app: game } = await getAppDetail(params.gameId);
+  const { history: _history } = await getAppPriceHistory(params.gameId);
 
   const releaseDateText = !game.releaseDate
     ? '출시 미정'
@@ -59,26 +67,32 @@ export default async function GameDetailPage({
       return a.price.current - b.price.current;
     });
 
-  const history = [
-    { date: '2024-02-01', steam: 68000 },
-    { date: '2024-02-02', steam: 68000 },
-    { date: '2024-02-03', steam: 58000 },
-    { date: '2024-02-04', steam: 58000 },
-    { date: '2024-02-05', steam: 58000 },
-    { date: '2024-02-06', steam: 48000 },
-    { date: '2024-02-07', steam: 68000 },
-    { date: '2024-02-08', steam: 68000 },
-    { date: '2024-02-09', steam: 68000 },
-    { date: '2024-02-10', steam: 68000 },
-    { date: '2024-02-11', steam: 68000 },
-    { date: '2024-02-12', steam: 58000 },
-    { date: '2024-02-13', steam: 58000 },
-    { date: '2024-02-14', steam: 68000 },
-    { date: '2024-02-15', steam: 68000 },
-    { date: '2024-02-16', steam: 68000 },
-    { date: '2024-02-17', steam: 68000 },
-    { date: '2024-02-18', steam: 68000 },
-  ];
+  const pricePerDate = Object.entries(_history).reduce<{
+    [K: string]: { [K in GameStore]?: number };
+  }>((acc, [store, prices]) => {
+    for (const price of prices) {
+      const date = dayjs(price.datetime).tz().format('YYYY.MM.DD');
+
+      if (Object.keys(acc).includes(date)) {
+        acc[date] = { ...acc[date], [store]: price.current };
+      } else {
+        acc[date] = { [store]: price.current };
+      }
+    }
+
+    return acc;
+  }, {});
+  const history = Object.entries(pricePerDate)
+    .map(([date, price]) => {
+      return { date, ...price };
+    })
+    .sort((a, b) => {
+      if (a.date < b.date) {
+        return -1;
+      }
+
+      return 1;
+    });
 
   const galleryContents = game.screenshots.map((url) => ({ url }));
 
@@ -117,7 +131,7 @@ export default async function GameDetailPage({
       </section>
       <section>
         <section className={styles.contentBox}>
-          <h3>가격 비교</h3>
+          <h3>가격 정보</h3>
           <div>
             {stores.map((store) => {
               return (

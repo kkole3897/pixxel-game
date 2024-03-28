@@ -10,7 +10,6 @@ import {
   Tooltip,
   YAxis,
   Brush,
-  ReferenceLine,
 } from 'recharts';
 
 import * as styles from './price-history-chart.css';
@@ -18,7 +17,7 @@ import type { GameStore } from '@/app/types';
 
 interface Props {
   history: ({
-    [key in GameStore]: number;
+    [key in GameStore]?: number;
   } & { date: string })[];
 }
 
@@ -40,7 +39,7 @@ export default function PriceHistoryChart({ history }: Props) {
             type="number"
             tickFormatter={(value: number) => dayjs.unix(value).format('MM.DD')}
             domain={['dataMin', 'dataMax']}
-            interval="preserveStartEnd"
+            interval={0}
           />
           <YAxis
             axisLine={false}
