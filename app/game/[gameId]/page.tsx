@@ -130,8 +130,9 @@ export default async function GameDetailPage({
         </div>
       </section>
       <section>
+        <div className={styles.contentDivider}></div>
         <section className={styles.contentBox}>
-          <h3>가격 정보</h3>
+          <h3 className={styles.contentTitle}>가격 정보</h3>
           <div>
             {stores.map((store) => {
               return (
@@ -145,95 +146,100 @@ export default async function GameDetailPage({
             })}
           </div>
         </section>
+        <div className={styles.contentDivider}></div>
         <section className={styles.contentBox}>
-          <h3>히스토리</h3>
+          <h3 className={styles.contentTitle}>히스토리</h3>
           <div>
             <PriceHistoryChart history={history} />
           </div>
         </section>
+        <div className={styles.contentDivider}></div>
         {game.score && (
-          <section className={styles.contentBox}>
-            <h3>평가</h3>
-            <div className={styles.reviewSites}>
-              {game.score.metaCritic && (
-                <div>
-                  <div className={styles.reviewSiteName}>Metacritic</div>
-                  <div className={styles.reviewSiteScores}>
-                    {game.score.metaCritic.metaScore != null && (
-                      <Link
-                        href={game.score.metaCritic.url}
-                        target="_blank"
-                        className={styles.reviewSiteLink}
-                      >
-                        <MetaScore score={game.score.metaCritic.metaScore} />
-                      </Link>
-                    )}
-                    {game.score.metaCritic.userScore != null && (
-                      <Link
-                        href={game.score.metaCritic.url}
-                        target="_blank"
-                        className={styles.reviewSiteLink}
-                      >
-                        <UserScore score={game.score.metaCritic.userScore} />
-                      </Link>
-                    )}
+          <>
+            <section className={styles.contentBox}>
+              <h3 className={styles.contentTitle}>평가</h3>
+              <div className={styles.reviewSites}>
+                {game.score.metaCritic && (
+                  <div>
+                    <div className={styles.reviewSiteName}>Metacritic</div>
+                    <div className={styles.reviewSiteScores}>
+                      {game.score.metaCritic.metaScore != null && (
+                        <Link
+                          href={game.score.metaCritic.url}
+                          target="_blank"
+                          className={styles.reviewSiteLink}
+                        >
+                          <MetaScore score={game.score.metaCritic.metaScore} />
+                        </Link>
+                      )}
+                      {game.score.metaCritic.userScore != null && (
+                        <Link
+                          href={game.score.metaCritic.url}
+                          target="_blank"
+                          className={styles.reviewSiteLink}
+                        >
+                          <UserScore score={game.score.metaCritic.userScore} />
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
-              {game.score.openCritic && (
-                <div>
-                  <div className={styles.reviewSiteName}>OpenCritic</div>
-                  <div className={styles.reviewSiteScores}>
-                    {game.score.openCritic.tier != null && (
-                      <Link
-                        href={game.score.openCritic.url}
-                        target="_blank"
-                        className={styles.reviewSiteLink}
-                      >
-                        <Rating tier={game.score.openCritic.tier} />
-                      </Link>
-                    )}
-                    {game.score.openCritic.topCriticScore != null && (
-                      <Link
-                        href={game.score.openCritic.url}
-                        target="_blank"
-                        className={styles.reviewSiteLink}
-                      >
-                        <TopCritic
-                          tier={game.score.openCritic.tier ?? 'Fair'}
-                          score={game.score.openCritic.topCriticScore}
-                        />
-                      </Link>
-                    )}
-                    {game.score.openCritic.percentRecommended != null && (
-                      <Link
-                        href={game.score.openCritic.url}
-                        target="_blank"
-                        className={styles.reviewSiteLink}
-                      >
-                        <RecommendPercent
-                          tier={game.score.openCritic.tier ?? 'Fair'}
-                          percent={game.score.openCritic.percentRecommended}
-                        />
-                      </Link>
-                    )}
+                )}
+                {game.score.openCritic && (
+                  <div>
+                    <div className={styles.reviewSiteName}>OpenCritic</div>
+                    <div className={styles.reviewSiteScores}>
+                      {game.score.openCritic.tier != null && (
+                        <Link
+                          href={game.score.openCritic.url}
+                          target="_blank"
+                          className={styles.reviewSiteLink}
+                        >
+                          <Rating tier={game.score.openCritic.tier} />
+                        </Link>
+                      )}
+                      {game.score.openCritic.topCriticScore != null && (
+                        <Link
+                          href={game.score.openCritic.url}
+                          target="_blank"
+                          className={styles.reviewSiteLink}
+                        >
+                          <TopCritic
+                            tier={game.score.openCritic.tier ?? 'Fair'}
+                            score={game.score.openCritic.topCriticScore}
+                          />
+                        </Link>
+                      )}
+                      {game.score.openCritic.percentRecommended != null && (
+                        <Link
+                          href={game.score.openCritic.url}
+                          target="_blank"
+                          className={styles.reviewSiteLink}
+                        >
+                          <RecommendPercent
+                            tier={game.score.openCritic.tier ?? 'Fair'}
+                            percent={game.score.openCritic.percentRecommended}
+                          />
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-            {game.score.steam && (
-              <div>
-                <div>스팀</div>
-                <ScoreBar
-                  positive={game.score.steam.positive}
-                  totalCount={game.score.steam.total}
-                />
+                )}
               </div>
-            )}
-          </section>
+              {game.score.steam && (
+                <div className={styles.steamScoreArea}>
+                  <div>스팀</div>
+                  <ScoreBar
+                    positive={game.score.steam.positive}
+                    totalCount={game.score.steam.total}
+                  />
+                </div>
+              )}
+            </section>
+            <div className={styles.contentDivider}></div>
+          </>
         )}
         <section className={styles.contentBox}>
-          <h3>상세 정보</h3>
+          <h3 className={styles.contentTitle}>상세 정보</h3>
           <Gallery name={game.name} contents={galleryContents} />
           <div className={styles.descriptionContainer}>
             <Description content={descriptionContent} />

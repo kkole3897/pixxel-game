@@ -4,8 +4,19 @@ export const contentBox = style({
   padding: '16px',
 });
 
+export const contentTitle = style({
+  marginBottom: '12px',
+  fontSize: '1.125rem',
+  fontWeight: '600',
+});
+
+export const contentDivider = style({
+  height: '4px',
+  background: '#eaedef',
+});
+
 export const gameTitle = style({
-  marginBottom: '8px',
+  marginBottom: '4px',
   fontSize: '1.5rem',
   fontWeight: 'bold',
 });
@@ -26,7 +37,7 @@ export const genreList = style({
 
 export const reviewSites = style({
   display: 'flex',
-  columnGap: '8px',
+  columnGap: '28px',
 });
 
 export const reviewSiteName = style({
@@ -40,6 +51,10 @@ export const reviewSiteScores = style({
 
 export const reviewSiteLink = style({
   textDecoration: 'none',
+});
+
+export const steamScoreArea = style({
+  marginTop: '20px',
 });
 
 export const descriptionContainer = style({
