@@ -4,6 +4,7 @@ import './globals.css';
 import { base, serif } from '@/app/fonts';
 import { BaseHeader } from './components/base-header';
 import { BottomNavigation } from './components/bottom-navigation';
+import RecoilProvider from './providers/recoil-provider';
 
 export const metadata: Metadata = {
   title: 'gamduck',
@@ -25,11 +26,13 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${base.variable} ${serif.variable}`}>
       <body>
-        <div className="page">
-          <BaseHeader />
-          <div className="layout">{children}</div>
-          <BottomNavigation />
-        </div>
+        <RecoilProvider>
+          <div className="page">
+            <BaseHeader />
+            <div className="layout">{children}</div>
+            <BottomNavigation />
+          </div>
+        </RecoilProvider>
       </body>
     </html>
   );
