@@ -1,5 +1,17 @@
 import { style } from '@vanilla-extract/css';
 
+export const thumbnailContainer = style({
+  position: 'relative',
+});
+
+export const gameActionContainer = style({
+  display: 'flex',
+  columnGap: '8px',
+  position: 'absolute',
+  bottom: '12px',
+  right: '16px',
+});
+
 export const contentBox = style({
   padding: '16px',
 });

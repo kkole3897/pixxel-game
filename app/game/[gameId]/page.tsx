@@ -19,6 +19,7 @@ import { Description } from './components/description';
 import { getAppDetail } from '@/api/apps';
 import { getAppPriceHistory } from '@/api/apps/price-history';
 import ImageWithFallback from '@/components/image-with-fallback';
+import { WishButton } from './components/wish-button';
 import type { GameStore } from '@/app/types';
 
 dayjs.extend(utc);
@@ -101,7 +102,7 @@ export default async function GameDetailPage({
   return (
     <div>
       <section>
-        <div>
+        <div className={styles.thumbnailContainer}>
           <ImageWithFallback
             src={game.thumbnail}
             alt={game.name}
@@ -113,6 +114,9 @@ export default async function GameDetailPage({
             width={100}
             height={100}
           />
+          <div className={styles.gameActionContainer}>
+            <WishButton gameId={params.gameId} />
+          </div>
         </div>
         <div className={styles.contentBox}>
           <h2 className={styles.gameTitle}>{game.name}</h2>
@@ -130,7 +134,6 @@ export default async function GameDetailPage({
         </div>
       </section>
       <section>
-        <div className={styles.contentDivider}></div>
         <section className={styles.contentBox}>
           <h3 className={styles.contentTitle}>가격 정보</h3>
           <div>

@@ -16,7 +16,7 @@ import * as style from './bottom-navigation.css';
 export default function BottomNavigation() {
   const pathname = usePathname();
   const isAuth = false;
-  const mypageUrl = isAuth ? '/user/1' : 'login';
+  const mypageUrl = isAuth ? '/user/1' : '/login';
 
   return (
     <nav className={style.bottomNav}>
