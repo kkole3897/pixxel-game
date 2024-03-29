@@ -1,10 +1,10 @@
 'use client';
 
 import { RiHeartLine, RiHeartFill } from '@remixicon/react';
-import { useRecoilState } from 'recoil';
 import { useMemo } from 'react';
 
-import { wishListState } from '@/store/atoms/wish-list';
+import { useWishListStore } from '@/stores/wish-list';
+
 import * as styles from './wish-button.css';
 
 type WishButtonProps = {
@@ -12,20 +12,23 @@ type WishButtonProps = {
 };
 
 export default function WishButton(props: WishButtonProps) {
-  const [wishList, setWishList] = useRecoilState(wishListState);
+  const games = useWishListStore((state) => state.games);
+  const addGame = useWishListStore((state) => state.addGame);
+  const removeGame = useWishListStore((state) => state.removeGame);
+
+  const isExisted = useMemo(
+    () => Object.keys(games ?? {}).includes(props.gameId),
+    [props.gameId, games]
+  );
 
   const toggleWishList = () => {
-    if (wishList.includes(props.gameId)) {
-      setWishList(wishList.filter((wishAppId) => wishAppId !== props.gameId));
-    } else {
-      setWishList([...wishList, props.gameId]);
+    if (isExisted) {
+      removeGame(props.gameId);
+      return;
     }
-  };
 
-  const isInWishList = useMemo(
-    () => wishList.includes(props.gameId),
-    [props.gameId, wishList]
-  );
+    addGame(props.gameId);
+  };
 
   return (
     <button
@@ -33,7 +36,7 @@ export default function WishButton(props: WishButtonProps) {
       onClick={toggleWishList}
       className={styles.wishButton}
     >
-      {isInWishList ? <RiHeartFill color="red" /> : <RiHeartLine />}
+      {isExisted ? <RiHeartFill color="red" /> : <RiHeartLine />}
     </button>
   );
 }
