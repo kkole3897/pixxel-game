@@ -12,13 +12,13 @@ type WishButtonProps = {
 };
 
 export default function WishButton(props: WishButtonProps) {
-  const games = useWishListStore((state) => state.games);
+  const wishList = useWishListStore((state) => state.wishList);
   const addGame = useWishListStore((state) => state.addGame);
   const removeGame = useWishListStore((state) => state.removeGame);
 
   const isExisted = useMemo(
-    () => Object.keys(games ?? {}).includes(props.gameId),
-    [props.gameId, games]
+    () => Object.keys(wishList ?? {}).includes(props.gameId),
+    [props.gameId, wishList]
   );
 
   const toggleWishList = () => {

@@ -2,15 +2,15 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type WishListState = {
-  games: { [K: string]: { priority: number } };
+  wishList: { [gameId: string]: { priority: number } };
 };
 
 export type WishListActions = {
-  addGame: (id: string) => void;
-  isExisted: (id: string) => boolean;
-  removeGame: (id: string) => void;
-  toggleGame: (id: string) => void;
-  changePriority: (id: string, priority: number) => void;
+  addGame: (gameId: string) => void;
+  isExisted: (gameId: string) => boolean;
+  removeGame: (gameId: string) => void;
+  toggleGame: (gameId: string) => void;
+  changePriority: (gameId: string, priority: number) => void;
 };
 
 export type WishListStore = WishListState & WishListActions;
@@ -18,22 +18,22 @@ export type WishListStore = WishListState & WishListActions;
 export const useWishListStore = create(
   persist<WishListStore>(
     (set, get) => ({
-      games: {},
-      isExisted: (id: string) => Object.keys(get().games).includes(id),
+      wishList: {},
+      isExisted: (id: string) => Object.keys(get().wishList).includes(id),
       addGame: (id: string) => {
-        const priority = Object.keys(get().games).length + 1;
+        const priority = Object.keys(get().wishList).length + 1;
 
-        set({ games: { ...get().games, [id]: { priority } } });
+        set({ wishList: { ...get().wishList, [id]: { priority } } });
       },
       removeGame: (id: string) => {
-        if (!get().games || !get().games[id]) {
+        if (!get().wishList || !get().wishList[id]) {
           return;
         }
 
         const {
           [id]: { priority },
           ..._remains
-        } = get().games;
+        } = get().wishList;
 
         const remains = Object.entries(_remains).reduce(
           (acc, [id, wishInfo]) => {
@@ -57,10 +57,10 @@ export const useWishListStore = create(
           {}
         );
 
-        set({ games: remains });
+        set({ wishList: remains });
       },
       toggleGame: (id: string) => {
-        const isIncluded = Object.keys(get().games).includes(id);
+        const isIncluded = Object.keys(get().wishList).includes(id);
 
         if (isIncluded) {
           get().removeGame(id);
@@ -72,12 +72,12 @@ export const useWishListStore = create(
         return {};
       },
       changePriority: (id: string, priority: number) => {
-        if (!get().games[id]) {
+        if (!get().wishList[id]) {
           return;
         }
 
         let cleanPriority = priority;
-        const maxPriority = Object.keys(get().games).length;
+        const maxPriority = Object.keys(get().wishList).length;
 
         if (cleanPriority < 1) {
           cleanPriority = 1;
@@ -85,13 +85,13 @@ export const useWishListStore = create(
           cleanPriority = maxPriority;
         }
 
-        const { priority: originPriority } = get().games[id];
+        const { priority: originPriority } = get().wishList[id];
 
         if (cleanPriority === originPriority) {
-          set({ games: { ...get().games } });
+          return;
         }
 
-        const newGames = Object.entries(get().games).reduce(
+        const newWishList = Object.entries(get().wishList).reduce(
           (acc, [curId, wishInfo]) => {
             if (id === curId) {
               return {
@@ -134,10 +134,10 @@ export const useWishListStore = create(
               [curId]: wishInfo,
             };
           },
-          {} as WishListState['games']
+          {} as WishListState['wishList']
         );
 
-        set({ games: newGames });
+        set({ wishList: newWishList });
       },
     }),
     {
