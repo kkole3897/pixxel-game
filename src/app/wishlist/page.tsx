@@ -8,7 +8,7 @@ import { GameList } from '@/app/components/game-list';
 import { GameLink } from '@/app/components/game-link';
 import { GameBox } from '@/app/components/game-box';
 
-export default function WishPage() {
+export default function WishListPage() {
   const wishList = useWishListStore((state) => state.wishList);
   const gameIds = useMemo(() => Object.keys(wishList), [wishList]);
   const { data, isPending, isError } = useFetchAppsQuery(

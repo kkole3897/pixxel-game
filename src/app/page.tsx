@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { GameBox } from './components/game-box';
-import { GameList } from './components/game-list';
+import { GameBox } from '@/app/components/game-box';
+import { GameList } from '@/app/components/game-list';
 import { fetchApps } from '@/api/apps';
 import * as style from './page.css';
 

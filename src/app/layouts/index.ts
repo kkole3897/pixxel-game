@@ -1,4 +1,4 @@
-import BaseHeader from './ui/base-header';
-import BaseBottomNavigation from './ui/base-bottom-navigation';
+import BaseHeader from './base-header';
+import BaseBottomNavigation from './base-bottom-navigation';
 
 export { BaseHeader, BaseBottomNavigation };

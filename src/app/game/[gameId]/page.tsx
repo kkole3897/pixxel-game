@@ -5,21 +5,24 @@ import timezone from 'dayjs/plugin/timezone';
 
 import * as styles from './page.css';
 import { GenreBadge } from '@/app/components/genre-badge';
-import { StoreLink } from './components/store-link';
-import { PriceHistoryChart } from './components/price-history-chart';
-import { MetaScore, UserScore } from './components/game-scores/meta-critic';
+import { StoreLink } from '@/app/game/[gameId]/components/store-link';
+import { PriceHistoryChart } from '@/app/game/[gameId]/components/price-history-chart';
+import {
+  MetaScore,
+  UserScore,
+} from '@/app/game/[gameId]/components/game-scores/meta-critic';
 import {
   Rating,
   TopCritic,
   RecommendPercent,
-} from './components/game-scores/open-critic';
-import { ScoreBar } from './components/game-scores/steam';
-import { Gallery } from './components/gallery';
-import { Description } from './components/description';
+} from '@/app/game/[gameId]/components/game-scores/open-critic';
+import { ScoreBar } from '@/app/game/[gameId]/components/game-scores/steam';
+import { Gallery } from '@/app/game/[gameId]/components/gallery';
+import { Description } from '@/app/game/[gameId]/components/description';
 import { fetchAppDetail } from '@/api/apps';
 import { getAppPriceHistory } from '@/api/apps/price-history';
 import ImageWithFallback from '@/src/shared/ui/image-with-fallback';
-import { WishButton } from './components/wish-button';
+import { WishButton } from '@/app/game/[gameId]/components/wish-button';
 import type { GameStore } from '@/app/types';
 
 dayjs.extend(utc);
