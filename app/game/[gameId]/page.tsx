@@ -16,7 +16,7 @@ import {
 import { ScoreBar } from './components/game-scores/steam';
 import { Gallery } from './components/gallery';
 import { Description } from './components/description';
-import { getAppDetail } from '@/api/apps';
+import { fetchAppDetail } from '@/api/apps';
 import { getAppPriceHistory } from '@/api/apps/price-history';
 import ImageWithFallback from '@/components/image-with-fallback';
 import { WishButton } from './components/wish-button';
@@ -31,7 +31,7 @@ export default async function GameDetailPage({
 }: {
   params: { gameId: string };
 }) {
-  const { app: game } = await getAppDetail(params.gameId);
+  const { app: game } = await fetchAppDetail(params.gameId);
   const { history: _history } = await getAppPriceHistory(params.gameId);
 
   const releaseDateText = !game.releaseDate

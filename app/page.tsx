@@ -1,24 +1,25 @@
 import Link from 'next/link';
 
 import { GameBox } from './components/game-box';
-import { getApps } from '@/api/apps';
+import { GameList } from './components/game-list';
+import { fetchApps } from '@/api/apps';
 import * as style from './page.css';
 
 async function Games() {
-  const { apps: games } = await getApps();
+  const { apps: games } = await fetchApps();
 
   return (
-    <ol className={style.gameList}>
+    <GameList>
       {games.map((game) => {
         return (
-          <li key={game.id} className={style.gameListItem}>
+          <GameList.Item key={game.id}>
             <Link href={`/game/${game.id}`} className={style.link}>
               <GameBox game={game} />
             </Link>
-          </li>
+          </GameList.Item>
         );
       })}
-    </ol>
+    </GameList>
   );
 }
 
