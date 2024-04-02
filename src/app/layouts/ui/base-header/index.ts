@@ -1,3 +1,3 @@
 import BaseHeader from './base-header';
 
-export { BaseHeader };
+export default BaseHeader;

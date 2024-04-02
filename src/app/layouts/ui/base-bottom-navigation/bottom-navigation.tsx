@@ -29,7 +29,7 @@ export default function BottomNavigation() {
         <span className={style.navLabel}>찜</span>
       </Link>
       <Link href={mypageUrl} className={style.navItem}>
-        {pathname.startsWith('/user') ? <RiUser3Fill /> : <RiUser3Line />}
+        {pathname?.startsWith('/user') ? <RiUser3Fill /> : <RiUser3Line />}
         <span className={style.navLabel}>마이페이지</span>
       </Link>
     </nav>

@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
 
-import '../app/globals.css';
-import { base, serif } from '../app/fonts';
+import '../src/app/styles/globals.css';
+import { base, serif } from '../src/app/fonts';
 
 const preview: Preview = {
   parameters: {

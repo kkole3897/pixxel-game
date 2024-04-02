@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 
-import './globals.css';
-import { base, serif } from '@/app/fonts';
-import { BaseHeader } from './components/base-header';
-import { BottomNavigation } from './components/bottom-navigation';
-import Providers from './providers';
+import '@/src/app/styles/globals.css';
+import { base, serif } from '@/src/app/fonts';
+import { BaseHeader, BaseBottomNavigation } from '@/src/app/layouts';
+import { ReactQueryProvider } from '@/src/app/providers';
 
 export const metadata: Metadata = {
   title: 'gamduck',
@@ -26,13 +25,13 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${base.variable} ${serif.variable}`}>
       <body>
-        <Providers>
+        <ReactQueryProvider>
           <div className="page">
             <BaseHeader />
             <div className="layout">{children}</div>
-            <BottomNavigation />
+            <BaseBottomNavigation />
           </div>
-        </Providers>
+        </ReactQueryProvider>
       </body>
     </html>
   );
