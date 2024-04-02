@@ -18,7 +18,7 @@ import { Gallery } from './components/gallery';
 import { Description } from './components/description';
 import { fetchAppDetail } from '@/api/apps';
 import { getAppPriceHistory } from '@/api/apps/price-history';
-import ImageWithFallback from '@/components/image-with-fallback';
+import ImageWithFallback from '@/src/shared/ui/image-with-fallback';
 import { WishButton } from './components/wish-button';
 import type { GameStore } from '@/app/types';
 

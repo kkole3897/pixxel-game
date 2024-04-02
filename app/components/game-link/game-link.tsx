@@ -1,7 +1,7 @@
 import Link, { type LinkProps } from 'next/link';
 
 import * as styles from './game-link.css';
-import { composeClassNames } from '@/libs/react/compose-class-name';
+import { composeClassNames } from '@/src/shared/lib/react/compose-class-name';
 
 export default function GameLink({
   href,

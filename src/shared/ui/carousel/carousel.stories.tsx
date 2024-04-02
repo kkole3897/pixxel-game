@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import * as Carousel from '@/components/carousel';
+import * as Carousel from '@/src/shared/ui/carousel';
 import * as styles from './carousel.stories.css';
 
 const meta: Meta = {

@@ -1,7 +1,7 @@
 import { useScoreFormat, useScoreRadial } from './use-score';
 import * as styles from './styles.css';
 import type { OpenCriticTier } from '@/app/types';
-import { assignInlineVarsServer } from '@/libs/vanilla-extract/dynamic';
+import { assignInlineVarsServer } from '@/src/shared/lib/vanilla-extract/dynamic';
 
 export default function TopCritic({
   score,
