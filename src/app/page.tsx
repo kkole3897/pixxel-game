@@ -1,21 +1,19 @@
-import Link from 'next/link';
-
-import { GameBox } from '@/app/components/game-box';
-import { GameList } from '@/app/components/game-list';
-import { fetchApps } from '@/api/apps';
-import * as style from './page.css';
+import { GameBox } from '@/src/entities/game/ui';
+import { GameList } from '@/src/widgets/game/ui';
+import { DefaultLink } from '@/src/shared/ui/default-link';
+import { fetchGames } from '@/src/entities/game/api';
 
 async function Games() {
-  const { apps: games } = await fetchApps();
+  const { games } = await fetchGames();
 
   return (
     <GameList>
       {games.map((game) => {
         return (
           <GameList.Item key={game.id}>
-            <Link href={`/game/${game.id}`} className={style.link}>
+            <DefaultLink href={`/game/${game.id}`}>
               <GameBox game={game} />
-            </Link>
+            </DefaultLink>
           </GameList.Item>
         );
       })}

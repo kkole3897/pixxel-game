@@ -3,10 +3,10 @@
 import { useMemo } from 'react';
 
 import { useWishListStore } from '@/stores/wish-list';
-import { useFetchAppsQuery } from '@/queries/apps';
-import { GameList } from '@/app/components/game-list';
-import { GameLink } from '@/app/components/game-link';
-import { GameBox } from '@/app/components/game-box';
+import { useFetchAppsQuery } from '@/src/entities/game/queries';
+import { GameList } from '@/src/widgets/game/ui/game-list';
+import { DefaultLink } from '@/src/shared/ui/default-link';
+import { GameBox } from '@/src/entities/game/ui';
 
 export default function WishListPage() {
   const wishList = useWishListStore((state) => state.wishList);
@@ -28,16 +28,16 @@ export default function WishListPage() {
     return <div>error</div>;
   }
 
-  const { apps: games } = data;
+  const { games } = data;
 
   return (
     <GameList>
       {games.map((game) => {
         return (
           <GameList.Item key={game.id}>
-            <GameLink href={`/game/${game.id}`}>
+            <DefaultLink href={`/game/${game.id}`}>
               <GameBox game={game} />
-            </GameLink>
+            </DefaultLink>
           </GameList.Item>
         );
       })}

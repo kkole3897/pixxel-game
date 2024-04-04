@@ -4,26 +4,23 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
 import * as styles from './page.css';
-import { GenreBadge } from '@/app/components/genre-badge';
-import { StoreLink } from '@/app/game/[gameId]/components/store-link';
-import { PriceHistoryChart } from '@/app/game/[gameId]/components/price-history-chart';
 import {
-  MetaScore,
-  UserScore,
-} from '@/app/game/[gameId]/components/game-scores/meta-critic';
+  MetaCritic,
+  OpenCritic,
+  SteamScore,
+  PriceHistoryChart,
+  StoreLink,
+  GenreBadge,
+} from '@/src/entities/game/ui';
+import { Gallery } from '@/src/widgets/game-detail/ui/gallery';
+import { Description } from '@/src/widgets/game-detail/ui';
 import {
-  Rating,
-  TopCritic,
-  RecommendPercent,
-} from '@/app/game/[gameId]/components/game-scores/open-critic';
-import { ScoreBar } from '@/app/game/[gameId]/components/game-scores/steam';
-import { Gallery } from '@/app/game/[gameId]/components/gallery';
-import { Description } from '@/app/game/[gameId]/components/description';
-import { fetchAppDetail } from '@/api/apps';
-import { getAppPriceHistory } from '@/api/apps/price-history';
+  fetchGameDetail,
+  fetchGamePriceHistory,
+} from '@/src/entities/game/api';
 import ImageWithFallback from '@/src/shared/ui/image-with-fallback';
-import { WishButton } from '@/app/game/[gameId]/components/wish-button';
-import type { GameStore } from '@/app/types';
+import { WishButton } from '@/src/features/wish-list/ui';
+import type { GameStore } from '@/src/entities/game/model';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -34,8 +31,8 @@ export default async function GameDetailPage({
 }: {
   params: { gameId: string };
 }) {
-  const { app: game } = await fetchAppDetail(params.gameId);
-  const { history: _history } = await getAppPriceHistory(params.gameId);
+  const { game } = await fetchGameDetail(params.gameId);
+  const { history: _history } = await fetchGamePriceHistory(params.gameId);
 
   const releaseDateText = !game.releaseDate
     ? '출시 미정'
@@ -129,7 +126,7 @@ export default async function GameDetailPage({
               <div className={styles.genreTitle}>장르</div>
               <div className={styles.genreList}>
                 {game.genres.map((genre) => (
-                  <GenreBadge key={genre.toString()} label={genre.toString()} />
+                  <GenreBadge key={genre} genre={genre} />
                 ))}
               </div>
             </div>
@@ -144,7 +141,7 @@ export default async function GameDetailPage({
               return (
                 <StoreLink
                   key={store.id}
-                  href={store.url}
+                  url={store.url}
                   store={store.storeName}
                   price={store.price}
                 />
@@ -175,7 +172,9 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <MetaScore score={game.score.metaCritic.metaScore} />
+                          <MetaCritic.MetaScore
+                            score={game.score.metaCritic.metaScore}
+                          />
                         </Link>
                       )}
                       {game.score.metaCritic.userScore != null && (
@@ -184,7 +183,9 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <UserScore score={game.score.metaCritic.userScore} />
+                          <MetaCritic.UserScore
+                            score={game.score.metaCritic.userScore}
+                          />
                         </Link>
                       )}
                     </div>
@@ -200,7 +201,9 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <Rating tier={game.score.openCritic.tier} />
+                          <OpenCritic.Rating
+                            tier={game.score.openCritic.tier}
+                          />
                         </Link>
                       )}
                       {game.score.openCritic.topCriticScore != null && (
@@ -209,7 +212,7 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <TopCritic
+                          <OpenCritic.TopCritic
                             tier={game.score.openCritic.tier ?? 'Fair'}
                             score={game.score.openCritic.topCriticScore}
                           />
@@ -221,7 +224,7 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <RecommendPercent
+                          <OpenCritic.RecommendPercent
                             tier={game.score.openCritic.tier ?? 'Fair'}
                             percent={game.score.openCritic.percentRecommended}
                           />
@@ -231,15 +234,17 @@ export default async function GameDetailPage({
                   </div>
                 )}
               </div>
-              {game.score.steam && (
-                <div className={styles.steamScoreArea}>
-                  <div>스팀</div>
-                  <ScoreBar
-                    positive={game.score.steam.positive}
-                    totalCount={game.score.steam.total}
-                  />
-                </div>
-              )}
+              {game.score.steam &&
+                game.score.steam.positive != null &&
+                game.score.steam.total != null && (
+                  <div className={styles.steamScoreArea}>
+                    <div>스팀</div>
+                    <SteamScore.Bar
+                      positive={game.score.steam.positive}
+                      totalCount={game.score.steam.total}
+                    />
+                  </div>
+                )}
             </section>
             <div className={styles.contentDivider}></div>
           </>

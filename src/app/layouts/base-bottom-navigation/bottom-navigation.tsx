@@ -24,8 +24,8 @@ export default function BottomNavigation() {
         {pathname === '/' ? <RiHome2Fill /> : <RiHome2Line />}
         <span className={style.navLabel}>홈</span>
       </Link>
-      <Link href="/wish" className={style.navItem}>
-        {pathname === '/wish' ? <RiHeartFill /> : <RiHeartLine />}
+      <Link href="/wishlist" className={style.navItem}>
+        {pathname === '/wishlist' ? <RiHeartFill /> : <RiHeartLine />}
         <span className={style.navLabel}>찜</span>
       </Link>
       <Link href={mypageUrl} className={style.navItem}>
