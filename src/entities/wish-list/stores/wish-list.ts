@@ -1,8 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 export type WishListState = {
-  wishList: { [gameId: string]: { priority: number } };
+  wishList: { [gameId: string]: { priority: number; createdAt: string } };
 };
 
 export type WishListActions = {
@@ -20,7 +24,12 @@ export const useWishListStore = create(
       addGame: (id: string) => {
         const priority = Object.keys(get().wishList).length + 1;
 
-        set({ wishList: { ...get().wishList, [id]: { priority } } });
+        set({
+          wishList: {
+            ...get().wishList,
+            [id]: { priority, createdAt: dayjs.utc().format() },
+          },
+        });
       },
       removeGame: (id: string) => {
         if (!get().wishList || !get().wishList[id]) {

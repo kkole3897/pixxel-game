@@ -1,20 +1,22 @@
 'use client';
 
-import { useMemo } from 'react';
-
-import { useWishListStore } from '@/stores/wish-list';
+import { useWishListStore } from '@/src/entities/wish-list/stores';
 import { useFetchAppsQuery } from '@/src/entities/game/queries';
 import { GameList } from '@/src/widgets/game/ui/game-list';
 import { DefaultLink } from '@/src/shared/ui/default-link';
 import { GameBox } from '@/src/entities/game/ui';
+import { useEffect } from 'react';
 
 export default function WishListPage() {
   const wishList = useWishListStore((state) => state.wishList);
-  const gameIds = useMemo(() => Object.keys(wishList), [wishList]);
   const { data, isPending, isError } = useFetchAppsQuery(
-    { ids: gameIds },
-    { enabled: gameIds.length > 0 }
+    { ids: Object.keys(wishList) },
+    { enabled: Object.keys(wishList).length > 0 }
   );
+
+  useEffect(() => {
+    useWishListStore.persist.rehydrate();
+  });
 
   if (Object.keys(wishList).length === 0) {
     return <div>wish empty</div>;
