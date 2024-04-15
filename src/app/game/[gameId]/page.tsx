@@ -19,7 +19,7 @@ import {
   fetchGamePriceHistory,
 } from '@/src/entities/game/api';
 import ImageWithFallback from '@/src/shared/ui/image-with-fallback';
-import { WishButton } from '@/src/features/wish-list/ui';
+import { WishButton } from '@/src/features/toggle-wish/ui';
 import type { GameStore } from '@/src/entities/game/model';
 
 dayjs.extend(utc);
