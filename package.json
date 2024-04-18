@@ -10,7 +10,7 @@
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "format": "prettier --write \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
+    "format": "prettier --write \"{src,apps,libs,test,__mocks__}/**/*.{ts,tsx}\"",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -53,6 +53,7 @@
     "@tanstack/react-query-devtools": "^5.28.10",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.2",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

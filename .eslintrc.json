@@ -4,5 +4,13 @@
     "plugin:@tanstack/eslint-plugin-query/recommended",
     "prettier",
     "plugin:storybook/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["__mocks__/**/*", "**/*.{test,spec}.{js,ts}"],
+      "env": {
+        "jest": true
+      }
+    }
   ]
 }
