@@ -1,5 +1,5 @@
 {
-  "name": "gamduck",
+  "name": "pixxel-gamez",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -75,10 +75,10 @@
     "style-loader": "^3.3.4",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@8.14.1",
+  "packageManager": "pnpm@9.0.2",
   "engines": {
-    "node": ">=20",
-    "pnpm": ">=8"
+    "node": "20.11.1",
+    "pnpm": "9.0.2"
   },
   "engineStrict": true
 }
