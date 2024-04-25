@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ScoreBar from './score-bar';
 
 const meta: Meta<typeof ScoreBar> = {
-  title: 'App/Game/[GameId]/GameScores/Steam/ScoreBar',
+  title: 'Entities/Game/SteamScore/ScoreBar',
   component: ScoreBar,
   tags: ['autodocs'],
 };

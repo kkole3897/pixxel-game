@@ -5,7 +5,7 @@ import * as styles from './carousel.stories.css';
 
 const meta: Meta = {
   component: Carousel.Root,
-  title: 'Components/Carousel',
+  title: 'Shared/Carousel',
   tags: ['autodocs'],
 };
 

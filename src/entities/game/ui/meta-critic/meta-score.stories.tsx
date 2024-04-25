@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import MetaScore from './meta-score';
 
 const meta: Meta<typeof MetaScore> = {
-  title: 'Entries/Game/MetaCritic/MetaScore',
+  title: 'Entities/Game/MetaCritic/MetaScore',
   component: MetaScore,
   tags: ['autodocs'],
 };
