@@ -1,13 +1,13 @@
 import { PriceHistoryRecord } from '../model';
 import { GameStore } from '../model';
+import { coreApi } from '@/src/shared/api';
 
 export async function fetchGamePriceHistory(
   gameId: string
 ): Promise<{ history: { [K in GameStore]?: PriceHistoryRecord[] } }> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/games/${gameId}/price-history`,
-    { next: { revalidate: 30 } }
-  );
+  const response = await coreApi(`/games/${gameId}/price-history`, {
+    next: { revalidate: 30 },
+  });
 
   if (!response.ok) {
     throw new Error('cannot fetch game price history');

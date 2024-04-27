@@ -1,4 +1,5 @@
 import type { Game } from '@/src/entities/game';
+import { coreApi } from '@/src/shared/api';
 
 export async function fetchWishListGames(
   gameIds: string[]
@@ -9,9 +10,8 @@ export async function fetchWishListGames(
 
   const params = gameIds.map((id) => ['ids', id]);
   const query = new URLSearchParams(params);
-  const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/games?${query}`);
 
-  const response = await fetch(url.href, {
+  const response = await coreApi(`/games?${query}`, {
     headers: {
       'Content-Type': 'application/json',
     },
