@@ -1,3 +1,9 @@
+import { KakaoLoginButton } from '@/src/features/auth/kakao';
+
 export default function LoginPage() {
-  return <div>login page</div>;
+  return (
+    <div>
+      <KakaoLoginButton />
+    </div>
+  );
 }
