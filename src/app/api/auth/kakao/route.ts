@@ -17,7 +17,16 @@ export type KakaoAuthResponse =
     };
 
 export async function POST(request: Request) {
-  const response = await coreApi('/auth/kakao', request);
+  const response = await coreApi('/auth/kakao', {
+    method: 'POST',
+    body: request.body,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    next: {
+      revalidate: 30,
+    },
+  });
 
   if (!response.ok) {
     throw new Error();
@@ -46,10 +55,7 @@ export async function POST(request: Request) {
       maxAge: refreshTokenMaxAge,
     });
 
-    return Response.json(
-      { isRegistrationCompleted: true },
-      { status: response.status }
-    );
+    return Response.json({ isRegistrationCompleted: true });
   }
 
   const { accessToken, accessTokenExpireAt } = data;
@@ -61,8 +67,5 @@ export async function POST(request: Request) {
     maxAge: accessTokenMaxAge,
   });
 
-  return Response.json(
-    { isRegistrationCompleted: false },
-    { status: response.status }
-  );
+  return Response.json({ isRegistrationCompleted: false });
 }
