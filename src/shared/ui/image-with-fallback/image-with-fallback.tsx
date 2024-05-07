@@ -3,7 +3,7 @@
 import Image, { ImageProps } from 'next/image';
 import { useState, useEffect, SyntheticEvent } from 'react';
 
-import fallbackImage from '@/public/images/fallback-image.png';
+import fallbackImage from '~/public/images/fallback-image.png';
 
 interface ImageWithFallbackProps
   extends Pick<Partial<ImageProps>, 'src'>,
