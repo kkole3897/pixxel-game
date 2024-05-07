@@ -1,4 +1,4 @@
-import { useWishListStore } from '@/src/entities/wish-list';
+import { useWishListStore } from '@/entities/wish-list';
 import { useMemo } from 'react';
 
 export function useToggleWish(gameId: string) {

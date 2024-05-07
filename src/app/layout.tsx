@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 
-import '@/src/app/styles/globals.css';
-import { base, serif } from '@/src/app/fonts';
-import { ReactQueryProvider } from '@/src/app/providers';
+import '@/app/styles/globals.css';
+import { base, serif } from '@/app/fonts';
+import { ReactQueryProvider } from '@/app/providers';
 
 export const metadata: Metadata = {
   title: 'Pixxel Gamez',

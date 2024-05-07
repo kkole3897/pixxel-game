@@ -1,7 +1,7 @@
-import { GameBox } from '@/src/entities/game/ui';
-import { GameList } from '@/src/widgets/game/ui';
-import { DefaultLink } from '@/src/shared/ui/default-link';
-import { fetchGames } from '@/src/entities/game/api';
+import { GameBox } from '@/entities/game/ui';
+import { GameList } from '@/widgets/game/ui';
+import { DefaultLink } from '@/shared/ui/default-link';
+import { fetchGames } from '@/entities/game/api';
 
 async function Games() {
   const { games } = await fetchGames();

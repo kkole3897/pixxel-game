@@ -1,5 +1,5 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { toPlainObject } from '@/src/shared/lib/object';
+import { toPlainObject } from '@/shared/lib/object';
 
 type AssignParameters = Parameters<typeof assignInlineVars>;
 type Styles = ReturnType<typeof assignInlineVars>;

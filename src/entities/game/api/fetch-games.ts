@@ -1,5 +1,5 @@
 import { Game } from '../model';
-import { coreApi } from '@/src/shared/api';
+import { coreApi } from '@/shared/api';
 
 export type FetchGamesOptions = {
   ids?: string[];

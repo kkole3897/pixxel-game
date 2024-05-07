@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { coreApi } from '@/src/shared/api';
+import { coreApi } from '@/shared/api';
 
 export type KakaoAuthResponse =
   | {

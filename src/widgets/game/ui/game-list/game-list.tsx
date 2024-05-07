@@ -1,5 +1,5 @@
 import * as styles from './game-list.css';
-import { composeClassNames } from '@/src/shared/lib/react/compose-class-name';
+import { composeClassNames } from '@/shared/lib/react/compose-class-name';
 
 export function GameList({
   children,

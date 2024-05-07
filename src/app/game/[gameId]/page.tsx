@@ -11,16 +11,13 @@ import {
   PriceHistoryChart,
   StoreLink,
   GenreBadge,
-} from '@/src/entities/game/ui';
-import { Gallery } from '@/src/widgets/game-detail/ui/gallery';
-import { Description } from '@/src/widgets/game-detail/ui';
-import {
-  fetchGameDetail,
-  fetchGamePriceHistory,
-} from '@/src/entities/game/api';
-import ImageWithFallback from '@/src/shared/ui/image-with-fallback';
-import { WishButton } from '@/src/features/toggle-wish/ui';
-import type { GameStore } from '@/src/entities/game/model';
+} from '@/entities/game/ui';
+import { Gallery } from '@/widgets/game-detail/ui/gallery';
+import { Description } from '@/widgets/game-detail/ui';
+import { fetchGameDetail, fetchGamePriceHistory } from '@/entities/game/api';
+import ImageWithFallback from '@/shared/ui/image-with-fallback';
+import { WishButton } from '@/features/toggle-wish/ui';
+import type { GameStore } from '@/entities/game/model';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

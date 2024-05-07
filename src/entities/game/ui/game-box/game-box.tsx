@@ -1,6 +1,6 @@
 import { RiArrowDownLine } from '@remixicon/react';
 
-import ImageWithFallback from '@/src/shared/ui/image-with-fallback';
+import ImageWithFallback from '@/shared/ui/image-with-fallback';
 import * as styles from './game-box.css';
 import { useGame } from './hooks/use-game';
 import type { Game } from '../../model';

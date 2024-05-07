@@ -1,4 +1,4 @@
-import { BaseHeader, BaseBottomNavigation } from '@/src/app/layouts';
+import { BaseHeader, BaseBottomNavigation } from '@/app/layouts';
 
 export default function RootLayout({
   children,

@@ -1,5 +1,5 @@
-import type { Game } from '@/src/entities/game';
-import { coreApi } from '@/src/shared/api';
+import type { Game } from '@/entities/game';
+import { coreApi } from '@/shared/api';
 
 export async function fetchWishListGames(
   gameIds: string[]

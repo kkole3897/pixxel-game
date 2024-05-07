@@ -1,6 +1,6 @@
 import { PriceHistoryRecord } from '../model';
 import { GameStore } from '../model';
-import { coreApi } from '@/src/shared/api';
+import { coreApi } from '@/shared/api';
 
 export async function fetchGamePriceHistory(
   gameId: string

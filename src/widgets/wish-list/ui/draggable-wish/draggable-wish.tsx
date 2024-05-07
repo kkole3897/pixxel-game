@@ -3,7 +3,7 @@
 import { PropsWithChildren } from 'react';
 import { RiDraggable } from '@remixicon/react';
 
-import { useDragWish, useDropWish } from '@/src/features/drag-wish-priority';
+import { useDragWish, useDropWish } from '@/features/drag-wish-priority';
 import * as styles from './style.css';
 
 type DraggalbeWishProps = PropsWithChildren & {

@@ -11,7 +11,7 @@ import {
 } from 'react';
 import { RiArrowRightSLine, RiArrowLeftSLine } from '@remixicon/react';
 
-import * as Carousel from '@/src/shared/ui/carousel';
+import * as Carousel from '@/shared/ui/carousel';
 import * as styles from './gallery.css';
 
 type GalleryProps = {

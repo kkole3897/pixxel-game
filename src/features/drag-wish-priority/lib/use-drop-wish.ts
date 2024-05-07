@@ -1,7 +1,7 @@
 import { useDrop } from 'react-dnd';
 
-import { DRAG_TYPES } from '@/src/entities/dnd';
-import { useWishListStore } from '@/src/entities/wish-list';
+import { DRAG_TYPES } from '@/entities/dnd';
+import { useWishListStore } from '@/entities/wish-list';
 
 export function useDropWish(gameId: string) {
   const wishList = useWishListStore((state) => state.wishList);

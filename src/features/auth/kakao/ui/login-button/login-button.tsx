@@ -1,7 +1,7 @@
 'use client';
 
 import { useKakaoOidc } from '../../lib';
-import { Icon } from '@/src/shared/ui';
+import { Icon } from '@/shared/ui';
 import * as styles from './login-button.css';
 
 export default function LoginButton() {

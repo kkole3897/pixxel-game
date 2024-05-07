@@ -1,14 +1,13 @@
 'use client';
 
 import { DndProvider } from 'react-dnd';
-import { TouchBackend } from 'react-dnd-touch-backend';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { GameList } from '@/src/widgets/game/ui/game-list';
-import { DefaultLink } from '@/src/shared/ui/default-link';
-import { GameBox } from '@/src/entities/game/ui';
-import { useWishListGames } from '@/src/entities/wish-list';
-import { DraggableWish } from '@/src/widgets/wish-list';
+import { GameList } from '@/widgets/game/ui/game-list';
+import { DefaultLink } from '@/shared/ui/default-link';
+import { GameBox } from '@/entities/game/ui';
+import { useWishListGames } from '@/entities/wish-list';
+import { DraggableWish } from '@/widgets/wish-list';
 
 export default function WishListPage() {
   const { games, isPending } = useWishListGames();

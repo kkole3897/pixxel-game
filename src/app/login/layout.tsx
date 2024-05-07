@@ -1,4 +1,4 @@
-import { KakaoSdkScript } from '@/src/shared/ui';
+import { KakaoSdkScript } from '@/shared/ui';
 
 export default function LoginLayout({
   children,
