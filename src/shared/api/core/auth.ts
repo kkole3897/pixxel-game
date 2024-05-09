@@ -1,27 +1,24 @@
-import { z } from 'zod';
-
 import { coreApiUrl } from '@/shared/config';
 
-const RegistrationComplete = z.object({
-  isRegistrationCompleted: z.literal(true),
-  accessToken: z.string(),
-  accessTokenExpireAt: z.string().datetime(),
-  refreshToken: z.string(),
-  refreshTokenExpireAt: z.string().datetime(),
-});
+export type RegistrationCompleteResponse = {
+  isRegistrationCompleted: true;
+  accessToken: string;
+  accessTokenExpireAt: string;
+  refreshToken: string;
+  refreshTokenExpireAt: string;
+};
 
-const RegistrationRequire = z.object({
-  isRegistrationCompleted: z.literal(false),
-  accessToken: z.string(),
-  accessTokenExpireAt: z.string().datetime(),
-});
+export type RegistrationRequireResponse = {
+  isRegistrationCompleted: false;
+  accessToken: string;
+  accessTokenExpireAt: string;
+};
 
-const LoginByKakaoResponse = z.union([
-  RegistrationComplete,
-  RegistrationRequire,
-]);
+export type LoginResponse =
+  | RegistrationCompleteResponse
+  | RegistrationRequireResponse;
 
-export async function loginByKakao(code: string) {
+export async function loginByKakao(code: string): Promise<LoginResponse> {
   const uri = `${coreApiUrl}/auth/kakao`;
 
   const body = JSON.stringify({ code });
@@ -41,7 +38,6 @@ export async function loginByKakao(code: string) {
   }
 
   const data = await response.json();
-  const validatedData = LoginByKakaoResponse.parse(data);
 
-  return validatedData;
+  return data;
 }

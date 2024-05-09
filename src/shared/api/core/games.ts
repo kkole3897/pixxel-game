@@ -1,26 +1,23 @@
-import { z } from 'zod';
-
 import { coreApiUrl } from '@/shared/config';
 
-const Store = z.enum(['steam']);
-type Store = z.infer<typeof Store>;
+export type StoreNameResponse = 'steam';
 
-const GamePrice = z.number().int().nonnegative();
+export type PriceHistoryRecordResponse = {
+  id: string;
+  gameId: string;
+  regular: number;
+  current: number;
+  store: StoreNameResponse;
+  datetime: string;
+};
 
-const PriceHistoryRecord = z.object({
-  id: z.string(),
-  gameId: z.string(),
-  regular: GamePrice,
-  current: GamePrice,
-  store: Store,
-  datetime: z.string().datetime(),
-});
+export type GetPriceHistoryResponse = {
+  history: Record<StoreNameResponse, PriceHistoryRecordResponse[]>;
+};
 
-const GetPriceHistoryResponse = z.object({
-  history: z.record(Store, PriceHistoryRecord.array()),
-});
-
-export async function getPriceHistory(gameId: string) {
+export async function getPriceHistory(
+  gameId: string
+): Promise<GetPriceHistoryResponse> {
   const uri = `${coreApiUrl}/games/${gameId}/price-history`;
 
   const response = await fetch(uri, {
@@ -34,92 +31,87 @@ export async function getPriceHistory(gameId: string) {
   }
 
   const data = await response.json();
-  const validatedData = GetPriceHistoryResponse.parse(data);
 
-  return validatedData;
+  return data;
 }
 
-const GetGamesOptions = z.object({
-  ids: z.string().array().optional(),
-});
-export type GetGamesOptions = z.infer<typeof GetGamesOptions>;
+export type GetGamesOptions = {
+  ids?: string[];
+};
 
-const GameType = z.enum(['game', 'dlc']);
+export type GameTypeResponse = 'game' | 'dlc';
 
-const MetaCritic = z.object({
-  url: z.string().url(),
-  metaScore: z.number().gte(0).lte(100).optional(),
-  userScore: z.number().gte(0).lte(100).optional(),
-});
+export type MetaCriticResponse = {
+  url: string;
+  metaScore?: number;
+  userScore?: number;
+};
 
-const OpenCriticTier = z.enum(['Mighty', 'Strong', 'Fair', 'Weak']);
+export type OpenCriticTierResponse = 'Mighty' | 'Strong' | 'Fair' | 'Weak';
 
-const OpenCritic = z.object({
-  url: z.string().url(),
-  tier: OpenCriticTier.optional(),
-  topCriticScore: z.number().gte(0).lte(100).optional(),
-  percentRecommended: z.number().gte(0).lte(100).optional(),
-});
+export type OpenCriticResponse = {
+  url: string;
+  tier?: OpenCriticResponse;
+  topCriticScore?: number;
+  percentRecommended?: number;
+};
 
-const SteamScore = z.object({
-  url: z.string().url(),
-  total: z.number().gte(0).optional(),
-  positive: z.number().gte(0).optional(),
-});
+export type SteamScoreResponse = {
+  url: string;
+  total?: number;
+  positive?: number;
+};
 
-const PriceInfo = z.object({
-  current: z.number().gte(0),
-  regular: z.number().gte(0),
-  lowest: z.number().gte(0),
-});
+export type PriceInfoResponse = {
+  current: number;
+  regular: number;
+  lowest: number;
+};
 
-const StoreInfo = z.object({
-  storeId: z.string(),
-  url: z.string().url(),
-  price: PriceInfo.optional(),
-  releaseDate: z.string().datetime().optional(),
-});
+export type StoreInfoResponse = {
+  storeId: string;
+  url: string;
+  price?: PriceInfoResponse;
+  releaseDate?: string;
+};
 
-const Genre = z.enum([
-  'rpg',
-  'action',
-  'adventure',
-  'simulation',
-  'sports',
-  'strategy',
-  'racing',
-  'music',
-]);
+export type GenreResponse =
+  | 'rpg'
+  | 'action'
+  | 'adventure'
+  | 'simulation'
+  | 'sports'
+  | 'strategy'
+  | 'racing'
+  | 'music';
 
-const Game = z.object({
-  id: z.string(),
-  name: z.string(),
-  defaultName: z.string(),
-  type: GameType,
-  releaseDate: z.string().datetime().optional(),
-  thumbnail: z.string().url().optional(),
-  score: z
-    .object({
-      metaCritic: MetaCritic.optional(),
-      openCritic: OpenCritic.optional(),
-      steam: SteamScore.optional(),
-    })
-    .optional(),
-  storeInfo: z.record(Store, StoreInfo).optional(),
-  genres: Genre.array(),
-  tags: z.string().array(),
-  description: z.string(),
-  summary: z.string(),
-  screenshots: z.string().url().array(),
-});
+export type GameResponse = {
+  id: string;
+  name: string;
+  defaultName: string;
+  type: GameTypeResponse;
+  releaseDate?: string;
+  thumbnail?: string;
+  score?: {
+    metaCritic?: MetaCriticResponse;
+    openCritic?: OpenCriticResponse;
+    steam?: SteamScoreResponse;
+  };
+  storeInfo?: Record<StoreNameResponse, StoreInfoResponse>;
+  genres: GenreResponse[];
+  tags: string[];
+  description: string;
+  summary: string;
+  screenshots: string[];
+};
 
-type Game = z.infer<typeof Game>;
+export type GetGamesResponse = {
+  games: GameResponse[];
+};
 
-const GetGamesResponse = z.object({
-  games: Game.array(),
-});
-
-export async function getGames({ ids }: GetGamesOptions = {}) {
+export async function getGames({
+  ids,
+}: GetGamesOptions = {}): Promise<GetGamesResponse> {
   const params = ids?.map((id) => ['ids', id]);
   const query = new URLSearchParams(params);
   const uri = `${coreApiUrl}/games?${query}`;
@@ -137,16 +129,15 @@ export async function getGames({ ids }: GetGamesOptions = {}) {
   }
 
   const data = await response.json();
-  const validatedData = GetGamesResponse.parse(data);
 
-  return validatedData;
+  return data;
 }
 
-const GetGameResponse = z.object({
-  game: Game,
-});
+export type GetGameResponse = {
+  game: GameResponse;
+};
 
-export async function getGame(id: string) {
+export async function getGame(id: string): Promise<GetGameResponse> {
   const uri = `${coreApiUrl}/games/${id}`;
 
   const response = await fetch(uri, {
@@ -162,7 +153,6 @@ export async function getGame(id: string) {
   }
 
   const data = await response.json();
-  const validatedData = GetGameResponse.parse(data);
 
-  return validatedData;
+  return data;
 }
