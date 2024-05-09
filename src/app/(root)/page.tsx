@@ -1,10 +1,10 @@
 import { GameBox } from '@/entities/game/ui';
 import { GameList } from '@/widgets/game/ui';
 import { DefaultLink } from '@/shared/ui/default-link';
-import { fetchGames } from '@/entities/game/api';
+import { core } from '@/shared/api';
 
 async function Games() {
-  const { games } = await fetchGames();
+  const { games } = await core.games.getGames();
 
   return (
     <GameList>

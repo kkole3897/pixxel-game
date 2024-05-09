@@ -1,1 +1,1 @@
-export * from './use-fetch-wish-list-games-query';
+export * from './use-wish-list-query';

@@ -2,17 +2,17 @@
 
 import { useEffect, useMemo } from 'react';
 
-import { useFetchWishListGamesQuery } from '../queries';
+import { useGetWishListQuery } from '../queries';
 import { useWishListStore } from '../model';
 
-export function useWishListGames() {
+export function useWishList() {
   const wishList = useWishListStore((state) => state.wishList);
 
   useEffect(() => {
     useWishListStore.persist.rehydrate();
   }, []);
 
-  const { isPending, data, isError } = useFetchWishListGamesQuery(
+  const { isPending, data, isError } = useGetWishListQuery(
     Object.keys(wishList)
   );
 

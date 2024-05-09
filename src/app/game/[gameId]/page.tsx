@@ -14,7 +14,7 @@ import {
 } from '@/entities/game/ui';
 import { Gallery } from '@/widgets/game-detail/ui/gallery';
 import { Description } from '@/widgets/game-detail/ui';
-import { fetchGameDetail, fetchGamePriceHistory } from '@/entities/game/api';
+import { core } from '@/shared/api';
 import ImageWithFallback from '@/shared/ui/image-with-fallback';
 import { WishButton } from '@/features/toggle-wish/ui';
 import type { GameStore } from '@/entities/game/model';
@@ -28,8 +28,8 @@ export default async function GameDetailPage({
 }: {
   params: { gameId: string };
 }) {
-  const { game } = await fetchGameDetail(params.gameId);
-  const { history: _history } = await fetchGamePriceHistory(params.gameId);
+  const { game } = await core.games.getGame(params.gameId);
+  const { history: _history } = await core.games.getPriceHistory(params.gameId);
 
   const releaseDateText = !game.releaseDate
     ? '출시 미정'

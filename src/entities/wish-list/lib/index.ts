@@ -1,1 +1,1 @@
-export * from './use-wish-list-games';
+export * from './use-wish-list';

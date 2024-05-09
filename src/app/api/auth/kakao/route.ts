@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { coreApi } from '@/shared/api';
+import { core } from '@/shared/api';
 
 export type KakaoAuthResponse =
   | {
@@ -17,22 +17,9 @@ export type KakaoAuthResponse =
     };
 
 export async function POST(request: Request) {
-  const response = await coreApi('/auth/kakao', {
-    method: 'POST',
-    body: request.body,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    next: {
-      revalidate: 30,
-    },
-  });
+  const body = await request.json();
 
-  if (!response.ok) {
-    throw new Error();
-  }
-
-  const data: KakaoAuthResponse = await response.json();
+  const data = await core.auth.loginByKakao(body.code);
 
   if (data.isRegistrationCompleted === true) {
     const {
