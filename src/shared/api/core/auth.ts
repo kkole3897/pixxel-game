@@ -1,6 +1,6 @@
 import { coreApiUrl } from '@/shared/config';
 
-export type RegistrationCompleteResponse = {
+export type OauthRegistrationCompleteResponse = {
   isRegistrationCompleted: true;
   accessToken: string;
   accessTokenExpireAt: string;
@@ -8,17 +8,17 @@ export type RegistrationCompleteResponse = {
   refreshTokenExpireAt: string;
 };
 
-export type RegistrationRequireResponse = {
+export type OauthRegistrationRequireResponse = {
   isRegistrationCompleted: false;
   accessToken: string;
   accessTokenExpireAt: string;
 };
 
-export type LoginResponse =
-  | RegistrationCompleteResponse
-  | RegistrationRequireResponse;
+export type OauthLoginResponse =
+  | OauthRegistrationCompleteResponse
+  | OauthRegistrationRequireResponse;
 
-export async function loginByKakao(code: string): Promise<LoginResponse> {
+export async function loginByKakao(code: string): Promise<OauthLoginResponse> {
   const uri = `${coreApiUrl}/auth/kakao`;
 
   const body = JSON.stringify({ code });

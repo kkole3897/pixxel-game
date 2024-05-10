@@ -7,6 +7,7 @@ export type {
   StoreNameResponse,
 } from './games';
 export type {
-  RegistrationCompleteResponse,
-  RegistrationRequireResponse,
+  OauthLoginResponse,
+  OauthRegistrationCompleteResponse,
+  OauthRegistrationRequireResponse,
 } from './auth';
