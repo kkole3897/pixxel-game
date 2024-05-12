@@ -41,3 +41,29 @@ export async function loginByKakao(code: string): Promise<OauthLoginResponse> {
 
   return data;
 }
+
+export type RegisterOauthRequestBody = {
+  nickname: string;
+};
+
+export async function registerOauthUser(body: RegisterOauthRequestBody) {
+  const uri = `${coreApiUrl}/auth/registration/oauth-user`;
+  const serializedBody = JSON.stringify(body);
+
+  const response = await fetch(uri, {
+    method: 'POST',
+    body: serializedBody,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    // TODO: oauth user api call error 구체화
+    throw new Error();
+  }
+
+  const data: OauthRegistrationCompleteResponse = await response.json();
+
+  return data;
+}
