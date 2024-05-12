@@ -2,20 +2,6 @@ import { cookies } from 'next/headers';
 
 import { core } from '@/shared/api';
 
-export type KakaoAuthResponse =
-  | {
-      isRegistrationCompleted: true;
-      accessToken: string;
-      accessTokenExpireAt: string;
-      refreshToken: string;
-      refreshTokenExpireAt: string;
-    }
-  | {
-      isRegistrationCompleted: false;
-      accessToken: string;
-      accessTokenExpireAt: string;
-    };
-
 export async function POST(request: Request) {
   const body = await request.json();
 
