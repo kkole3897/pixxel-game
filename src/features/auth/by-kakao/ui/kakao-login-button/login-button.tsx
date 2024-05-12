@@ -1,14 +1,12 @@
 'use client';
 
-import { useKakaoOidc } from '../../lib';
+import { requestAuthorizationCode } from '../../model/request-authroziation-code';
 import { Icon } from '@/shared/ui';
 import * as styles from './login-button.css';
 
 export default function LoginButton() {
-  const { authorize } = useKakaoOidc();
-
   const clickHandler = () => {
-    authorize();
+    requestAuthorizationCode();
   };
 
   return (

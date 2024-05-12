@@ -9,7 +9,6 @@ export default function KakaoSdk() {
 
   const handleLoad = () => {
     Kakao.init(javascriptKey);
-    console.log(Kakao.isInitialized());
   };
 
   return (

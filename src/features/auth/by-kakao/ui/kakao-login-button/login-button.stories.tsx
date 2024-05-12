@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import LoginButton from './login-button';
 
 const meta: Meta<typeof LoginButton> = {
-  title: 'Features/Auth/Kakao/KakaoLoginButton',
+  title: 'Features/Auth/ByKakao/KakaoLoginButton',
   component: LoginButton,
 };
 
