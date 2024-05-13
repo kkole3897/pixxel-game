@@ -24,7 +24,6 @@ export const input = style({
 export const inputContainer = recipe({
   base: {
     display: 'inline-flex',
-    width: '100%',
     padding: '10px 18px',
     border: '1px solid #cccdd0',
     borderRadius: '8px',
