@@ -7,7 +7,7 @@ type CheckNicknameResponse = {
 export async function checkNickname(
   nickname: string
 ): Promise<CheckNicknameResponse> {
-  const uri = `${coreApiUrl}/users/check/nickname?${nickname}`;
+  const uri = `${coreApiUrl}/users/check/nickname?nickname=${nickname}`;
 
   const response = await fetch(uri, {
     headers: {
