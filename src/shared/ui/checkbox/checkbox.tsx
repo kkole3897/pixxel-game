@@ -6,13 +6,15 @@ import cn from 'classnames';
 import { CheckLine } from '@/shared/ui/icons';
 import * as styles from './checkbox.css';
 
-interface CheckboxProps extends Omit<RadixCheckboxProps, 'asChild'> {}
+interface CheckboxProps extends Omit<RadixCheckboxProps, 'asChild'> {
+  isInvalid?: boolean;
+}
 
 const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
   (props, forwardedRef) => {
-    const { className, ...rest } = props;
+    const { className, isInvalid = false, ...rest } = props;
 
-    const composedClassName = cn(className, styles.checkbox);
+    const composedClassName = cn(className, styles.checkbox({ isInvalid }));
 
     return (
       <RadixCheckbox.Root
