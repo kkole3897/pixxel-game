@@ -7,12 +7,12 @@ export const checkbox = recipe({
     height: '16px',
     padding: 0,
     borderRadius: '4px',
-    border: '1px solid #80838a',
+    border: '1px solid #cccdd0',
     backgroundColor: 'transparent',
 
     selectors: {
       '&:hover': {
-        borderColor: '#6b9fdd',
+        borderColor: '#4d515b',
       },
       '&[aria-checked=true]': {
         borderColor: '#3786FB',

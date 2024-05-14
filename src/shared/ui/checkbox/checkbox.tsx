@@ -1,4 +1,6 @@
-import { forwardRef, LabelHTMLAttributes, PropsWithChildren } from 'react';
+'use client';
+
+import { forwardRef } from 'react';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
 import { type CheckboxProps as RadixCheckboxProps } from '@radix-ui/react-checkbox';
 import cn from 'classnames';
