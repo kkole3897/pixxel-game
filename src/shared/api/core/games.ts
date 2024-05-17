@@ -51,7 +51,7 @@ export type OpenCriticTierResponse = 'Mighty' | 'Strong' | 'Fair' | 'Weak';
 
 export type OpenCriticResponse = {
   url: string;
-  tier?: OpenCriticResponse;
+  tier?: OpenCriticTierResponse;
   topCriticScore?: number;
   percentRecommended?: number;
 };
