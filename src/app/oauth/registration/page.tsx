@@ -1,3 +1,9 @@
+import { RegisterOauthForm } from '@/features/auth/register-oauth';
+
 export default function Page() {
-  return <div>registration</div>;
+  return (
+    <div>
+      <RegisterOauthForm />
+    </div>
+  );
 }
