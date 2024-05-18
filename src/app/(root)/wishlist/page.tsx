@@ -10,27 +10,28 @@ import { useWishList } from '@/entities/wish-list';
 import { DraggableWish } from '@/widgets/wish-list';
 
 export default function WishListPage() {
-  const { games, isPending } = useWishList();
+  // const { games, isPending } = useWishList();
 
-  if (isPending) {
-    return <div>loading</div>;
-  }
+  // if (isPending) {
+  //   return <div>loading</div>;
+  // }
 
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <GameList>
-        {games.map((game) => {
-          return (
-            <GameList.Item key={game.id}>
-              <DraggableWish id={game.id}>
-                <DefaultLink href={`/game/${game.id}`}>
-                  <GameBox game={game} />
-                </DefaultLink>
-              </DraggableWish>
-            </GameList.Item>
-          );
-        })}
-      </GameList>
-    </DndProvider>
-  );
+  // return (
+  //   <DndProvider backend={HTML5Backend}>
+  //     <GameList>
+  //       {games.map((game) => {
+  //         return (
+  //           <GameList.Item key={game.id}>
+  //             <DraggableWish id={game.id}>
+  //               <DefaultLink href={`/game/${game.id}`}>
+  //                 <GameBox game={game} />
+  //               </DefaultLink>
+  //             </DraggableWish>
+  //           </GameList.Item>
+  //         );
+  //       })}
+  //     </GameList>
+  //   </DndProvider>
+  // );
+  return null;
 }
