@@ -1,12 +1,12 @@
 'use client';
 
-import { requestAuthorizationCode } from '../../model/request-authroziation-code';
+import { loginByKakao } from '../../model/login-by-kakao';
 import { Icon } from '@/shared/ui';
 import * as styles from './login-button.css';
 
 export default function LoginButton() {
-  const clickHandler = () => {
-    requestAuthorizationCode();
+  const clickHandler = async () => {
+    await loginByKakao();
   };
 
   return (

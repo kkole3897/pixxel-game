@@ -40,21 +40,3 @@ export const OauthRegistrationRequireSchema = z.object({
 export type OauthRegistrationRequire = z.infer<
   typeof OauthRegistrationRequireSchema
 >;
-
-export function manageRegistrationComplete(
-  oauthRegistrationComplete: OauthRegistrationComplete
-) {
-  const { isRegistrationCompleted, ...rest } = oauthRegistrationComplete;
-
-  ServerSession.save(rest);
-}
-
-export function manageRegistrationRequire(
-  oauthRegistrationRequire: OauthRegistrationRequire
-) {
-  const { accessToken } = oauthRegistrationRequire;
-
-  TempServerSession.save(accessToken);
-
-  redirect('/oauth/registration');
-}
