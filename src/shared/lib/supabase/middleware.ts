@@ -3,6 +3,8 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 import { supabase as supabaseConfig } from '@/shared/config';
 
+const protectedRoutes = ['/me'];
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
@@ -56,7 +58,11 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
+  const { error } = await supabase.auth.getUser();
+
+  if (protectedRoutes.includes(request.nextUrl.pathname) && !!error) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
 
   return response;
 }

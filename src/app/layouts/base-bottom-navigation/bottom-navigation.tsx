@@ -15,8 +15,6 @@ import * as style from './bottom-navigation.css';
 
 export default function BottomNavigation() {
   const pathname = usePathname();
-  const isAuth = false;
-  const mypageUrl = isAuth ? '/user/1' : '/login';
 
   return (
     <nav className={style.bottomNav}>
@@ -28,9 +26,9 @@ export default function BottomNavigation() {
         {pathname === '/wishlist' ? <RiHeartFill /> : <RiHeartLine />}
         <span className={style.navLabel}>찜</span>
       </Link>
-      <Link href={mypageUrl} className={style.navItem}>
-        {pathname?.startsWith('/user') ? <RiUser3Fill /> : <RiUser3Line />}
-        <span className={style.navLabel}>마이페이지</span>
+      <Link href="/me" className={style.navItem}>
+        {pathname?.startsWith('/me') ? <RiUser3Fill /> : <RiUser3Line />}
+        <span className={style.navLabel}>me</span>
       </Link>
     </nav>
   );

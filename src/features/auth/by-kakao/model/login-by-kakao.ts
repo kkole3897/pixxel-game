@@ -11,7 +11,6 @@ export async function loginByKakao() {
       queryParams: {
         prompt: 'select_account',
       },
-      scopes: 'account_email',
     },
   });
 }
