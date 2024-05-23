@@ -22,19 +22,27 @@ type InputType =
   | 'week';
 type Size = 'lg' | 'md';
 
-export interface InputProps
+export interface InputRootProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
   type?: InputType;
   /**
-   * @defaultValue `md`
+   * @default `md`
    */
   size?: Size;
   isInvalid?: boolean;
+  children?: React.ReactNode;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputRootProps>(
   (props, forwardedRef) => {
-    const { size = 'md', className, isInvalid, style, ...rest } = props;
+    const {
+      size = 'md',
+      className,
+      isInvalid,
+      style,
+      children,
+      ...rest
+    } = props;
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const composedRefs = useComposedRefs(forwardedRef, inputRef);
@@ -54,6 +62,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         style={style}
       >
         <input ref={composedRefs} className={styles.input} {...rest} />
+        {children}
       </div>
     );
   }
@@ -61,4 +70,30 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = 'Input';
 
-export default Input;
+export interface InputSlotProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /**
+   * @default `right`
+   */
+  side?: 'left' | 'right';
+}
+
+const InputSlot = forwardRef<HTMLSpanElement, InputSlotProps>(
+  (props, forwardedRef) => {
+    const { side = 'right', className, children, ...rest } = props;
+
+    const composedClassName = cn(className, styles.inputSlot({ side }));
+
+    return (
+      <span ref={forwardedRef} className={composedClassName} {...rest}>
+        {children}
+      </span>
+    );
+  }
+);
+
+InputSlot.displayName = 'InputSlot';
+
+const Root = Input;
+const Slot = InputSlot;
+
+export { Input, InputSlot, Root, Slot };

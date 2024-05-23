@@ -51,7 +51,7 @@ export default function RegisterOauthForm() {
             <div className={styles.formHelperText}>
               2자 이상 20자 이하로 입력해주세요.
             </div>
-            <Input
+            <Input.Root
               id="nickname"
               className={styles.input}
               placeholder="닉네임을 입력해주세요"

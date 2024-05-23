@@ -1,55 +1,61 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
+import { RiAddCircleLine } from '@remixicon/react';
 
-import Input from './input';
+import * as Input from './input';
 
 const meta: Meta<typeof Input> = {
   title: 'Shared/Input',
-  component: Input,
-  tags: ['autodocs'],
-  argTypes: {
-    placeholder: {
-      control: 'text',
-    },
-    disabled: {
-      control: 'boolean',
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['lg', 'md'],
-      table: {
-        defaultValue: { summary: 'md' },
-      },
-    },
-    isInvalid: {
-      control: 'boolean',
-    },
-  },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Input>;
+const placeholder = '입력해주세요';
 
-export const Default: Story = {
-  args: {
-    placeholder: '입력해주세요',
-  },
+export const Medium = () => {
+  return <Input.Root placeholder={placeholder} />;
 };
-export const Large: Story = {
-  args: {
-    placeholder: '입력해주세요',
-    size: 'lg',
-  },
+
+export const MediumWithRightIcon = () => {
+  return (
+    <Input.Root placeholder={placeholder}>
+      <Input.Slot>
+        <RiAddCircleLine />
+      </Input.Slot>
+    </Input.Root>
+  );
 };
-export const Invalid: Story = {
-  args: {
-    placeholder: '입력해주세요',
-    isInvalid: true,
-  },
+
+export const MediumWithLeftIcon = () => {
+  return (
+    <Input.Root placeholder={placeholder}>
+      <Input.Slot side="left">
+        <RiAddCircleLine />
+      </Input.Slot>
+    </Input.Root>
+  );
 };
-export const Disabled: Story = {
-  args: {
-    placeholder: '입력해주세요',
-    disabled: true,
-  },
+
+export const MediumWithBothSideIcon = () => {
+  return (
+    <Input.Root placeholder={placeholder}>
+      <Input.Slot side="left">
+        <RiAddCircleLine />
+      </Input.Slot>
+      <Input.Slot side="right">
+        <RiAddCircleLine />
+      </Input.Slot>
+    </Input.Root>
+  );
+};
+
+export const Large = () => {
+  return <Input.Root size="lg" placeholder={placeholder} />;
+};
+
+export const Invalid = () => {
+  return <Input.Root isInvalid placeholder={placeholder} />;
+};
+
+export const Disabled = () => {
+  return <Input.Root disabled placeholder={placeholder} />;
 };
