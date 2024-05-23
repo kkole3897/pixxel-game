@@ -1,6 +1,8 @@
 'use client';
 
-import { Input, Button, Checkbox } from '@/shared/ui';
+import { Button } from '@/shared/ui/button';
+import { Checkbox } from '@/shared/ui/checkbox';
+import { Input } from '@/shared/ui/input';
 import { Controller } from 'react-hook-form';
 import { debounce } from 'lodash-es';
 
@@ -51,7 +53,7 @@ export default function RegisterOauthForm() {
             <div className={styles.formHelperText}>
               2자 이상 20자 이하로 입력해주세요.
             </div>
-            <Input.Root
+            <Input
               id="nickname"
               className={styles.input}
               placeholder="닉네임을 입력해주세요"

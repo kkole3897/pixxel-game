@@ -1,3 +1,1 @@
-import DefaultLink from './default-link';
-
-export { DefaultLink };
+export { default as DefaultLink } from './default-link';

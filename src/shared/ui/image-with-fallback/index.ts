@@ -1,3 +1,1 @@
-import ImageWithFallback from './image-with-fallback';
-
-export default ImageWithFallback;
+export { default as ImageWithFallback } from './image-with-fallback';
