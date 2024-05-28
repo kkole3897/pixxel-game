@@ -9,7 +9,6 @@ export const box = style({
 
 export const thumbnailArea = style({
   flex: '0 0 100px',
-  position: 'relative',
   width: '100px',
   height: '100%',
 });

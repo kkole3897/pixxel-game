@@ -10,7 +10,8 @@ const nextConfig = {
         hostname: 'loremflickr.com',
       },
       {
-        hostname: '*.steamstatic.com',
+        hostname: process.env.NEXT_PUBLIC_STORAGE_HOSTNAME,
+        port: process.env.NEXT_PUBLIC_STORAGE_PORT,
       },
     ],
   },

@@ -1,5 +1,10 @@
-import { GAME_TYPE, GENRE, GAME_STORE } from '../constants';
-import { OPEN_CRITIC_TIER } from '../constants';
+import {
+  GAME_TYPE,
+  GENRE,
+  GAME_STORE,
+  OPEN_CRITIC_TIER,
+  GAME_DRM,
+} from '../constants';
 
 export type GameType = (typeof GAME_TYPE)[keyof typeof GAME_TYPE];
 
@@ -7,10 +12,13 @@ export type Genre = (typeof GENRE)[keyof typeof GENRE];
 
 export type GameStore = (typeof GAME_STORE)[keyof typeof GAME_STORE];
 
+export type GameDrm = (typeof GAME_DRM)[keyof typeof GAME_DRM];
+
 export interface MetaCritic {
-  url: string;
-  metaScore?: number;
-  userScore?: number;
+  metaScoreUrl: string;
+  metaScore: number | null;
+  userScoreUrl: string;
+  userScore: number | null;
 }
 
 export type OpenCriticTier =
@@ -18,48 +26,73 @@ export type OpenCriticTier =
 
 export interface OpenCritic {
   url: string;
-  tier?: OpenCriticTier;
-  topCriticScore?: number;
-  percentRecommended?: number;
+  tier: OpenCriticTier | null;
+  topCriticScore: number | null;
+  percentRecommended: number | null;
 }
 
 export interface SteamScore {
   url: string;
-  total?: number;
-  positive?: number;
+  total: number | null;
+  positive: number | null;
 }
 
-export interface PriceInfo {
-  current: number;
-  regular: number;
-  lowest: number;
-}
-
-export interface StoreInfo {
-  storeId: string;
+export interface GameCatalog {
+  id: number;
+  gameId: number | null;
   url: string;
-  price?: PriceInfo;
-  releaseDate?: string;
+  store: GameStore;
+  drm: GameDrm;
+  regularPrice: number | null;
+  currentPrice: number | null;
+  currentPriceExpireAt: string | null;
+  lowestPrice: number | null;
+  lowestPriceUpdatedAt: string | null;
 }
 
 export interface Game {
-  id: string;
-  name: string;
-  defaultName: string;
+  id: number;
+  publicId: string;
+  title: string | null;
+  titleKo: string | null;
   type: GameType;
-  releaseDate?: string;
-  thumbnail?: string;
-  score?: {
-    metaCritic?: MetaCritic;
-    openCritic?: OpenCritic;
-    steam?: SteamScore;
-  };
-  storeInfo?: { [key in GameStore]?: StoreInfo };
-  genres: Genre[];
+  isFree: boolean;
+  releaseYear: number | null;
+  releaseMonth: number | null;
+  releaseDay: number | null;
+  mainImage: string | null;
+  description: string | null;
+  summary: string | null;
+  baseGameId: number | null;
   tags: string[];
-  description: string;
-  summary: string;
   screenshots: string[];
+  developers: string[];
+  publishers: string[];
+  createdAt: string;
+  metaCritic: MetaCritic | null;
+  openCritic: OpenCritic | null;
+  steam: SteamScore | null;
+  gameCatalog: GameCatalog[];
+}
+
+export type GameCatalogPreview = Pick<
+  GameCatalog,
+  | 'id'
+  | 'gameId'
+  | 'store'
+  | 'drm'
+  | 'currentPrice'
+  | 'currentPriceExpireAt'
+  | 'lowestPrice'
+  | 'regularPrice'
+>;
+
+export interface GamePrievew
+  extends Pick<
+    Game,
+    'id' | 'publicId' | 'title' | 'titleKo' | 'type' | 'isFree' | 'mainImage'
+  > {
+  gameCatalog: GameCatalogPreview[];
 }
 
 export interface PriceHistoryRecord {

@@ -5,10 +5,9 @@ import { useState, useEffect, SyntheticEvent } from 'react';
 
 import fallbackImage from '~/public/images/fallback-image.png';
 
-interface ImageWithFallbackProps
-  extends Pick<Partial<ImageProps>, 'src'>,
-    Omit<ImageProps, 'src'> {
+interface ImageWithFallbackProps extends Omit<ImageProps, 'src'> {
   fallback?: ImageProps['src'];
+  src?: ImageProps['src'] | null;
 }
 
 export default function ImageWithFallback(props: ImageWithFallbackProps) {

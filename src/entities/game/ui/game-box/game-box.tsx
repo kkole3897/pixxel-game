@@ -1,12 +1,12 @@
 import { RiArrowDownLine } from '@remixicon/react';
 
-import ImageWithFallback from '@/shared/ui/image-with-fallback';
+import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import * as styles from './game-box.css';
-import { useGame } from './hooks/use-game';
-import type { Game } from '../../model';
+import { useGamePreview } from './hooks/use-game';
+import type { GamePrievew } from '../../model';
 
 interface GameBoxProps {
-  game: Game;
+  game: GamePrievew;
 }
 
 export default function GameBox({ game }: GameBoxProps) {
@@ -15,24 +15,25 @@ export default function GameBox({ game }: GameBoxProps) {
     discountPriceText,
     discountRate,
     isPriceDefined,
-    isLowest,
-  } = useGame(game);
-  const discountPercentText = `${Math.round(discountRate * 100)}%`;
+    isHistoricalLowest,
+    discountPercentText,
+  } = useGamePreview(game);
 
   return (
     <div className={styles.box}>
       <div className={styles.thumbnailArea}>
         <ImageWithFallback
-          src={game.thumbnail}
+          src={game.mainImage}
           className={styles.thumbnailImg}
-          alt={`${game.name} thumbnail`}
-          fill
+          alt={`${game.titleKo} thumbnail`}
+          width="100"
+          height="68"
         />
       </div>
       <div className={styles.summaryArea}>
         <div>
           <div>
-            <div className={styles.gameName}>{game.name}</div>
+            <div className={styles.gameName}>{game.titleKo}</div>
           </div>
           {isPriceDefined && (
             <div className={styles.priceArea}>
@@ -49,7 +50,7 @@ export default function GameBox({ game }: GameBoxProps) {
                 )}
               </div>
               <div className={styles.finalPriceArea}>
-                {isLowest && discountRate > 0 && (
+                {isHistoricalLowest && discountRate > 0 && (
                   <span className={styles.lowestArea}>
                     <span className={styles.lowestText}>역대 최저</span>
                     <RiArrowDownLine size={16} color="#1d4ed8" />

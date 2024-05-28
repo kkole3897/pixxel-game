@@ -1,30 +1,73 @@
-import dayjs from 'dayjs';
+import { GamePrievew, GameCatalogPreview } from '../../../model';
 
-import { Game } from '../../../model';
+export function useGamePreview(game: GamePrievew) {
+  const initialCatalog: null | GameCatalogPreview = null;
+  const lowestCurrentPriceCatalog = game.gameCatalog.reduce(
+    (acc: null | GameCatalogPreview, cur: GameCatalogPreview) => {
+      if (acc === null) {
+        return cur;
+      }
 
-export function useGame(game: Game) {
-  const releaseDateText =
-    game.releaseDate != null
-      ? `출시일 : ${dayjs(game.releaseDate).format('YYYY.MM.DD')}`
-      : '출시 미정';
+      if (acc.currentPrice === null && cur.currentPrice !== null) {
+        return cur;
+      }
 
-  const priceInfo = game.storeInfo?.steam?.price;
-  const isPriceDefined = priceInfo;
+      if (
+        acc.currentPrice !== null &&
+        cur.currentPrice !== null &&
+        cur.currentPrice < acc.currentPrice
+      ) {
+        return cur;
+      }
+
+      return acc;
+    },
+    initialCatalog
+  );
+  const historicalLowestPrice = game.gameCatalog.reduce((acc, cur) => {
+    if (cur.lowestPrice !== null && cur.lowestPrice < acc) {
+      return cur.lowestPrice;
+    }
+
+    return acc;
+  }, Infinity);
+
+  const isPriceDefined = lowestCurrentPriceCatalog?.regularPrice != null;
   const regularPriceText =
-    priceInfo?.regular == null ? '' : priceInfo.regular.toLocaleString();
+    lowestCurrentPriceCatalog === null ||
+    lowestCurrentPriceCatalog.regularPrice === null
+      ? ''
+      : lowestCurrentPriceCatalog.regularPrice.toLocaleString();
   const discountPriceText =
-    priceInfo?.current == null ? '' : priceInfo.current.toLocaleString();
-  const discountRate = !priceInfo
-    ? 0
-    : (priceInfo.regular - priceInfo.current) / priceInfo.regular;
-  const isLowest = priceInfo && priceInfo.current === priceInfo?.lowest;
+    lowestCurrentPriceCatalog === null ||
+    lowestCurrentPriceCatalog.currentPrice === null
+      ? ''
+      : lowestCurrentPriceCatalog.currentPrice.toLocaleString();
+  const discountRate =
+    lowestCurrentPriceCatalog === null ||
+    lowestCurrentPriceCatalog.regularPrice === null ||
+    lowestCurrentPriceCatalog.regularPrice === 0 ||
+    lowestCurrentPriceCatalog.currentPrice === null
+      ? 0
+      : (lowestCurrentPriceCatalog.regularPrice -
+          lowestCurrentPriceCatalog.currentPrice) /
+        lowestCurrentPriceCatalog.regularPrice;
+  const isHistoricalLowest =
+    lowestCurrentPriceCatalog !== null &&
+    historicalLowestPrice === lowestCurrentPriceCatalog.currentPrice;
+  const isStoreLowest =
+    lowestCurrentPriceCatalog !== null &&
+    lowestCurrentPriceCatalog.currentPrice ===
+      lowestCurrentPriceCatalog.lowestPrice;
+  const discountPercentText = `${Math.round(discountRate * 100)}%`;
 
   return {
-    releaseDateText,
     regularPriceText,
     discountPriceText,
     discountRate,
+    isHistoricalLowest,
+    isStoreLowest,
     isPriceDefined,
-    isLowest,
+    discountPercentText,
   };
 }
