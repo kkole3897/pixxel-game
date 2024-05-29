@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { createServerClient } from '@/shared/lib/supabase';
+import { createClient } from '@/shared/lib/supabase/server';
 import {
   convertKakaoCallbackSearchParams,
   type KakaoCallbackSearchParams,
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
   const { code } = kakaoCallbackSearchParams;
 
   if (code) {
-    const supabase = createServerClient();
+    const supabase = createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       return redirect('/');

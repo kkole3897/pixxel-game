@@ -2,24 +2,29 @@ import Link from 'next/link';
 import { RiSteamFill } from '@remixicon/react';
 
 import * as styles from './store-link.css';
-import type { StoreInfo, GameStore } from '../../model';
+import type { GameStore, GameCatalog } from '../../model';
 import { usePriceInfo } from './hooks/use-price-info';
 
-interface StoreLinkProps extends Pick<StoreInfo, 'price' | 'url'> {
-  store: GameStore;
-}
+interface StoreLinkProps
+  extends Pick<
+    GameCatalog,
+    'store' | 'url' | 'currentPrice' | 'regularPrice' | 'lowestPrice'
+  > {}
 
 const storeIconMap: { [key in GameStore]: React.ReactNode } = {
   steam: <RiSteamFill />,
+  epic: <></>,
 };
 
 export default function StoreLink(props: StoreLinkProps) {
-  const { url: href, store, price } = props;
-  const { initalPrice, finalPrice, isDiscounted, isLowest } = usePriceInfo(
-    price ?? { regular: 0, current: 0, lowest: 0 }
-  );
+  const { url: href, store, currentPrice, regularPrice, lowestPrice } = props;
+  const { initalPrice, finalPrice, isDiscounted, isLowest } = usePriceInfo({
+    regular: regularPrice ?? 0,
+    current: currentPrice ?? 0,
+    lowest: lowestPrice ?? 0,
+  });
 
-  if (!price) {
+  if (regularPrice === null) {
     return (
       <Link href={href} target="_blank" className={styles.storeLink}>
         <div>{storeIconMap[store]}</div>
@@ -29,7 +34,10 @@ export default function StoreLink(props: StoreLinkProps) {
       </Link>
     );
   }
-  const { lowest = 0, regular = 0, current = 0 } = price ?? {};
+
+  const lowest = lowestPrice ?? 0;
+  const regular = regularPrice ?? 0;
+  const current = currentPrice ?? 0;
 
   const initialPriceText = `${initalPrice.toLocaleString()}원`;
   const lowestPriceText = `${lowest.toLocaleString()}원`;
