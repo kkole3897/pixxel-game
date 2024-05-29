@@ -232,30 +232,33 @@ export type Database = {
           created_at: string;
           current_price: number;
           deleted_at: string | null;
-          end_date: string | null;
+          end_at: string | null;
           game_catalog_id: number | null;
           id: number;
-          start_date: string;
+          regular_price: number;
+          start_at: string;
           updated_at: string | null;
         };
         Insert: {
           created_at?: string;
           current_price: number;
           deleted_at?: string | null;
-          end_date?: string | null;
+          end_at?: string | null;
           game_catalog_id?: number | null;
           id?: number;
-          start_date: string;
+          regular_price: number;
+          start_at?: string;
           updated_at?: string | null;
         };
         Update: {
           created_at?: string;
           current_price?: number;
           deleted_at?: string | null;
-          end_date?: string | null;
+          end_at?: string | null;
           game_catalog_id?: number | null;
           id?: number;
-          start_date?: string;
+          regular_price?: number;
+          start_at?: string;
           updated_at?: string | null;
         };
         Relationships: [
