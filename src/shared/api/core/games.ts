@@ -4,19 +4,6 @@ import { coreApiUrl } from '@/shared/config';
 export type GameStoreResponse = 'steam' | 'epic';
 export type GameDrmResponse = 'steam' | 'epic';
 
-export type PriceHistoryRecordResponse = {
-  id: string;
-  gameId: string;
-  regular: number;
-  current: number;
-  store: GameStoreResponse;
-  datetime: string;
-};
-
-export type GetPriceHistoryResponse = {
-  history: Record<GameStoreResponse, PriceHistoryRecordResponse[]>;
-};
-
 export type GetGamesOptions = {
   ids?: number[];
 };
@@ -116,6 +103,21 @@ export type GetGameResponse = {
   game: GameResponse;
 };
 
+export type PriceHistoryRecordResponse = {
+  id: number;
+  gameCatalogId: number | null;
+  regularPrice: number;
+  currentPrice: number;
+  startAt: string;
+  endAt: string | null;
+};
+
+export type GetPriceHistoryResponse = Pick<GameResponse, 'id' | 'publicId'> & {
+  gameCatalog: (Pick<GameCatalogResponse, 'id' | 'store' | 'drm' | 'gameId'> & {
+    gamePriceHistory: PriceHistoryRecordResponse[];
+  })[];
+};
+
 export class Games extends Base {
   public async getGames({
     ids,
@@ -165,21 +167,22 @@ export class Games extends Base {
   }
 
   public async getPriceHistory(
-    gameId: string
+    gamePublicId: string
   ): Promise<GetPriceHistoryResponse> {
-    const uri = `${coreApiUrl}/games/${gameId}/price-history`;
+    const { data, error } = await this.supabase
+      .from('game')
+      .select(
+        'id, publicId: public_id,\
+        gameCatalog: game_catalog(id, gameId: game_id, store, drm,\
+          gamePriceHistory: game_price_log(id, gameCatalogId: game_catalog_id, regularPrice: regular_price, currentPrice: current_price, startAt: start_at, endAt: end_at)\
+        )'
+      )
+      .eq('public_id', gamePublicId)
+      .single();
 
-    const response = await fetch(uri, {
-      headers: { 'Content-Type': 'application/json' },
-      next: { revalidate: 30 },
-    });
-
-    if (!response.ok) {
-      // TODO: error 구체화
-      throw new Error();
+    if (!!error) {
+      throw error;
     }
-
-    const data = await response.json();
 
     return data;
   }

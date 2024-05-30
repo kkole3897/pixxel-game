@@ -17,7 +17,6 @@ import { Description } from '@/widgets/game-detail/ui';
 import { Core } from '@/shared/api';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import { WishButton } from '@/features/toggle-wish/ui';
-import type { GameStore } from '@/entities/game/model';
 import { formatReleaseDate } from '@/entities/game';
 import { sorted } from '@/shared/lib/array';
 import { createClient } from '@/shared/lib/supabase/server';
@@ -34,7 +33,7 @@ export default async function GameDetailPage({
   const core = new Core(createClient());
 
   const { game } = await core.games.getGame(params.gameId);
-  // const { history: _history } = await core.games.getPriceHistory(params.gameId);
+  await core.games.getPriceHistory(params.gameId);
 
   const releaseDateText = formatReleaseDate(
     game.releaseYear,
@@ -56,33 +55,6 @@ export default async function GameDetailPage({
 
     return priceB - priceA;
   });
-
-  // const pricePerDate = Object.entries(_history).reduce<{
-  //   [K: string]: { [K in GameStore]?: number };
-  // }>((acc, [store, prices]) => {
-  //   for (const price of prices) {
-  //     const date = dayjs(price.datetime).tz().format('YYYY.MM.DD');
-
-  //     if (Object.keys(acc).includes(date)) {
-  //       acc[date] = { ...acc[date], [store]: price.current };
-  //     } else {
-  //       acc[date] = { [store]: price.current };
-  //     }
-  //   }
-
-  //   return acc;
-  // }, {});
-  // const history = Object.entries(pricePerDate)
-  //   .map(([date, price]) => {
-  //     return { date, ...price };
-  //   })
-  //   .sort((a, b) => {
-  //     if (a.date < b.date) {
-  //       return -1;
-  //     }
-
-  //     return 1;
-  //   });
 
   const hasGameReviewScore =
     game.metaCritic !== null ||
