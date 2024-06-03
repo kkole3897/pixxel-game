@@ -213,6 +213,7 @@ export default function PriceHistoryChart2() {
             x={(d) => dateScale(getDate(d))}
             y={(d) => priceScale(getValue(d))}
             stroke="#000"
+            strokeWidth={2}
           />
           <rect
             width={width - margin.left - margin.right}
@@ -245,6 +246,7 @@ export default function PriceHistoryChart2() {
             x={(d) => brushDateScale(getDate(d))}
             y={(d) => brushPriceScale(getValue(d))}
             stroke="#000"
+            strokeWidth={1}
           />
           <Brush
             xScale={brushDateScale}
@@ -262,13 +264,10 @@ export default function PriceHistoryChart2() {
           />
         </Group>
         {tooltipOpen && (
-          <circle
-            r={4}
-            stroke="black"
-            cx={tooltipLeft}
-            cy={tooltipTop}
-            fill="black"
-          />
+          <Group left={(tooltipLeft ?? 0) - 8} top={(tooltipTop ?? 0) - 8}>
+            <circle cx="8" cy="8" r="8" fill="#000" fill-opacity="0.25" />
+            <circle cx="8" cy="8" r="4" fill="#000" stroke="#fff" />
+          </Group>
         )}
       </svg>
       {tooltipOpen && (
