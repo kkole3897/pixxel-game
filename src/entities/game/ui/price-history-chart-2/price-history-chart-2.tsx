@@ -6,7 +6,7 @@ import { Brush } from '@visx/brush';
 import { Group } from '@visx/group';
 import { useParentSize } from '@visx/responsive';
 import { AxisBottom, AxisRight } from '@visx/axis';
-import { max, extent, min, bisector } from '@visx/vendor/d3-array';
+import { max, extent, bisector } from '@visx/vendor/d3-array';
 import { curveStepAfter } from '@visx/curve';
 import { LinePath } from '@visx/shape';
 import { Bounds } from '@visx/brush/lib/types';
