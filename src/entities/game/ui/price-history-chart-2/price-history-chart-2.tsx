@@ -12,7 +12,11 @@ import { LinePath } from '@visx/shape';
 import { Bounds } from '@visx/brush/lib/types';
 import BaseBrush from '@visx/brush/lib/BaseBrush';
 import { localPoint } from '@visx/event';
-import { useTooltip, Tooltip } from '@visx/tooltip';
+import {
+  useTooltip,
+  TooltipWithBounds,
+  useTooltipInPortal,
+} from '@visx/tooltip';
 import dayjs from 'dayjs';
 
 import * as styles from './price-history-chart-2.css';
@@ -153,6 +157,8 @@ export default function PriceHistoryChart2() {
     setFilterSeries(seriesCopy);
   };
 
+  const { containerRef } = useTooltipInPortal({ detectBounds: true });
+
   const {
     tooltipTop,
     tooltipLeft,
@@ -191,8 +197,8 @@ export default function PriceHistoryChart2() {
         date: dayjs(getDate(d)).format('YYYY.MM.DD'),
         price: `${getValue(d).toLocaleString()}원`,
       },
-      tooltipLeft: dateScale(getDate(d)),
-      tooltipTop: priceScale(getValue(d)),
+      tooltipLeft: dateScale(getDate(d)) + margin.left,
+      tooltipTop: priceScale(getValue(d)) + margin.top,
     };
     showTooltip(tooltipPos);
   };
@@ -212,6 +218,7 @@ export default function PriceHistoryChart2() {
             width={width - margin.left - margin.right}
             height={topChartHeight}
             fill="transparent"
+            ref={containerRef}
             onTouchMove={handleTooltip}
             onTouchStart={handleTooltip}
             onMouseMove={handleTooltip}
@@ -254,12 +261,21 @@ export default function PriceHistoryChart2() {
             useWindowMoveEvents
           />
         </Group>
+        {tooltipOpen && (
+          <circle
+            r={4}
+            stroke="black"
+            cx={tooltipLeft}
+            cy={tooltipTop}
+            fill="black"
+          />
+        )}
       </svg>
       {tooltipOpen && (
-        <Tooltip top={tooltipTop} left={tooltipLeft}>
+        <TooltipWithBounds top={tooltipTop} left={tooltipLeft}>
           <div>날짜: {tooltipData.date}</div>
           <div>가격: {tooltipData.price}</div>
-        </Tooltip>
+        </TooltipWithBounds>
       )}
     </div>
   );
