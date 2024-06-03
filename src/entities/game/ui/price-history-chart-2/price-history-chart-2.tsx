@@ -8,7 +8,7 @@ import { useParentSize } from '@visx/responsive';
 import { AxisBottom, AxisRight } from '@visx/axis';
 import { max, extent, bisector } from '@visx/vendor/d3-array';
 import { curveStepAfter } from '@visx/curve';
-import { LinePath } from '@visx/shape';
+import { LinePath, Line } from '@visx/shape';
 import { Bounds } from '@visx/brush/lib/types';
 import BaseBrush from '@visx/brush/lib/BaseBrush';
 import { localPoint } from '@visx/event';
@@ -207,6 +207,15 @@ export default function PriceHistoryChart2() {
     <div ref={parentRef} className={styles.container}>
       <svg width={width} height={height}>
         <Group left={margin.left} top={margin.top}>
+          {tooltipOpen && (
+            <Group top={-margin.top} left={-margin.left}>
+              <Line
+                from={{ x: tooltipLeft, y: 0 }}
+                to={{ x: tooltipLeft, y: topChartHeight }}
+                stroke="#cccccc"
+              />
+            </Group>
+          )}
           <LinePath
             curve={curveStepAfter}
             data={filteredSeries}
@@ -215,6 +224,24 @@ export default function PriceHistoryChart2() {
             stroke="#000"
             strokeWidth={2}
           />
+          {tooltipOpen && (
+            <Group top={-margin.top} left={-margin.left}>
+              <circle
+                cx={tooltipLeft}
+                cy={tooltipTop}
+                r="8"
+                fill="#000"
+                fillOpacity="0.25"
+              />
+              <circle
+                cx={tooltipLeft}
+                cy={tooltipTop}
+                r="4"
+                fill="#000"
+                stroke="#fff"
+              />
+            </Group>
+          )}
           <rect
             width={width - margin.left - margin.right}
             height={topChartHeight}
@@ -263,12 +290,7 @@ export default function PriceHistoryChart2() {
             useWindowMoveEvents
           />
         </Group>
-        {tooltipOpen && (
-          <Group left={(tooltipLeft ?? 0) - 8} top={(tooltipTop ?? 0) - 8}>
-            <circle cx="8" cy="8" r="8" fill="#000" fill-opacity="0.25" />
-            <circle cx="8" cy="8" r="4" fill="#000" stroke="#fff" />
-          </Group>
-        )}
+        {tooltipOpen && <Group></Group>}
       </svg>
       {tooltipOpen && (
         <TooltipWithBounds top={tooltipTop} left={tooltipLeft}>
