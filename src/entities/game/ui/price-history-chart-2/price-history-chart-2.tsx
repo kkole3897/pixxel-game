@@ -6,7 +6,7 @@ import { Brush } from '@visx/brush';
 import { Group } from '@visx/group';
 import { useParentSize } from '@visx/responsive';
 import { AxisBottom, AxisRight } from '@visx/axis';
-import { max, extent, bisector } from '@visx/vendor/d3-array';
+import { max, extent, bisector, min } from '@visx/vendor/d3-array';
 import { curveStepAfter } from '@visx/curve';
 import { LinePath, Line } from '@visx/shape';
 import { Bounds } from '@visx/brush/lib/types';
@@ -87,8 +87,8 @@ export default function PriceHistoryChart2() {
     [filteredSeries, xMax]
   );
 
-  const minPrice = 0;
-  const maxPrice = (max(series, getValue) || 0) * 2;
+  const minPrice = Math.max((min(filteredSeries, getValue) || 0) - 1000, 0);
+  const maxPrice = (max(filteredSeries, getValue) || 0) + 1000;
 
   const priceScale = useMemo(
     () =>
