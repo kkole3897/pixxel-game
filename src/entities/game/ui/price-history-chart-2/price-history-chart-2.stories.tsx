@@ -12,4 +12,27 @@ export default meta;
 
 type Story = StoryObj<typeof PriceHistoryChart2>;
 
-export const Example: Story = {};
+export const WithinDateRangeLimit: Story = {
+  args: {
+    data: [
+      { date: '2024-05-01', price: 10000 },
+      { date: '2024-05-03', price: 9000 },
+      { date: '2024-05-07', price: 7000 },
+      { date: '2024-06-01', price: 10000 },
+      { date: '2024-06-02', price: 10000 },
+    ],
+  },
+};
+
+export const OverDateRangeLimit: Story = {
+  args: {
+    data: [
+      { date: '2024-01-01', price: 9000 },
+      { date: '2024-05-01', price: 10000 },
+      { date: '2024-05-03', price: 9000 },
+      { date: '2024-05-07', price: 7000 },
+      { date: '2024-06-01', price: 10000 },
+      { date: '2024-06-02', price: 10000 },
+    ],
+  },
+};
