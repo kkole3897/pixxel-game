@@ -1,3 +1,1 @@
-import PriceHistoryChart from './price-history-chart';
-
-export { PriceHistoryChart };
+export { default as PriceHistoryChart } from './price-history-chart';

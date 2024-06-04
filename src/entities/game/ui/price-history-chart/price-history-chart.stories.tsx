@@ -12,27 +12,27 @@ export default meta;
 
 type Story = StoryObj<typeof PriceHistoryChart>;
 
-export const Example: Story = {
+export const WithinDateRangeLimit: Story = {
   args: {
-    history: [
-      { date: '2024-02-01', steam: 68000 },
-      { date: '2024-02-02', steam: 68000 },
-      { date: '2024-02-03', steam: 58000 },
-      { date: '2024-02-04', steam: 58000 },
-      { date: '2024-02-05', steam: 58000 },
-      { date: '2024-02-06', steam: 48000 },
-      { date: '2024-02-07', steam: 68000 },
-      { date: '2024-02-08', steam: 68000 },
-      { date: '2024-02-09', steam: 68000 },
-      { date: '2024-02-10', steam: 68000 },
-      { date: '2024-02-11', steam: 68000 },
-      { date: '2024-02-12', steam: 58000 },
-      { date: '2024-02-13', steam: 58000 },
-      { date: '2024-02-14', steam: 68000 },
-      { date: '2024-02-15', steam: 68000 },
-      { date: '2024-02-16', steam: 68000 },
-      { date: '2024-02-17', steam: 68000 },
-      { date: '2024-02-18', steam: 68000 },
+    data: [
+      { startAt: '2024-05-01', price: 10000 },
+      { startAt: '2024-05-03', price: 9000 },
+      { startAt: '2024-05-07', price: 7000 },
+      { startAt: '2024-06-01', price: 10000 },
+      { startAt: '2024-06-02', price: 10000 },
+    ],
+  },
+};
+
+export const OverDateRangeLimit: Story = {
+  args: {
+    data: [
+      { startAt: '2024-01-01', price: 9000 },
+      { startAt: '2024-05-01', price: 10000 },
+      { startAt: '2024-05-03', price: 9000 },
+      { startAt: '2024-05-07', price: 7000 },
+      { startAt: '2024-06-01', price: 10000 },
+      { startAt: '2024-06-02', price: 10000 },
     ],
   },
 };
