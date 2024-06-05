@@ -333,7 +333,7 @@ export type Database = {
           id?: number;
           priority: number;
           updated_at?: string | null;
-          user_id: string;
+          user_id?: string;
         };
         Update: {
           created_at?: string;
@@ -554,6 +554,12 @@ export type Database = {
           start_at: string;
           min_price: number;
         }[];
+      };
+      insert_into_wishlist_by_game_public_id: {
+        Args: {
+          game_public_id: string;
+        };
+        Returns: undefined;
       };
     };
     Enums: {
