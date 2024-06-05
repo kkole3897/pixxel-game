@@ -546,7 +546,15 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_best_price_history_by_game_public_id: {
+        Args: {
+          game_public_id: string;
+        };
+        Returns: {
+          start_at: string;
+          min_price: number;
+        }[];
+      };
     };
     Enums: {
       game_drm: 'steam' | 'epic';

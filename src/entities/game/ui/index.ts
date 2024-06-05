@@ -1,7 +1,11 @@
 export * from './game-box';
 export * from './genre-badge';
-export * as MetaCritic from './meta-critic';
-export * as OpenCritic from './open-ciritic';
-export * as SteamScore from './steam-score';
+export { MetaScore, UserScore as MetaUserScore } from './meta-critic';
+export {
+  Rating as OpenCriticRating,
+  TopCritic as OpenCriticTop,
+  RecommendPercent as OpenCriticRecommend,
+} from './open-ciritic';
+export { Bar as SteamScoreBar } from './steam-score';
 export * from './store-link';
 export * from './price-history-chart';

@@ -23,7 +23,6 @@ import * as styles from './price-history-chart.css';
 
 type PriceHistoryRecord = {
   startAt: string;
-  endAt?: string | null;
   price: number;
 };
 

@@ -5,19 +5,21 @@ import timezone from 'dayjs/plugin/timezone';
 
 import * as styles from './page.css';
 import {
-  MetaCritic,
-  OpenCritic,
-  SteamScore,
-  PriceHistoryChart,
+  MetaScore,
+  MetaUserScore,
+  OpenCriticRating,
+  OpenCriticTop,
+  OpenCriticRecommend,
+  SteamScoreBar,
   StoreLink,
   GenreBadge,
-} from '@/entities/game/ui';
+  formatReleaseDate,
+} from '@/entities/game';
 import { Gallery } from '@/widgets/game-detail/ui/gallery';
-import { Description } from '@/widgets/game-detail/ui';
+import { GameDescription, PriceHistoryFetcher } from '@/widgets/game-detail';
 import { Core } from '@/shared/api';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import { WishButton } from '@/features/toggle-wish/ui';
-import { formatReleaseDate } from '@/entities/game';
 import { sorted } from '@/shared/lib/array';
 import { createClient } from '@/shared/lib/supabase/server';
 
@@ -120,12 +122,10 @@ export default async function GameDetailPage({
           </div>
         </section>
         <div className={styles.contentDivider}></div>
-        {/* <section className={styles.contentBox}>
+        <section className={styles.contentBox}>
           <h3 className={styles.contentTitle}>히스토리</h3>
-          <div>
-            <PriceHistoryChart history={history} />
-          </div>
-        </section> */}
+          <PriceHistoryFetcher gamePublicId={params.gameId} />
+        </section>
         <div className={styles.contentDivider}></div>
         {hasGameReviewScore && (
           <>
@@ -142,9 +142,7 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <MetaCritic.MetaScore
-                            score={game.metaCritic.metaScore}
-                          />
+                          <MetaScore score={game.metaCritic.metaScore} />
                         </Link>
                       )}
                       {game.metaCritic.userScore !== null && (
@@ -153,9 +151,7 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <MetaCritic.UserScore
-                            score={game.metaCritic.userScore}
-                          />
+                          <MetaUserScore score={game.metaCritic.userScore} />
                         </Link>
                       )}
                     </div>
@@ -171,7 +167,7 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <OpenCritic.Rating tier={game.openCritic.tier} />
+                          <OpenCriticRating tier={game.openCritic.tier} />
                         </Link>
                       )}
                       {game.openCritic.topCriticScore !== null && (
@@ -180,7 +176,7 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <OpenCritic.TopCritic
+                          <OpenCriticTop
                             tier={game.openCritic.tier ?? 'Fair'}
                             score={game.openCritic.topCriticScore}
                           />
@@ -192,7 +188,7 @@ export default async function GameDetailPage({
                           target="_blank"
                           className={styles.reviewSiteLink}
                         >
-                          <OpenCritic.RecommendPercent
+                          <OpenCriticRecommend
                             tier={game.openCritic.tier ?? 'Fair'}
                             percent={game.openCritic.percentRecommended}
                           />
@@ -207,7 +203,7 @@ export default async function GameDetailPage({
                 game.steamScore.total !== null && (
                   <div className={styles.steamScoreArea}>
                     <div>스팀</div>
-                    <SteamScore.Bar
+                    <SteamScoreBar
                       positive={game.steamScore.positive}
                       totalCount={game.steamScore.total}
                     />
@@ -224,7 +220,7 @@ export default async function GameDetailPage({
             contents={galleryContents}
           />
           <div className={styles.descriptionContainer}>
-            <Description content={descriptionContent} />
+            <GameDescription content={descriptionContent} />
           </div>
         </section>
       </section>

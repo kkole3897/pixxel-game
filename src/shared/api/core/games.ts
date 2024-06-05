@@ -186,4 +186,18 @@ export class Games extends Base {
 
     return data;
   }
+
+  public async getBestPriceHistoryByGamePublicId(gamePublicId: string) {
+    const { data, error } = await this.supabase
+      .rpc('get_best_price_history_by_game_public_id', {
+        game_public_id: gamePublicId,
+      })
+      .select('startAt: start_at, price: min_price');
+
+    if (!!error) {
+      throw error;
+    }
+
+    return data;
+  }
 }
