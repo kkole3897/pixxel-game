@@ -322,7 +322,8 @@ export type Database = {
           deleted_at: string | null;
           game_id: number | null;
           id: number;
-          priority: number;
+          next_id: number | null;
+          prev_id: number | null;
           updated_at: string | null;
           user_id: string;
         };
@@ -331,7 +332,8 @@ export type Database = {
           deleted_at?: string | null;
           game_id?: number | null;
           id?: number;
-          priority: number;
+          next_id?: number | null;
+          prev_id?: number | null;
           updated_at?: string | null;
           user_id?: string;
         };
@@ -340,7 +342,8 @@ export type Database = {
           deleted_at?: string | null;
           game_id?: number | null;
           id?: number;
-          priority?: number;
+          next_id?: number | null;
+          prev_id?: number | null;
           updated_at?: string | null;
           user_id?: string;
         };
@@ -350,6 +353,20 @@ export type Database = {
             columns: ['game_id'];
             isOneToOne: false;
             referencedRelation: 'game';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'game_wishlist_next_id_fkey';
+            columns: ['next_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_wishlist';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'game_wishlist_prev_id_fkey';
+            columns: ['prev_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_wishlist';
             referencedColumns: ['id'];
           },
           {
@@ -546,6 +563,12 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      delete_wish: {
+        Args: {
+          wish_id: number;
+        };
+        Returns: undefined;
+      };
       get_best_price_history_by_game_public_id: {
         Args: {
           game_public_id: string;
@@ -555,7 +578,20 @@ export type Database = {
           min_price: number;
         }[];
       };
-      insert_into_wishlist_by_game_public_id: {
+      get_wishlist: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          id: number;
+          user_id: string;
+          game_id: number;
+          prev_id: number;
+          next_id: number;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string;
+        }[];
+      };
+      insert_last_wish_by_game_public_id: {
         Args: {
           game_public_id: string;
         };
