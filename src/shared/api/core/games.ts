@@ -1,5 +1,4 @@
 import { Base } from './lib/base';
-import { coreApiUrl } from '@/shared/config';
 
 export type GameStoreResponse = 'steam' | 'epic';
 export type GameDrmResponse = 'steam' | 'epic';
@@ -49,6 +48,7 @@ export type GameCatalogResponse = {
   currentPriceExpireAt: string | null;
   lowestPrice: number | null;
   lowestPriceUpdatedAt: string | null;
+  createdAt: string;
 };
 
 export type GameResponse = {
@@ -147,12 +147,13 @@ export class Games extends Base {
     const { data, error } = await this.supabase
       .from('game')
       .select(
-        'id, publicId: public_id, title, titleKo: title_ko, type, releaseYear: release_year, releaseMonth: release_month, releaseDay: release_day, mainImage: main_image, isFree: is_free,\
-        description, summary, baseGameId: base_game_id, tags, screenshots, developers, publishers, createdAt: created_at,\
+        'id, publicId: public_id, title, titleKo: title_ko, type, releaseYear: release_year, releaseMonth: release_month, releaseDay: release_day,\
+        mainImage: main_image, isFree: is_free, description, summary, baseGameId: base_game_id, tags, screenshots, developers, publishers, createdAt: created_at,\
         metaCritic: meta_critic(metaScoreUrl: meta_score_url, metaScore: meta_score, userScoreUrl: user_score_url, userScore: user_score),\
         openCritic: open_critic(url, tier, topCriticScore: top_critic_score, percentRecommended: percent_recommended),\
         steamScore: steam_score(url, total, positive),\
-        gameCatalog: game_catalog(id, gameId: game_id, url, store, drm, regularPrice: regular_price, currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price, lowestPriceUpdatedAt: lowest_price_updated_at)'
+        gameCatalog: game_catalog(id, gameId: game_id, url, store, drm, regularPrice: regular_price, currentPrice: current_price, currentPriceExpireAt: current_price_expire_at,\
+          lowestPrice: lowest_price, lowestPriceUpdatedAt: lowest_price_updated_at, createdAt: created_at)'
       )
       .eq('public_id', publicId)
       .single();
