@@ -581,14 +581,14 @@ export type Database = {
       get_wishlist: {
         Args: Record<PropertyKey, never>;
         Returns: {
-          id: number;
-          user_id: string;
-          game_id: number;
-          prev_id: number;
-          next_id: number;
           created_at: string;
-          updated_at: string;
-          deleted_at: string;
+          deleted_at: string | null;
+          game_id: number | null;
+          id: number;
+          next_id: number | null;
+          prev_id: number | null;
+          updated_at: string | null;
+          user_id: string;
         }[];
       };
       insert_last_wish_by_game_public_id: {
