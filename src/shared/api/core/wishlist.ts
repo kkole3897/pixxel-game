@@ -84,4 +84,21 @@ export class Wishlist extends Base {
       throw error;
     }
   }
+
+  public async getWishlistItemByGamePublicId(gamePublicId: string) {
+    const { data, error } = await this.supabase
+      .from('game_wishlist')
+      .select(
+        'id, createdAt: created_at, updatedAt: updated_at, gameId: game_id,\
+        game(id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image, isFree: is_free)'
+      )
+      .eq('game.public_id', gamePublicId)
+      .single<(WishlistItemResponse & { game: GamePreviewResponse }) | null>();
+
+    if (!!error) {
+      throw error;
+    }
+
+    return data;
+  }
 }
