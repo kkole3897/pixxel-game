@@ -10,7 +10,7 @@ type WishButtonProps = {
 };
 
 export default function WishButton(props: WishButtonProps) {
-  const { isExisted, toggle } = useToggleWish(props.gameId);
+  const { isWished, toggle } = useToggleWish(props.gameId);
 
   return (
     <button
@@ -18,7 +18,7 @@ export default function WishButton(props: WishButtonProps) {
       onClick={() => toggle()}
       className={styles.wishButton}
     >
-      {isExisted ? <RiHeartFill color="red" /> : <RiHeartLine />}
+      {isWished ? <RiHeartFill color="red" /> : <RiHeartLine />}
     </button>
   );
 }

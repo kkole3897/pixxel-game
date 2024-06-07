@@ -19,7 +19,7 @@ import { Gallery } from '@/widgets/game-detail/ui/gallery';
 import { GameDescription, PriceHistoryFetcher } from '@/widgets/game-detail';
 import { Core } from '@/shared/api';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
-import { WishButton } from '@/features/toggle-wish/ui';
+import { WishButton } from '@/features/toggle-wish';
 import { sorted } from '@/shared/lib/array';
 import { createClient } from '@/shared/lib/supabase/server';
 

@@ -1,0 +1,1 @@
+export { WishButton } from './ui';

@@ -1,27 +1,60 @@
-import { useWishListStore } from '@/entities/wish-list';
-import { useMemo } from 'react';
+import { useWishState } from './use-wish-state';
+import {
+  useAddWishlistItemMutation,
+  useDeleteWishlistItemMutation,
+} from '@/entities/wish-list';
 
-export function useToggleWish(gameId: string) {
-  const wishList = useWishListStore((state) => state.wishList);
-  const addGame = useWishListStore((state) => state.addGame);
-  const removeGame = useWishListStore((state) => state.removeGame);
+export function useToggleWish(gamePublicId: string) {
+  const {
+    isWished,
+    setControllable,
+    setControlledWished,
+    wishId,
+    forceUpdate,
+  } = useWishState(gamePublicId);
 
-  const isExisted = useMemo(() => {
-    const _isExisted = Object.keys(wishList).includes(gameId);
+  const { mutate: mutateAddWishlistItem } = useAddWishlistItemMutation();
+  const { mutate: mutateDeleteWishlistItem } = useDeleteWishlistItemMutation();
 
-    return _isExisted;
-  }, [wishList, gameId]);
-
-  const toggle = () => {
-    if (isExisted) {
-      removeGame(gameId);
-    } else {
-      addGame(gameId);
+  const toggle = async () => {
+    if (!isWished) {
+      mutateAddWishlistItem(gamePublicId, {
+        onSuccess: (data) => {
+          forceUpdate(data);
+        },
+        onError: () => {
+          setControlledWished(false);
+        },
+        onSettled: () => {
+          setControllable(false);
+        },
+      });
+      setControlledWished(true);
+      setControllable(true);
+      return;
     }
+
+    if (!wishId) {
+      return;
+    }
+
+    mutateDeleteWishlistItem(wishId, {
+      onSuccess: () => {
+        forceUpdate(null);
+      },
+      onError: () => {
+        setControlledWished(true);
+      },
+      onSettled: () => {
+        setControllable(false);
+      },
+    });
+    setControlledWished(false);
+    setControllable(true);
   };
 
   return {
-    isExisted,
+    isWished,
     toggle,
   };
 }

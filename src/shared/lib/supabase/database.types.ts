@@ -595,7 +595,16 @@ export type Database = {
         Args: {
           game_public_id: string;
         };
-        Returns: undefined;
+        Returns: {
+          created_at: string;
+          deleted_at: string | null;
+          game_id: number | null;
+          id: number;
+          next_id: number | null;
+          prev_id: number | null;
+          updated_at: string | null;
+          user_id: string;
+        };
       };
     };
     Enums: {

@@ -67,14 +67,21 @@ export class Wishlist extends Base {
   }
 
   public async addWishlistItem(gamePublicId: string) {
-    const { error } = await this.supabase.rpc(
-      'insert_last_wish_by_game_public_id',
-      { game_public_id: gamePublicId }
-    );
+    const { data, error } = await this.supabase
+      .rpc('insert_last_wish_by_game_public_id', {
+        game_public_id: gamePublicId,
+      })
+      .select(
+        'id, createdAt: created_at, updatedAt: updated_at, gameId: game_id,\
+        game(id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image, isFree: is_free)'
+      )
+      .single<WishlistItemResponse & { game: GamePreviewResponse }>();
 
     if (!!error) {
       throw error;
     }
+
+    return data;
   }
 
   public async deleteWishlistItem(id: number) {
@@ -90,10 +97,12 @@ export class Wishlist extends Base {
       .from('game_wishlist')
       .select(
         'id, createdAt: created_at, updatedAt: updated_at, gameId: game_id,\
-        game(id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image, isFree: is_free)'
+        game!inner(id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image, isFree: is_free)'
       )
       .eq('game.public_id', gamePublicId)
-      .single<(WishlistItemResponse & { game: GamePreviewResponse }) | null>();
+      .maybeSingle<
+        (WishlistItemResponse & { game: GamePreviewResponse }) | null
+      >();
 
     if (!!error) {
       throw error;
