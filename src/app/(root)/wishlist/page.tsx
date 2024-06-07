@@ -1,37 +1,28 @@
-'use client';
-
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-
 import { GameList } from '@/widgets/game/ui/game-list';
 import { DefaultLink } from '@/shared/ui/default-link';
 import { GameBox } from '@/entities/game/ui';
-import { useWishList } from '@/entities/wish-list';
-import { DraggableWish } from '@/widgets/wish-list';
+import { Core } from '@/shared/api/core';
+import { createClient } from '@/shared/lib/supabase/server';
 
-export default function WishListPage() {
-  // const { games, isPending } = useWishList();
+export default async function WishListPage() {
+  const core = new Core(createClient());
 
-  // if (isPending) {
-  //   return <div>loading</div>;
-  // }
+  const wishlist = await core.wishlist.getWishlist();
+  const filteredWishlist = wishlist.filter(
+    (wishlistItem) => wishlistItem.game !== null
+  );
 
-  // return (
-  //   <DndProvider backend={HTML5Backend}>
-  //     <GameList>
-  //       {games.map((game) => {
-  //         return (
-  //           <GameList.Item key={game.id}>
-  //             <DraggableWish id={game.id}>
-  //               <DefaultLink href={`/game/${game.id}`}>
-  //                 <GameBox game={game} />
-  //               </DefaultLink>
-  //             </DraggableWish>
-  //           </GameList.Item>
-  //         );
-  //       })}
-  //     </GameList>
-  //   </DndProvider>
-  // );
-  return null;
+  return (
+    <GameList>
+      {filteredWishlist.map((wishlistItem) => {
+        return (
+          <GameList.Item key={wishlistItem.id}>
+            <DefaultLink href={`/game/${wishlistItem.game!.publicId}`}>
+              <GameBox game={wishlistItem.game!} />
+            </DefaultLink>
+          </GameList.Item>
+        );
+      })}
+    </GameList>
+  );
 }

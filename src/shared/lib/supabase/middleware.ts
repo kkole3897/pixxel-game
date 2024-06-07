@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 import { supabase as supabaseConfig } from '@/shared/config';
 
-const protectedRoutes = ['/me'];
+const protectedRoutes = ['/me', '/wishlist'];
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
