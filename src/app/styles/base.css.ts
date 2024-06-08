@@ -1,8 +1,10 @@
 import { globalStyle } from '@vanilla-extract/css';
 
+import { base } from './layer.css';
+
 globalStyle('html, body', {
   '@layer': {
-    base: {
+    [base]: {
       height: '100%',
     },
   },
@@ -10,7 +12,7 @@ globalStyle('html, body', {
 
 globalStyle('body, input, textarea, select, button', {
   '@layer': {
-    base: {
+    [base]: {
       fontFamily: 'var(--font-base)',
       fontSize: '0.875rem',
     },
@@ -19,7 +21,7 @@ globalStyle('body, input, textarea, select, button', {
 
 globalStyle('.page', {
   '@layer': {
-    base: {
+    [base]: {
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '768px',
@@ -32,7 +34,7 @@ globalStyle('.page', {
 
 globalStyle('.layout', {
   '@layer': {
-    base: {
+    [base]: {
       display: 'flex',
       flexDirection: 'column',
       flex: 1,

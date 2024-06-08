@@ -1,6 +1,8 @@
 import { globalStyle } from '@vanilla-extract/css';
 
-/* http://meyerweb.com/eric/tools/css/reset/ 
+import { reset } from './layer.css';
+
+/* http://meyerweb.com/eric/tools/css/reset/
   v2.0 | 20110126
   License: none (public domain)
 */
@@ -16,14 +18,14 @@ globalStyle(
   dl, dt, dd, ol, ul, li,
   fieldset, form, label, legend,
   table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed, 
-  figure, figcaption, footer, header, hgroup, 
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
   menu, nav, output, ruby, section, summary,
   time, mark, audio, video
 `,
   {
     '@layer': {
-      reset: {
+      [reset]: {
         margin: 0,
         padding: 0,
         border: 0,
@@ -37,12 +39,12 @@ globalStyle(
 
 globalStyle(
   `
-  article, aside, details, figcaption, figure, 
+  article, aside, details, figcaption, figure,
   footer, header, hgroup, menu, nav, section
 `,
   {
     '@layer': {
-      reset: {
+      [reset]: {
         display: 'block',
       },
     },
@@ -51,7 +53,7 @@ globalStyle(
 
 globalStyle('body', {
   '@layer': {
-    reset: {
+    [reset]: {
       lineHeight: 1,
     },
   },
@@ -59,7 +61,7 @@ globalStyle('body', {
 
 globalStyle('ol, ul', {
   '@layer': {
-    reset: {
+    [reset]: {
       listStyle: 'none',
     },
   },
@@ -67,7 +69,7 @@ globalStyle('ol, ul', {
 
 globalStyle('blockquote, q', {
   '@layer': {
-    reset: {
+    [reset]: {
       quotes: 'none',
     },
   },
@@ -80,7 +82,7 @@ globalStyle(
 `,
   {
     '@layer': {
-      reset: {
+      [reset]: {
         content: '',
       },
     },
@@ -94,7 +96,7 @@ globalStyle(
 `,
   {
     '@layer': {
-      reset: {
+      [reset]: {
         content: 'none',
       },
     },
@@ -103,7 +105,7 @@ globalStyle(
 
 globalStyle('table', {
   '@layer': {
-    reset: {
+    [reset]: {
       borderCollapse: 'collapse',
       borderSpacing: 0,
     },

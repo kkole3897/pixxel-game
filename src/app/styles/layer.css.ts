@@ -1,4 +1,4 @@
 import { globalLayer } from '@vanilla-extract/css';
 
-globalLayer('reset');
-globalLayer('base');
+export const reset = globalLayer('reset');
+export const base = globalLayer('base');
