@@ -1,6 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css';
 
-import { reset } from './layer.css';
+import { reset } from '@/shared/styles/layer.css';
 
 /* http://meyerweb.com/eric/tools/css/reset/
   v2.0 | 20110126

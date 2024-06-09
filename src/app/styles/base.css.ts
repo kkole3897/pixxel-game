@@ -1,6 +1,7 @@
 import { globalStyle } from '@vanilla-extract/css';
 
-import { base } from './layer.css';
+import { base } from '@/shared/styles/layer.css';
+import { theme } from '@/shared/styles/theme.css';
 
 globalStyle('html, body', {
   '@layer': {
@@ -14,7 +15,8 @@ globalStyle('body, input, textarea, select, button', {
   '@layer': {
     [base]: {
       fontFamily: 'var(--font-base)',
-      fontSize: '0.875rem',
+      fontSize: theme.fontSize.sm,
+      lineHeight: theme.lineHeight.sm,
     },
   },
 });
