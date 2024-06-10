@@ -85,3 +85,69 @@ export const text = styleVariants({
     },
   },
 });
+
+export const fontWeight = styleVariants({
+  thin: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.thin,
+      },
+    },
+  },
+  extralight: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.extralight,
+      },
+    },
+  },
+  light: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.light,
+      },
+    },
+  },
+  regular: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.regular,
+      },
+    },
+  },
+  medium: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.medium,
+      },
+    },
+  },
+  semibold: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.semibold,
+      },
+    },
+  },
+  bold: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.bold,
+      },
+    },
+  },
+  extrabold: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.extrabold,
+      },
+    },
+  },
+  black: {
+    '@layer': {
+      [base]: {
+        fontWeight: theme.fontWeight.black,
+      },
+    },
+  },
+});

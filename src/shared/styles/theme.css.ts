@@ -112,4 +112,15 @@ export const theme = createGlobalTheme(':root', {
     '3xl': '2.875rem',
     '4xl': '3.375rem',
   },
+  fontWeight: {
+    thin: '100',
+    extralight: '200',
+    light: '300',
+    regular: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+    extrabold: '800',
+    black: '900',
+  },
 });

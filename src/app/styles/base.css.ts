@@ -16,6 +16,7 @@ globalStyle('body, input, textarea, select, button', {
     [base]: {
       fontFamily: 'var(--font-base)',
       fontSize: theme.fontSize.sm,
+      fontWeight: theme.fontWeight.regular,
       lineHeight: theme.lineHeight.sm,
     },
   },
