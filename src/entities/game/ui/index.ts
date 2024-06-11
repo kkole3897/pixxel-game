@@ -1,5 +1,4 @@
-export * from './game-box';
-export * from './genre-badge';
+export { GameBox } from './game-box';
 export { MetaScore, UserScore as MetaUserScore } from './meta-critic';
 export {
   Rating as OpenCriticRating,
@@ -7,5 +6,5 @@ export {
   RecommendPercent as OpenCriticRecommend,
 } from './open-ciritic';
 export { Bar as SteamScoreBar } from './steam-score';
-export * from './store-link';
-export * from './price-history-chart';
+export { StoreLink as GameStoreLink } from './store-link';
+export { PriceHistoryChart as GamePriceHistoryChart } from './price-history-chart';

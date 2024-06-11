@@ -11,8 +11,7 @@ import {
   OpenCriticTop,
   OpenCriticRecommend,
   SteamScoreBar,
-  StoreLink,
-  GenreBadge,
+  GameStoreLink,
   formatReleaseDate,
 } from '@/entities/game';
 import { Gallery } from '@/widgets/game-detail/ui/gallery';
@@ -91,16 +90,6 @@ export default async function GameDetailPage({
             {game.titleKo ?? game.title ?? `game/${params.gameId}`}
           </h2>
           <div>{releaseDateText}</div>
-          {/* {game.genres.length > 0 && (
-            <div className={styles.genreArea}>
-              <div className={styles.genreTitle}>장르</div>
-              <div className={styles.genreList}>
-                {game.genres.map((genre) => (
-                  <GenreBadge key={genre} genre={genre} />
-                ))}
-              </div>
-            </div>
-          )} */}
         </div>
       </section>
       <section>
@@ -109,7 +98,7 @@ export default async function GameDetailPage({
           <div>
             {catalog.map((c) => {
               return (
-                <StoreLink
+                <GameStoreLink
                   key={c.id}
                   url={c.url}
                   store={c.store}

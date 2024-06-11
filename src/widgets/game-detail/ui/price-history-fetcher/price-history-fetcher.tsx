@@ -1,8 +1,8 @@
 'use client';
 
 import {
-  useGetBestPriceHistoryQuery,
-  PriceHistoryChart,
+  useGetBestGamePriceHistoryQuery,
+  GamePriceHistoryChart,
 } from '@/entities/game';
 
 interface PriceHistoryFetcherProps {
@@ -15,7 +15,7 @@ export default function PriceHistoryContainer({
   gamePublicId,
 }: PriceHistoryFetcherProps) {
   const { isPending, data, isError } =
-    useGetBestPriceHistoryQuery(gamePublicId);
+    useGetBestGamePriceHistoryQuery(gamePublicId);
 
   if (isPending) {
     return <div className={className}>로딩 중...</div>;
@@ -27,7 +27,7 @@ export default function PriceHistoryContainer({
 
   return (
     <div className={className}>
-      <PriceHistoryChart data={data} />
+      <GamePriceHistoryChart data={data} />
     </div>
   );
 }
