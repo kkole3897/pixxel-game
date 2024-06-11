@@ -22,7 +22,7 @@ const EpicFillBase = forwardRef<SVGSVGElement, EpicFillBaseProps>(
         ref={forwardedRef}
         {...props}
       >
-        <g clip-path={`url(#${clipPathId})`}>
+        <g clipPath={`url(#${clipPathId})`}>
           <mask
             id={maskId}
             style={{ maskType: 'luminance' }}
@@ -39,8 +39,8 @@ const EpicFillBase = forwardRef<SVGSVGElement, EpicFillBaseProps>(
           </mask>
           <g mask={`url(#${maskId})`}>
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M19.3654 0.999987H4.63462C3.44064 0.999987 3 1.4641 3 2.72227V17.904C3 18.0464 3.00545 18.1787 3.01739 18.3012C3.04458 18.5758 3.04969 18.842 3.29219 19.1449C3.31589 19.1746 3.56347 19.3687 3.56347 19.3687C3.69664 19.4375 3.78757 19.4881 3.93776 19.5518L11.1914 22.7527C11.5679 22.9345 11.7254 23.0054 11.9989 22.9997C11.9993 22.9997 11.9996 22.9997 12 22.9997C12.0003 22.9997 12.0007 22.9997 12.0011 22.9997C12.2746 23.0054 12.432 22.9345 12.8086 22.7527L20.0622 19.5518C20.2124 19.4881 20.3033 19.4375 20.4365 19.3687C20.4365 19.3687 20.6841 19.1746 20.7078 19.1449C20.9503 18.842 20.9554 18.5758 20.9826 18.3012C20.9945 18.1787 21 18.0464 21 17.904V2.72227C21 1.4641 20.5593 0.999987 19.3654 0.999987Z"
               fill="#2F2D2E"
             />
@@ -65,8 +65,8 @@ const EpicFillBase = forwardRef<SVGSVGElement, EpicFillBaseProps>(
               fill="white"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M8.52954 19.9858H15.5035L11.9439 21.2222L8.52954 19.9858Z"
               fill="white"
             />

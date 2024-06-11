@@ -22,7 +22,7 @@ const SteamFillBase = forwardRef<SVGSVGElement, SteamFillBaseProps>(
         ref={forwardedRef}
         {...props}
       >
-        <g clip-path={`url(#${clipPathId})`}>
+        <g clipPath={`url(#${clipPathId})`}>
           <path
             d="M2.41318 14.8755C3.64863 18.9957 7.47034 22 11.9926 22C17.5162 22 21.9934 17.5227 21.9934 12C21.9934 6.47725 17.5162 2 11.9934 2C6.69386 2 2.35738 6.12275 2.01489 11.3356C2.66296 12.4223 2.91463 13.0944 2.41335 14.8755H2.41318Z"
             fill={`url(#${gradientId})`}
@@ -41,13 +41,13 @@ const SteamFillBase = forwardRef<SVGSVGElement, SteamFillBaseProps>(
             y2="22"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#111D2E" />
-            <stop offset="0.212" stop-color="#051839" />
-            <stop offset="0.407" stop-color="#0A1B48" />
-            <stop offset="0.581" stop-color="#132E62" />
-            <stop offset="0.738" stop-color="#144B7E" />
-            <stop offset="0.873" stop-color="#136497" />
-            <stop offset="1" stop-color="#1387B8" />
+            <stop stopColor="#111D2E" />
+            <stop offset="0.212" stopColor="#051839" />
+            <stop offset="0.407" stopColor="#0A1B48" />
+            <stop offset="0.581" stopColor="#132E62" />
+            <stop offset="0.738" stopColor="#144B7E" />
+            <stop offset="0.873" stopColor="#136497" />
+            <stop offset="1" stopColor="#1387B8" />
           </linearGradient>
           <clipPath id={clipPathId}>
             <rect
