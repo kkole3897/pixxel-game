@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { Meta, StoryObj } from '@storybook/react';
 import GameBox from './game-box';
-import type { GamePrievew } from '../../model';
+import type { GamePreview } from '../../model';
 
 const meta: Meta<typeof GameBox> = {
   title: 'Entities/Game/GameBox',
@@ -13,7 +13,7 @@ export default meta;
 
 type Story = StoryObj<typeof GameBox>;
 
-function createRandomGame(): GamePrievew {
+function createRandomGame(): GamePreview {
   const regularPrice = faker.number.int({ min: 2000, max: 200000 });
   const currentPrice = faker.number.int({ min: 0, max: regularPrice });
   const lowestPrice = faker.number.int({ min: 0, max: currentPrice });
