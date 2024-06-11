@@ -1,4 +1,4 @@
-import { style, type StyleRule } from '@vanilla-extract/css';
+import { style, StyleRule } from '@vanilla-extract/css';
 
 export const truncate = (
   textOverflow: StyleRule['textOverflow'] = 'ellipsis'
@@ -29,3 +29,17 @@ export const clampLine = (
     textOverflow,
   });
 };
+
+export const visuallyHiddenRule: StyleRule = {
+  position: 'absolute',
+  overflow: 'hidden',
+  width: '1px',
+  height: '1px',
+  margin: '-1px',
+  padding: '0',
+  borderWidth: '0',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+};
+
+export const visuallyHidden = style(visuallyHiddenRule);
