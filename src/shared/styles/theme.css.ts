@@ -11,7 +11,7 @@ export const theme = createGlobalTheme(':root', {
   colors: {
     blue: {
       50: '#fff',
-      100: '#cedff4',
+      100: '#e5f1ff',
       200: '#9cbfe8',
       300: '#6b9fdd',
       400: '#397fd1',
@@ -51,7 +51,7 @@ export const theme = createGlobalTheme(':root', {
     yellow: {
       50: '#fffaf4',
       100: '#fff6e8',
-      200: '#feecc1',
+      200: '#feecd1',
       300: '#fee3ba',
       400: '#fed9a3',
       500: '#fed08c',
