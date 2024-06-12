@@ -1,14 +1,14 @@
 import { style } from '@vanilla-extract/css';
 
 export const gameList = style({
-  padding: '0',
+  display: 'flex',
+  flexWrap: 'wrap',
+  rowGap: '24px',
+  padding: '16px 8px',
 });
 
 export const gameListItem = style({
-  padding: '0',
-  selectors: {
-    '& + &': {
-      borderTop: '1px solid #eaedef',
-    },
-  },
+  width: '50%',
+  padding: '0 8px',
+  boxSizing: 'border-box',
 });

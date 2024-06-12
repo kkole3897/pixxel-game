@@ -1,4 +1,4 @@
-import { GameBox } from '@/entities/game/ui';
+import { GamePreviewCard } from '@/entities/game/ui';
 import { GameList } from '@/widgets/game/ui';
 import { DefaultLink } from '@/shared/ui/default-link';
 import { Core } from '@/shared/api';
@@ -14,7 +14,7 @@ async function Games() {
         return (
           <GameList.Item key={game.id}>
             <DefaultLink href={`/game/${game.publicId}`}>
-              <GameBox game={game} />
+              <GamePreviewCard gamePreview={game} />
             </DefaultLink>
           </GameList.Item>
         );
