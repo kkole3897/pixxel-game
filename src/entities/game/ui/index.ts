@@ -8,3 +8,4 @@ export {
 export { Bar as SteamScoreBar } from './steam-score';
 export { StoreLink as GameStoreLink } from './store-link';
 export { PriceHistoryChart as GamePriceHistoryChart } from './price-history-chart';
+export { GamePreviewCard } from './game-preview-card';
