@@ -42,8 +42,13 @@ export function useGamePreviewCard(gamePreview: GamePreview) {
   const historicalLowestPrice = getHistoricalLowestPrice(gamePreview);
 
   const currentPriceText =
-    currentPrice === 0 ? 'Free' : `${currentPrice?.toLocaleString()}원`;
-  const regularPriceText = `${regularPrice?.toLocaleString()}원`;
+    currentPrice === null
+      ? ''
+      : currentPrice === 0
+        ? 'Free'
+        : `${currentPrice?.toLocaleString()}원`;
+  const regularPriceText =
+    regularPrice === null ? '' : `${regularPrice?.toLocaleString()}원`;
   const discountPercentText = `${getDiscountPercent(currentPrice, regularPrice)}%`;
   const isHistoricalLow =
     isDiscounted(currentPrice, regularPrice) &&
