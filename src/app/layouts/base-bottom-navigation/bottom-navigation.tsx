@@ -18,17 +18,35 @@ export default function BottomNavigation() {
 
   return (
     <nav className={style.bottomNav}>
-      <Link href="/" className={style.navItem}>
-        {pathname === '/' ? <RiHome2Fill /> : <RiHome2Line />}
+      <Link href="/" className={style.navItem({ active: pathname === '/' })}>
+        {pathname === '/' ? (
+          <RiHome2Fill size={20} />
+        ) : (
+          <RiHome2Line size={20} />
+        )}
         <span className={style.navLabel}>홈</span>
       </Link>
-      <Link href="/wishlist" className={style.navItem}>
-        {pathname === '/wishlist' ? <RiHeartFill /> : <RiHeartLine />}
+      <Link
+        href="/wishlist"
+        className={style.navItem({ active: pathname === '/wishlist' })}
+      >
+        {pathname === '/wishlist' ? (
+          <RiHeartFill size={20} />
+        ) : (
+          <RiHeartLine size={20} />
+        )}
         <span className={style.navLabel}>찜</span>
       </Link>
-      <Link href="/me" className={style.navItem}>
-        {pathname?.startsWith('/me') ? <RiUser3Fill /> : <RiUser3Line />}
-        <span className={style.navLabel}>me</span>
+      <Link
+        href="/me"
+        className={style.navItem({ active: pathname?.startsWith('/me') })}
+      >
+        {pathname?.startsWith('/me') ? (
+          <RiUser3Fill size={20} />
+        ) : (
+          <RiUser3Line size={20} />
+        )}
+        <span className={style.navLabel}>Me</span>
       </Link>
     </nav>
   );
