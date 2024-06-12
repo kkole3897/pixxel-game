@@ -15,11 +15,10 @@ export default meta;
 
 type Story = StoryObj<typeof GamePreviewCard>;
 
-const gamePreview: GamePreviewCardProps['gamePreview'] = {
+const emptyCatalog: GamePreviewCardProps['gamePreview'] = {
   id: 1,
-  title: 'Game Name',
-  titleKo:
-    '게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름게임 이름',
+  title: 'Thymesia',
+  titleKo: '티메시아',
   mainImage: mainImage.src,
   type: 'game',
   isFree: false,
@@ -29,6 +28,62 @@ const gamePreview: GamePreviewCardProps['gamePreview'] = {
 
 export const Default: Story = {
   args: {
-    gamePreview,
+    gamePreview: emptyCatalog,
+  },
+};
+
+const bestSteamCatalog: GamePreviewCardProps['gamePreview'] = {
+  id: 1,
+  title: 'Thymesia',
+  titleKo: '티메시아',
+  mainImage: mainImage.src,
+  type: 'game',
+  isFree: false,
+  publicId: '123',
+  gameCatalog: [
+    {
+      id: 1,
+      gameId: 1,
+      store: 'steam',
+      drm: 'steam',
+      currentPrice: 3000,
+      currentPriceExpireAt: '2021-01-01T00:00:00+09:00',
+      lowestPrice: 10000,
+      regularPrice: 10000,
+    },
+  ],
+};
+
+export const Steam: Story = {
+  args: {
+    gamePreview: bestSteamCatalog,
+  },
+};
+
+const bestEpicCatalog: GamePreviewCardProps['gamePreview'] = {
+  id: 1,
+  title: 'Thymesia',
+  titleKo: '티메시아',
+  mainImage: mainImage.src,
+  type: 'game',
+  isFree: false,
+  publicId: '123',
+  gameCatalog: [
+    {
+      id: 1,
+      gameId: 1,
+      store: 'epic',
+      drm: 'epic',
+      currentPrice: 3000,
+      currentPriceExpireAt: '2031-01-01T00:00:00+09:00',
+      lowestPrice: 3000,
+      regularPrice: 10000,
+    },
+  ],
+};
+
+export const Epic: Story = {
+  args: {
+    gamePreview: bestEpicCatalog,
   },
 };

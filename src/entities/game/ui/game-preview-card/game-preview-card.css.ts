@@ -51,7 +51,7 @@ export const descriptionArea = style({
   padding: '8px',
 });
 
-export const title = style([truncate()]);
+export const title = style([truncate(), fontWeight.medium]);
 
 const catalogAreaContainer = createContainer();
 
@@ -78,7 +78,7 @@ export const priceArea = style({
   gap: '4px',
 });
 
-export const discountRatio = style([
+export const discountPercent = style([
   text.xs,
   {
     display: 'flex',

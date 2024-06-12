@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { GameType } from './game-type';
 import { MetaCritic } from './meta-critic';
 import { OpenCritic } from './open-critic';
@@ -29,7 +31,7 @@ export interface Game {
   gameCatalog: GameCatalogItem[];
 }
 
-type GameCatalogPreview = Pick<
+type GameCatalogItemPreview = Pick<
   GameCatalogItem,
   | 'id'
   | 'gameId'
@@ -46,5 +48,81 @@ export interface GamePreview
     Game,
     'id' | 'publicId' | 'title' | 'titleKo' | 'type' | 'isFree' | 'mainImage'
   > {
-  gameCatalog: GameCatalogPreview[];
+  gameCatalog: GameCatalogItemPreview[];
+}
+
+export function isCurrentPriceExpired(currentPriceExpireAt: string | null) {
+  if (currentPriceExpireAt === null) {
+    return false;
+  }
+
+  const current = dayjs();
+
+  return current > dayjs(currentPriceExpireAt);
+}
+
+export function getCurrentPrice(
+  gameCatalogItem: GameCatalogItemPreview
+): number | null {
+  if (gameCatalogItem.currentPrice === null) {
+    return gameCatalogItem.regularPrice;
+  }
+
+  return isCurrentPriceExpired(gameCatalogItem.currentPriceExpireAt)
+    ? gameCatalogItem.regularPrice
+    : gameCatalogItem.currentPrice;
+}
+
+export function getBestCatalog(game: GamePreview) {
+  if (game.gameCatalog.length === 0) {
+    return null;
+  }
+
+  const bestCatalog = game.gameCatalog.reduce<null | GameCatalogItemPreview>(
+    (best, cur) => {
+      if (!best) {
+        return cur;
+      }
+
+      const bestPrice = getCurrentPrice(best);
+      const currentPrice = getCurrentPrice(cur);
+
+      if (bestPrice === null) {
+        return cur;
+      }
+
+      if (currentPrice === null) {
+        return best;
+      }
+
+      if (currentPrice < bestPrice) {
+        return cur;
+      }
+
+      return best;
+    },
+    null
+  );
+
+  return bestCatalog;
+}
+
+export function getHistoricalLowestPrice(game: GamePreview) {
+  if (game.gameCatalog.length === 0) {
+    return null;
+  }
+
+  const lowestPrice = game.gameCatalog.reduce<null | number>((lowest, cur) => {
+    if (lowest === null) {
+      return cur.lowestPrice;
+    }
+
+    if (cur.lowestPrice === null) {
+      return lowest;
+    }
+
+    return cur.lowestPrice < lowest ? cur.lowestPrice : lowest;
+  }, null);
+
+  return lowestPrice;
 }
