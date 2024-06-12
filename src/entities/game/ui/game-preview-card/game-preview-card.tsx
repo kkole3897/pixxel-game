@@ -23,11 +23,13 @@ export default function GamePreviewCard({
     <div className={composedRootClassName}>
       <div className={styles.thumbnailArea}>
         <ImageWithFallback
-          src={gamePreview.mainImage}
+          src={null}
           alt=""
           fill
           className={styles.thumbnailImage}
-        />
+        >
+          <div className={styles.thumbnailFallback}></div>
+        </ImageWithFallback>
         <div className={styles.historicalLow}>역대 최저</div>
       </div>
       <div className={styles.descriptionArea}>

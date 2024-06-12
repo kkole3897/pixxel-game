@@ -20,6 +20,13 @@ export const thumbnailArea = style({
 export const thumbnailImage = style({
   width: '100%',
   height: '100%',
+  objectFit: 'cover',
+});
+
+export const thumbnailFallback = style({
+  width: '100%',
+  height: '100%',
+  background: theme.colors.gray[200],
 });
 
 export const historicalLow = style([

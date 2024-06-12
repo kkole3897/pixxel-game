@@ -12,7 +12,7 @@ const meta: Meta<typeof ImageWithFallback> = {
       control: 'text',
       description: '이미지 url 또는 static import',
     },
-    fallback: {
+    fallbackSrc: {
       control: 'text',
       description:
         'src가 비어 있거나 오류가 있을 때 나타낼 대체 이미지의 url 또는 static import',
@@ -65,7 +65,7 @@ export const BrokenImage: Story = {
     src: 'dsdfs',
     width: 128,
     height: 128,
-    fallback: '/images/fallback-image.png',
+    fallbackSrc: '/images/fallback-image.png',
     alt: 'broken image',
   },
 };
