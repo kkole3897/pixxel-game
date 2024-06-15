@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import cn from 'classnames';
 
 import '@/app/styles/globals.css';
 import { base, serif } from '@/shared/fonts';
@@ -22,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={cn(base.variable, serif.variable)}>
       <body>
         <ReactQueryProvider>
           <div className="page">{children}</div>
