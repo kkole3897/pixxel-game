@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
 import '@/app/styles/globals.css';
-import { base, serif } from '@/app/fonts';
+import { base, serif } from '@/shared/fonts';
 import { ReactQueryProvider } from '@/app/providers';
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${base.variable} ${serif.variable}`}>
+    <html lang="ko">
       <body>
         <ReactQueryProvider>
           <div className="page">{children}</div>

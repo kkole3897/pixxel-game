@@ -46,6 +46,7 @@ const config: StorybookConfig = {
         ],
       },
     },
+    '@storybook/addon-mdx-gfm',
   ],
   framework: {
     name: '@storybook/nextjs',
@@ -56,8 +57,12 @@ const config: StorybookConfig = {
   },
   staticDirs: [
     {
-      from: '../src/app/fonts',
-      to: 'app/fonts',
+      from: '../src/shared/fonts',
+      to: 'src/shared/fonts',
+    },
+    {
+      from: '../src/app/styles',
+      to: 'src/app/styles',
     },
     '../public',
   ],

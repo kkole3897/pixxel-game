@@ -1,8 +1,9 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
+import cn from 'classnames';
 
 import '../src/app/styles/globals.css';
-import { base, serif } from '../src/app/fonts';
+import { base, serif } from '../src/shared/fonts/fonts';
 
 const preview: Preview = {
   parameters: {
@@ -17,7 +18,7 @@ const preview: Preview = {
   decorators: [
     (Story) => {
       return (
-        <div className={`${base.className} ${serif.className}`}>
+        <div className={cn(base.className, base.variable, serif.variable)}>
           <Story />
         </div>
       );
