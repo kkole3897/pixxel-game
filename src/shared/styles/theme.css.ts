@@ -98,7 +98,7 @@ export const theme = createGlobalTheme(':root', {
     xl: '1.5rem',
     '2xl': '1.75rem',
     '3xl': '2.25rem',
-    '4xl': '2.65rem',
+    '4xl': '2.625rem',
   },
   lineHeight: {
     '3xs': '1rem',
