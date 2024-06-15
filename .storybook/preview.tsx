@@ -6,8 +6,8 @@ import '../src/app/styles/globals.css';
 import { base, serif } from '../src/shared/fonts/fonts';
 
 const preview: Preview = {
+  tags: ['autodocs'],
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,

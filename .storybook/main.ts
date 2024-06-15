@@ -2,6 +2,7 @@ import type { StorybookConfig } from '@storybook/nextjs';
 
 import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import remarkGfm from 'remark-gfm';
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.mdx', '../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -46,15 +47,26 @@ const config: StorybookConfig = {
         ],
       },
     },
-    '@storybook/addon-mdx-gfm',
+    '@chromatic-com/storybook',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
   ],
+
   framework: {
     name: '@storybook/nextjs',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
+
+  docs: {},
+
   staticDirs: [
     {
       from: '../src/shared/fonts',
@@ -64,7 +76,13 @@ const config: StorybookConfig = {
       from: '../src/app/styles',
       to: 'src/app/styles',
     },
-    '../public',
+    {
+      from: '../public',
+      to: 'public',
+    },
   ],
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+  },
 };
 export default config;
