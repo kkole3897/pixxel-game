@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import GamePreviewCard, {
   type GamePreviewCardProps,
 } from './game-preview-card';
-import mainImage from './assets/main.jpg';
+import mainImage from '~/stories/assets/game-main-image.png';
 
 const meta: Meta<typeof GamePreviewCard> = {
   title: 'Entities/Game/GamePreviewCard',
