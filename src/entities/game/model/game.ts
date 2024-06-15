@@ -27,7 +27,7 @@ export interface Game {
   createdAt: string;
   metaCritic: MetaCritic | null;
   openCritic: OpenCritic | null;
-  steam: SteamScore | null;
+  steamScore: SteamScore | null;
   gameCatalog: GameCatalogItem[];
 }
 
