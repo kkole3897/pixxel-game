@@ -63,6 +63,6 @@ const SteamFillBase = forwardRef<SVGSVGElement, SteamFillBaseProps>(
   }
 );
 
-SteamFillBase.displayName = 'SteamGradientFill';
+SteamFillBase.displayName = 'SteamFillBase';
 
 export default SteamFillBase;
