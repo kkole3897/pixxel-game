@@ -6,7 +6,7 @@ import BestGameCatalog, {
 import mainImage from '~/stories/assets/game-main-image.png';
 
 const meta: Meta<typeof BestGameCatalog> = {
-  title: 'Widgets/GameDetail/BestGameCatalogCard',
+  title: 'Entities/Game/BestGameCatalogCard',
   component: BestGameCatalog,
   tags: ['autodocs'],
 };
