@@ -1,6 +1,8 @@
 import { useId, forwardRef } from 'react';
 
-type SteamFillWithTextProps = {
+import { CommonSvgIconProps } from '../types';
+
+interface SteamFillWithTextProps extends CommonSvgIconProps {
   /**
    * @default 192
    */
@@ -17,11 +19,17 @@ type SteamFillWithTextProps = {
    * @default 'width'
    */
   scaleBy?: 'width' | 'height';
-};
+}
 
 const SteamFillWithText = forwardRef<SVGSVGElement, SteamFillWithTextProps>(
   (
-    { width = 192, height = 58, color = '#231F20', scaleBy = 'width' } = {},
+    {
+      width = 192,
+      height = 58,
+      color = '#231F20',
+      scaleBy = 'width',
+      ...props
+    } = {},
     forwardedRef
   ) => {
     const maskId = useId();
@@ -37,6 +45,7 @@ const SteamFillWithText = forwardRef<SVGSVGElement, SteamFillWithTextProps>(
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         ref={forwardedRef}
+        {...props}
       >
         <mask
           id={maskId}

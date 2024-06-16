@@ -1,6 +1,8 @@
 import { forwardRef, useId } from 'react';
 
-export type EpicFillProps = {
+import { CommonSvgIconProps } from '../types';
+
+export interface EpicFillProps extends CommonSvgIconProps {
   /**
    * @default 24
    */
@@ -9,10 +11,10 @@ export type EpicFillProps = {
    * @default #000000
    */
   color?: string;
-};
+}
 
 const EpicFill = forwardRef<SVGSVGElement, EpicFillProps>(
-  ({ size = 24, color } = {}, forwardedRef) => {
+  ({ size = 24, color = '#000000', ...props } = {}, forwardedRef) => {
     const clipPathId = useId();
     const maskId = useId();
 
@@ -24,6 +26,7 @@ const EpicFill = forwardRef<SVGSVGElement, EpicFillProps>(
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         ref={forwardedRef}
+        {...props}
       >
         <g clipPath={`url(#${clipPathId})`}>
           <mask
