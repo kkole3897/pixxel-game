@@ -62,7 +62,10 @@ export function isCurrentPriceExpired(currentPriceExpireAt: string | null) {
 }
 
 export function getCurrentPrice(
-  gameCatalogItem: GameCatalogItemPreview
+  gameCatalogItem: Pick<
+    GameCatalogItem,
+    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt'
+  >
 ): number | null {
   if (gameCatalogItem.currentPrice === null) {
     return gameCatalogItem.regularPrice;
@@ -125,4 +128,27 @@ export function getHistoricalLowestPrice(game: GamePreview) {
   }, null);
 
   return lowestPrice;
+}
+
+export function isDiscounted({
+  currentPrice,
+  regularPrice,
+}: {
+  currentPrice: number | null;
+  regularPrice: number | null;
+}) {
+  if (currentPrice === null || regularPrice === null || regularPrice === 0) {
+    return false;
+  }
+
+  return currentPrice < regularPrice;
+}
+
+export function isDiscountedCatalogItem(
+  gameCatalogItem: Parameters<typeof getCurrentPrice>[0]
+) {
+  const currentPrice = getCurrentPrice(gameCatalogItem);
+  const { regularPrice } = gameCatalogItem;
+
+  return isDiscounted({ currentPrice, regularPrice });
 }

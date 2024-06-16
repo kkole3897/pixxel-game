@@ -1,6 +1,9 @@
 export {
   useGetBestGamePriceHistoryQuery,
   useGetGamePriceHistoryQuery,
+  getCurrentPrice,
+  isDiscountedCatalogItem,
+  isDiscounted,
   type GameType,
   type GameStore,
   type GameDrm,

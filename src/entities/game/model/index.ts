@@ -13,6 +13,8 @@ export {
   getBestCatalog,
   getCurrentPrice,
   getHistoricalLowestPrice,
+  isDiscountedCatalogItem,
+  isDiscounted,
   type Game,
   type GamePreview,
 } from './game';
