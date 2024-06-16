@@ -37,9 +37,6 @@ const meta: Meta<typeof ImageWithFallback> = {
       description:
         'false일 경우 또는 static import가 아닌 경우 width, height 값을 반드시 명시해야 함',
     },
-    loading: {
-      control: 'string',
-    },
   },
 };
 
