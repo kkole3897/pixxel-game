@@ -1,6 +1,6 @@
 import { useId, forwardRef } from 'react';
 
-type SteamFillWithText = {
+type SteamFillWithTextProps = {
   /**
    * @default 192
    */
@@ -19,9 +19,9 @@ type SteamFillWithText = {
   scaleBy?: 'width' | 'height';
 };
 
-const SteamFillWithText = forwardRef<SVGSVGElement, SteamFillWithText>(
+const SteamFillWithText = forwardRef<SVGSVGElement, SteamFillWithTextProps>(
   (
-    { width = 192, height = 58, color = '#231F20', scaleBy = 'width' },
+    { width = 192, height = 58, color = '#231F20', scaleBy = 'width' } = {},
     forwardedRef
   ) => {
     const maskId = useId();
