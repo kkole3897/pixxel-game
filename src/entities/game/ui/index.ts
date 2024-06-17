@@ -17,3 +17,4 @@ export const LowestPriceRanks = {
   Item: LowestPriceRankItem,
 };
 export { BestGameCatalogCard } from './best-game-catalog-card';
+export { GameCatalogListItem } from './game-catalog-list';
