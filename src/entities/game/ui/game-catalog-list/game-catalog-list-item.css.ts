@@ -29,6 +29,7 @@ export const priceArea = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-end',
+  justifyContent: 'center',
 });
 
 export const regularPriceArea = style([

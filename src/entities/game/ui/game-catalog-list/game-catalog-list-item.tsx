@@ -1,14 +1,12 @@
 import { RiSteamFill } from '@remixicon/react';
 
-import { GameCatalogItem } from '../../model';
+import type { GameCatalogListItem } from './types';
 import * as styles from './game-catalog-list-item.css';
 import { SteamFillWithText, EpicFill, EpicFillBase } from '@/shared/ui/icons';
+import { useGameCatalogItem } from './hooks/use-game-catalog-item';
 
 export type GameCatalogListItemProps = {
-  item: Omit<
-    GameCatalogItem,
-    'id' | 'gameId' | 'lowestPrice' | 'lowestPriceUpdatedAt'
-  >;
+  item: GameCatalogListItem;
 };
 
 const storeIconMap = {
@@ -24,6 +22,16 @@ const drmIconMap = {
 export default function GameCatalogListItem({
   item,
 }: GameCatalogListItemProps) {
+  const {
+    discountPercent,
+    isDiscounted,
+    hasPriceInfo,
+    regularPriceText,
+    currentPriceText,
+    willDiscountExpire,
+    discountExpireDate,
+  } = useGameCatalogItem(item);
+
   return (
     <div className={styles.listItem}>
       <div className={styles.storeArea}>
@@ -33,14 +41,22 @@ export default function GameCatalogListItem({
           {drmIconMap[item.drm]}
         </div>
       </div>
-      <div className={styles.priceArea}>
-        <div className={styles.regularPriceArea}>
-          <span className={styles.discountPercent}>{'38%'}</span>
-          <span className={styles.regularPrice}>{'68,000원'}</span>
+      {hasPriceInfo && (
+        <div className={styles.priceArea}>
+          {isDiscounted && (
+            <div className={styles.regularPriceArea}>
+              <span className={styles.discountPercent}>{discountPercent}</span>
+              <span className={styles.regularPrice}>{regularPriceText}</span>
+            </div>
+          )}
+          <div className={styles.currentPrice}>{currentPriceText}</div>
+          {willDiscountExpire && (
+            <div className={styles.discountExpireDate}>
+              {discountExpireDate}까지
+            </div>
+          )}
         </div>
-        <div className={styles.currentPrice}>{'30,000원'}</div>
-        <div className={styles.discountExpireDate}>{'24.06.24'}까지</div>
-      </div>
+      )}
     </div>
   );
 }

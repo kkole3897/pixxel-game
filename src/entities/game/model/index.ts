@@ -15,6 +15,7 @@ export {
   getHistoricalLowestPrice,
   isDiscountedCatalogItem,
   isDiscounted,
+  calculateCatalogDiscountRatio,
   type Game,
   type GamePreview,
 } from './game';

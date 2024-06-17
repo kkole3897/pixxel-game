@@ -152,3 +152,19 @@ export function isDiscountedCatalogItem(
 
   return isDiscounted({ currentPrice, regularPrice });
 }
+
+export function calculateCatalogDiscountRatio(
+  catalogItem: Pick<
+    GameCatalogItem,
+    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt'
+  >
+) {
+  const currentPrice = getCurrentPrice(catalogItem);
+  const { regularPrice } = catalogItem;
+
+  if (currentPrice === null || regularPrice === null || regularPrice === 0) {
+    return 0;
+  }
+
+  return (regularPrice - currentPrice) / regularPrice;
+}
