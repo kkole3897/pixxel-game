@@ -33,7 +33,7 @@ export const Example: Story = {
     return (
       <LowestPriceRanks>
         {data.map((record, index) => (
-          <LowestPriceRankItem key={index} record={record} />
+          <LowestPriceRankItem key={index} record={record} rank={1} />
         ))}
       </LowestPriceRanks>
     );

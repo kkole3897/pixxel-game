@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { type StyleRule, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { text } from '@/shared/styles/typography.css';
@@ -15,43 +15,39 @@ export const rankItem = style([
   },
 ]);
 
-export const iconArea = recipe({
+export const iconArea = recipe<{ rank: { [k: number]: StyleRule } }>({
   base: {
     display: 'inline-flex',
     flexShrink: 0,
     width: '18px',
     height: '18px',
+    color: theme.colors.gray[700],
   },
   variants: {
     rank: {
-      gold: {
+      1: {
         color: theme.colors.yellow[950],
-      },
-      silver: {
-        color: theme.colors.gray[700],
       },
     },
   },
   defaultVariants: {
-    rank: 'silver',
+    rank: undefined,
   },
 });
 
-export const price = recipe({
+export const price = recipe<{ rank: { [k: number]: StyleRule } }>({
   base: {
     fontWeight: theme.fontWeight.semibold,
+    color: theme.colors.gray[700],
   },
   variants: {
     rank: {
-      gold: {
+      1: {
         color: theme.colors.yellow[950],
-      },
-      silver: {
-        color: theme.colors.gray[700],
       },
     },
   },
   defaultVariants: {
-    rank: 'silver',
+    rank: undefined,
   },
 });
