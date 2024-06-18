@@ -79,6 +79,10 @@ globalStyle(`${content} strong`, {
   fontWeight: theme.fontWeight.semibold,
 });
 
+globalStyle(`${content} i`, {
+  fontStyle: 'italic',
+});
+
 globalStyle(`${content} img`, {
   width: '100%',
 });
@@ -89,4 +93,19 @@ globalStyle(`${content} a`, {
 });
 globalStyle(`${content} a:hover`, {
   color: theme.colors.blue[500],
+});
+
+globalStyle(`${content} ul`, {
+  marginLeft: '16px',
+  listStyleType: 'disc',
+});
+
+globalStyle(`${content} ol`, {
+  marginLeft: '16px',
+  listStyleType: 'decimal',
+});
+
+globalStyle(`${content} li`, {
+  marginBottom: '8px',
+  listStylePosition: 'outside',
 });
