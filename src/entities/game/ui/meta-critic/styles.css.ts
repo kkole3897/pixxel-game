@@ -1,13 +1,15 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 
+import { theme } from '@/shared/styles/theme.css';
+
 const baseContainer = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: '40px',
   height: '40px',
-  fontWeight: 'bold',
-  color: '#262626',
+  color: theme.colors.gray[50],
+  fontWeight: theme.fontWeight.medium,
 });
 
 const scoreShape = styleVariants({
@@ -29,6 +31,7 @@ const grades = {
   default: {
     border: '1px solid #808080',
     background: 'transparent',
+    color: '#262626',
   },
   good: {
     background: '#00ce7a',
