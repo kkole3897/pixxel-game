@@ -118,6 +118,13 @@ export type GetPriceHistoryResponse = Pick<GameResponse, 'id' | 'publicId'> & {
   })[];
 };
 
+type GetLowestPriceRanksOptions = {
+  /**
+   * @default 2
+   */
+  limit?: number;
+};
+
 export class Games extends Base {
   public async getGames({
     ids,
@@ -202,11 +209,14 @@ export class Games extends Base {
     return data;
   }
 
-  public async getLowestPriceRanks(gamePublicId: string) {
+  public async getLowestPriceRanks(
+    gamePublicId: string,
+    { limit = 2 }: GetLowestPriceRanksOptions = {}
+  ) {
     const { data, error } = await this.supabase
       .rpc('get_lowest_price_ranks', { game_public_id: gamePublicId })
       .select('id, startAt: start_at, currentPrice: current_price, store')
-      .limit(2);
+      .limit(limit);
 
     if (!!error) {
       throw error;
