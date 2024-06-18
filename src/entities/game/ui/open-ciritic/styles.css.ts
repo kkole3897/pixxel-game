@@ -1,5 +1,4 @@
 import { style, styleVariants, createVar } from '@vanilla-extract/css';
-import {} from '@vanilla-extract/dynamic';
 
 export const container = style({
   position: 'relative',
