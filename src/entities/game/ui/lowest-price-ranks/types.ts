@@ -7,5 +7,5 @@ export type Record = Pick<
   GamePriceHistoryRecord,
   'currentPrice' | 'startAt'
 > & {
-  gameCatalog: Pick<GameCatalogItem, 'store'>;
+  store: GameCatalogItem['store'];
 };

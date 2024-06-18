@@ -8,7 +8,7 @@ const storeTextMap = {
 };
 
 export function useRecord(record: Record) {
-  const storeText = storeTextMap[record.gameCatalog.store];
+  const storeText = storeTextMap[record.store];
   const datetimeText = dayjs(record.startAt).format('YY.MM.DD');
   const priceText =
     record.currentPrice === 0

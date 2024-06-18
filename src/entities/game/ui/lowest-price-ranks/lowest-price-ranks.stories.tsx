@@ -19,12 +19,12 @@ const data: LowestPriceRankItemProps['record'][] = [
   {
     currentPrice: 0,
     startAt: '2024-06-16T00:00:00+09:00',
-    gameCatalog: { store: 'steam' },
+    store: 'steam',
   },
   {
     currentPrice: 10000,
     startAt: '2024-06-13T00:00:00+09:00',
-    gameCatalog: { store: 'steam' },
+    store: 'steam',
   },
 ];
 
