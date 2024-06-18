@@ -93,7 +93,7 @@ importers:
         specifier: 14.1.0
         version: 14.1.0(@babel/core@7.24.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dnd:
         specifier: ^16.0.1
@@ -105,7 +105,7 @@ importers:
         specifier: ^16.0.1
         version: 16.0.1
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
         specifier: ^7.51.4
@@ -124,7 +124,7 @@ importers:
         version: 4.5.2(@types/react@18.2.48)(react@18.2.0)
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: '1'
+        specifier: ^1.5.0
         version: 1.5.0(react@18.2.0)
       '@faker-js/faker':
         specifier: ^8.4.0
@@ -181,13 +181,13 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^20
+        specifier: ^20.11.5
         version: 20.11.5
       '@types/react':
-        specifier: ^18
+        specifier: ^18.2.48
         version: 18.2.48
       '@types/react-dom':
-        specifier: ^18
+        specifier: ^18.2.18
         version: 18.2.18
       '@types/sanitize-html':
         specifier: ^2.11.0
@@ -202,7 +202,7 @@ importers:
         specifier: ^6.10.0
         version: 6.10.0(webpack@5.90.0(esbuild@0.19.12))
       eslint:
-        specifier: ^8
+        specifier: ^8.56.0
         version: 8.56.0
       eslint-config-next:
         specifier: 14.1.0
@@ -241,7 +241,7 @@ importers:
         specifier: ^3.3.4
         version: 3.3.4(webpack@5.90.0(esbuild@0.19.12))
       typescript:
-        specifier: ^5
+        specifier: ^5.3.3
         version: 5.3.3
 
 packages:
@@ -3253,14 +3253,8 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
-  caniuse-lite@1.0.30001579:
-    resolution: {integrity: sha512-u5AUVkixruKHJjw/pj9wISlcMpgFWzSrczLZbrqBSxukQixmg0SJ5sZTpvaFvxU0HoQKd4yoyAogyrAz9pzJnA==}
-
-  caniuse-lite@1.0.30001581:
-    resolution: {integrity: sha512-whlTkwhqV2tUmP3oYhtNfaWGYHDdS3JYFQBKXxcUR9qqPWsRhFHhoISO2Xnl/g0xyKzht9mI1LZpiNWfMzHixQ==}
-
-  caniuse-lite@1.0.30001634:
-    resolution: {integrity: sha512-fbBYXQ9q3+yp1q1gBk86tOFs4pyn/yxFm5ZNP18OXJDfA3txImOY9PhfxVggZ4vRHDqoU8NrKU81eN0OtzOgRA==}
+  caniuse-lite@1.0.30001636:
+    resolution: {integrity: sha512-bMg2vmr8XBsbL6Lr0UHXy/21m84FTxDLWn2FSqMd5PrlbMxwJlQnC2YWYxVgp66PZE+BBNF2jYQUBKCo1FDeZg==}
 
   case-sensitive-paths-webpack-plugin@2.4.0:
     resolution: {integrity: sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw==}
@@ -11383,14 +11377,14 @@ snapshots:
 
   browserslist@4.22.3:
     dependencies:
-      caniuse-lite: 1.0.30001581
+      caniuse-lite: 1.0.30001636
       electron-to-chromium: 1.4.650
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.3)
 
   browserslist@4.23.1:
     dependencies:
-      caniuse-lite: 1.0.30001634
+      caniuse-lite: 1.0.30001636
       electron-to-chromium: 1.4.803
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.1)
@@ -11444,11 +11438,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  caniuse-lite@1.0.30001579: {}
-
-  caniuse-lite@1.0.30001581: {}
-
-  caniuse-lite@1.0.30001634: {}
+  caniuse-lite@1.0.30001636: {}
 
   case-sensitive-paths-webpack-plugin@2.4.0: {}
 
@@ -14351,7 +14341,7 @@ snapshots:
       '@next/env': 14.1.0
       '@swc/helpers': 0.5.2
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001579
+      caniuse-lite: 1.0.30001636
       graceful-fs: 4.2.11
       postcss: 8.4.31
       react: 18.2.0
