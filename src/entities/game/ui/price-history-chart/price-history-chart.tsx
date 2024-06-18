@@ -5,7 +5,7 @@ import { scaleTime, scaleLinear } from '@visx/scale';
 import { Brush } from '@visx/brush';
 import { Group } from '@visx/group';
 import { useParentSize } from '@visx/responsive';
-import { AxisBottom, AxisRight } from '@visx/axis';
+import { AxisBottom, AxisRight, AxisTop } from '@visx/axis';
 import { max, extent, bisector, min } from '@visx/vendor/d3-array';
 import { curveStepAfter } from '@visx/curve';
 import { LinePath, Line } from '@visx/shape';
@@ -18,6 +18,7 @@ import {
   useTooltipInPortal,
 } from '@visx/tooltip';
 import dayjs from 'dayjs';
+import { GridRows } from '@visx/grid';
 
 import * as styles from './price-history-chart.css';
 
@@ -223,17 +224,26 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
               <Line
                 from={{ x: tooltipLeft, y: 0 }}
                 to={{ x: tooltipLeft, y: topChartHeight }}
-                stroke="#cccccc"
+                stroke="#b3b5b9"
               />
             </Group>
           )}
+          <GridRows
+            scale={priceScale}
+            stroke="#cccdd0"
+            strokeDasharray="2, 2"
+            width={width - margin.left - margin.right}
+            numTicks={5}
+          />
           <LinePath
             curve={curveStepAfter}
             data={filteredData}
             x={(d) => dateScale(getDate(d))}
             y={(d) => priceScale(getValue(d))}
-            stroke="#000"
-            strokeWidth={2}
+            stroke="#3786fb"
+            strokeWidth={3}
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           {tooltipOpen && (
             <Group top={-margin.top} left={-margin.left}>
@@ -241,14 +251,14 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
                 cx={tooltipLeft}
                 cy={tooltipTop}
                 r="8"
-                fill="#000"
+                fill="#3786fb"
                 fillOpacity="0.25"
               />
               <circle
                 cx={tooltipLeft}
                 cy={tooltipTop}
                 r="4"
-                fill="#000"
+                fill="#3786fb"
                 stroke="#fff"
               />
             </Group>
@@ -265,16 +275,31 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
           />
           <AxisBottom
             scale={dateScale}
-            stroke="#000"
+            stroke="#b3b5b9"
             top={topChartHeight}
             numTicks={5}
+            tickStroke="#b3b5b9"
+            tickLabelProps={() => ({
+              dx: -12,
+              dy: 2,
+              fill: '#80838a',
+              fontSize: 10,
+              fontFamily: 'Pretendard, sans-serif',
+            })}
           />
           <AxisRight
             scale={priceScale}
             left={width - margin.right}
-            numTicks={2}
+            numTicks={5}
             stroke="transparent"
             tickStroke="transparent"
+            tickLabelProps={() => ({
+              dx: -15,
+              dy: 4,
+              fontSize: 10,
+              fill: '#80838a',
+              fontFamily: 'Pretendard, sans-serif',
+            })}
           />
         </Group>
         <Group left={margin.left} top={margin.top + topChartHeight + rowGap}>
@@ -283,7 +308,7 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             data={props.data}
             x={(d) => brushDateScale(getDate(d))}
             y={(d) => brushPriceScale(getValue(d))}
-            stroke="#000"
+            stroke="#3786fb"
             strokeWidth={1}
           />
           <Brush
@@ -298,6 +323,21 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             onChange={onBrushChange}
             disableDraggingOverlay
             useWindowMoveEvents
+            selectedBoxStyle={{ fill: '#cccdd0', fillOpacity: 0.5 }}
+          />
+          <AxisTop
+            scale={brushDateScale}
+            stroke="#b3b5b9"
+            top={0}
+            numTicks={0}
+            tickStroke="transparent"
+          />
+          <AxisBottom
+            scale={brushDateScale}
+            stroke="#b3b5b9"
+            top={yBrushMax}
+            numTicks={0}
+            tickStroke="transparent"
           />
         </Group>
         {tooltipOpen && <Group></Group>}
