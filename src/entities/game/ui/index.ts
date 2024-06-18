@@ -16,5 +16,8 @@ export const LowestPriceRanks = {
   Root: LowestPriceRankRoot,
   Item: LowestPriceRankItem,
 };
-export { BestGameCatalogCard } from './best-game-catalog-card';
+export {
+  BestGameCatalogCard,
+  type BestGameCatalogCardProps,
+} from './best-game-catalog-card';
 export { GameCatalogListItem } from './game-catalog-list';
