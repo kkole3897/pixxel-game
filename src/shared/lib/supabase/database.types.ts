@@ -578,6 +578,17 @@ export type Database = {
           min_price: number;
         }[];
       };
+      get_lowest_price_ranks: {
+        Args: {
+          game_public_id: string;
+        };
+        Returns: {
+          id: number;
+          current_price: number;
+          start_at: string;
+          store: Database['public']['Enums']['game_store'];
+        }[];
+      };
       get_wishlist: {
         Args: Record<PropertyKey, never>;
         Returns: {

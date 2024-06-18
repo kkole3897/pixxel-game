@@ -201,4 +201,17 @@ export class Games extends Base {
 
     return data;
   }
+
+  public async getLowestPriceRanks(gamePublicId: string) {
+    const { data, error } = await this.supabase
+      .rpc('get_lowest_price_ranks', { game_public_id: gamePublicId })
+      .select('id, startAt: start_at, currentPrice: current_price, store')
+      .limit(2);
+
+    if (!!error) {
+      throw error;
+    }
+
+    return data;
+  }
 }
