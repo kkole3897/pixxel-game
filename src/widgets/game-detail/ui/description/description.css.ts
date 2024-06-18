@@ -1,9 +1,10 @@
 import { style, globalStyle, styleVariants } from '@vanilla-extract/css';
 
+import { theme } from '@/shared/styles/theme.css';
+import { text } from '@/shared/styles/typography.css';
+
 export const description = style({
   position: 'relative',
-  fontSize: '0.875rem',
-  lineHeight: '1.25rem',
 });
 
 const collapsibleBase = style({
@@ -56,17 +57,36 @@ export const collapseControlButton = style({
   border: 0,
   backgroundColor: 'transparent',
   color: '#777',
-  fontSize: '1.25rem',
   cursor: 'pointer',
 });
 
-globalStyle(`${description} h2`, {
+export const content = style([
+  text.sm,
+  {
+    color: theme.colors.gray[600],
+  },
+]);
+
+globalStyle(`${content} h2`, {
   marginTop: '12px',
-  fontSize: '1rem',
-  fontWeight: '600',
-  lineHeight: '1.75rem',
+  color: theme.colors.gray[900],
+  fontSize: theme.fontSize.base,
+  fontWeight: theme.fontWeight.semibold,
+  lineHeight: theme.lineHeight.base,
 });
 
-globalStyle(`${description} img`, {
+globalStyle(`${content} strong`, {
+  fontWeight: theme.fontWeight.semibold,
+});
+
+globalStyle(`${content} img`, {
   width: '100%',
+});
+
+globalStyle(`${content} a`, {
+  color: theme.colors.gray[900],
+  textDecoration: 'none',
+});
+globalStyle(`${content} a:hover`, {
+  color: theme.colors.blue[500],
 });

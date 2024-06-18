@@ -5,15 +5,18 @@ import sanitizeHtml from 'sanitize-html';
 import { RiArrowDownWideLine, RiArrowUpWideLine } from '@remixicon/react';
 
 import * as styles from './description.css';
+import { useGameDetailQuery } from '@/entities/game';
 
 type Props = {
-  content: string;
+  gamePublicId: string;
 };
 
-export default function Description({ content }: Props) {
-  const MAX_HEIGHT = 850;
+const MAX_HEIGHT = 850;
 
-  const cleanContent = sanitizeHtml(content, {
+export default function Description({ gamePublicId }: Props) {
+  const { data } = useGameDetailQuery(gamePublicId);
+
+  const cleanContent = sanitizeHtml(data?.game.description ?? '', {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
   });
 
@@ -54,6 +57,7 @@ export default function Description({ content }: Props) {
         <div
           dangerouslySetInnerHTML={{ __html: cleanContent }}
           ref={contentRef}
+          className={styles.content}
         ></div>
       </div>
       {isOverflowed && (

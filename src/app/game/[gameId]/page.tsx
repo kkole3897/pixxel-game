@@ -14,7 +14,6 @@ import {
   OpenCriticRecommend,
   SteamScoreBar,
 } from '@/entities/game';
-import { Gallery } from '@/widgets/game-detail/ui/gallery';
 import { GameDescription, PriceHistoryFetcher } from '@/widgets/game-detail';
 import { Core } from '@/shared/api';
 import { createClient } from '@/shared/lib/supabase/server';
@@ -45,20 +44,22 @@ export default async function GameDetailPage({
     game.openCritic !== null ||
     game.steamScore !== null;
 
-  const galleryContents = game.screenshots.map((url) => ({ url }));
-
-  const descriptionContent = game.description ?? '';
-
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div>
-        <GameCatalogSection gamePublicId={params.gameId} />
+        <GameCatalogSection
+          gamePublicId={params.gameId}
+          className={styles.contentBox}
+        />
+        <section className={styles.contentBox}>
+          <h3 className={styles.contentTitle}>최저가추이</h3>
+          <PriceHistoryFetcher gamePublicId={params.gameId} />
+        </section>
+        <section className={styles.contentBox}>
+          <h3 className={styles.contentTitle}>게임 설명</h3>
+          <GameDescription gamePublicId={params.gameId} />
+        </section>
         <section>
-          <section className={styles.contentBox}>
-            <h3 className={styles.contentTitle}>히스토리</h3>
-            <PriceHistoryFetcher gamePublicId={params.gameId} />
-          </section>
-          <div className={styles.contentDivider}></div>
           {hasGameReviewScore && (
             <>
               <section className={styles.contentBox}>
@@ -145,16 +146,6 @@ export default async function GameDetailPage({
               <div className={styles.contentDivider}></div>
             </>
           )}
-          <section className={styles.contentBox}>
-            <h3 className={styles.contentTitle}>상세 정보</h3>
-            <Gallery
-              name={game.titleKo ?? game.title ?? `game/${params.gameId}`}
-              contents={galleryContents}
-            />
-            <div className={styles.descriptionContainer}>
-              <GameDescription content={descriptionContent} />
-            </div>
-          </section>
         </section>
       </div>
     </HydrationBoundary>
