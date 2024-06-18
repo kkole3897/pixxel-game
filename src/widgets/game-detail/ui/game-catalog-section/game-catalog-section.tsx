@@ -8,6 +8,7 @@ import {
 import { useGameDetailQuery, useLowestPriceRanksQuery } from '@/entities/game';
 import { adaptBestGameCatalog } from '../../lib';
 import * as styles from './game-catalog-section.css';
+import { WishButton } from '@/features/toggle-wish';
 
 type GameCatalogSectionProps = {
   gamePublicId: string;
@@ -23,11 +24,9 @@ export default function GameCatalogSection({
   const lowsetPriceRanksQuery = useLowestPriceRanksQuery(gamePublicId);
 
   // TODO: 로딩, 에러 처리 구체화
-  if (gameDetailQuery.isPending || lowsetPriceRanksQuery.isPending)
-    return '로딩 중...';
+  if (gameDetailQuery.isPending || lowsetPriceRanksQuery.isPending) return null;
 
-  if (gameDetailQuery.isError || lowsetPriceRanksQuery.isError)
-    return '에러가 발생했습니다.';
+  if (gameDetailQuery.isError || lowsetPriceRanksQuery.isError) return null;
 
   if (!gameDetailQuery.data || !lowsetPriceRanksQuery.data) return null;
 
@@ -53,6 +52,7 @@ export default function GameCatalogSection({
             </div>
           )
         }
+        wish={<WishButton gameId={gamePublicId} />}
       />
       {gameDetailQuery.data.game.gameCatalog.length > 0 && (
         <div className={styles.catalogList}>

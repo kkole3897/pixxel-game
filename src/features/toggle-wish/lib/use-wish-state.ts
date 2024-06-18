@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import {
   useGetWishlistItemByGamePublicIdQuery,
-  wishlistKeys,
+  wishListQueryKeys,
 } from '@/entities/wish-list';
 
 export function useWishState(gamePublicId: string) {
@@ -23,7 +23,7 @@ export function useWishState(gamePublicId: string) {
 
   const forceUpdate = (newData: Exclude<typeof data, undefined>) => {
     queryClient.setQueryData(
-      wishlistKeys.getWishlistItemByGamePublicId(gamePublicId).queryKey,
+      wishListQueryKeys.getWishlistItemByGamePublicId(gamePublicId).queryKey,
       newData
     );
   };

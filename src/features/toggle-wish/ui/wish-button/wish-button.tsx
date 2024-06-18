@@ -1,6 +1,6 @@
 'use client';
 
-import { RiHeartLine, RiHeartFill } from '@remixicon/react';
+import { RiHeartFill } from '@remixicon/react';
 
 import { useToggleWish } from '../../lib';
 import * as styles from './wish-button.css';
@@ -12,6 +12,7 @@ type WishButtonProps = {
 
 export default function WishButton(props: WishButtonProps) {
   const { isWished, toggle } = useToggleWish(props.gameId);
+  const heartColor = isWished ? '#fff' : 'rgba(255, 255, 255, 0.5)';
 
   const handleClick = async () => {
     await toggle();
@@ -19,8 +20,12 @@ export default function WishButton(props: WishButtonProps) {
   };
 
   return (
-    <button type="button" onClick={handleClick} className={styles.wishButton}>
-      {isWished ? <RiHeartFill color="red" /> : <RiHeartLine />}
+    <button
+      type="button"
+      onClick={handleClick}
+      className={styles.wishButton({ isWished })}
+    >
+      {<RiHeartFill size={20} color={heartColor} />}
     </button>
   );
 }

@@ -1,1 +1,7 @@
-export * from './queries';
+export {
+  wishListQueryKeys,
+  useGetWishListQuery,
+  useGetWishlistItemByGamePublicIdQuery,
+  useAddWishlistItemMutation,
+  useDeleteWishlistItemMutation,
+} from './queries';

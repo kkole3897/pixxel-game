@@ -10,6 +10,7 @@ import { Core } from '@/shared/api';
 import { createClient } from '@/shared/lib/supabase/server';
 import { gameQueryKeys } from '@/entities/game';
 import { GameCatalogSection, ReviewSection } from '@/widgets/game-detail';
+import { wishListQueryKeys } from '@/entities/wish-list';
 
 export default async function GameDetailPage({
   params,
@@ -25,6 +26,11 @@ export default async function GameDetailPage({
   await queryClient.prefetchQuery({
     queryKey: gameQueryKeys.lowestPriceRanks(params.gameId).queryKey,
     queryFn: () => core.games.getLowestPriceRanks(params.gameId),
+  });
+  await queryClient.prefetchQuery({
+    queryKey: wishListQueryKeys.getWishlistItemByGamePublicId(params.gameId)
+      .queryKey,
+    queryFn: () => core.wishlist.getWishlistItemByGamePublicId(params.gameId),
   });
 
   return (
