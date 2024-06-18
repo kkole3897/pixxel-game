@@ -2,6 +2,7 @@ import { style, createVar } from '@vanilla-extract/css';
 
 export const container = style({
   width: '100%',
+  minWidth: '200px',
   maxWidth: '300px',
 });
 

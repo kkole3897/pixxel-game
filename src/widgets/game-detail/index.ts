@@ -3,4 +3,5 @@ export {
   Gallery as GameGallery,
   PriceHistoryFetcher,
   GameCatalogSection,
+  ReviewSection,
 } from './ui';
