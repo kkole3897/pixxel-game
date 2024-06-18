@@ -4,6 +4,7 @@ export {
   getCurrentPrice,
   isDiscountedCatalogItem,
   isDiscounted,
+  getBestCatalog,
   type GameType,
   type GameStore,
   type GameDrm,
@@ -31,5 +32,8 @@ export {
   LowestPriceRankItem,
   GamePreviewCard,
   LowestPriceRanks,
+  GameCatalogListItem,
+  type BestGameCatalogCardProps,
 } from './ui';
 export { gameQueryKeys, useGameDetailQuery } from './queries';
+export { useLowestPriceRanksQuery } from './queries';
