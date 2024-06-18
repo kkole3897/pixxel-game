@@ -32,3 +32,4 @@ export {
   GamePreviewCard,
   LowestPriceRanks,
 } from './ui';
+export { gameQueryKeys, useGameDetailQuery } from './queries';
