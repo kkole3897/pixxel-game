@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import RecommendPercent from './recommend-percent';
 
 const meta: Meta<typeof RecommendPercent> = {
-  title: 'Entities/Game/RecommendedPercent',
+  title: 'Entities/Game/OpenCritic/RecommendedPercent',
   component: RecommendPercent,
   tags: ['autodocs'],
 };
