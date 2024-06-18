@@ -37,17 +37,20 @@ export default function GameCatalogSection({
         game={adaptBestGameCatalog(gameDetailQuery.data.game)}
         footer={
           lowsetPriceRanksQuery.data.length > 0 && (
-            <LowestPriceRanks.Root>
-              {lowsetPriceRanksQuery.data.map((item, index) => {
-                return (
-                  <LowestPriceRanks.Item
-                    key={item.id}
-                    record={item}
-                    rank={index + 1}
-                  />
-                );
-              })}
-            </LowestPriceRanks.Root>
+            <div className={styles.lowestPriceRankArea}>
+              <div className={styles.lowestPriceRankAreaTitle}>역대 최저가</div>
+              <LowestPriceRanks.Root>
+                {lowsetPriceRanksQuery.data.map((item, index) => {
+                  return (
+                    <LowestPriceRanks.Item
+                      key={item.id}
+                      record={item}
+                      rank={index + 1}
+                    />
+                  );
+                })}
+              </LowestPriceRanks.Root>
+            </div>
           )
         }
       />

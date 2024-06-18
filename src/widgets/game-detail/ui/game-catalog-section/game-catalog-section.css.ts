@@ -1,5 +1,7 @@
 import { style } from '@vanilla-extract/css';
+
 import { theme } from '@/shared/styles/theme.css';
+import { text } from '@/shared/styles/typography.css';
 
 export const catalogList = style({
   marginTop: '16px',
@@ -21,3 +23,17 @@ export const catalogItemLink = style({
     },
   },
 });
+
+export const lowestPriceRankArea = style({
+  marginTop: '8px',
+  paddingTop: '8px',
+  borderTop: `1px solid ${theme.colors.gray[100]}`,
+});
+
+export const lowestPriceRankAreaTitle = style([
+  text.sm,
+  {
+    marginBottom: '4px',
+    color: theme.colors.gray[600],
+  },
+]);
