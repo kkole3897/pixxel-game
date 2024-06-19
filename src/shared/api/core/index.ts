@@ -30,8 +30,3 @@ export type {
   PriceHistoryRecordResponse,
   GameStoreResponse,
 } from './games';
-export type {
-  OauthLoginResponse,
-  OauthRegistrationCompleteResponse,
-  OauthRegistrationRequireResponse,
-} from './auth';
