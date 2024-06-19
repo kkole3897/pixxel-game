@@ -1,7 +1,7 @@
 'use client';
 
 import Image, { ImageProps } from 'next/image';
-import { useState, useEffect, SyntheticEvent } from 'react';
+import { useState } from 'react';
 
 import fallbackImage from '~/public/images/fallback-image.png';
 
@@ -20,25 +20,19 @@ export default function ImageWithFallback(props: ImageWithFallbackProps) {
     ...rest
   } = props;
 
-  const [error, setError] = useState<null | SyntheticEvent<
-    HTMLImageElement,
-    Event
-  >>(null);
+  const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    setError(null);
-  }, [src]);
+  const handleError = () => {
+    if (!isError) {
+      setIsError(true);
+    }
+  };
 
-  if ((!src || !!error) && !!children) {
+  if ((!src || isError) && !!children) {
     return children;
+  } else if (!src || isError) {
+    return <Image src={fallback} alt={alt} {...rest} />;
   }
 
-  return (
-    <Image
-      src={!src || error ? fallback : src}
-      alt={alt}
-      onError={(error) => setError(error)}
-      {...rest}
-    />
-  );
+  return <Image src={src} alt={alt} onError={handleError} {...rest} />;
 }
