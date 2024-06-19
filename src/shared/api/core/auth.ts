@@ -1,5 +1,6 @@
 import { Base } from './lib/base';
 import { coreApiUrl } from '@/shared/config';
+import { AuthSessionMissingError } from '@supabase/supabase-js';
 
 export type OauthRegistrationCompleteResponse = {
   isRegistrationCompleted: true;
@@ -68,5 +69,35 @@ export class Auth extends Base {
     const data: OauthRegistrationCompleteResponse = await response.json();
 
     return data;
+  }
+
+  public async getUser() {
+    const { data, error } = await this.supabase.auth.getUser();
+
+    if (!!error) {
+      throw error;
+    }
+
+    const { user } = data;
+
+    return user;
+  }
+
+  public async getUserFromSession() {
+    const { data, error } = await this.supabase.auth.getSession();
+
+    if (!!error) {
+      throw error;
+    }
+
+    const { session } = data;
+
+    if (!session) {
+      throw new AuthSessionMissingError();
+    }
+
+    const { user } = session;
+
+    return user;
   }
 }
