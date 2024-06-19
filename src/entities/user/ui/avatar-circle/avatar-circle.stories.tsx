@@ -22,8 +22,10 @@ type Story = StoryObj<typeof AvatarCircle>;
 
 export const Example: Story = {
   args: {
-    src: AvatarImage.src,
-    alt: '테스트 유저',
+    user: {
+      avatarUrl: AvatarImage.src,
+      name: '테스트',
+    },
     size: 48,
   },
 };

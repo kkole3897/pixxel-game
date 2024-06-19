@@ -1,11 +1,12 @@
 import cn from 'classnames';
-import Image from 'next/image';
+import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 
 import * as styles from './avatar-circle.css';
+import { User } from '../../models';
+import DefaultAvatarImage from '~/public/images/user-avatar-640x640.png';
 
 export type AvatarCircleProps = {
-  src: string;
-  alt: string;
+  user: Pick<User, 'avatarUrl' | 'name'>;
   /**
    * @default 48
    */
@@ -13,18 +14,20 @@ export type AvatarCircleProps = {
   className?: string;
 };
 
-export default function AvatarCircle({
-  src,
-  alt,
-  ...props
-}: AvatarCircleProps) {
+export default function AvatarCircle({ user, ...props }: AvatarCircleProps) {
   const { size = 48, className } = props;
 
   const composedRootClassName = cn(className, styles.avatarContainer);
 
   return (
     <div className={composedRootClassName}>
-      <Image src={src} width={size} height={size} alt={alt} />
+      <ImageWithFallback
+        src={null}
+        fallbackSrc={DefaultAvatarImage}
+        width={size}
+        height={size}
+        alt={user.name}
+      />
     </div>
   );
 }
