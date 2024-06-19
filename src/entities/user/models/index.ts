@@ -1,2 +1,2 @@
-export { type AuthProvider } from './provider';
-export { type User } from './user';
+export { authProviderSchema, type AuthProvider } from './auth-provider';
+export { userSchema, type User } from './user';
