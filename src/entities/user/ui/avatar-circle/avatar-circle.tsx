@@ -22,7 +22,7 @@ export default function AvatarCircle({ user, ...props }: AvatarCircleProps) {
   return (
     <div className={composedRootClassName}>
       <ImageWithFallback
-        src={null}
+        src={user.avatarUrl}
         fallbackSrc={DefaultAvatarImage}
         width={size}
         height={size}
