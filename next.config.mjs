@@ -13,6 +13,9 @@ const nextConfig = {
         hostname: process.env.NEXT_PUBLIC_STORAGE_HOSTNAME,
         port: process.env.NEXT_PUBLIC_STORAGE_PORT,
       },
+      {
+        hostname: '*.kakaocdn.net',
+      },
     ],
   },
 };
