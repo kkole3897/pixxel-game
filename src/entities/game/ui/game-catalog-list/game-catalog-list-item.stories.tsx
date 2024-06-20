@@ -15,7 +15,6 @@ export default meta;
 type Story = StoryObj<typeof GameCatalogListItem>;
 
 const gameCatalogItem: GameCatalogListItemProps['item'] = {
-  url: 'https://store.steampowered.com/app/1343240/Thymesia/?l=koreana',
   store: 'steam',
   drm: 'steam',
   regularPrice: 27800,
