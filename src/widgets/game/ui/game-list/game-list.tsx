@@ -1,5 +1,6 @@
+import cn from 'classnames';
+
 import * as styles from './game-list.css';
-import { composeClassNames } from '@/shared/lib/react/compose-class-name';
 
 export function GameList({
   children,
@@ -9,7 +10,7 @@ export function GameList({
   React.OlHTMLAttributes<HTMLOListElement>,
   HTMLOListElement
 >) {
-  const composedClassName = composeClassNames(styles.gameList, className);
+  const composedClassName = cn(styles.gameList, className);
 
   return (
     <ol className={composedClassName} {...props}>
@@ -26,7 +27,7 @@ function GameListItem({
   React.LiHTMLAttributes<HTMLLIElement>,
   HTMLLIElement
 >) {
-  const composedClassName = composeClassNames(styles.gameListItem, className);
+  const composedClassName = cn(styles.gameListItem, className);
 
   return (
     <li className={composedClassName} {...props}>
