@@ -3,10 +3,10 @@ import { RiArrowDownLine } from '@remixicon/react';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import * as styles from './game-box.css';
 import { useGamePreview } from './hooks/use-game';
-import type { GamePrievew } from '../../model';
+import type { GamePreview } from '../../model';
 
 interface GameBoxProps {
-  game: GamePrievew;
+  game: GamePreview;
 }
 
 export default function GameBox({ game }: GameBoxProps) {

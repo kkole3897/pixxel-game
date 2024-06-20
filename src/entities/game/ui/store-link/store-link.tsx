@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { RiSteamFill } from '@remixicon/react';
 
 import * as styles from './store-link.css';
-import type { GameStore, GameCatalog } from '../../model';
+import type { GameStore, GameCatalogItem } from '../../model';
 import { usePriceInfo } from './hooks/use-price-info';
 
 interface StoreLinkProps
   extends Pick<
-    GameCatalog,
+    GameCatalogItem,
     'store' | 'url' | 'currentPrice' | 'regularPrice' | 'lowestPrice'
   > {}
 
