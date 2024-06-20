@@ -15,7 +15,6 @@ export const contentTitle = style([
   text.lg,
   {
     marginBottom: '12px',
-    fontSize: '1.125rem',
     fontWeight: theme.fontWeight.medium,
   },
 ]);
