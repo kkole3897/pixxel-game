@@ -4,6 +4,7 @@ import cn from 'classnames';
 import '@/app/styles/globals.css';
 import { base, serif } from '@/shared/fonts';
 import { ReactQueryProvider } from '@/app/providers';
+import { PrevPageStoreProvider } from '@/features/restore-prev-page';
 
 export const metadata: Metadata = {
   title: 'Pixxel Gamez',
@@ -26,7 +27,9 @@ export default function RootLayout({
     <html lang="ko" className={cn(base.variable, serif.variable)}>
       <body>
         <ReactQueryProvider>
-          <div className="page">{children}</div>
+          <PrevPageStoreProvider>
+            <div className="page">{children}</div>
+          </PrevPageStoreProvider>
         </ReactQueryProvider>
       </body>
     </html>

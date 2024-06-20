@@ -11,10 +11,16 @@ import {
   RiUser3Fill,
 } from '@remixicon/react';
 
+import { usePrevPageStore } from '@/features/restore-prev-page';
 import * as style from './bottom-navigation.css';
 
 export default function BottomNavigation() {
   const pathname = usePathname();
+
+  const { setPathname } = usePrevPageStore((state) => state);
+  const handleClickMe = () => {
+    setPathname(pathname);
+  };
 
   return (
     <nav className={style.bottomNav}>
@@ -40,6 +46,7 @@ export default function BottomNavigation() {
       <Link
         href="/me"
         className={style.navItem({ active: pathname?.startsWith('/me') })}
+        onClick={handleClickMe}
       >
         {pathname?.startsWith('/me') ? (
           <RiUser3Fill size={20} />
