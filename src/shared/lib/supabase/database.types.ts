@@ -517,6 +517,47 @@ export type Database = {
           },
         ];
       };
+      profile: {
+        Row: {
+          avatar_url: string | null;
+          created_at: string;
+          deleted_at: string | null;
+          email: string;
+          id: string;
+          name: string;
+          providers: Database['public']['Enums']['auth_provider'][];
+          updated_at: string | null;
+        };
+        Insert: {
+          avatar_url?: string | null;
+          created_at?: string;
+          deleted_at?: string | null;
+          email: string;
+          id?: string;
+          name: string;
+          providers: Database['public']['Enums']['auth_provider'][];
+          updated_at?: string | null;
+        };
+        Update: {
+          avatar_url?: string | null;
+          created_at?: string;
+          deleted_at?: string | null;
+          email?: string;
+          id?: string;
+          name?: string;
+          providers?: Database['public']['Enums']['auth_provider'][];
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'public_profile_id_fkey';
+            columns: ['id'];
+            isOneToOne: true;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       steam_score: {
         Row: {
           created_at: string;
@@ -619,6 +660,7 @@ export type Database = {
       };
     };
     Enums: {
+      auth_provider: 'kakao';
       game_drm: 'steam' | 'epic';
       game_scrape_type:
         | 'new_game'

@@ -7,6 +7,6 @@ import { Core } from '@/shared/api/core';
 export function useGetUserQuery() {
   return useQuery({
     queryKey: userQueryKeys.getUser.queryKey,
-    queryFn: () => new Core(createClient()).auth.getUserFromSession(),
+    queryFn: () => new Core(createClient()).auth.getUser(),
   });
 }

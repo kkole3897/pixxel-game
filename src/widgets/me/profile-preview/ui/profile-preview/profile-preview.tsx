@@ -3,11 +3,7 @@
 import Link from 'next/link';
 import cn from 'classnames';
 
-import {
-  AvatarCircle,
-  useGetUserQuery,
-  adaptSupabaseUser,
-} from '@/entities/user';
+import { AvatarCircle, useGetUserQuery } from '@/entities/user';
 import * as styles from './profile-preview.css';
 
 type ProfilePreviewProps = {
@@ -21,14 +17,12 @@ export default function ProfilePreview({
 }: ProfilePreviewProps) {
   const composedRootClassName = cn(styles.profilePreview, className);
 
-  const { data } = useGetUserQuery();
+  const { data: user } = useGetUserQuery();
 
   // TODO: 로딩, 에러 처리
-  if (!data) {
+  if (!user) {
     return null;
   }
-
-  const user = adaptSupabaseUser(data);
 
   return (
     <div className={composedRootClassName} {...props}>
@@ -38,8 +32,8 @@ export default function ProfilePreview({
       <div className={styles.descriptionArea}>
         <div className={styles.username}>{user.name}</div>
         <div>
-          <Link href="#" className={styles.profileEditLink}>
-            프로필 편집
+          <Link href="/profile" className={styles.profileEditLink}>
+            프로필 상세
           </Link>
         </div>
       </div>

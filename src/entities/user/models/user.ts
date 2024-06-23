@@ -7,7 +7,7 @@ export const userSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   avatarUrl: z.string().url().nullable(),
-  provider: authProviderSchema,
+  providers: z.array(authProviderSchema),
 });
 
 export type User = z.infer<typeof userSchema>;
