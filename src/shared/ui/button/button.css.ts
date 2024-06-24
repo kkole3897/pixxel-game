@@ -33,7 +33,7 @@ export const button = recipe({
       },
     },
     variant: {
-      primary: {
+      solid: {
         borderColor: '#3786fb',
         backgroundColor: '#3786fb',
         color: '#fff',
@@ -54,7 +54,7 @@ export const button = recipe({
           },
         },
       },
-      secondary: {
+      ghost: {
         borderColor: '#3786fb',
         backgroundColor: 'transparent',
         color: '#3786fb',
@@ -94,6 +94,6 @@ export const button = recipe({
   },
   defaultVariants: {
     size: 'md',
-    variant: 'primary',
+    variant: 'solid',
   },
 });

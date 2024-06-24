@@ -20,7 +20,7 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {};
+export const Solid: Story = {};
 
 export const Large: Story = {
   args: {
@@ -28,9 +28,9 @@ export const Large: Story = {
   },
 };
 
-export const Secondary: Story = {
+export const Ghost: Story = {
   args: {
-    variant: 'secondary',
+    variant: 'ghost',
   },
 };
 

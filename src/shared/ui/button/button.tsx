@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 import * as styles from './button.css';
 
-type ButtonVariant = 'primary' | 'secondary' | 'text';
+type ButtonVariant = 'solid' | 'ghost' | 'text';
 type Size = 'lg' | 'md';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -21,7 +21,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, forwardedRef) => {
-    const { className, variant = 'primary', size = 'md', ...rest } = props;
+    const { className, variant = 'solid', size = 'md', ...rest } = props;
     const composedClassName = cn(className, styles.button({ size, variant }));
 
     return (
