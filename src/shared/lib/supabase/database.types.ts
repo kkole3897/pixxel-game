@@ -604,6 +604,12 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      delete_user: {
+        Args: {
+          user_id: string;
+        };
+        Returns: undefined;
+      };
       delete_wish: {
         Args: {
           wish_id: number;

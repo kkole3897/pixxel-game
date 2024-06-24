@@ -13,4 +13,14 @@ export class Auth extends Base {
 
     return data;
   }
+
+  public async deleteUser(userId: string) {
+    const { error } = await this.supabase.rpc('delete_user', {
+      user_id: userId,
+    });
+
+    if (!!error) {
+      throw error;
+    }
+  }
 }
