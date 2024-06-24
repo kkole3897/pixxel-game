@@ -4,5 +4,9 @@ export {
   type User,
   type AuthProvider,
 } from './models';
-export { userQueryKeys, useGetUserQuery } from './queries';
+export {
+  userQueryKeys,
+  useGetUserQuery,
+  useDeleteUserMutation,
+} from './queries';
 export { AvatarCircle } from './ui';

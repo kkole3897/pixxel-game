@@ -31,3 +31,11 @@ export const profileDetailSection = style({
   marginTop: '24px',
   padding: '0 16px',
 });
+
+export const deleteUserArea = style({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  maxWidth: '480px',
+  margin: '16px auto 0',
+  padding: '0 16px',
+});

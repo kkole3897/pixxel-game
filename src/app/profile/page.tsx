@@ -6,6 +6,10 @@ import { Core } from '@/shared/api/core';
 import { createClient } from '@/shared/lib/supabase/server';
 import { userQueryKeys } from '@/entities/user';
 import { ProfileDetailSection } from '@/widgets/profile/profile-detail-section';
+import {
+  DeleteUserButton,
+  DeleteUserAlertDialog,
+} from '@/features/auth/delete-user';
 import * as styles from './page.css';
 
 export default async function ProfilePage() {
@@ -23,6 +27,9 @@ export default async function ProfilePage() {
         </Link>
       </header>
       <ProfileDetailSection className={styles.profileDetailSection} />
+      <div className={styles.deleteUserArea}>
+        <DeleteUserAlertDialog trigger={<DeleteUserButton />} />
+      </div>
     </div>
   );
 }

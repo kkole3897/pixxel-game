@@ -1,7 +1,13 @@
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
+'use client';
 
-import * as styles from './delete-user-alert-dialog.css';
+import { useState } from 'react';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/shared/ui/button';
+import { useGetUserQuery, useDeleteUserMutation } from '@/entities/user';
+import { createClient } from '@/shared/lib/supabase/client';
+import * as styles from './delete-user-alert-dialog.css';
 
 type DeleteUserAlertDialogProps = {
   trigger?: React.ReactNode;
@@ -10,8 +16,29 @@ type DeleteUserAlertDialogProps = {
 export default function DeleteUserAlertDialog({
   trigger,
 }: DeleteUserAlertDialogProps) {
+  const [isOpened, setIsOpened] = useState(false);
+  const { data: user } = useGetUserQuery();
+  const { mutate } = useDeleteUserMutation();
+  const supabase = createClient();
+  const router = useRouter();
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    if (!user) {
+      return;
+    }
+
+    mutate(undefined, {
+      onSuccess: async () => {
+        await supabase.auth.signOut();
+        router.replace('/');
+      },
+    });
+  };
+
   return (
-    <AlertDialog.Root>
+    <AlertDialog.Root open={isOpened} onOpenChange={setIsOpened}>
       <AlertDialog.Trigger asChild>{trigger}</AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay className={styles.overlay} />
@@ -29,7 +56,11 @@ export default function DeleteUserAlertDialog({
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action asChild>
-              <Button type="button" className={styles.deleteButton}>
+              <Button
+                type="button"
+                className={styles.deleteButton}
+                onClick={handleDelete}
+              >
                 탈퇴
               </Button>
             </AlertDialog.Action>

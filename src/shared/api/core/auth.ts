@@ -14,9 +14,9 @@ export class Auth extends Base {
     return data;
   }
 
-  public async deleteUser(userId: string) {
-    const { error } = await this.supabase.rpc('delete_user', {
-      user_id: userId,
+  public async deleteUser() {
+    const { error } = await this.supabase.functions.invoke('delete-user', {
+      method: 'POST',
     });
 
     if (!!error) {
