@@ -24,6 +24,7 @@ export const summaryArea = style({
 export const thumbnailImg = style({
   width: '100%',
   height: '100%',
+  borderRadius: '8px',
   objectFit: 'cover',
 });
 
