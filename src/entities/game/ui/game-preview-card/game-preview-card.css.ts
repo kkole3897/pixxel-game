@@ -49,6 +49,7 @@ export const descriptionArea = style({
   gap: '4px',
   height: '70px',
   padding: '8px',
+  boxSizing: 'content-box',
 });
 
 export const title = style([truncate(), fontWeight.medium]);
