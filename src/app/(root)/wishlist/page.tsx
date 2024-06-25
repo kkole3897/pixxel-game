@@ -1,6 +1,7 @@
 import { WishList } from '@/widgets/wishlist/wish-list';
 import { DefaultLink } from '@/shared/ui/default-link';
-import { GameBox } from '@/entities/game/ui';
+import { GameBox } from '@/entities/game';
+import { EmptyWishListGuide } from '@/widgets/wishlist/empty-wish-list-guide';
 import { Core } from '@/shared/api/core';
 import { createClient } from '@/shared/lib/supabase/server';
 import * as styles from './page.css';
@@ -12,6 +13,10 @@ export default async function WishListPage() {
   const filteredWishlist = wishlist.filter(
     (wishlistItem) => wishlistItem.game !== null
   );
+
+  if (filteredWishlist.length === 0) {
+    return <EmptyWishListGuide className={styles.empty} />;
+  }
 
   return (
     <WishList.Root className={styles.list}>
