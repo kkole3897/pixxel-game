@@ -10,5 +10,4 @@ export const gameList = style({
 export const gameListItem = style({
   width: '50%',
   padding: '0 8px',
-  boxSizing: 'border-box',
 });

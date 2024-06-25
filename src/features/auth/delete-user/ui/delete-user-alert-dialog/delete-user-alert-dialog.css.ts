@@ -24,7 +24,6 @@ export const content = style({
   borderRadius: '8px',
   background: '#fff',
   transform: 'translate(-50%, -50%)',
-  boxSizing: 'border-box',
   zIndex: 30,
 });
 

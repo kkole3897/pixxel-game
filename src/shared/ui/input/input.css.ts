@@ -55,7 +55,6 @@ export const inputContainer = recipe({
     backgroundColor: '#fff',
     color: '#010715',
     cursor: 'text',
-    boxSizing: 'border-box',
 
     selectors: {
       [`&:hover`]: {

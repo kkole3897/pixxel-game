@@ -3,14 +3,6 @@ import { globalStyle } from '@vanilla-extract/css';
 import { base } from '@/shared/styles/layer.css';
 import { theme } from '@/shared/styles/theme.css';
 
-globalStyle('html, body', {
-  '@layer': {
-    [base]: {
-      height: '100%',
-    },
-  },
-});
-
 globalStyle('body, input, textarea, select, button', {
   '@layer': {
     [base]: {

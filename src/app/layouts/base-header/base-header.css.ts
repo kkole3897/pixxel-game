@@ -11,7 +11,6 @@ export const container = style({
   borderBottom: `1px solid ${theme.colors.gray[100]}`,
   background: theme.colors.gray[50],
   zIndex: 10,
-  boxSizing: 'border-box',
 });
 
 export const indexLink = style({

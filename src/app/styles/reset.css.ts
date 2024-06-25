@@ -51,6 +51,28 @@ globalStyle(
   }
 );
 
+globalStyle('*, *::before, *::after', {
+  boxSizing: 'border-box',
+});
+
+globalStyle('html', {
+  '@layer': {
+    [reset]: {
+      textSizeAdjust: '100%',
+      WebkitFontSmoothing: 'antialiased',
+      MozOsxFontSmoothing: 'grayscale',
+    },
+  },
+});
+
+globalStyle('html, body', {
+  '@layer': {
+    [reset]: {
+      height: '100%',
+    },
+  },
+});
+
 globalStyle('body', {
   '@layer': {
     [reset]: {

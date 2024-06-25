@@ -7,7 +7,6 @@ export const menu = style({});
 export const menuItem = style({
   height: '48px',
   padding: '0 16px',
-  boxSizing: 'border-box',
 
   selectors: {
     '& + &': {

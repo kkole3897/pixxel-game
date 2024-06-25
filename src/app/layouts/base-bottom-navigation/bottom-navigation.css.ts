@@ -13,7 +13,6 @@ export const bottomNav = style({
   background: theme.colors.gray[50],
   zIndex: 10,
   boxShadow: '0 4px 24px 0 rgba(0, 0, 0, 0.15)',
-  boxSizing: 'border-box',
 });
 
 export const navItem = recipe({

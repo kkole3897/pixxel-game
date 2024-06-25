@@ -33,7 +33,6 @@ export const descriptionCell = style({
   columnGap: '4px',
   width: '100%',
   padding: '16px',
-  boxSizing: 'border-box',
 
   selectors: {
     '& + &': {
