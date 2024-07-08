@@ -1,7 +1,4 @@
 import { z } from 'zod';
-import { redirect } from 'next/navigation';
-
-import { ServerSession, TempServerSession } from '@/entities/session';
 
 export type KakaoCallbackSearchParams = { [key: string]: string | undefined };
 
