@@ -1,3 +1,4 @@
-export * from './kakao';
-export * from './app';
-export * from './supabase';
+export { kakao } from './kakao';
+export { coreApiUrl } from './app';
+export { supabase } from './supabase';
+export { google } from './google';
