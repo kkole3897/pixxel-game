@@ -16,6 +16,9 @@ const nextConfig = {
       {
         hostname: '*.kakaocdn.net',
       },
+      {
+        hostname: '*.googleusercontent.com',
+      },
     ],
   },
 };
