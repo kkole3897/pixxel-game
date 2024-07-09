@@ -12,7 +12,7 @@ export default function BaseHeader() {
         <Link href="/" className={style.indexLink}>
           <Image
             src={PixxelLogoWithText}
-            alt="Pixxel Gamez"
+            alt="Pixxel Game"
             height={24}
             className={style.logoImage}
           />

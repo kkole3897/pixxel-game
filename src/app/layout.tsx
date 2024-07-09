@@ -7,7 +7,7 @@ import { ReactQueryProvider } from '@/app/providers';
 import { PrevPageStoreProvider } from '@/features/restore-prev-page';
 
 export const metadata: Metadata = {
-  title: 'Pixxel Gamez',
+  title: 'Pixxel Game',
   description: '게임 할인 정보 모음',
 };
 
