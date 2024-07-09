@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { QueryClient } from '@tanstack/react-query';
 
 import { Core } from '@/shared/api';
@@ -7,6 +8,16 @@ import { userQueryKeys } from '@/entities/user';
 import { MyPageHeader } from '@/widgets/me/header';
 import { MyPageMenu } from '@/widgets/me/menu';
 import * as styles from './page.css';
+
+export const metadata: Metadata = {
+  title: '마이페이지 - Pixxel Game',
+  openGraph: {
+    title: '마이페이지 - Pixxel Game',
+  },
+  twitter: {
+    title: '마이페이지 - Pixxel Game',
+  },
+};
 
 export default async function Page() {
   const queryClient = new QueryClient();

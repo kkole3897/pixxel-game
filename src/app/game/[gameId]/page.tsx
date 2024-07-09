@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import {
   QueryClient,
   dehydrate,
@@ -12,13 +13,39 @@ import { gameQueryKeys } from '@/entities/game';
 import { GameCatalogSection, ReviewSection } from '@/widgets/game-detail';
 import { wishListQueryKeys } from '@/entities/wish-list';
 
-export default async function GameDetailPage({
-  params,
-}: {
+type PageProps = {
   params: { gameId: string };
-}) {
+};
+
+const queryClient = new QueryClient();
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { gameId } = params;
+
   const core = new Core(createClient());
-  const queryClient = new QueryClient();
+
+  const { game } = await queryClient.fetchQuery({
+    queryKey: gameQueryKeys.detail(params.gameId).queryKey,
+    queryFn: () => core.games.getGame(params.gameId),
+  });
+
+  const generatedTitle = game?.titleKo ?? game?.title ?? gameId;
+
+  return {
+    title: `${generatedTitle} - Pixxel Game`,
+    openGraph: {
+      title: `${generatedTitle} - Pixxel Game`,
+    },
+    twitter: {
+      title: `${generatedTitle} - Pixxel Game`,
+    },
+  };
+}
+
+export default async function GameDetailPage({ params }: PageProps) {
+  const core = new Core(createClient());
   await queryClient.prefetchQuery({
     queryKey: gameQueryKeys.detail(params.gameId).queryKey,
     queryFn: () => core.games.getGame(params.gameId),

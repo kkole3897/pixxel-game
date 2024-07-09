@@ -1,6 +1,18 @@
+import { Metadata } from 'next';
+
 import { GoogleLoginButton } from '@/features/auth/by-google';
 // import { KakaoLoginButton } from '@/features/auth/by-kakao';
 import * as styles from './page.css';
+
+export const metadata: Metadata = {
+  title: '로그인 - Pixxel Game',
+  openGraph: {
+    title: '로그인 - Pixxel Game',
+  },
+  twitter: {
+    title: '로그인 - Pixxel Game',
+  },
+};
 
 export default function LoginPage() {
   return (

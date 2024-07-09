@@ -7,8 +7,19 @@ import { ReactQueryProvider } from '@/app/providers';
 import { PrevPageStoreProvider } from '@/features/restore-prev-page';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://pixxelgame.com'),
   title: 'Pixxel Game',
-  description: '게임 할인 정보 모음',
+  description: '여러 게임 스토어의 할인 정보를 한번에 모아보세요',
+  openGraph: {
+    title: 'Pixxel Game',
+    description: '여러 게임 스토어의 할인 정보를 한번에 모아보세요',
+    images: ['/og_v1.png'],
+  },
+  twitter: {
+    title: 'Pixxel Game',
+    description: '여러 게임 스토어의 할인 정보를 한번에 모아보세요',
+    images: ['/og_v1.png'],
+  },
 };
 
 export const viewport: Viewport = {

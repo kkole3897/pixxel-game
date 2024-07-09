@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { QueryClient } from '@tanstack/react-query';
 import { RiArrowLeftSLine } from '@remixicon/react';
@@ -11,6 +12,16 @@ import {
   DeleteUserAlertDialog,
 } from '@/features/auth/delete-user';
 import * as styles from './page.css';
+
+export const metadata: Metadata = {
+  title: '프로필 상세 - Pixxel Game',
+  openGraph: {
+    title: '프로필 상세 - Pixxel Game',
+  },
+  twitter: {
+    title: '프로필 상세 - Pixxel Game',
+  },
+};
 
 export default async function ProfilePage() {
   const queryClient = new QueryClient();
