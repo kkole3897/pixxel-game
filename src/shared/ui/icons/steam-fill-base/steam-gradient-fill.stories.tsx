@@ -12,7 +12,7 @@ const meta: Meta<typeof SteamFillBase> = {
       description: '아이콘 크기, 정방형으로 조절 가능',
       table: {
         defaultValue: {
-          summary: 24,
+          summary: '24',
         },
       },
     },
