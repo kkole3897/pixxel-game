@@ -31,7 +31,7 @@ export interface Game {
   gameCatalog: GameCatalogItem[];
 }
 
-type GameCatalogItemPreview = Pick<
+export type GameCatalogItemPreview = Pick<
   GameCatalogItem,
   | 'id'
   | 'gameId'

@@ -1,9 +1,9 @@
-import { GamePrievew, GameCatalogPreview } from '../../../model';
+import type { GamePreview, GameCatalogItemPreview } from '../../../model';
 
-export function useGamePreview(game: GamePrievew) {
-  const initialCatalog: null | GameCatalogPreview = null;
+export function useGamePreview(game: GamePreview) {
+  const initialCatalog: null | GameCatalogItemPreview = null;
   const lowestCurrentPriceCatalog = game.gameCatalog.reduce(
-    (acc: null | GameCatalogPreview, cur: GameCatalogPreview) => {
+    (acc: null | GameCatalogItemPreview, cur: GameCatalogItemPreview) => {
       if (acc === null) {
         return cur;
       }

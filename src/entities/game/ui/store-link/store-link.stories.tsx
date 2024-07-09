@@ -16,11 +16,9 @@ export const Regular: Story = {
   args: {
     url: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
     store: 'steam',
-    price: {
-      regular: 66000,
-      current: 66000,
-      lowest: 58000,
-    },
+    regularPrice: 66000,
+    currentPrice: 66000,
+    lowestPrice: 58000,
   },
 };
 
@@ -28,11 +26,9 @@ export const Discount: Story = {
   args: {
     url: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
     store: 'steam',
-    price: {
-      regular: 66000,
-      current: 58000,
-      lowest: 55000,
-    },
+    regularPrice: 66000,
+    currentPrice: 58000,
+    lowestPrice: 55000,
   },
 };
 
@@ -40,10 +36,8 @@ export const Lowest: Story = {
   args: {
     url: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
     store: 'steam',
-    price: {
-      regular: 66000,
-      current: 55000,
-      lowest: 55000,
-    },
+    regularPrice: 66000,
+    currentPrice: 55000,
+    lowestPrice: 55000,
   },
 };

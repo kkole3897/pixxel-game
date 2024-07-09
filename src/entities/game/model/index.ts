@@ -18,6 +18,7 @@ export {
   calculateCatalogDiscountRatio,
   type Game,
   type GamePreview,
+  type GameCatalogItemPreview,
 } from './game';
 export { type GameCatalogItem } from './game-catalog';
 export { type PriceHistoryRecord as GamePriceHistoryRecord } from './price-history';
