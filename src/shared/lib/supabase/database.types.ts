@@ -660,7 +660,7 @@ export type Database = {
       };
     };
     Enums: {
-      auth_provider: 'kakao';
+      auth_provider: 'kakao' | 'google';
       game_drm: 'steam' | 'epic';
       game_scrape_type:
         | 'new_game'

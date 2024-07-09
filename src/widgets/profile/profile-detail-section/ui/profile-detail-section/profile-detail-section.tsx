@@ -7,6 +7,7 @@ import * as styles from './profile-detail-section.css';
 
 const authProviderTextMap = {
   kakao: '카카오',
+  google: '구글',
 };
 
 type ProfileDetailSectionProps = {
