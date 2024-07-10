@@ -1,1 +1,0 @@
-export { EmptyWishListGuide } from './ui';

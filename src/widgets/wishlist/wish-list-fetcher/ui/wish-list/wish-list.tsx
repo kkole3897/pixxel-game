@@ -1,5 +1,8 @@
+'use client';
+
 import cn from 'classnames';
 
+import { useGetWishListQuery } from '@/entities/wish-list';
 import * as styles from './wish-list.css';
 
 type WishListProps = {
@@ -8,6 +11,7 @@ type WishListProps = {
 };
 
 export function WishList({ className, children }: WishListProps) {
+  const {} = useGetWishListQuery();
   const composedRootClassName = cn(className, styles.wishList);
 
   return <ol className={composedRootClassName}>{children}</ol>;

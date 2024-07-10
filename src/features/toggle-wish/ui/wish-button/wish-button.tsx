@@ -2,11 +2,12 @@
 
 import { RiHeartFill } from '@remixicon/react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useToggleWish } from '../../lib';
 import * as styles from './wish-button.css';
-import { revalidateWishlist } from './action';
 import { createClient } from '@/shared/lib/supabase/client';
+import { wishListQueryKeys } from '@/entities/wish-list';
 
 type WishButtonProps = {
   gameId: string;
@@ -15,6 +16,7 @@ type WishButtonProps = {
 export default function WishButton(props: WishButtonProps) {
   const supabase = createClient();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { isWished, toggle } = useToggleWish(props.gameId);
   const heartColor = isWished ? '#fff' : 'rgba(255, 255, 255, 0.5)';
@@ -30,7 +32,10 @@ export default function WishButton(props: WishButtonProps) {
     }
 
     await toggle();
-    revalidateWishlist();
+    queryClient.invalidateQueries({
+      queryKey: wishListQueryKeys.getWishList.queryKey,
+      exact: true,
+    });
   };
 
   return (

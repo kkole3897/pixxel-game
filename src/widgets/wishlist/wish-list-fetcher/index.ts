@@ -1,0 +1,1 @@
+export { WishListFetcher } from './ui';
