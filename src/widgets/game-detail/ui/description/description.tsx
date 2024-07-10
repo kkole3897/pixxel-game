@@ -18,7 +18,7 @@ export default function Description({ gamePublicId }: Props) {
 
   const cleanContent = sanitizeHtml(data?.game.description ?? '', {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-  });
+  }).replaceAll('\\r\\n', '');
 
   const collapsibleId = useId();
 
