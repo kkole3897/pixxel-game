@@ -31,6 +31,14 @@ export default function PriceHistoryContainer({
     return <div className={composedRootClassName}></div>;
   }
 
+  if (data.length === 0) {
+    return (
+      <div className={styles.emptyContainer}>
+        <div className={styles.emptyMessage}>누적된 데이터가 없습니다.</div>
+      </div>
+    );
+  }
+
   return (
     <div className={composedRootClassName}>
       <GamePriceHistoryChart data={data} />
