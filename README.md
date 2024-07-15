@@ -1,4 +1,4 @@
-# gamduck
+# pixxel-game
 
 내가 쓰려고 만드는 게임 할인 정보 모음
 
