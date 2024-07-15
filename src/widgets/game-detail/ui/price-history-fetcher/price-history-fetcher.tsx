@@ -39,9 +39,14 @@ export default function PriceHistoryContainer({
     );
   }
 
+  const history = [
+    ...data,
+    { startAt: new Date().toISOString(), price: data[data.length - 1].price },
+  ];
+
   return (
     <div className={composedRootClassName}>
-      <GamePriceHistoryChart data={data} />
+      <GamePriceHistoryChart data={history} />
     </div>
   );
 }
