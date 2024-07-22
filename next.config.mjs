@@ -21,6 +21,7 @@ const nextConfig = {
       },
     ],
   },
+  output: 'standalone',
 };
 
 export default withVanillaExtract(nextConfig);

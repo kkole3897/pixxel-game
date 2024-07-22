@@ -50,7 +50,7 @@
     "dayjs": "^1.11.10",
     "jsonwebtoken": "^9.0.2",
     "lodash-es": "^4.17.21",
-    "next": "14.2.4",
+    "next": "14.2.5",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -90,7 +90,7 @@
     "@vanilla-extract/webpack-plugin": "^2.3.4",
     "css-loader": "^6.10.0",
     "eslint": "^8.56.0",
-    "eslint-config-next": "14.2.4",
+    "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-storybook": "^0.6.15",
     "husky": "^9.0.11",
@@ -106,7 +106,7 @@
   },
   "packageManager": "pnpm@9.2.0",
   "engines": {
-    "node": "20.11.1",
+    "node": "20.15.1",
     "pnpm": "9.2.0"
   },
   "engineStrict": true

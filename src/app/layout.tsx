@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import cn from 'classnames';
 
-import '@/app/styles/globals.css';
+import './styles/globals.css';
+import { ReactQueryProvider } from './providers';
 import { base, serif } from '@/shared/fonts';
-import { ReactQueryProvider } from '@/app/providers';
 import { PrevPageStoreProvider } from '@/features/restore-prev-page';
 
 export const metadata: Metadata = {
