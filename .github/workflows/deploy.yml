@@ -119,6 +119,5 @@ jobs:
         run: |
           docker stop nextjs && docker stop nginx
           docker rm nextjs && docker rm nginx
-          docker rmi nextjs && docker rmi nginx
-          docker run -d -p 80:80 --name nginx ${{ env.REGISTRY }}/${{ github.repository }}/nginx:latest
-          docker run -d --name nextjs ${{ env.REGISTRY }}/${{ github.repository }}/nextjs:latest
+          docker run -d -p 3000:80 --name nginx ${{ env.REGISTRY }}/${{ github.repository }}/nginx:main
+          docker run -d --name nextjs ${{ env.REGISTRY }}/${{ github.repository }}/nextjs:main
