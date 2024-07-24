@@ -119,5 +119,6 @@ jobs:
         run: |
           docker stop nextjs && docker stop nginx
           docker rm nextjs && docker rm nginx
-          docker run -d -p 3000:80 --name nginx ${{ env.REGISTRY }}/${{ github.repository }}/nginx:main
-          docker run -d --name nextjs ${{ env.REGISTRY }}/${{ github.repository }}/nextjs:main
+          docker network ls|grep my-network > /dev/null || docker network create my-network
+          docker run --network my-network -d --name nextjs ${{ env.REGISTRY }}/${{ github.repository }}/nextjs:main
+          docker run --network my-network -d -p 3000:80 --name nginx --link nextjs:nextjs ${{ env.REGISTRY }}/${{ github.repository }}/nginx:main
