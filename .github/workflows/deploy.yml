@@ -103,3 +103,19 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+  deploy:
+    needs: build
+    runs-on: [self-hosted, pixxel-game-front-ec2]
+    steps:
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Docker Image
+        run: docker stop nextjs && docker stop nginx
+          docker rm nextjs && docker rm nginx
+          docker rmi nextjs && docker rmi nginx
+          docker run -d -p 80:80 --name nginx ${{ env.REGISTRY }}/${{ github.repository }}/nginx:latest
+          docker run -d --name nextjs ${{ env.REGISTRY }}/${{ github.repository }}/nextjs:latest
