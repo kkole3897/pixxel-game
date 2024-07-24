@@ -31,12 +31,21 @@ jobs:
         include:
           - context: .
             image: ghcr.io/${{ github.repository }}/nextjs
+            name: nextjs
           - context: ./nginx
             image: ghcr.io/${{ github.repository }}/nginx
+            name: nginx
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Generate Environment Variables File
+        if: ${{ matrix.name == 'nextjs' }}
+        run: |
+          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
