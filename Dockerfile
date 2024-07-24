@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json pnpm-lock.yaml* ./
-RUN corepack enable pnpm && corepack prepare pnpm@9.6.0 --activate && pnpm install;
+RUN corepack enable pnpm && corepack prepare pnpm@9.6.0 --activate && pnpm i --frozon-lockfile;
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -21,7 +21,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN corepack enable pnpm && corepack prepare pnpm@9.6.0 --activate && pnpm run build;
+RUN corepack enable pnpm && corepack prepare pnpm@9.6.0 --activate && pnpm build;
 
 # Production image, copy all the files and run next
 FROM base AS runner
