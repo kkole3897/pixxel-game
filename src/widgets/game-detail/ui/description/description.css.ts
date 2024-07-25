@@ -84,7 +84,10 @@ globalStyle(`${content} i`, {
 });
 
 globalStyle(`${content} img`, {
-  width: '100%',
+  display: 'inline-block',
+  width: 'auto',
+  maxWidth: '100%',
+  height: 'auto',
 });
 
 globalStyle(`${content} a`, {
