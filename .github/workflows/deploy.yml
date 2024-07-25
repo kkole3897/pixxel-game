@@ -103,7 +103,12 @@ jobs:
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
   deploy:
     needs: build
-    runs-on: [self-hosted, pixxel-game-front-ec2]
+    strategy:
+      matrix:
+        include:
+          - runs-on: [self-hosted, pixxel-game-front01]
+          - runs-on: [self-hosted, pixxel-game-front02]
+    runs-on: ${{ matrix.runs-on }}
     env:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
