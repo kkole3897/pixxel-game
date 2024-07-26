@@ -107,7 +107,6 @@ jobs:
       matrix:
         include:
           - runs-on: [self-hosted, pixxel-game-front01]
-          - runs-on: [self-hosted, pixxel-game-front02]
     runs-on: ${{ matrix.runs-on }}
     env:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
