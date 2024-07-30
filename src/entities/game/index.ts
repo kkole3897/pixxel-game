@@ -34,6 +34,7 @@ export {
   LowestPriceRanks,
   GameCatalogListItem,
   DlcBadge,
+  TrackingDateAlertBox,
   type BestGameCatalogCardProps,
 } from './ui';
 export { gameQueryKeys, useGameDetailQuery } from './queries';

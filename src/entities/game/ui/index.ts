@@ -22,3 +22,4 @@ export {
 } from './best-game-catalog-card';
 export { GameCatalogListItem } from './game-catalog-list';
 export { DlcBadge } from './dlc-badge';
+export { TrackingDateAlertBox } from './tracking-date-alert-box';
