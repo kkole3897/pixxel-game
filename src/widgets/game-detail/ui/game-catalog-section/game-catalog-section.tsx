@@ -5,10 +5,14 @@ import {
   LowestPriceRanks,
   GameCatalogListItem,
 } from '@/entities/game';
-import { useGameDetailQuery, useLowestPriceRanksQuery } from '@/entities/game';
+import {
+  useGameDetailQuery,
+  useLowestPriceRanksQuery,
+  TrackingDateAlertBox,
+} from '@/entities/game';
 import { adaptBestGameCatalog } from '../../lib';
-import * as styles from './game-catalog-section.css';
 import { WishButton } from '@/features/toggle-wish';
+import * as styles from './game-catalog-section.css';
 
 type GameCatalogSectionProps = {
   gamePublicId: string;
@@ -35,22 +39,30 @@ export default function GameCatalogSection({
       <BestGameCatalogCard
         game={adaptBestGameCatalog(gameDetailQuery.data.game)}
         footer={
-          lowsetPriceRanksQuery.data.length > 0 && (
-            <div className={styles.lowestPriceRankArea}>
-              <div className={styles.lowestPriceRankAreaTitle}>역대 최저가</div>
-              <LowestPriceRanks.Root>
-                {lowsetPriceRanksQuery.data.map((item, index) => {
-                  return (
-                    <LowestPriceRanks.Item
-                      key={item.id}
-                      record={item}
-                      rank={index + 1}
-                    />
-                  );
-                })}
-              </LowestPriceRanks.Root>
-            </div>
-          )
+          <div>
+            {lowsetPriceRanksQuery.data.length > 0 && (
+              <div className={styles.lowestPriceRankArea}>
+                <div className={styles.lowestPriceRankAreaTitle}>
+                  역대 최저가
+                </div>
+                <LowestPriceRanks.Root>
+                  {lowsetPriceRanksQuery.data.map((item, index) => {
+                    return (
+                      <LowestPriceRanks.Item
+                        key={item.id}
+                        record={item}
+                        rank={index + 1}
+                      />
+                    );
+                  })}
+                </LowestPriceRanks.Root>
+              </div>
+            )}
+            <TrackingDateAlertBox
+              date={gameDetailQuery.data.game.createdAt}
+              className={styles.trackingDateAlert}
+            />
+          </div>
         }
         wish={<WishButton gameId={gamePublicId} />}
       />

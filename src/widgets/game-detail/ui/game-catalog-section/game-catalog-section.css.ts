@@ -37,3 +37,7 @@ export const lowestPriceRankAreaTitle = style([
     color: theme.colors.gray[600],
   },
 ]);
+
+export const trackingDateAlert = style({
+  marginTop: '20px',
+});
