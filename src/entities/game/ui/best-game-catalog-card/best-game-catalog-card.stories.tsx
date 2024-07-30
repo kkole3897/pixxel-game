@@ -35,6 +35,7 @@ const regularGame: BestGameCatalogCardProps['game'] = {
     currentPrice: 13900,
     currentPriceExpireAt: '2024-05-28T00:00:00+09:00', // 실제로는 utc 0 기준
   },
+  baseGame: null,
 };
 
 export const Regular: Story = {
@@ -63,6 +64,7 @@ const discountGame: BestGameCatalogCardProps['game'] = {
     currentPrice: 13900,
     currentPriceExpireAt: '2024-06-28T00:00:00+09:00', // 실제로는 utc 0 기준
   },
+  baseGame: null,
 };
 
 export const Discount: Story = {
@@ -91,10 +93,45 @@ const unknownGame: BestGameCatalogCardProps['game'] = {
     currentPrice: null,
     currentPriceExpireAt: null, // 실제로는 utc 0 기준
   },
+  baseGame: null,
 };
 
 export const Unknown: Story = {
   args: {
     game: unknownGame,
+  },
+};
+
+const dlcGame: BestGameCatalogCardProps['game'] = {
+  id: 1,
+  publicId: '1234',
+  type: 'dlc',
+  title: 'Thumesia - DLC',
+  titleKo: '티메시아 - DLC',
+  mainImage: mainImage.src,
+  releaseYear: 2024,
+  releaseMonth: 6,
+  releaseDay: 15,
+  gameCatalog: {
+    id: 1,
+    gameId: 1,
+    url: 'https://store.steampowered.com/app/1343240/Thymesia/',
+    store: 'steam',
+    drm: 'steam',
+    regularPrice: 27800,
+    currentPrice: 13900,
+    currentPriceExpireAt: '2024-06-28T00:00:00+09:00', // 실제로는 utc 0 기준
+  },
+  baseGame: {
+    id: 2,
+    publicId: '12345',
+    title: 'Thumesia',
+    titleKo: '티메시아',
+  },
+};
+
+export const DLC: Story = {
+  args: {
+    game: dlcGame,
   },
 };
