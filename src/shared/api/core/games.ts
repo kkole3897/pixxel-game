@@ -51,6 +51,11 @@ export type GameCatalogResponse = {
   createdAt: string;
 };
 
+export type BaseGameResponse = Pick<
+  GameResponse,
+  'id' | 'publicId' | 'title' | 'titleKo'
+>;
+
 export type GameResponse = {
   id: number;
   publicId: string;
@@ -74,6 +79,7 @@ export type GameResponse = {
   openCritic: OpenCriticResponse | null;
   steamScore: SteamScoreResponse | null;
   gameCatalog: GameCatalogResponse[];
+  baseGame: BaseGameResponse | null;
 };
 
 export type GameCatalogPreviewResponse = Pick<
@@ -160,10 +166,11 @@ export class Games extends Base {
         openCritic: open_critic(url, tier, topCriticScore: top_critic_score, percentRecommended: percent_recommended),\
         steamScore: steam_score(url, total, positive),\
         gameCatalog: game_catalog(id, gameId: game_id, url, store, drm, regularPrice: regular_price, currentPrice: current_price, currentPriceExpireAt: current_price_expire_at,\
-          lowestPrice: lowest_price, lowestPriceUpdatedAt: lowest_price_updated_at, createdAt: created_at)'
+          lowestPrice: lowest_price, lowestPriceUpdatedAt: lowest_price_updated_at, createdAt: created_at),\
+        baseGame: base_game_id(id, title, titleKo: title_ko, publicId: public_id)'
       )
       .eq('public_id', publicId)
-      .single();
+      .single<GameResponse>();
 
     if (!!error) {
       throw error;

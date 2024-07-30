@@ -91,6 +91,12 @@ export function useBestGameCatalogCard(game: BestGameCatalog) {
     game.gameCatalog === null ? '' : formatPrice(game.gameCatalog.regularPrice);
   const hasPriceInfo = game.gameCatalog !== null && currentPrice !== null;
 
+  const isDlc = game.type === 'dlc';
+  const baseGameLink = game.baseGame ? `/game/${game.baseGame.publicId}` : null;
+  const baseGameTitle = game.baseGame
+    ? game.baseGame.titleKo ?? game.baseGame.title ?? game.baseGame.publicId
+    : null;
+
   return {
     title,
     releaseDate,
@@ -100,5 +106,8 @@ export function useBestGameCatalogCard(game: BestGameCatalog) {
     currentPriceText,
     regularPriceText,
     hasPriceInfo,
+    isDlc,
+    baseGameLink,
+    baseGameTitle,
   };
 }

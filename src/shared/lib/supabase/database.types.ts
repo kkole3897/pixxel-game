@@ -271,51 +271,6 @@ export type Database = {
           },
         ];
       };
-      game_scrape_task: {
-        Row: {
-          completed_at: string | null;
-          created_at: string;
-          deleted_at: string | null;
-          executed_at: string | null;
-          failed_at: string | null;
-          id: number;
-          referenced_id: number | null;
-          retry_at: string | null;
-          retry_count: number;
-          schedule_at: string | null;
-          type: Database['public']['Enums']['game_scrape_type'];
-          updated_at: string | null;
-        };
-        Insert: {
-          completed_at?: string | null;
-          created_at?: string;
-          deleted_at?: string | null;
-          executed_at?: string | null;
-          failed_at?: string | null;
-          id?: number;
-          referenced_id?: number | null;
-          retry_at?: string | null;
-          retry_count?: number;
-          schedule_at?: string | null;
-          type: Database['public']['Enums']['game_scrape_type'];
-          updated_at?: string | null;
-        };
-        Update: {
-          completed_at?: string | null;
-          created_at?: string;
-          deleted_at?: string | null;
-          executed_at?: string | null;
-          failed_at?: string | null;
-          id?: number;
-          referenced_id?: number | null;
-          retry_at?: string | null;
-          retry_count?: number;
-          schedule_at?: string | null;
-          type?: Database['public']['Enums']['game_scrape_type'];
-          updated_at?: string | null;
-        };
-        Relationships: [];
-      };
       game_wishlist: {
         Row: {
           created_at: string;
@@ -599,9 +554,85 @@ export type Database = {
           },
         ];
       };
+      update_game_price_schedule_log: {
+        Row: {
+          created_at: string;
+          end_at: string | null;
+          error_message: string | null;
+          game_catalog_id: number | null;
+          id: number;
+          retry_at: string | null;
+          retry_count: number;
+          schedule_at: string;
+          start_at: string | null;
+          status: Database['public']['Enums']['scraping_schedule_status'];
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          end_at?: string | null;
+          error_message?: string | null;
+          game_catalog_id?: number | null;
+          id?: number;
+          retry_at?: string | null;
+          retry_count?: number;
+          schedule_at: string;
+          start_at?: string | null;
+          status?: Database['public']['Enums']['scraping_schedule_status'];
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          end_at?: string | null;
+          error_message?: string | null;
+          game_catalog_id?: number | null;
+          id?: number;
+          retry_at?: string | null;
+          retry_count?: number;
+          schedule_at?: string;
+          start_at?: string | null;
+          status?: Database['public']['Enums']['scraping_schedule_status'];
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'public_update_game_price_schedule_log_game_catalog_id_fkey';
+            columns: ['game_catalog_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_catalog';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: {
-      [_ in never]: never;
+      update_game_price_schedule_log_rank_view: {
+        Row: {
+          created_at: string | null;
+          end_at: string | null;
+          error_message: string | null;
+          game_catalog_id: number | null;
+          id: number | null;
+          rank: number | null;
+          retry_at: string | null;
+          retry_count: number | null;
+          schedule_at: string | null;
+          start_at: string | null;
+          status:
+            | Database['public']['Enums']['scraping_schedule_status']
+            | null;
+          updated_at: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'public_update_game_price_schedule_log_game_catalog_id_fkey';
+            columns: ['game_catalog_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_catalog';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Functions: {
       delete_wish: {
@@ -628,6 +659,25 @@ export type Database = {
           current_price: number;
           start_at: string;
           store: Database['public']['Enums']['game_store'];
+        }[];
+      };
+      get_update_game_targets: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          created_at: string | null;
+          end_at: string | null;
+          error_message: string | null;
+          game_catalog_id: number | null;
+          id: number | null;
+          rank: number | null;
+          retry_at: string | null;
+          retry_count: number | null;
+          schedule_at: string | null;
+          start_at: string | null;
+          status:
+            | Database['public']['Enums']['scraping_schedule_status']
+            | null;
+          updated_at: string | null;
         }[];
       };
       get_wishlist: {
@@ -662,15 +712,10 @@ export type Database = {
     Enums: {
       auth_provider: 'kakao' | 'google';
       game_drm: 'steam' | 'epic';
-      game_scrape_type:
-        | 'new_game'
-        | 'update_game'
-        | 'update_meta_critic'
-        | 'update_open_critic'
-        | 'update_steam_score';
       game_store: 'steam' | 'epic';
       game_type: 'game' | 'dlc' | 'bundle';
       open_critic_tier: 'Weak' | 'Fair' | 'Strong' | 'Mighty';
+      scraping_schedule_status: 'wait' | 'success' | 'fail' | 'skip';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -952,6 +997,10 @@ export type Database = {
           metadata: Json;
           updated_at: string;
         }[];
+      };
+      operation: {
+        Args: Record<PropertyKey, never>;
+        Returns: string;
       };
       search: {
         Args: {

@@ -41,6 +41,7 @@ export function adaptBestGameCatalog(game: GetGameResponse['game']) {
     releaseMonth,
     releaseDay,
     gameCatalog,
+    baseGame,
   } = game;
 
   let bestGameCatalog: BestGameCatalogCardProps['game'] = {
@@ -53,6 +54,7 @@ export function adaptBestGameCatalog(game: GetGameResponse['game']) {
     releaseYear,
     releaseMonth,
     releaseDay,
+    baseGame,
     gameCatalog: null,
   };
 

@@ -53,6 +53,27 @@ export const releaseDate = style([
   },
 ]);
 
+export const dlcArea = style({
+  display: 'flex',
+  alignItems: 'center',
+  columnGap: '4px',
+  marginBottom: '8px',
+});
+
+export const baseGameArea = style({
+  display: 'flex',
+  columnGap: '4px',
+  color: theme.colors.gray[600],
+  fontSize: theme.fontSize.sm,
+  fontWeight: theme.fontWeight.regular,
+  lineHeight: theme.lineHeight.sm,
+});
+
+export const baseGameLink = style({
+  color: 'inherit',
+  textDecoration: 'underline',
+});
+
 export const bodyArea = style({
   display: 'flex',
   flexDirection: 'column',

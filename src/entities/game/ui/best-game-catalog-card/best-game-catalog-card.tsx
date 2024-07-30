@@ -1,11 +1,13 @@
 import cn from 'classnames';
 import { RiSteamFill } from '@remixicon/react';
+import Link from 'next/link';
 
 import type { BestGameCatalog } from './types';
-import * as styles from './best-game-catalog-card.css';
 import { SteamFillWithText, EpicFill, EpicFillBase } from '@/shared/ui/icons';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import { useBestGameCatalogCard } from './hooks/use-best-game-catalog-card';
+import { DlcBadge } from '@/entities/game';
+import * as styles from './best-game-catalog-card.css';
 
 export type BestGameCatalogCardProps = {
   game: BestGameCatalog;
@@ -41,6 +43,9 @@ export default function BestGameCatalogCard({
     regularPriceText,
     currentPriceText,
     hasPriceInfo,
+    isDlc,
+    baseGameLink,
+    baseGameTitle,
   } = useBestGameCatalogCard(game);
 
   return (
@@ -57,6 +62,23 @@ export default function BestGameCatalogCard({
         <div className={styles.wishArea}>{wish}</div>
       </div>
       <div className={styles.headerArea}>
+        {isDlc && (
+          <div className={styles.dlcArea}>
+            <DlcBadge />
+            <div className={styles.baseGameArea}>
+              {baseGameLink && (
+                <Link
+                  href={baseGameLink}
+                  target="_blank"
+                  className={styles.baseGameLink}
+                >
+                  {baseGameTitle}
+                </Link>
+              )}
+              기본 게임 필요
+            </div>
+          </div>
+        )}
         <div className={styles.title}>{title}</div>
         <div className={styles.releaseDate}>출시일: {releaseDate}</div>
       </div>

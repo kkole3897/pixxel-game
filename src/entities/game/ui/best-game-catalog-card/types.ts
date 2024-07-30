@@ -23,4 +23,6 @@ export type BestGameCatalog = Pick<
     | 'currentPrice'
     | 'currentPriceExpireAt'
   > | null;
+} & {
+  baseGame: Pick<Game, 'id' | 'publicId' | 'title' | 'titleKo'> | null;
 };
