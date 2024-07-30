@@ -33,6 +33,7 @@ export {
   GamePreviewCard,
   LowestPriceRanks,
   GameCatalogListItem,
+  DlcBadge,
   type BestGameCatalogCardProps,
 } from './ui';
 export { gameQueryKeys, useGameDetailQuery } from './queries';
