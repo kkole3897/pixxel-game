@@ -15,7 +15,7 @@ function formatReleaseDate({
   let releaseDate: string;
 
   if (releaseYear === null) {
-    return '미정';
+    return '-';
   }
 
   releaseDate = `${releaseYear}년`;
