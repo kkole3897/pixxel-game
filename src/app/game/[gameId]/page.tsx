@@ -60,6 +60,11 @@ export default async function GameDetailPage({ params }: PageProps) {
     queryFn: () => core.wishlist.getWishlistItemByGamePublicId(params.gameId),
   });
 
+  const { game } = await queryClient.fetchQuery({
+    queryKey: gameQueryKeys.detail(params.gameId).queryKey,
+    queryFn: () => core.games.getGame(params.gameId),
+  });
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className={styles.container}>
@@ -71,14 +76,18 @@ export default async function GameDetailPage({ params }: PageProps) {
           <h3 className={styles.contentTitle}>최저가추이</h3>
           <PriceHistoryFetcher gamePublicId={params.gameId} />
         </section>
-        <section className={styles.contentBox}>
-          <h3 className={styles.contentTitle}>게임 설명</h3>
-          <GameDescription gamePublicId={params.gameId} />
-        </section>
-        <section className={styles.contentBox}>
-          <h3 className={styles.contentTitle}>리뷰</h3>
-          <ReviewSection gamePublicId={params.gameId} />
-        </section>
+        {game.description && (
+          <section className={styles.contentBox}>
+            <h3 className={styles.contentTitle}>게임 설명</h3>
+            <GameDescription gamePublicId={params.gameId} />
+          </section>
+        )}
+        {(game.type === 'game' || game.type === 'dlc') && (
+          <section className={styles.contentBox}>
+            <h3 className={styles.contentTitle}>리뷰</h3>
+            <ReviewSection gamePublicId={params.gameId} />
+          </section>
+        )}
       </div>
     </HydrationBoundary>
   );
