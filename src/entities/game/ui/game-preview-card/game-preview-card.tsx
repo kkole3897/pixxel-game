@@ -41,6 +41,7 @@ export default function GamePreviewCard({
           alt={gameTitle}
           fill
           className={styles.thumbnailImage}
+          sizes="50vw"
         >
           <div className={styles.thumbnailFallback}></div>
         </ImageWithFallback>

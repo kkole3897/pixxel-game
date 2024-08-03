@@ -20,6 +20,7 @@ const nextConfig = {
         hostname: '*.googleusercontent.com',
       },
     ],
+    deviceSizes: [320, 768],
   },
   output: 'standalone',
 };
