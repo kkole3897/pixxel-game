@@ -17,13 +17,12 @@ export const mediaArea = style({
   position: 'relative',
   overflow: 'hidden',
   width: '100%',
-  aspectRatio: '303 / 185',
   borderRadius: '16px',
 });
 
 export const mainImage = style({
   width: '100%',
-  height: '100%',
+  height: 'auto',
 });
 
 export const wishArea = style({

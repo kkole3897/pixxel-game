@@ -54,7 +54,9 @@ export default function BestGameCatalogCard({
         <ImageWithFallback
           src={game.mainImage}
           alt={title}
-          fill
+          width={0}
+          height={0}
+          sizes="100vw"
           className={styles.mainImage}
         >
           <div></div>
