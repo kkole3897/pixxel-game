@@ -25,9 +25,9 @@ export default function GameBox({ game }: GameBoxProps) {
         <ImageWithFallback
           src={game.mainImage}
           className={styles.thumbnailImg}
-          alt={`${game.titleKo} thumbnail`}
-          width="100"
-          height="68"
+          alt={game.titleKo ?? game.title ?? game.publicId}
+          width="200"
+          height="136"
         />
       </div>
       <div className={styles.summaryArea}>
