@@ -1,26 +1,26 @@
 import cn from 'classnames';
 import Link from 'next/link';
 
-import { BundleContent } from './types';
+import { RelatedGameContent } from './types';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
-import { useGameBundleContentLink } from './use-game-bundle-content-link';
-import * as styles from './game-bundle-content-link.css';
+import { useRelatedGameContentLink } from './use-related-game-content-link';
+import * as styles from './related-game-content-link.css';
 
-type GameBundleContentLinkProps = {
-  content: BundleContent;
+type RelatedGameContentLinkProps = {
+  content: RelatedGameContent;
   className?: string;
   id?: string;
 };
 
-export default function GameBundleContentLink({
+export default function RelatedGameContentLink({
   content,
   id,
   className,
-}: GameBundleContentLinkProps) {
+}: RelatedGameContentLinkProps) {
   const composedRootClassName = cn(styles.link, className);
 
   const { title, href, currentBestPriceText } =
-    useGameBundleContentLink(content);
+    useRelatedGameContentLink(content);
 
   return (
     <Link id={id} href={href} className={composedRootClassName}>

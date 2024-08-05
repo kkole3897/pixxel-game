@@ -1,6 +1,9 @@
 'use client';
 
-import { useBundleContentsQuery, GameBundleContentLink } from '@/entities/game';
+import {
+  useBundleContentsQuery,
+  RelatedGameContentLink,
+} from '@/entities/game';
 
 export default function BundleContents({ id }: { id: number }) {
   const { data } = useBundleContentsQuery(id);
@@ -17,7 +20,7 @@ export default function BundleContents({ id }: { id: number }) {
     <div>
       {filteredContents.map((content) => {
         return (
-          <GameBundleContentLink
+          <RelatedGameContentLink
             key={content.id}
             content={content.includedGame!}
           />

@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import GameBundleContentLink from './game-bundle-content-link';
+import RelatedGameContentLink from './related-game-content-link';
 import mainImage from '~/stories/assets/game-main-image.png';
 
 const meta: Meta = {
-  title: 'Entities/Game/GameBundleContentLink',
-  component: GameBundleContentLink,
+  title: 'Entities/Game/RelatedGameContentLink',
+  component: RelatedGameContentLink,
   tags: ['autodocs'],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof GameBundleContentLink>;
+type Story = StoryObj<typeof RelatedGameContentLink>;
 
 export const Thymesia: Story = {
   args: {

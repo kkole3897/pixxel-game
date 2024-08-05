@@ -1,4 +1,4 @@
-import { BundleContent } from './types';
+import { RelatedGameContent } from './types';
 import { getCurrentBestPrice } from '../../model';
 
 function getCurrentBestPriceText(currentBestPrice: number | null) {
@@ -13,7 +13,7 @@ function getCurrentBestPriceText(currentBestPrice: number | null) {
   return `${currentBestPrice.toLocaleString()}원`;
 }
 
-export function useGameBundleContentLink(content: BundleContent) {
+export function useRelatedGameContentLink(content: RelatedGameContent) {
   const title = content.titleKo ?? content.title ?? content.publicId;
   const href = `/game/${content.publicId}`;
   const currentBestPrice = getCurrentBestPrice(content);

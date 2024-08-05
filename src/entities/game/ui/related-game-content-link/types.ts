@@ -1,6 +1,6 @@
 import { type Game, type GameCatalogItem } from '../../model';
 
-export type BundleContent = Pick<
+export type RelatedGameContent = Pick<
   Game,
   'title' | 'titleKo' | 'mainImage' | 'publicId' | 'isFree'
 > & {

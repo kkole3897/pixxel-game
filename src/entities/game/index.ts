@@ -35,7 +35,7 @@ export {
   GameCatalogListItem,
   DlcBadge,
   TrackingDateAlertBox,
-  GameBundleContentLink,
+  RelatedGameContentLink,
   type BestGameCatalogCardProps,
 } from './ui';
 export {

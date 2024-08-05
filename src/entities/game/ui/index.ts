@@ -23,4 +23,4 @@ export {
 export { GameCatalogListItem } from './game-catalog-list';
 export { DlcBadge } from './dlc-badge';
 export { TrackingDateAlertBox } from './tracking-date-alert-box';
-export { GameBundleContentLink } from './game-bundle-content-link';
+export { RelatedGameContentLink } from './related-game-content-link';
