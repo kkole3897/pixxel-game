@@ -5,4 +5,5 @@ export {
   GameCatalogSection,
   ReviewSection,
   BundleContents as GameBundleContents,
+  DlcContents as GameDlcContents,
 } from './ui';

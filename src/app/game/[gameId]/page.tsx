@@ -14,6 +14,7 @@ import {
   GameCatalogSection,
   ReviewSection,
   GameBundleContents,
+  GameDlcContents,
 } from '@/widgets/game-detail';
 import { wishListQueryKeys } from '@/entities/wish-list';
 
@@ -72,6 +73,7 @@ export default async function GameDetailPage({ params }: PageProps) {
   let bundleContents: Awaited<
     ReturnType<typeof core.games.getGameBundleContents>
   > = [];
+  let dlcContents: Awaited<ReturnType<typeof core.games.getDlcs>> = [];
   if (game.type === 'bundle') {
     await queryClient.prefetchQuery({
       queryKey: gameQueryKeys.bundleContents(game.id).queryKey,
@@ -80,6 +82,15 @@ export default async function GameDetailPage({ params }: PageProps) {
     bundleContents = await queryClient.fetchQuery({
       queryKey: gameQueryKeys.bundleContents(game.id).queryKey,
       queryFn: () => core.games.getGameBundleContents(game.id),
+    });
+  } else if (game.type === 'game') {
+    await queryClient.prefetchQuery({
+      queryKey: gameQueryKeys.dlcs(game.id).queryKey,
+      queryFn: () => core.games.getDlcs(game.id),
+    });
+    dlcContents = await queryClient.fetchQuery({
+      queryKey: gameQueryKeys.dlcs(game.id).queryKey,
+      queryFn: () => core.games.getDlcs(game.id),
     });
   }
 
@@ -98,6 +109,12 @@ export default async function GameDetailPage({ params }: PageProps) {
           <section className={styles.contentBox}>
             <h3 className={styles.contentTitle}>번들에 포함된 콘텐츠</h3>
             <GameBundleContents id={game.id} />
+          </section>
+        )}
+        {dlcContents.length > 0 && (
+          <section className={styles.contentBox}>
+            <h3 className={styles.contentTitle}>DLC</h3>
+            <GameDlcContents id={game.id} />
           </section>
         )}
         {game.description && (
