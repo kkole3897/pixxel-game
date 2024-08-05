@@ -10,7 +10,11 @@ import { GameDescription, PriceHistoryFetcher } from '@/widgets/game-detail';
 import { Core } from '@/shared/api';
 import { createClient } from '@/shared/lib/supabase/server';
 import { gameQueryKeys } from '@/entities/game';
-import { GameCatalogSection, ReviewSection } from '@/widgets/game-detail';
+import {
+  GameCatalogSection,
+  ReviewSection,
+  GameBundleContents,
+} from '@/widgets/game-detail';
 import { wishListQueryKeys } from '@/entities/wish-list';
 
 type PageProps = {
@@ -65,6 +69,20 @@ export default async function GameDetailPage({ params }: PageProps) {
     queryFn: () => core.games.getGame(params.gameId),
   });
 
+  let bundleContents: Awaited<
+    ReturnType<typeof core.games.getGameBundleContents>
+  > = [];
+  if (game.type === 'bundle') {
+    await queryClient.prefetchQuery({
+      queryKey: gameQueryKeys.bundleContents(game.id).queryKey,
+      queryFn: () => core.games.getGameBundleContents(game.id),
+    });
+    bundleContents = await queryClient.fetchQuery({
+      queryKey: gameQueryKeys.bundleContents(game.id).queryKey,
+      queryFn: () => core.games.getGameBundleContents(game.id),
+    });
+  }
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className={styles.container}>
@@ -76,6 +94,12 @@ export default async function GameDetailPage({ params }: PageProps) {
           <h3 className={styles.contentTitle}>최저가추이</h3>
           <PriceHistoryFetcher gamePublicId={params.gameId} />
         </section>
+        {bundleContents.length > 0 && (
+          <section className={styles.contentBox}>
+            <h3 className={styles.contentTitle}>번들에 포함된 콘텐츠</h3>
+            <GameBundleContents id={game.id} />
+          </section>
+        )}
         {game.description && (
           <section className={styles.contentBox}>
             <h3 className={styles.contentTitle}>게임 설명</h3>

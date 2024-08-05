@@ -50,16 +50,17 @@ export const contentArea = style({
 export const title = style([
   truncate(),
   {
-    fontSize: theme.fontSize.base,
-    fontWeight: theme.fontWeight.medium,
-    lineHeight: theme.lineHeight.base,
+    fontSize: theme.fontSize.xs,
+    fontWeight: theme.fontWeight.semibold,
+    lineHeight: theme.lineHeight.xs,
   },
 ]);
 
 export const price = style({
-  flex: '0 0 100px',
+  flex: '0 0 auto',
   color: theme.colors.blue[500],
-  fontSize: theme.fontSize.base,
+  fontSize: theme.fontSize.sm,
   fontWeight: theme.fontWeight.medium,
-  lineHeight: theme.lineHeight.base,
+  lineHeight: theme.lineHeight.sm,
+  textAlign: 'right',
 });

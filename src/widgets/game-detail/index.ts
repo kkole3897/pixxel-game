@@ -4,4 +4,5 @@ export {
   PriceHistoryFetcher,
   GameCatalogSection,
   ReviewSection,
+  BundleContents as GameBundleContents,
 } from './ui';

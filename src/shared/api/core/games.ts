@@ -238,9 +238,10 @@ export class Games extends Base {
       .select(
         'id, gameId: bundle_id,\
         includedGame: game!game_bundle_contents_included_game_id_fkey(\
-          id, title, titleKo: title_ko, mainImage: main_image, isFree: is_free,\
+          id, title, titleKo: title_ko, mainImage: main_image, isFree: is_free, publicId: public_id,\
           gameCatalog: game_catalog(\
-            id, currentPrice: current_price\
+            id, currentPrice: current_price, regularPrice: regular_price,\
+            currentPriceExpireAt: current_price_expire_at\
           )\
         )'
       )
