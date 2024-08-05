@@ -253,4 +253,23 @@ export class Games extends Base {
 
     return data;
   }
+
+  public async getDlcs(gameId: number) {
+    const { data, error } = await this.supabase
+      .from('game')
+      .select(
+        'id, title, titleKo: title_ko, mainImage: main_image, isFree: is_free, publicId: public_id,\
+        gameCatalog: game_catalog(\
+          id, currentPrice: current_price, regularPrice: regular_price,\
+          currentPriceExpireAt: current_price_expire_at\
+        )'
+      )
+      .eq('base_game_id', gameId);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 }
