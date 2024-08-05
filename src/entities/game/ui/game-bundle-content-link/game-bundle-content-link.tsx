@@ -1,35 +1,33 @@
 import cn from 'classnames';
 import Link from 'next/link';
 
-import { type Game } from '../../model';
+import { BundleContent } from './types';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
+import { useGameBundleContentLink } from './use-game-bundle-content-link';
 import * as styles from './game-bundle-content-link.css';
 
-type GameBundleContentItemProps = {
-  game: Pick<Game, 'title' | 'titleKo' | 'mainImage' | 'publicId'> & {
-    price: number | null;
-  };
+type GameBundleContentLinkProps = {
+  content: BundleContent;
   className?: string;
   id?: string;
 };
 
-export default function GameBundleContentItem({
-  game,
+export default function GameBundleContentLink({
+  content,
   id,
   className,
-}: GameBundleContentItemProps) {
+}: GameBundleContentLinkProps) {
   const composedRootClassName = cn(styles.link, className);
 
+  const { title, href, currentBestPriceText } =
+    useGameBundleContentLink(content);
+
   return (
-    <Link
-      id={id}
-      href={`/game/${game.publicId}`}
-      className={composedRootClassName}
-    >
+    <Link id={id} href={href} className={composedRootClassName}>
       <div className={styles.imageArea}>
         <ImageWithFallback
-          src={game.mainImage}
-          alt={game.titleKo ?? game.title ?? game.publicId}
+          src={content.mainImage}
+          alt={title}
           width={176}
           height={96}
           className={styles.mainImage}
@@ -39,10 +37,10 @@ export default function GameBundleContentItem({
       </div>
       <div className={styles.contentArea}>
         <div className={styles.title}>
-          {game.titleKo ?? game.title ?? game.publicId}
+          {content.titleKo ?? content.title ?? content.publicId}
         </div>
-        {game.price !== null && (
-          <div className={styles.price}>{game.price.toLocaleString()}원~</div>
+        {currentBestPriceText && (
+          <div className={styles.price}>{currentBestPriceText}</div>
         )}
       </div>
     </Link>

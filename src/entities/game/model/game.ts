@@ -5,6 +5,7 @@ import { MetaCritic } from './meta-critic';
 import { OpenCritic } from './open-critic';
 import { SteamScore } from './steam-score';
 import { GameCatalogItem } from './game-catalog';
+import { PickDeep } from 'type-fest';
 
 export interface Game {
   id: number;
@@ -74,6 +75,40 @@ export function getCurrentPrice(
   return isCurrentPriceExpired(gameCatalogItem.currentPriceExpireAt)
     ? gameCatalogItem.regularPrice
     : gameCatalogItem.currentPrice;
+}
+
+export function getCurrentBestPrice(
+  game: Pick<Game, 'isFree'> & {
+    gameCatalog: Pick<
+      GameCatalogItem,
+      'currentPrice' | 'regularPrice' | 'currentPriceExpireAt'
+    >[];
+  }
+) {
+  if (game.isFree) {
+    return 0;
+  }
+
+  if (game.gameCatalog.length === 0) {
+    return null;
+  }
+
+  const currentBestPrice = game.gameCatalog.reduce<null | number>(
+    (prevPrice, currentCatalogItem) => {
+      const currentPrice = getCurrentPrice(currentCatalogItem);
+
+      if (currentPrice === null) {
+        return prevPrice;
+      }
+
+      return prevPrice === null || currentPrice < prevPrice
+        ? currentPrice
+        : prevPrice;
+    },
+    null
+  );
+
+  return currentBestPrice;
 }
 
 export function getBestCatalog(game: GamePreview) {

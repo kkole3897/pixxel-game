@@ -13,14 +13,47 @@ export default meta;
 
 type Story = StoryObj<typeof GameBundleContentLink>;
 
-export const BioShock: Story = {
+export const Thymesia: Story = {
   args: {
-    game: {
+    content: {
       title: 'Thymesia',
       titleKo: '티메시아',
       mainImage: mainImage.src,
-      price: 10000,
       publicId: 'publicId',
+      isFree: false,
+      gameCatalog: [
+        {
+          currentPrice: 10000,
+          regularPrice: 20000,
+          currentPriceExpireAt: null,
+        },
+      ],
+    },
+  },
+};
+
+export const FreeGame: Story = {
+  args: {
+    content: {
+      title: 'Free Game',
+      titleKo: '무료 게임',
+      mainImage: mainImage.src,
+      publicId: 'publicId',
+      isFree: true,
+      gameCatalog: [],
+    },
+  },
+};
+
+export const NoPrice: Story = {
+  args: {
+    content: {
+      title: 'No Price',
+      titleKo: '가격 없음',
+      mainImage: mainImage.src,
+      publicId: 'publicId',
+      isFree: false,
+      gameCatalog: [],
     },
   },
 };
