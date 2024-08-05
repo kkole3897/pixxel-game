@@ -38,5 +38,9 @@ export {
   GameBundleContentLink,
   type BestGameCatalogCardProps,
 } from './ui';
-export { gameQueryKeys, useGameDetailQuery } from './queries';
-export { useLowestPriceRanksQuery } from './queries';
+export {
+  gameQueryKeys,
+  useGameDetailQuery,
+  useLowestPriceRanksQuery,
+  useBundleContentsQuery,
+} from './queries';

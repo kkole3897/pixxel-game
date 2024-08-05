@@ -231,4 +231,25 @@ export class Games extends Base {
 
     return data;
   }
+
+  public async getGameBundleContents(gameId: number) {
+    const { data, error } = await this.supabase
+      .from('game_bundle_content')
+      .select(
+        'id, gameId: bundle_id,\
+        includedGame: game!game_bundle_contents_included_game_id_fkey(\
+          id, title, titleKo: title_ko, mainImage: main_image, isFree: is_free,\
+          gameCatalog: game_catalog(\
+            id, currentPrice: current_price\
+          )\
+        )'
+      )
+      .eq('bundle_id', gameId);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 }
