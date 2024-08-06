@@ -6,4 +6,5 @@ export const gameQueryKeys = createQueryKeys('game', {
   lowestPriceRanks: (publicId: string) => [publicId],
   bundleContents: (id: number) => [id],
   dlcs: (id: number) => [id],
+  list: null,
 });

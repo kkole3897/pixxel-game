@@ -44,4 +44,5 @@ export {
   useLowestPriceRanksQuery,
   useBundleContentsQuery,
   useDlcsQuery,
+  useGamesInfiniteQuery,
 } from './queries';

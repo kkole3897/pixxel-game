@@ -5,6 +5,14 @@ export type GameDrmResponse = 'steam' | 'epic';
 
 export type GetGamesOptions = {
   ids?: number[];
+  /**
+   * @default 0
+   */
+  from?: number;
+  /**
+   * @default 99
+   */
+  to?: number;
 };
 
 export type GameTypeResponse = 'game' | 'dlc' | 'bundle';
@@ -134,6 +142,8 @@ type GetLowestPriceRanksOptions = {
 export class Games extends Base {
   public async getGames({
     ids,
+    from = 0,
+    to = 99,
   }: GetGamesOptions = {}): Promise<GetGamesResponse> {
     let baseRequest = this.supabase.from('game').select(
       'id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image,\
@@ -145,7 +155,7 @@ export class Games extends Base {
       baseRequest = baseRequest.in('id', ids);
     }
 
-    const { data, error } = await baseRequest;
+    const { data, error } = await baseRequest.range(from, to);
 
     if (!!error) {
       throw error;
