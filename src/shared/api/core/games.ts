@@ -15,7 +15,7 @@ export type GetGamesOptions = {
   to?: number;
 };
 
-export type GameTypeResponse = 'game' | 'dlc' | 'bundle';
+export type GameTypeResponse = 'game' | 'dlc' | 'bundle' | 'extra';
 
 export type MetaCriticResponse = {
   metaScoreUrl: string;

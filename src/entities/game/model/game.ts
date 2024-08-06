@@ -5,7 +5,6 @@ import { MetaCritic } from './meta-critic';
 import { OpenCritic } from './open-critic';
 import { SteamScore } from './steam-score';
 import { GameCatalogItem } from './game-catalog';
-import { PickDeep } from 'type-fest';
 
 export interface Game {
   id: number;

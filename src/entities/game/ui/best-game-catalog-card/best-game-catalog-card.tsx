@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { RiSteamFill } from '@remixicon/react';
+import { RiSteamFill, RiErrorWarningFill } from '@remixicon/react';
 import Link from 'next/link';
 
 import type { BestGameCatalog } from './types';
@@ -43,7 +43,6 @@ export default function BestGameCatalogCard({
     regularPriceText,
     currentPriceText,
     hasPriceInfo,
-    isDlc,
     baseGameLink,
     baseGameTitle,
   } = useBestGameCatalogCard(game);
@@ -64,7 +63,7 @@ export default function BestGameCatalogCard({
         <div className={styles.wishArea}>{wish}</div>
       </div>
       <div className={styles.headerArea}>
-        {isDlc && (
+        {game.type === 'dlc' ? (
           <div className={styles.dlcArea}>
             <DlcBadge />
             <div className={styles.baseGameArea}>
@@ -80,7 +79,21 @@ export default function BestGameCatalogCard({
               기본 게임 필요
             </div>
           </div>
-        )}
+        ) : game.type === 'extra' && baseGameLink ? (
+          <div className={styles.dlcArea}>
+            <RiErrorWarningFill size={20} />
+            <div className={styles.baseGameArea}>
+              <Link
+                href={baseGameLink}
+                target="_blank"
+                className={styles.baseGameLink}
+              >
+                {baseGameTitle}
+              </Link>
+              의 추가 콘텐츠
+            </div>
+          </div>
+        ) : null}
         <div className={styles.title}>{title}</div>
         <div className={styles.releaseDate}>출시일: {releaseDate}</div>
       </div>
