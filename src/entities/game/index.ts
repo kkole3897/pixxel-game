@@ -36,6 +36,7 @@ export {
   DlcBadge,
   TrackingDateAlertBox,
   RelatedGameContentLink,
+  GamePreviewCardSkeleton,
   type BestGameCatalogCardProps,
 } from './ui';
 export {

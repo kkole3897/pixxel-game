@@ -4,6 +4,8 @@ import { theme } from '@/shared/styles/theme.css';
 import { text, fontWeight } from '@/shared/styles/typography.css';
 import { truncate, visuallyHiddenRule } from '@/shared/styles/utils.css';
 
+const SKELETON_COLOR = theme.colors.gray[200];
+
 export const card = style({
   display: 'flex',
   flexDirection: 'column',
@@ -16,6 +18,13 @@ export const thumbnailArea = style({
   borderRadius: '8px',
   aspectRatio: '616 / 353',
 });
+
+export const thumbnailAreaSkeleton = style([
+  thumbnailArea,
+  {
+    backgroundColor: SKELETON_COLOR,
+  },
+]);
 
 export const thumbnailImage = style({
   width: '100%',
@@ -54,6 +63,15 @@ export const descriptionArea = style({
 
 export const title = style([truncate(), fontWeight.medium]);
 
+export const titleSkeleton = style([
+  title,
+  {
+    height: theme.lineHeight.sm,
+    width: '80%',
+    backgroundColor: SKELETON_COLOR,
+  },
+]);
+
 const catalogAreaContainer = createContainer();
 
 export const catalogArea = style({
@@ -70,6 +88,16 @@ export const storeArea = style({
     [`${catalogAreaContainer} (max-width: 135px)`]: visuallyHiddenRule,
   },
 });
+
+export const storeAreaSkeleton = style([
+  storeArea,
+  {
+    width: '24px',
+    height: '24px',
+    borderRadius: '50%',
+    backgroundColor: SKELETON_COLOR,
+  },
+]);
 
 export const priceArea = style({
   display: 'flex',
@@ -113,5 +141,14 @@ export const currentPrice = style([
   fontWeight.bold,
   {
     color: theme.colors.blue[500],
+  },
+]);
+
+export const currentPriceSkeleton = style([
+  currentPrice,
+  {
+    width: '72px',
+    height: theme.lineHeight.base,
+    backgroundColor: SKELETON_COLOR,
   },
 ]);
