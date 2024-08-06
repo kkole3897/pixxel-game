@@ -1,1 +1,1 @@
-export * from './game-list';
+export { GameListFetcher } from './game-list-fetcher';
