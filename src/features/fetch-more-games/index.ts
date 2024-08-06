@@ -1,0 +1,1 @@
+export { FetchMoreGamesTrigger } from './ui';
