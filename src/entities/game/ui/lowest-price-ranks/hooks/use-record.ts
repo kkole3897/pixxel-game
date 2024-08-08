@@ -1,5 +1,4 @@
-import dayjs from 'dayjs';
-
+import dayjs from '@/shared/lib/dayjs';
 import type { Record } from '../types';
 
 const storeTextMap = {
@@ -9,7 +8,7 @@ const storeTextMap = {
 
 export function useRecord(record: Record) {
   const storeText = storeTextMap[record.store];
-  const datetimeText = dayjs(record.startAt).format('YY.MM.DD');
+  const datetimeText = dayjs(record.startAt).tz().format('YY.MM.DD');
   const priceText =
     record.currentPrice === 0
       ? 'Free'
