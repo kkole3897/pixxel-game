@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '@/shared/lib/dayjs';
 
 import {
   getCurrentPrice,
@@ -21,7 +21,7 @@ export function useGameCatalogItem(item: GameCatalogListItem) {
     item.currentPriceExpireAt !== null &&
     dayjs(item.currentPriceExpireAt).isAfter(dayjs());
   const discountExpireDate = willDiscountExpire
-    ? dayjs(item.currentPriceExpireAt).format('YY.MM.DD')
+    ? dayjs(item.currentPriceExpireAt).tz().format('YY.MM.DD')
     : '';
 
   return {

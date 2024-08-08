@@ -1,5 +1,4 @@
-import dayjs from 'dayjs';
-
+import dayjs from '@/shared/lib/dayjs';
 import { GameType } from './game-type';
 import { MetaCritic } from './meta-critic';
 import { OpenCritic } from './open-critic';

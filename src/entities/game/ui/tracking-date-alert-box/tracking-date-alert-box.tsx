@@ -1,15 +1,8 @@
 import { RiErrorWarningFill } from '@remixicon/react';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from '@/shared/lib/dayjs';
 import cn from 'classnames';
 
 import * as styles from './tracking-date-alert-box.css';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-const tz = 'Asia/Seoul';
 
 type TrackingDateAlertBoxProps = {
   className?: string;
@@ -22,7 +15,7 @@ export default function TrackingDateAlertBox({
 }: TrackingDateAlertBoxProps) {
   const composedClassName = cn(styles.box, className);
 
-  const dateText = dayjs(date).tz(tz).format('YY.MM.DD');
+  const dateText = dayjs(date).tz().format('YY.MM.DD');
 
   return (
     <div className={composedClassName}>

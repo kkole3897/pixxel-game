@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '@/shared/lib/dayjs';
 
 import type { BestGameCatalog } from '../types';
 import {
@@ -40,7 +40,7 @@ function getOnDiscountText(currentPriceExpireAt: string | null | undefined) {
     return '에서 할인 중';
   }
 
-  const expireDateText = dayjs(currentPriceExpireAt).format('M월 D일');
+  const expireDateText = dayjs(currentPriceExpireAt).tz().format('M월 D일');
 
   return `에서 ${expireDateText}까지 할인 중`;
 }

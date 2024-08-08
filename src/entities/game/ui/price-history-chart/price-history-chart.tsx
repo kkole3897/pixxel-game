@@ -17,7 +17,7 @@ import {
   TooltipWithBounds,
   useTooltipInPortal,
 } from '@visx/tooltip';
-import dayjs from 'dayjs';
+import dayjs from '@/shared/lib/dayjs';
 import { GridRows } from '@visx/grid';
 
 import * as styles from './price-history-chart.css';
@@ -206,7 +206,7 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
 
     const tooltipPos = {
       tooltipData: {
-        date: dayjs(getDate(d)).format('YYYY.MM.DD'),
+        date: dayjs(getDate(d)).tz().format('YYYY.MM.DD'),
         price: `${getValue(d).toLocaleString()}원`,
       },
       tooltipLeft: dateScale(getDate(d)) + margin.left,
