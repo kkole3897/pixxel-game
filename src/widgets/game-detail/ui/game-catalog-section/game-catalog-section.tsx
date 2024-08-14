@@ -68,6 +68,7 @@ export default function GameCatalogSection({
       />
       {gameDetailQuery.data.game.gameCatalog.length > 0 && (
         <div className={styles.catalogList}>
+          <div className={styles.catalogListTitle}>모든 가격 비교</div>
           {gameDetailQuery.data.game.gameCatalog.map((item) => {
             return (
               <a

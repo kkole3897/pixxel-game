@@ -7,6 +7,15 @@ export const catalogList = style({
   marginTop: '16px',
 });
 
+export const catalogListTitle = style([
+  text.base,
+  {
+    marginTop: '24px',
+    marginBottom: '8px',
+    fontWeight: theme.fontWeight.medium,
+  },
+]);
+
 export const catalogItemLink = style({
   display: 'block',
   padding: '16px 12px',
