@@ -49,6 +49,7 @@ export default function BestGameCatalogCard({
 
   return (
     <div className={composedRootClassName}>
+      <div className={styles.bestMarker}>BEST</div>
       <div className={styles.mediaArea}>
         <ImageWithFallback
           src={game.mainImage}

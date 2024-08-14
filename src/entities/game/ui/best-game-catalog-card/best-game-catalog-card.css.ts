@@ -6,12 +6,31 @@ import { text, fontWeight } from '@/shared/styles/typography.css';
 export const card = style({
   display: 'flex',
   flexDirection: 'column',
+  position: 'relative',
   padding: '20px',
   borderRadius: '20px',
   background:
     'linear-gradient(0deg, #FFF 0.36%, rgba(246, 247, 255, 0.00) 99.76%)',
   boxShadow: '0 0 52px 0 rgba(0, 0, 0, 0.08)',
 });
+
+export const bestMarker = style([
+  text.sm,
+  {
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    left: '28px',
+    height: '40px',
+    padding: '6px 4px 0',
+    backgroundColor: theme.colors.blue[500],
+    color: theme.colors.gray[50],
+    fontWeight: theme.fontWeight.medium,
+    clipPath: 'polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%)',
+    zIndex: 1,
+  },
+]);
 
 export const mediaArea = style({
   position: 'relative',
