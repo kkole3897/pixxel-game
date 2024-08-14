@@ -112,6 +112,13 @@ export type Database = {
             referencedRelation: 'game';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'games_base_game_id_fkey';
+            columns: ['base_game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
+            referencedColumns: ['id'];
+          },
         ];
       };
       game_bundle_content: {
@@ -148,10 +155,24 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'game_bundle_contents_bundle_id_fkey';
+            columns: ['bundle_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
+            referencedColumns: ['id'];
+          },
+          {
             foreignKeyName: 'game_bundle_contents_included_game_id_fkey';
             columns: ['included_game_id'];
             isOneToOne: false;
             referencedRelation: 'game';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'game_bundle_contents_included_game_id_fkey';
+            columns: ['included_game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
             referencedColumns: ['id'];
           },
         ];
@@ -172,6 +193,8 @@ export type Database = {
           original_slug: string;
           original_title: string | null;
           original_title_ko: string | null;
+          price_updated_at: string;
+          raw_catalog_meta_data: Json | null;
           regular_price: number | null;
           store: Database['public']['Enums']['game_store'];
           updated_at: string | null;
@@ -192,6 +215,8 @@ export type Database = {
           original_slug: string;
           original_title?: string | null;
           original_title_ko?: string | null;
+          price_updated_at?: string;
+          raw_catalog_meta_data?: Json | null;
           regular_price?: number | null;
           store: Database['public']['Enums']['game_store'];
           updated_at?: string | null;
@@ -212,6 +237,8 @@ export type Database = {
           original_slug?: string;
           original_title?: string | null;
           original_title_ko?: string | null;
+          price_updated_at?: string;
+          raw_catalog_meta_data?: Json | null;
           regular_price?: number | null;
           store?: Database['public']['Enums']['game_store'];
           updated_at?: string | null;
@@ -223,6 +250,13 @@ export type Database = {
             columns: ['game_id'];
             isOneToOne: false;
             referencedRelation: 'game';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'game_integrated_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
             referencedColumns: ['id'];
           },
         ];
@@ -311,6 +345,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'game_wishlist_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
+            referencedColumns: ['id'];
+          },
+          {
             foreignKeyName: 'game_wishlist_next_id_fkey';
             columns: ['next_id'];
             isOneToOne: false;
@@ -375,6 +416,13 @@ export type Database = {
             referencedRelation: 'game';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'meta_critic_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: true;
+            referencedRelation: 'game_effective_price_updated_at_view';
+            referencedColumns: ['id'];
+          },
         ];
       };
       new_game_request: {
@@ -417,6 +465,13 @@ export type Database = {
             columns: ['game_id'];
             isOneToOne: false;
             referencedRelation: 'game';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'game_tracking_request_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
             referencedColumns: ['id'];
           },
           {
@@ -468,6 +523,13 @@ export type Database = {
             columns: ['game_id'];
             isOneToOne: true;
             referencedRelation: 'game';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'open_critic_integrated_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: true;
+            referencedRelation: 'game_effective_price_updated_at_view';
             referencedColumns: ['id'];
           },
         ];
@@ -552,6 +614,13 @@ export type Database = {
             referencedRelation: 'game';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'steam_score_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: true;
+            referencedRelation: 'game_effective_price_updated_at_view';
+            referencedColumns: ['id'];
+          },
         ];
       };
       update_game_price_schedule_log: {
@@ -606,6 +675,96 @@ export type Database = {
       };
     };
     Views: {
+      game_effective_price_updated_at_view: {
+        Row: {
+          base_game_id: number | null;
+          confirmed_at: string | null;
+          created_at: string | null;
+          deleted_at: string | null;
+          description: string | null;
+          developers: string[] | null;
+          effective_price_updated_at: string | null;
+          id: number | null;
+          is_free: boolean | null;
+          main_image: string | null;
+          public_id: string | null;
+          publishers: string[] | null;
+          release_day: number | null;
+          release_month: number | null;
+          release_year: number | null;
+          screenshots: string[] | null;
+          summary: string | null;
+          tags: string[] | null;
+          title: string | null;
+          title_ko: string | null;
+          type: Database['public']['Enums']['game_type'] | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          base_game_id?: number | null;
+          confirmed_at?: string | null;
+          created_at?: string | null;
+          deleted_at?: string | null;
+          description?: string | null;
+          developers?: string[] | null;
+          effective_price_updated_at?: never;
+          id?: number | null;
+          is_free?: boolean | null;
+          main_image?: string | null;
+          public_id?: string | null;
+          publishers?: string[] | null;
+          release_day?: number | null;
+          release_month?: number | null;
+          release_year?: number | null;
+          screenshots?: string[] | null;
+          summary?: string | null;
+          tags?: string[] | null;
+          title?: string | null;
+          title_ko?: string | null;
+          type?: Database['public']['Enums']['game_type'] | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          base_game_id?: number | null;
+          confirmed_at?: string | null;
+          created_at?: string | null;
+          deleted_at?: string | null;
+          description?: string | null;
+          developers?: string[] | null;
+          effective_price_updated_at?: never;
+          id?: number | null;
+          is_free?: boolean | null;
+          main_image?: string | null;
+          public_id?: string | null;
+          publishers?: string[] | null;
+          release_day?: number | null;
+          release_month?: number | null;
+          release_year?: number | null;
+          screenshots?: string[] | null;
+          summary?: string | null;
+          tags?: string[] | null;
+          title?: string | null;
+          title_ko?: string | null;
+          type?: Database['public']['Enums']['game_type'] | null;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'games_base_game_id_fkey';
+            columns: ['base_game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'games_base_game_id_fkey';
+            columns: ['base_game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       update_game_price_schedule_log_rank_view: {
         Row: {
           created_at: string | null;
