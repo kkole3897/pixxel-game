@@ -44,6 +44,11 @@ export const mainImage = style({
   height: 'auto',
 });
 
+export const mainImageFallback = style({
+  backgroundColor: theme.colors.gray[200],
+  aspectRatio: '616 / 353',
+});
+
 export const wishArea = style({
   position: 'absolute',
   top: '16px',

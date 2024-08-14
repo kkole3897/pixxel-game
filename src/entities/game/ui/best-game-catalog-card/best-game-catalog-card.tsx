@@ -59,7 +59,7 @@ export default function BestGameCatalogCard({
           sizes="100vw"
           className={styles.mainImage}
         >
-          <div></div>
+          <div className={styles.mainImageFallback}></div>
         </ImageWithFallback>
         <div className={styles.wishArea}>{wish}</div>
       </div>
