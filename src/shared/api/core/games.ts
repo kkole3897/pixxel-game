@@ -1,3 +1,4 @@
+import { ascending } from '@visx/vendor/d3-array';
 import { Base } from './lib/base';
 
 export type GameStoreResponse = 'steam' | 'epic';
@@ -13,6 +14,14 @@ export type GetGamesOptions = {
    * @default 99
    */
   to?: number;
+  /**
+   * @default 'effective_price_updated_at
+   */
+  sortBy?: 'effective_price_updated_at';
+  /**
+   * @default false
+   */
+  ascending?: boolean;
 };
 
 export type GameTypeResponse = 'game' | 'dlc' | 'bundle' | 'extra';
@@ -144,18 +153,25 @@ export class Games extends Base {
     ids,
     from = 0,
     to = 99,
+    sortBy = 'effective_price_updated_at',
+    ascending = false,
   }: GetGamesOptions = {}): Promise<GetGamesResponse> {
-    let baseRequest = this.supabase.from('game').select(
-      'id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image,\
+    let baseRequest = this.supabase
+      .from('game_effective_price_updated_at_view')
+      .select(
+        'id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image,\
       isFree: is_free, gameCatalog: game_catalog(id, gameId: game_id, store, drm, regularPrice: regular_price,\
       currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price)'
-    );
+      )
+      .order(sortBy, { ascending });
 
     if (!!ids) {
       baseRequest = baseRequest.in('id', ids);
     }
 
-    const { data, error } = await baseRequest.range(from, to);
+    const { data, error } = await baseRequest
+      .range(from, to)
+      .returns<GamePreviewResponse[]>();
 
     if (!!error) {
       throw error;
