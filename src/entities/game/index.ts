@@ -16,7 +16,7 @@ export {
   type Game,
   type GameCatalogItem,
 } from './model';
-export { formatReleaseDate } from './lib';
+export { formatReleaseDate, sortGameCatalogItemsByCurrentPrice } from './lib';
 export {
   GameBox,
   MetaScore,

@@ -4,11 +4,10 @@ import {
   BestGameCatalogCard,
   LowestPriceRanks,
   GameCatalogListItem,
-} from '@/entities/game';
-import {
   useGameDetailQuery,
   useLowestPriceRanksQuery,
   TrackingDateAlertBox,
+  sortGameCatalogItemsByCurrentPrice,
 } from '@/entities/game';
 import { adaptBestGameCatalog } from '../../lib';
 import { WishButton } from '@/features/toggle-wish';
@@ -26,6 +25,10 @@ export default function GameCatalogSection({
 }: GameCatalogSectionProps) {
   const gameDetailQuery = useGameDetailQuery(gamePublicId);
   const lowsetPriceRanksQuery = useLowestPriceRanksQuery(gamePublicId);
+
+  const sortedGameCatalogItems = sortGameCatalogItemsByCurrentPrice(
+    gameDetailQuery.data?.game.gameCatalog ?? []
+  );
 
   // TODO: 로딩, 에러 처리 구체화
   if (gameDetailQuery.isPending || lowsetPriceRanksQuery.isPending) return null;
@@ -69,7 +72,7 @@ export default function GameCatalogSection({
       {gameDetailQuery.data.game.gameCatalog.length > 0 && (
         <div className={styles.catalogList}>
           <div className={styles.catalogListTitle}>모든 가격 비교</div>
-          {gameDetailQuery.data.game.gameCatalog.map((item) => {
+          {sortedGameCatalogItems.map((item) => {
             return (
               <a
                 key={item.id}
