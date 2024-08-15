@@ -7,7 +7,7 @@ export const container = style({
   display: 'flex',
   flexDirection: 'column',
   rowGap: '72px',
-  paddingBottom: '32px',
+  padding: '16px 0 32px',
 });
 
 export const contentBox = style({
