@@ -12,4 +12,5 @@ export const searchIconButton = style({
   border: 0,
   background: 'transparent',
   color: theme.colors.gray[700],
+  cursor: 'pointer',
 });
