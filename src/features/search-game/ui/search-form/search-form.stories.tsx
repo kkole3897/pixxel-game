@@ -21,3 +21,9 @@ export const DefaultKeyword: Story = {
     defaultKeyword: 'Super Mario',
   },
 };
+
+export const AutoFocus: Story = {
+  args: {
+    autoFocus: true,
+  },
+};
