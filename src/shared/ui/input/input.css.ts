@@ -1,6 +1,8 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
+import { theme } from '@/shared/styles/theme.css';
+
 export const input = style({
   flex: 1,
   width: '100%',
@@ -86,12 +88,14 @@ export const inputContainer = recipe({
   variants: {
     size: {
       md: {
-        fontSize: '0.875rem',
-        lineHeight: '2.625rem',
+        height: '40px',
+        fontSize: theme.fontSize.base,
+        lineHeight: theme.lineHeight.base,
       },
       lg: {
-        fontSize: '1rem',
-        lineHeight: '2.875rem',
+        height: '48px',
+        fontSize: theme.fontSize.lg,
+        lineHeight: theme.fontSize.lg,
       },
     },
     isInvalid: {
