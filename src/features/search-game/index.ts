@@ -1,4 +1,9 @@
-export { SearchIconButton, SearchForm, SearchGameList } from './ui';
+export {
+  SearchIconButton,
+  SearchForm,
+  SearchGameList,
+  EmptySearchResult,
+} from './ui';
 export {
   useSearchRouter,
   parseSearchPageSearchParams,

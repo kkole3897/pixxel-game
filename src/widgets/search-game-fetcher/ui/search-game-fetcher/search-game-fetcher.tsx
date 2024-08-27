@@ -1,8 +1,9 @@
 'use client';
 
-import { SearchGameList } from '@/features/search-game';
+import { SearchGameList, EmptySearchResult } from '@/features/search-game';
 import { useSearchGameQuery, GamePreviewCard } from '@/entities/game';
 import { DefaultLink } from '@/shared/ui/default-link';
+import * as styles from './search-game-fetcher.css';
 
 type SearchGameFetcherProps = {
   query: string;
@@ -22,7 +23,7 @@ export default function SearchGameFetcher({ query }: SearchGameFetcherProps) {
 
   // TODO: 검색 결과 없음 ui 추가
   if (data.length === 0) {
-    return null;
+    return <EmptySearchResult className={styles.emptySearchResult} />;
   }
 
   return (
