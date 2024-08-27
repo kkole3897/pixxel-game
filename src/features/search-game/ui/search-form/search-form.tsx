@@ -10,7 +10,7 @@ import * as styles from './search-form.css';
 type SearchFormProps = {
   autoFocus?: boolean;
   defaultKeyword?: string;
-  onSubmit: (formData: SearchFormData) => void;
+  onSubmit?: (formData: SearchFormData) => void;
 };
 
 export default function SearchForm({

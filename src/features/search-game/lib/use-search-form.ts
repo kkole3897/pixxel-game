@@ -11,10 +11,10 @@ export function useSearchForm(defaultFormData: Partial<SearchFormData>) {
 
   const handleSumit = (
     event: React.FormEvent<HTMLFormElement>,
-    onSubmit: (formData: SearchFormData) => void
+    onSubmit?: (formData: SearchFormData) => void
   ) => {
     event.preventDefault();
-    onSubmit({ keyword });
+    onSubmit?.({ keyword });
   };
 
   return {
