@@ -1,1 +1,1 @@
-export { SearchIconButton } from './ui';
+export { SearchIconButton, SearchForm } from './ui';
