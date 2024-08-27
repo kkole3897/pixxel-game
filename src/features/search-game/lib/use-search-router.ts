@@ -15,6 +15,10 @@ export function useSearchRouter() {
   function searchGame(searchFormData: SearchFormData) {
     const { keyword } = searchFormData;
 
+    if (keyword.length === 0) {
+      return;
+    }
+
     const query = toSearchQuery(keyword);
     const href = `/search?query=${query}`;
 
