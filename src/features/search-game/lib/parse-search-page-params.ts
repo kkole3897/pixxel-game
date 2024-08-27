@@ -5,10 +5,9 @@ export type SearchPageSearchParams = {
 export function parseSearchPageSearchParams(
   searchParams: SearchPageSearchParams
 ): { query?: string } {
-  let query = Array.isArray(searchParams.query)
+  const query = Array.isArray(searchParams.query)
     ? searchParams.query[0]
     : searchParams.query;
-  query = query?.replace(/\s+/g, '+').trim();
 
   return {
     query,

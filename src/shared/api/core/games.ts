@@ -300,6 +300,8 @@ export class Games extends Base {
   }
 
   public async search(query: string): Promise<GamePreviewResponse[]> {
+    const _query = query.replace(/\s+/g, '+').trim();
+
     const { data, error } = await this.supabase
       .from('game')
       .select(
@@ -307,7 +309,7 @@ export class Games extends Base {
       isFree: is_free, gameCatalog: game_catalog(id, gameId: game_id, store, drm, regularPrice: regular_price,\
       currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price)'
       )
-      .textSearch('combined_title', query);
+      .textSearch('combined_title', _query);
 
     if (error) {
       throw error;

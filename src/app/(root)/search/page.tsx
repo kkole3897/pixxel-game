@@ -3,6 +3,7 @@ import {
   dehydrate,
   HydrationBoundary,
 } from '@tanstack/react-query';
+import { Metadata } from 'next';
 
 import { SearchGameFetcher } from '@/widgets/search-game-fetcher';
 import {
@@ -16,6 +17,22 @@ import { createClient } from '@/shared/lib/supabase/server';
 type SearchPageProps = {
   searchParams: SearchPageSearchParams;
 };
+
+export function generateMetadata({ searchParams }: SearchPageProps): Metadata {
+  const { query } = parseSearchPageSearchParams(searchParams);
+
+  const title = `${query}의 검색 결과 - Pixxel Game`;
+
+  return {
+    title: title,
+    openGraph: {
+      title,
+    },
+    twitter: {
+      title,
+    },
+  };
+}
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { query } = parseSearchPageSearchParams(searchParams);
