@@ -1,0 +1,1 @@
+export { SearchGameFetcher } from './ui';

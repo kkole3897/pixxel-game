@@ -1,2 +1,2 @@
-export { SearchIconButton, SearchForm } from './ui';
+export { SearchIconButton, SearchForm, SearchGameList } from './ui';
 export { useSearchRouter, type SearchFormData } from './lib';
