@@ -7,6 +7,8 @@ export type SearchFormData = {
 export function useSearchForm(defaultFormData: Partial<SearchFormData>) {
   const [keyword, setKeyword] = useState(defaultFormData.keyword ?? '');
 
+  const clearKeyword = () => setKeyword('');
+
   const handleSumit = (
     event: React.FormEvent<HTMLFormElement>,
     onSubmit: (formData: SearchFormData) => void
@@ -19,5 +21,6 @@ export function useSearchForm(defaultFormData: Partial<SearchFormData>) {
     keyword,
     setKeyword,
     handleSumit,
+    clearKeyword,
   };
 }

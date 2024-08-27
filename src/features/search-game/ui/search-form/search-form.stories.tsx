@@ -15,3 +15,9 @@ type Story = StoryObj<typeof SearchForm>;
 export const Default: Story = {
   args: {},
 };
+
+export const DefaultKeyword: Story = {
+  args: {
+    defaultKeyword: 'Super Mario',
+  },
+};

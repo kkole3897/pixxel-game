@@ -1,37 +1,49 @@
 'use client';
 
 import { DetailedHTMLProps, FormHTMLAttributes } from 'react';
-import { RiSearchLine } from '@remixicon/react';
+import { RiSearchLine, RiCloseCircleFill } from '@remixicon/react';
 
 import * as Input from '@/shared/ui/input';
 import { useSearchForm, type SearchFormData } from '../../lib';
 import * as styles from './search-form.css';
 
-type SearchFormProps = Pick<
-  DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>,
-  'className'
-> & { defaultKeyword?: string; onSubmit: (formData: SearchFormData) => void };
+type SearchFormProps = {
+  defaultKeyword?: string;
+  onSubmit: (formData: SearchFormData) => void;
+};
 
 export default function SearchForm({
   onSubmit,
   defaultKeyword,
 }: SearchFormProps) {
-  const { keyword, setKeyword, handleSumit } = useSearchForm({
+  const { keyword, setKeyword, handleSumit, clearKeyword } = useSearchForm({
     keyword: defaultKeyword,
   });
 
   return (
-    <form onSubmit={(event) => handleSumit(event, onSubmit)}>
+    <form onSubmit={(event) => handleSumit(event, onSubmit)} autoComplete="off">
       <Input.Root
         type="text"
         name="keyword"
-        className={styles.input}
+        className={styles.keywordInput}
         value={keyword}
         onChange={(event) => setKeyword(event.target.value)}
+        placeholder="타이틀을 입력해주세요"
       >
-        <Input.Slot>
+        <Input.Slot side="left">
           <RiSearchLine color="#80838a" />
         </Input.Slot>
+        {keyword.length > 0 && (
+          <Input.Slot side="right">
+            <button
+              type="button"
+              onClick={() => clearKeyword()}
+              className={styles.clearKeywordButton}
+            >
+              <RiCloseCircleFill color="#80838a" />
+            </button>
+          </Input.Slot>
+        )}
       </Input.Root>
     </form>
   );
