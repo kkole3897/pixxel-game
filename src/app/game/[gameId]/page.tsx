@@ -5,18 +5,18 @@ import {
   HydrationBoundary,
 } from '@tanstack/react-query';
 
-import * as styles from './page.css';
 import { GameDescription, PriceHistoryFetcher } from '@/widgets/game-detail';
-import { Core } from '@/shared/api';
-import { createClient } from '@/shared/lib/supabase/server';
-import { gameQueryKeys } from '@/entities/game';
 import {
   GameCatalogSection,
   ReviewSection,
   GameBundleContents,
   GameDlcContents,
 } from '@/widgets/game-detail';
+import { gameQueryKeys } from '@/entities/game';
 import { wishListQueryKeys } from '@/entities/wish-list';
+import { Core } from '@/shared/api';
+import { createClient } from '@/shared/lib/supabase/server';
+import * as styles from './page.css';
 
 type PageProps = {
   params: { gameId: string };
