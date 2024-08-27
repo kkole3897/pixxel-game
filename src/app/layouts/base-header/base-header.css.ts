@@ -5,7 +5,10 @@ import { theme } from '@/shared/styles/theme.css';
 export const container = style({
   display: 'flex',
   alignItems: 'center',
-  height: '40px',
+  justifyContent: 'space-between',
+  position: 'sticky',
+  top: 0,
+  height: '48px',
   width: '100%',
   padding: '0 16px',
   borderBottom: `1px solid ${theme.colors.gray[100]}`,
@@ -13,12 +16,7 @@ export const container = style({
   zIndex: 10,
 });
 
-export const indexLink = style({
-  color: 'unset',
-  fontSize: '1.25rem',
-  fontWeight: 'bold',
-  textDecoration: 'none',
-});
+export const indexLink = style({});
 
 export const logoImage = style({
   display: 'block',
