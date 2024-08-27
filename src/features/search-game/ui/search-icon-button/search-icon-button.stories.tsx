@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import SearchIconButton from './search-icon-button';
 
 const meta: Meta = {
-  title: 'Features/SearchGameTitle/SearchIconButton',
+  title: 'Features/SearchGame/SearchIconButton',
   component: SearchIconButton,
   tags: ['autodocs'],
 };
