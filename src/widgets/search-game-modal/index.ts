@@ -1,0 +1,1 @@
+export { SearchGameModal } from './ui';
