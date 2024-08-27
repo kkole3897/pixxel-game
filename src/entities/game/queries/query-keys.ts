@@ -7,4 +7,5 @@ export const gameQueryKeys = createQueryKeys('game', {
   bundleContents: (id: number) => [id],
   dlcs: (id: number) => [id],
   list: null,
+  search: (query: string) => [query],
 });

@@ -46,4 +46,5 @@ export {
   useBundleContentsQuery,
   useDlcsQuery,
   useGamesInfiniteQuery,
+  useSearchGameQuery,
 } from './queries';

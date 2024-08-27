@@ -298,4 +298,21 @@ export class Games extends Base {
 
     return data;
   }
+
+  public async search(query: string): Promise<GamePreviewResponse[]> {
+    const { data, error } = await this.supabase
+      .from('game')
+      .select(
+        'id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image,\
+      isFree: is_free, gameCatalog: game_catalog(id, gameId: game_id, store, drm, regularPrice: regular_price,\
+      currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price)'
+      )
+      .textSearch('combined_title', query);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 }
