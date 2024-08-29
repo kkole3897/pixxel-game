@@ -8,6 +8,8 @@ export {
 export {
   useSearchRouter,
   parseSearchPageSearchParams,
+  SearchQueryStoreProvider,
+  useSearchQueryStore,
   type SearchFormData,
   type SearchPageSearchParams,
 } from './lib';

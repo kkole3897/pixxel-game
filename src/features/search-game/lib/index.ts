@@ -4,3 +4,7 @@ export {
   parseSearchPageSearchParams,
   type SearchPageSearchParams,
 } from './parse-search-page-params';
+export {
+  SearchQueryStoreProvider,
+  useSearchQueryStore,
+} from './use-search-query-store';

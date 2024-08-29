@@ -2,9 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import cn from 'classnames';
 
 import './styles/globals.css';
-import { ReactQueryProvider } from './providers';
+import { ReactQueryProvider, StoreProviders } from './providers';
 import { base, serif } from '@/shared/fonts';
-import { PrevPageStoreProvider } from '@/features/restore-prev-page';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pixxelgame.com'),
@@ -38,9 +37,9 @@ export default function RootLayout({
     <html lang="ko" className={cn(base.variable, serif.variable)}>
       <body>
         <ReactQueryProvider>
-          <PrevPageStoreProvider>
+          <StoreProviders>
             <div className="page">{children}</div>
-          </PrevPageStoreProvider>
+          </StoreProviders>
         </ReactQueryProvider>
       </body>
     </html>
