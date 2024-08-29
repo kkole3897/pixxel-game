@@ -3,6 +3,7 @@ export {
   SearchForm,
   SearchGameList,
   EmptySearchResult,
+  SearchGameError,
 } from './ui';
 export {
   useSearchRouter,

@@ -1,6 +1,10 @@
 'use client';
 
-import { SearchGameList, EmptySearchResult } from '@/features/search-game';
+import {
+  SearchGameList,
+  EmptySearchResult,
+  SearchGameError,
+} from '@/features/search-game';
 import {
   useSearchGameQuery,
   GamePreviewCard,
@@ -30,9 +34,8 @@ export default function SearchGameFetcher({ query }: SearchGameFetcherProps) {
     );
   }
 
-  // TODO: 에러 ui 추가
   if (isError) {
-    return null;
+    return <SearchGameError className={styles.searchGameError} />;
   }
 
   if (data.length === 0) {
