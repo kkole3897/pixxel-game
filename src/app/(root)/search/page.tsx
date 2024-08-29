@@ -6,6 +6,7 @@ import {
 import { Metadata } from 'next';
 
 import { SearchGameFetcher } from '@/widgets/search-game-fetcher';
+import { EmptySearchResult } from '@/features/search-game/ui/empty-search-result';
 import {
   parseSearchPageSearchParams,
   type SearchPageSearchParams,
@@ -13,6 +14,7 @@ import {
 import { gameQueryKeys } from '@/entities/game';
 import { Core } from '@/shared/api';
 import { createClient } from '@/shared/lib/supabase/server';
+import * as styles from './page.css';
 
 type SearchPageProps = {
   searchParams: SearchPageSearchParams;
@@ -38,8 +40,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { query } = parseSearchPageSearchParams(searchParams);
 
   if (!query) {
-    // TODO: empty page 처리
-    return null;
+    return <EmptySearchResult className={styles.emptySearchResult} />;
   }
 
   const queryClient = new QueryClient();
