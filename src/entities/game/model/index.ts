@@ -1,8 +1,3 @@
-export {
-  useGetBestPriceHistoryQuery as useGetBestGamePriceHistoryQuery,
-  useGetPriceHistoryQuery as useGetGamePriceHistoryQuery,
-} from './use-price-history-query';
-
 export { type GameType } from './game-type';
 export { type GameStore } from './game-store';
 export { type GameDrm } from './game-drm';

@@ -1,6 +1,4 @@
 export {
-  useGetBestGamePriceHistoryQuery,
-  useGetGamePriceHistoryQuery,
   getCurrentPrice,
   isDiscountedCatalogItem,
   isDiscounted,
@@ -47,4 +45,6 @@ export {
   useDlcsQuery,
   useGamesInfiniteQuery,
   useSearchGameQuery,
+  useGetBestPriceHistoryQuery as useGetBestGamePriceHistoryQuery,
+  useGetPriceHistoryQuery as useGetGamePriceHistoryQuery,
 } from './queries';
