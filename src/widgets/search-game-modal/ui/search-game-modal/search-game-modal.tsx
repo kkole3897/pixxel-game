@@ -21,7 +21,8 @@ export default function SearchGameModal() {
         <SearchIconButton label="게임 검색" />
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Content className={styles.content}>
+        <Dialog.Content className={styles.content} aria-describedby={undefined}>
+          <Dialog.Title className={styles.title}>게임 검색</Dialog.Title>
           <div className={styles.searchArea}>
             <Dialog.Close asChild>
               <button type="button" className={styles.closeButton}>

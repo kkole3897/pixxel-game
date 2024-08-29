@@ -1,5 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
+import { visuallyHidden } from '@/shared/styles/utils.css';
+
 export const content = style({
   position: 'fixed',
   top: 0,
@@ -35,3 +37,5 @@ export const searchFormContainer = style({
   flex: 1,
   paddingRight: '16px',
 });
+
+export const title = style([visuallyHidden]);
