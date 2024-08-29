@@ -23,7 +23,7 @@ type SearchPageProps = {
 export function generateMetadata({ searchParams }: SearchPageProps): Metadata {
   const { query } = parseSearchPageSearchParams(searchParams);
 
-  const title = `${query}의 검색 결과 - Pixxel Game`;
+  const title = `"${query ?? ''}"의 검색 결과 - Pixxel Game`;
 
   return {
     title: title,
