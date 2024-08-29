@@ -133,3 +133,11 @@ globalStyle('table', {
     },
   },
 });
+
+globalStyle('img', {
+  '@layer': {
+    [reset]: {
+      verticalAlign: 'top',
+    },
+  },
+});
