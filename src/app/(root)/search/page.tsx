@@ -4,6 +4,7 @@ import {
   HydrationBoundary,
 } from '@tanstack/react-query';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { SearchGameFetcher } from '@/widgets/search-game-fetcher';
 import { EmptySearchResult } from '@/features/search-game/ui/empty-search-result';
@@ -43,7 +44,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   if (!query) {
     return (
       <>
-        <DefaultQuerySetter />
+        <Suspense>
+          <DefaultQuerySetter />
+        </Suspense>
         <EmptySearchResult className={styles.emptySearchResult} />
       </>
     );
@@ -59,7 +62,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <DefaultQuerySetter />
+      <Suspense>
+        <DefaultQuerySetter />
+      </Suspense>
       <SearchGameFetcher query={query} />
     </HydrationBoundary>
   );

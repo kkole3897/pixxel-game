@@ -6,14 +6,14 @@ import { RiArrowLeftSLine } from '@remixicon/react';
 import {
   SearchForm,
   SearchIconButton,
-  useDefaultSearchQuery,
+  useSearchQueryStore,
 } from '@/features/search-game';
 import { useSearchGameModal } from '../../lib';
 import * as styles from './search-game-modal.css';
 
 export default function SearchGameModal() {
   const { isOpened, setIsOpened, handleSumit } = useSearchGameModal();
-  const { defaultQuery } = useDefaultSearchQuery();
+  const defaultQuery = useSearchQueryStore((state) => state.query);
 
   return (
     <Dialog.Root open={isOpened} onOpenChange={setIsOpened}>

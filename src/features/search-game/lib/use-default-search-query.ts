@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import { useSearchQueryStore } from './use-search-query-store';
 
 export function useDefaultSearchQuery() {
-  const defaultQuery = useSearchQueryStore((store) => store.query);
   const setQuery = useSearchQueryStore((store) => store.setQuery);
 
   const searchParams = useSearchParams();
@@ -16,7 +15,6 @@ export function useDefaultSearchQuery() {
   };
 
   return {
-    defaultQuery,
     setDefaultQuery,
   };
 }
