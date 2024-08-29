@@ -8,3 +8,4 @@ export {
   SearchQueryStoreProvider,
   useSearchQueryStore,
 } from './use-search-query-store';
+export { useDefaultSearchQuery } from './use-default-search-query';
