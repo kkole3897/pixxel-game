@@ -1,9 +1,10 @@
 import { RiArrowDownLine } from '@remixicon/react';
 
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
-import * as styles from './game-box.css';
 import { useGamePreview } from './hooks/use-game';
 import type { GamePreview } from '../../model';
+import DefaultGameMainImage from '~/public/images/default-game-main-image.jpg';
+import * as styles from './game-box.css';
 
 interface GameBoxProps {
   game: GamePreview;
@@ -28,6 +29,7 @@ export default function GameBox({ game }: GameBoxProps) {
           alt={game.titleKo ?? game.title ?? game.publicId}
           width="200"
           height="136"
+          fallbackSrc={DefaultGameMainImage}
         />
       </div>
       <div className={styles.summaryArea}>

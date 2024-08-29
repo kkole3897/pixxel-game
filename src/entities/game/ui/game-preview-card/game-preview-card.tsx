@@ -1,11 +1,11 @@
 import cn from 'classnames';
 
 import type { GamePreview } from '../../model';
-
-import * as styles from './game-preview-card.css';
 import { useGamePreviewCard } from './hooks/use-game-preview-card';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import { SteamFillBase, EpicFillBase } from '@/shared/ui/icons';
+import DefaultGameMainImage from '~/public/images/default-game-main-image.jpg';
+import * as styles from './game-preview-card.css';
 
 export type GamePreviewCardProps = {
   className?: string;
@@ -42,9 +42,8 @@ export default function GamePreviewCard({
           fill
           className={styles.thumbnailImage}
           sizes="50vw"
-        >
-          <div className={styles.thumbnailFallback}></div>
-        </ImageWithFallback>
+          fallbackSrc={DefaultGameMainImage}
+        />
         {isHistoricalLow && (
           <div className={styles.historicalLow}>역대 최저</div>
         )}
