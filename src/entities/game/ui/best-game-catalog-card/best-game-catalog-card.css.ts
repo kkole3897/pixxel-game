@@ -36,6 +36,7 @@ export const mediaArea = style({
   position: 'relative',
   overflow: 'hidden',
   width: '100%',
+  minHeight: '48px',
   borderRadius: '16px',
 });
 

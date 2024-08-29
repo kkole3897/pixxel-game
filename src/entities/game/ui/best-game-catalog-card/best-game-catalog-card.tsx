@@ -7,6 +7,7 @@ import { SteamFillWithText, EpicFill, EpicFillBase } from '@/shared/ui/icons';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import { useBestGameCatalogCard } from './hooks/use-best-game-catalog-card';
 import { DlcBadge } from '@/entities/game';
+import DefaultGameMainImage from '~/public/images/default-game-main-image.jpg';
 import * as styles from './best-game-catalog-card.css';
 
 export type BestGameCatalogCardProps = {
@@ -58,9 +59,8 @@ export default function BestGameCatalogCard({
           height={0}
           sizes="100vw"
           className={styles.mainImage}
-        >
-          <div className={styles.mainImageFallback}></div>
-        </ImageWithFallback>
+          fallbackSrc={DefaultGameMainImage}
+        />
         <div className={styles.wishArea}>{wish}</div>
       </div>
       <div className={styles.headerArea}>
