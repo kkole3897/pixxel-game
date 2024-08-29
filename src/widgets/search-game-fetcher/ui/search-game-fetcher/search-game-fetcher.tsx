@@ -1,7 +1,11 @@
 'use client';
 
 import { SearchGameList, EmptySearchResult } from '@/features/search-game';
-import { useSearchGameQuery, GamePreviewCard } from '@/entities/game';
+import {
+  useSearchGameQuery,
+  GamePreviewCard,
+  GamePreviewCardSkeleton,
+} from '@/entities/game';
 import { DefaultLink } from '@/shared/ui/default-link';
 import * as styles from './search-game-fetcher.css';
 
@@ -12,16 +16,25 @@ type SearchGameFetcherProps = {
 export default function SearchGameFetcher({ query }: SearchGameFetcherProps) {
   const { data, isPending, isError } = useSearchGameQuery(query);
 
-  // TODO: 로딩, 에러 ui 추가
   if (isPending) {
-    return null;
+    return (
+      <SearchGameList>
+        {Array(10)
+          .fill(null)
+          .map((_, index) => (
+            <SearchGameList.Item key={index}>
+              <GamePreviewCardSkeleton />
+            </SearchGameList.Item>
+          ))}
+      </SearchGameList>
+    );
   }
 
+  // TODO: 에러 ui 추가
   if (isError) {
     return null;
   }
 
-  // TODO: 검색 결과 없음 ui 추가
   if (data.length === 0) {
     return <EmptySearchResult className={styles.emptySearchResult} />;
   }
