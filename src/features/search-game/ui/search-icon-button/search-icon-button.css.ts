@@ -14,3 +14,8 @@ export const searchIconButton = style({
   color: theme.colors.gray[700],
   cursor: 'pointer',
 });
+
+export const icon = style({
+  width: '100%',
+  height: '100%',
+});
