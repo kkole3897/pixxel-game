@@ -66,6 +66,7 @@ export type GameCatalogResponse = {
   lowestPrice: number | null;
   lowestPriceUpdatedAt: string | null;
   createdAt: string;
+  salesEndedAt: string | null;
 };
 
 export type BaseGameResponse = Pick<
@@ -109,6 +110,7 @@ export type GameCatalogPreviewResponse = Pick<
   | 'currentPriceExpireAt'
   | 'lowestPrice'
   | 'regularPrice'
+  | 'salesEndedAt'
 >;
 
 export type GamePreviewResponse = Pick<
@@ -161,7 +163,7 @@ export class Games extends Base {
       .select(
         'id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image,\
       isFree: is_free, gameCatalog: game_catalog(id, gameId: game_id, store, drm, regularPrice: regular_price,\
-      currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price)'
+      currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price, salesEndedAt: sales_ended_at)'
       )
       .order(sortBy, { ascending });
 
@@ -192,7 +194,7 @@ export class Games extends Base {
         openCritic: open_critic(url, tier, topCriticScore: top_critic_score, percentRecommended: percent_recommended),\
         steamScore: steam_score(url, total, positive),\
         gameCatalog: game_catalog(id, gameId: game_id, url, store, drm, regularPrice: regular_price, currentPrice: current_price, currentPriceExpireAt: current_price_expire_at,\
-          lowestPrice: lowest_price, lowestPriceUpdatedAt: lowest_price_updated_at, createdAt: created_at),\
+          lowestPrice: lowest_price, lowestPriceUpdatedAt: lowest_price_updated_at, createdAt: created_at, salesEndedAt: sales_ended_at),\
         baseGame: base_game_id(id, title, titleKo: title_ko, publicId: public_id)'
       )
       .eq('public_id', publicId)
@@ -267,7 +269,7 @@ export class Games extends Base {
           id, title, titleKo: title_ko, mainImage: main_image, isFree: is_free, publicId: public_id,\
           gameCatalog: game_catalog(\
             id, currentPrice: current_price, regularPrice: regular_price,\
-            currentPriceExpireAt: current_price_expire_at\
+            currentPriceExpireAt: current_price_expire_at, salesEndedAt: sales_ended_at\
           )\
         )'
       )
@@ -287,7 +289,7 @@ export class Games extends Base {
         'id, title, titleKo: title_ko, mainImage: main_image, isFree: is_free, publicId: public_id,\
         gameCatalog: game_catalog(\
           id, currentPrice: current_price, regularPrice: regular_price,\
-          currentPriceExpireAt: current_price_expire_at\
+          currentPriceExpireAt: current_price_expire_at, salesEndedAt: sales_ended_at\
         )'
       )
       .eq('base_game_id', gameId);
@@ -307,7 +309,7 @@ export class Games extends Base {
       .select(
         'id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image,\
       isFree: is_free, gameCatalog: game_catalog(id, gameId: game_id, store, drm, regularPrice: regular_price,\
-      currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price)'
+      currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price, salesEndedAt: sales_ended_at)'
       )
       .textSearch('combined_title', _query);
 
