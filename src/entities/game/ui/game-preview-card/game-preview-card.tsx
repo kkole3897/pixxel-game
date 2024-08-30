@@ -2,7 +2,7 @@ import cn from 'classnames';
 import React from 'react';
 
 import type { GamePreview } from '../../model';
-import { useGamePreviewCard } from './hooks/use-game-preview-card';
+import { useGamePreview } from '../../lib';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
 import { SteamFillBase, EpicFillBase } from '@/shared/ui/icons';
 import DefaultGameMainImage from '~/public/images/default-game-main-image.jpg';
@@ -33,7 +33,7 @@ export default function GamePreviewCard({
     discountPercentText,
     isHistoricalLow,
     isBestSalesEnded,
-  } = useGamePreviewCard(gamePreview);
+  } = useGamePreview(gamePreview);
 
   const StoreIcon = storeIconMap[currentBestCatalog?.store ?? 'steam'];
 
