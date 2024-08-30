@@ -2,6 +2,7 @@ import {
   type GamePreview,
   getCurrentPrice,
   getHistoricalLowestPrice,
+  isSalesEnded,
 } from '../../../model';
 import { useGamePreview } from '../../../lib';
 
@@ -32,11 +33,19 @@ function getDiscountPercent(
 
 export function useGamePreviewCard(gamePreview: GamePreview) {
   const { currentBestCatalog } = useGamePreview(gamePreview);
+
+  const isBestSalesEnded =
+    currentBestCatalog === null
+      ? false
+      : isSalesEnded(currentBestCatalog.salesEndedAt);
+
   const gameTitle =
     gamePreview.titleKo ?? gamePreview.title ?? gamePreview.publicId;
 
   const currentPrice =
-    currentBestCatalog === null ? null : getCurrentPrice(currentBestCatalog);
+    currentBestCatalog === null || isBestSalesEnded
+      ? null
+      : getCurrentPrice(currentBestCatalog);
   const regularPrice =
     currentBestCatalog === null ? null : currentBestCatalog.regularPrice;
   const historicalLowestPrice = getHistoricalLowestPrice(gamePreview);
@@ -63,5 +72,6 @@ export function useGamePreviewCard(gamePreview: GamePreview) {
     discountPercentText,
     isDiscounted: isDiscounted(currentPrice, regularPrice),
     isHistoricalLow,
+    isBestSalesEnded,
   };
 }

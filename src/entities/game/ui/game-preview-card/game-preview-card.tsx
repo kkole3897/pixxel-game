@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import React from 'react';
 
 import type { GamePreview } from '../../model';
 import { useGamePreviewCard } from './hooks/use-game-preview-card';
@@ -13,8 +14,8 @@ export type GamePreviewCardProps = {
 };
 
 const storeIconMap = {
-  steam: <SteamFillBase />,
-  epic: <EpicFillBase />,
+  steam: SteamFillBase,
+  epic: EpicFillBase,
 };
 
 export default function GamePreviewCard({
@@ -31,7 +32,10 @@ export default function GamePreviewCard({
     isDiscounted,
     discountPercentText,
     isHistoricalLow,
+    isBestSalesEnded,
   } = useGamePreviewCard(gamePreview);
+
+  const StoreIcon = storeIconMap[currentBestCatalog?.store ?? 'steam'];
 
   return (
     <div className={composedRootClassName}>
@@ -40,7 +44,7 @@ export default function GamePreviewCard({
           src={gamePreview.mainImage}
           alt={gameTitle}
           fill
-          className={styles.thumbnailImage}
+          className={styles.thumbnailImage({ dimmed: isBestSalesEnded })}
           sizes="50vw"
           fallbackSrc={DefaultGameMainImage}
         />
@@ -49,26 +53,40 @@ export default function GamePreviewCard({
         )}
       </div>
       <div className={styles.descriptionArea}>
-        <div className={styles.title}>{gameTitle}</div>
+        <div className={styles.title({ dimmed: isBestSalesEnded })}>
+          {gameTitle}
+        </div>
         {currentBestCatalog !== null && (
           <div className={styles.catalogArea}>
             <div className={styles.storeArea}>
-              {storeIconMap[currentBestCatalog.store]}
+              <StoreIcon
+                className={styles.storeIcon({ dimmed: isBestSalesEnded })}
+              />
             </div>
             <div className={styles.priceArea}>
-              {isDiscounted && (
-                <div className={styles.discountPercent}>
-                  {discountPercentText}
+              {isBestSalesEnded ? (
+                <div className={styles.priceArea}>
+                  <span className={styles.salesEndText}>판매 종료</span>
                 </div>
+              ) : (
+                <>
+                  {isDiscounted && (
+                    <div className={styles.discountPercent}>
+                      {discountPercentText}
+                    </div>
+                  )}
+                  <div className={styles.prices}>
+                    {isDiscounted && (
+                      <span className={styles.regularPrice}>
+                        {regularPriceText}
+                      </span>
+                    )}
+                    <span className={styles.currentPrice}>
+                      {currentPriceText}
+                    </span>
+                  </div>
+                </>
               )}
-              <div className={styles.prices}>
-                {isDiscounted && (
-                  <span className={styles.regularPrice}>
-                    {regularPriceText}
-                  </span>
-                )}
-                <span className={styles.currentPrice}>{currentPriceText}</span>
-              </div>
             </div>
           </div>
         )}

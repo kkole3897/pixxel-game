@@ -12,6 +12,7 @@ export {
   isDiscounted,
   calculateCatalogDiscountRatio,
   getCurrentBestPrice,
+  isSalesEnded,
   type Game,
   type GamePreview,
   type GameCatalogItemPreview,
