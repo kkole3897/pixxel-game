@@ -40,6 +40,7 @@ export type GameCatalogItemPreview = Pick<
   | 'currentPriceExpireAt'
   | 'lowestPrice'
   | 'regularPrice'
+  | 'salesEndedAt'
 >;
 
 export interface GamePreview
@@ -60,12 +61,26 @@ export function isCurrentPriceExpired(currentPriceExpireAt: string | null) {
   return current > dayjs(currentPriceExpireAt);
 }
 
+export function isSalesEnded(salesEndedAt: string | null) {
+  if (salesEndedAt === null) {
+    return false;
+  }
+
+  const current = dayjs();
+
+  return current > dayjs(salesEndedAt);
+}
+
 export function getCurrentPrice(
   gameCatalogItem: Pick<
     GameCatalogItem,
-    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt'
+    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt' | 'salesEndedAt'
   >
 ): number | null {
+  if (isSalesEnded(gameCatalogItem.salesEndedAt)) {
+    return null;
+  }
+
   if (gameCatalogItem.currentPrice === null) {
     return gameCatalogItem.regularPrice;
   }
@@ -79,7 +94,7 @@ export function getCurrentBestPrice(
   game: Pick<Game, 'isFree'> & {
     gameCatalog: Pick<
       GameCatalogItem,
-      'currentPrice' | 'regularPrice' | 'currentPriceExpireAt'
+      'currentPrice' | 'regularPrice' | 'currentPriceExpireAt' | 'salesEndedAt'
     >[];
   }
 ) {
@@ -189,7 +204,7 @@ export function isDiscountedCatalogItem(
 export function calculateCatalogDiscountRatio(
   catalogItem: Pick<
     GameCatalogItem,
-    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt'
+    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt' | 'salesEndedAt'
   >
 ) {
   const currentPrice = getCurrentPrice(catalogItem);

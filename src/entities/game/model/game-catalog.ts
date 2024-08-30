@@ -12,4 +12,5 @@ export interface GameCatalogItem {
   currentPriceExpireAt: string | null;
   lowestPrice: number | null;
   lowestPriceUpdatedAt: string | null;
+  salesEndedAt: string | null;
 }
