@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { theme } from '@/shared/styles/theme.css';
 import { text, fontWeight } from '@/shared/styles/typography.css';
@@ -40,9 +41,18 @@ export const mediaArea = style({
   borderRadius: '16px',
 });
 
-export const mainImage = style({
-  width: '100%',
-  height: 'auto',
+export const mainImage = recipe({
+  base: {
+    width: '100%',
+    height: 'auto',
+  },
+  variants: {
+    dimmed: {
+      true: {
+        filter: 'grayscale(1)',
+      },
+    },
+  },
 });
 
 export const mainImageFallback = style({
@@ -63,13 +73,22 @@ export const headerArea = style({
   paddingTop: '8px',
 });
 
-export const title = style([
-  text.base,
-  fontWeight.bold,
-  {
-    color: theme.colors.gray[900],
+export const title = recipe({
+  base: [
+    text.base,
+    fontWeight.bold,
+    {
+      color: theme.colors.gray[900],
+    },
+  ],
+  variants: {
+    dimmed: {
+      true: {
+        color: theme.colors.gray[400],
+      },
+    },
   },
-]);
+});
 
 export const releaseDate = style([
   {
@@ -104,6 +123,14 @@ export const bodyArea = style({
   rowGap: '8px',
   paddingTop: '16px',
 });
+
+export const salesEndText = style([
+  text.lg,
+  {
+    color: theme.colors.gray[400],
+    fontWeight: theme.fontWeight.bold,
+  },
+]);
 
 export const storeArea = style({
   display: 'flex',

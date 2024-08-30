@@ -13,6 +13,7 @@ export function adaptBestCatalog(
     regularPrice,
     currentPrice,
     currentPriceExpireAt,
+    salesEndedAt,
   } = catalogItem;
 
   const bestCatalog: BestGameCatalogCardProps['game']['gameCatalog'] = {
@@ -24,6 +25,7 @@ export function adaptBestCatalog(
     regularPrice,
     currentPrice,
     currentPriceExpireAt,
+    salesEndedAt,
   };
 
   return bestCatalog;

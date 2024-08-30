@@ -5,7 +5,8 @@ import {
   getCurrentPrice,
   isDiscountedCatalogItem,
   isDiscounted,
-} from '@/entities/game';
+  isSalesEnded,
+} from '../../../model';
 
 function formatReleaseDate({
   releaseYear,
@@ -70,15 +71,21 @@ function formatPrice(price: number | null) {
 export function useBestGameCatalogCard(game: BestGameCatalog) {
   const title = game.titleKo ?? game.title ?? game.publicId;
   const releaseDate = formatReleaseDate(game);
+  const isBestSalesEnded =
+    game.gameCatalog === null
+      ? false
+      : isSalesEnded(game.gameCatalog.salesEndedAt);
   const currentPrice =
     game.gameCatalog === null ? null : getCurrentPrice(game.gameCatalog);
   const isDiscounted =
     game.gameCatalog === null
       ? false
       : isDiscountedCatalogItem(game.gameCatalog);
-  const onSalesText = isDiscounted
-    ? getOnDiscountText(game.gameCatalog?.currentPriceExpireAt)
-    : '에서 판매 중';
+  const onSalesText = isBestSalesEnded
+    ? ''
+    : isDiscounted
+      ? getOnDiscountText(game.gameCatalog?.currentPriceExpireAt)
+      : '에서 판매 중';
   const discountPercent =
     game.gameCatalog === null
       ? 0
@@ -107,5 +114,6 @@ export function useBestGameCatalogCard(game: BestGameCatalog) {
     hasPriceInfo,
     baseGameLink,
     baseGameTitle,
+    isBestSalesEnded,
   };
 }
