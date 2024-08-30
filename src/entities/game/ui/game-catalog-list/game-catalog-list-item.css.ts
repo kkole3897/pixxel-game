@@ -65,3 +65,11 @@ export const discountExpireDate = style([
     fontWeight: theme.fontWeight.medium,
   },
 ]);
+
+export const salesEndText = style([
+  text.base,
+  {
+    color: theme.colors.gray[500],
+    fontWeight: theme.fontWeight.medium,
+  },
+]);

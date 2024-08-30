@@ -30,6 +30,10 @@ export const catalogItemLink = style({
     '&:hover': {
       backgroundColor: theme.colors.blue[100],
     },
+    '&[aria-disabled="true"]': {
+      pointerEvents: 'none',
+      opacity: 0.5,
+    },
   },
 });
 

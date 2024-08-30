@@ -4,6 +4,7 @@ import {
   getCurrentPrice,
   isDiscountedCatalogItem,
   calculateCatalogDiscountRatio,
+  isSalesEnded,
 } from '../../../model';
 
 import type { GameCatalogListItem } from '../types';
@@ -32,5 +33,6 @@ export function useGameCatalogItem(item: GameCatalogListItem) {
     discountPercent,
     willDiscountExpire,
     discountExpireDate,
+    isSalesEnded: isSalesEnded(item.salesEndedAt),
   };
 }
