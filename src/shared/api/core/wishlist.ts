@@ -34,6 +34,7 @@ type GameCatalogItemPreviewResponse = CamelCasedPropertiesDeep<
     | 'current_price'
     | 'current_price_expire_at'
     | 'lowest_price'
+    | 'sales_ended_at'
   >
 >;
 
@@ -53,7 +54,7 @@ export class Wishlist extends Base {
         'id, createdAt: created_at, updatedAt: updated_at, gameId: game_id, prevId: prev_id, nextId: next_id,\
         game(id, publicId: public_id, title, titleKo: title_ko, type, mainImage: main_image, isFree: is_free,\
           gameCatalog: game_catalog(id, gameId: game_id, store, drm, regularPrice: regular_price,\
-            currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price\
+            currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price, salesEndedAt: sales_ended_at\
           )\
         )'
       )

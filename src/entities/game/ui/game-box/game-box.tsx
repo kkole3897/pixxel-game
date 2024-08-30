@@ -19,6 +19,7 @@ export default function GameBox({ game }: GameBoxProps) {
     discountPercentText,
     gameTitle,
     isDiscounted,
+    isBestSalesEnded,
   } = useGamePreview(game);
 
   return (
@@ -26,7 +27,7 @@ export default function GameBox({ game }: GameBoxProps) {
       <div className={styles.thumbnailArea}>
         <ImageWithFallback
           src={game.mainImage}
-          className={styles.thumbnailImg}
+          className={styles.thumbnailImg({ dimmed: isBestSalesEnded })}
           alt={gameTitle}
           width="200"
           height="136"
@@ -36,31 +37,41 @@ export default function GameBox({ game }: GameBoxProps) {
       <div className={styles.summaryArea}>
         <div>
           <div>
-            <div className={styles.gameName}>{gameTitle}</div>
+            <div className={styles.gameName({ dimmed: isBestSalesEnded })}>
+              {gameTitle}
+            </div>
           </div>
           {currentBestCatalog && (
             <div className={styles.priceArea}>
-              <div className={styles.initialPriceArea}>
-                {isDiscounted && (
-                  <>
-                    <span className={styles.discountRate}>
-                      {discountPercentText}
+              {isBestSalesEnded ? (
+                <div className={styles.salesEndText}>판매 종료</div>
+              ) : (
+                <>
+                  <div className={styles.initialPriceArea}>
+                    {isDiscounted && (
+                      <>
+                        <span className={styles.discountRate}>
+                          {discountPercentText}
+                        </span>
+                        <span className={styles.initalPrice}>
+                          {regularPriceText}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div className={styles.finalPriceArea}>
+                    {isHistoricalLow && (
+                      <span className={styles.lowestArea}>
+                        <span className={styles.lowestText}>역대 최저</span>
+                        <RiArrowDownLine size={16} color="#1d4ed8" />
+                      </span>
+                    )}
+                    <span className={styles.finalPrice}>
+                      {currentPriceText}
                     </span>
-                    <span className={styles.initalPrice}>
-                      {regularPriceText}
-                    </span>
-                  </>
-                )}
-              </div>
-              <div className={styles.finalPriceArea}>
-                {isHistoricalLow && (
-                  <span className={styles.lowestArea}>
-                    <span className={styles.lowestText}>역대 최저</span>
-                    <RiArrowDownLine size={16} color="#1d4ed8" />
-                  </span>
-                )}
-                <span className={styles.finalPrice}>{currentPriceText}</span>
-              </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
