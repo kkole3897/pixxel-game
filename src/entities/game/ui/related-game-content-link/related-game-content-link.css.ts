@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { theme } from '@/shared/styles/theme.css';
 import { truncate } from '@/shared/styles/utils.css';
@@ -24,10 +25,19 @@ export const imageArea = style({
   width: '88px',
 });
 
-export const mainImage = style({
-  height: '100%',
-  width: '100%',
-  objectFit: 'cover',
+export const mainImage = recipe({
+  base: {
+    height: '100%',
+    width: '100%',
+    objectFit: 'cover',
+  },
+  variants: {
+    dimmed: {
+      true: {
+        filter: 'grayscale(1)',
+      },
+    },
+  },
 });
 
 export const mainImageFallback = style({
@@ -47,20 +57,38 @@ export const contentArea = style({
   padding: '0 16px',
 });
 
-export const title = style([
-  truncate(),
-  {
-    fontSize: theme.fontSize.xs,
-    fontWeight: theme.fontWeight.semibold,
-    lineHeight: theme.lineHeight.xs,
+export const title = recipe({
+  base: [
+    truncate(),
+    {
+      fontSize: theme.fontSize.xs,
+      fontWeight: theme.fontWeight.semibold,
+      lineHeight: theme.lineHeight.xs,
+    },
+  ],
+  variants: {
+    dimmed: {
+      true: {
+        color: theme.colors.gray[500],
+      },
+    },
   },
-]);
+});
 
-export const price = style({
-  flex: '0 0 auto',
-  color: theme.colors.blue[500],
-  fontSize: theme.fontSize.sm,
-  fontWeight: theme.fontWeight.medium,
-  lineHeight: theme.lineHeight.sm,
-  textAlign: 'right',
+export const price = recipe({
+  base: {
+    flex: '0 0 auto',
+    color: theme.colors.blue[500],
+    fontSize: theme.fontSize.sm,
+    fontWeight: theme.fontWeight.medium,
+    lineHeight: theme.lineHeight.sm,
+    textAlign: 'right',
+  },
+  variants: {
+    dimmed: {
+      true: {
+        color: theme.colors.gray[500],
+      },
+    },
+  },
 });
