@@ -1,7 +1,7 @@
 import {
-  getBestCatalog,
+  getBestCatalogItem,
   isSalesEnded,
-  getCurrentPrice,
+  getEffectivePrice,
   getHistoricalLowestPrice,
   type GamePreview,
 } from '../model';
@@ -32,7 +32,7 @@ function getDiscountPercent(
 }
 
 export function useGamePreview(gamePreview: GamePreview) {
-  const currentBestCatalog = getBestCatalog(gamePreview);
+  const currentBestCatalog = getBestCatalogItem(gamePreview.gameCatalog);
 
   const isBestSalesEnded =
     currentBestCatalog === null
@@ -45,10 +45,12 @@ export function useGamePreview(gamePreview: GamePreview) {
   const currentPrice =
     currentBestCatalog === null || isBestSalesEnded
       ? null
-      : getCurrentPrice(currentBestCatalog);
+      : getEffectivePrice(currentBestCatalog);
   const regularPrice =
     currentBestCatalog === null ? null : currentBestCatalog.regularPrice;
-  const historicalLowestPrice = getHistoricalLowestPrice(gamePreview);
+  const historicalLowestPrice = getHistoricalLowestPrice(
+    gamePreview.gameCatalog
+  );
 
   const currentPriceText =
     currentPrice === null

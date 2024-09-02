@@ -2,10 +2,10 @@ import dayjs from '@/shared/lib/dayjs';
 
 import type { BestGameCatalog } from '../types';
 import {
-  getCurrentPrice,
-  isDiscountedCatalogItem,
-  isDiscounted,
+  getEffectivePrice,
+  isDiscounted as isDiscountedCatalogItem,
   isSalesEnded,
+  getCatalogDiscountRate,
 } from '../../../model';
 
 function formatReleaseDate({
@@ -46,18 +46,8 @@ function getOnDiscountText(currentPriceExpireAt: string | null | undefined) {
   return `에서 ${expireDateText}까지 할인 중`;
 }
 
-function getDiscountPrecent({
-  regularPrice,
-  currentPrice,
-}: {
-  regularPrice: number | null;
-  currentPrice: number | null;
-}) {
-  if (!isDiscounted({ regularPrice, currentPrice })) {
-    return 0;
-  }
-
-  return `${Math.floor(((<number>regularPrice - <number>currentPrice) / <number>regularPrice) * 100)}%`;
+function formatDiscountPercent(discountRate: number) {
+  return `${Math.floor(discountRate * 100)}%`;
 }
 
 function formatPrice(price: number | null) {
@@ -76,7 +66,7 @@ export function useBestGameCatalogCard(game: BestGameCatalog) {
       ? false
       : isSalesEnded(game.gameCatalog.salesEndedAt);
   const currentPrice =
-    game.gameCatalog === null ? null : getCurrentPrice(game.gameCatalog);
+    game.gameCatalog === null ? null : getEffectivePrice(game.gameCatalog);
   const isDiscounted =
     game.gameCatalog === null
       ? false
@@ -88,11 +78,8 @@ export function useBestGameCatalogCard(game: BestGameCatalog) {
       : '에서 판매 중';
   const discountPercent =
     game.gameCatalog === null
-      ? 0
-      : getDiscountPrecent({
-          regularPrice: game.gameCatalog.regularPrice,
-          currentPrice,
-        });
+      ? formatDiscountPercent(0)
+      : formatDiscountPercent(getCatalogDiscountRate(game.gameCatalog));
   const currentPriceText = formatPrice(currentPrice);
   const regularPriceText =
     game.gameCatalog === null ? '' : formatPrice(game.gameCatalog.regularPrice);

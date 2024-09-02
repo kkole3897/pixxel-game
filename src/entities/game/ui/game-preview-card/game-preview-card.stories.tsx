@@ -50,6 +50,7 @@ const bestSteamCatalog: GamePreviewCardProps['gamePreview'] = {
       currentPriceExpireAt: '2021-01-01T00:00:00+09:00',
       lowestPrice: 10000,
       regularPrice: 10000,
+      salesEndedAt: null,
     },
   ],
 };
@@ -78,6 +79,7 @@ const bestEpicCatalog: GamePreviewCardProps['gamePreview'] = {
       currentPriceExpireAt: '2031-01-01T00:00:00+09:00',
       lowestPrice: 3000,
       regularPrice: 10000,
+      salesEndedAt: null,
     },
   ],
 };

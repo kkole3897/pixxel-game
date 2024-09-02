@@ -6,6 +6,6 @@ export type RelatedGameContent = Pick<
 > & {
   gameCatalog: Pick<
     GameCatalogItem,
-    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt'
+    'currentPrice' | 'regularPrice' | 'currentPriceExpireAt' | 'salesEndedAt'
   >[];
 };
