@@ -70,11 +70,7 @@ export default function BestGameCatalogCard({
             <DlcBadge />
             <div className={styles.baseGameArea}>
               {baseGameLink && (
-                <Link
-                  href={baseGameLink}
-                  target="_blank"
-                  className={styles.baseGameLink}
-                >
+                <Link href={baseGameLink} className={styles.baseGameLink}>
                   {baseGameTitle}
                 </Link>
               )}
@@ -85,11 +81,7 @@ export default function BestGameCatalogCard({
           <div className={styles.dlcArea}>
             <RiErrorWarningFill size={20} />
             <div className={styles.baseGameArea}>
-              <Link
-                href={baseGameLink}
-                target="_blank"
-                className={styles.baseGameLink}
-              >
+              <Link href={baseGameLink} className={styles.baseGameLink}>
                 {baseGameTitle}
               </Link>
               의 추가 콘텐츠
