@@ -71,18 +71,27 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
   const xBrushMax = Math.max(width - brushMargin.left - brushMargin.right, 0);
   const yBrushMax = Math.max(brushHeight, 0);
 
-  const minDate = min(props.data, getDate);
-  const maxDate = useMemo(() => new Date(), []);
-  const firstDateBoundary = dayjs(maxDate).subtract(3, 'months').toDate();
+  const minDate = useRef(min(props.data, getDate));
+  const maxDate = useRef(new Date());
+  const firstDateBoundary = dayjs(maxDate.current)
+    .subtract(3, 'months')
+    .toDate();
   const firstDate =
-    minDate && minDate > firstDateBoundary ? minDate : firstDateBoundary;
+    minDate.current && minDate.current > firstDateBoundary
+      ? minDate.current
+      : firstDateBoundary;
 
   const [dateRange, setDateRange] = useState<[Date, Date]>([
     firstDate,
-    maxDate,
+    maxDate.current,
   ]);
   const filteredData = useMemo(() => {
     const [startDate, endDate] = dateRange;
+
+    if (startDate > getDate(props.data[props.data.length - 1])) {
+      return [];
+    }
+
     let dataCopy = props.data.filter((d) => {
       const date = getDate(d);
 
@@ -97,18 +106,28 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
       },
       ...dataCopy,
     ];
-    const lastIndex = props.data.findLastIndex((d) => getDate(d) < endDate);
-    dataCopy = [
+    const lastIndex = props.data.findLastIndex((d) => getDate(d) <= endDate);
+
+    const lastData =
+      props.data[lastIndex === -1 ? props.data.length - 1 : lastIndex];
+
+    if (lastIndex === props.data.length - 1 && endDate > getDate(lastData)) {
+      return [
+        ...dataCopy,
+        {
+          startAt: getDate(lastData).toISOString(),
+          price: lastData.price,
+        },
+      ];
+    }
+
+    return [
       ...dataCopy,
       {
         startAt: endDate.toISOString(),
-        price:
-          props.data[lastIndex === -1 ? props.data.length - 1 : lastIndex]
-            .price,
+        price: lastData.price,
       },
     ];
-
-    return dataCopy;
   }, [dateRange, props.data]);
 
   const dateScale = useMemo(
@@ -136,10 +155,10 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
   const brushDateScale = useMemo(
     () =>
       scaleTime({
-        domain: [firstDate, maxDate],
+        domain: [minDate.current, maxDate.current] as [Date, Date],
         range: [0, xBrushMax],
       }),
-    [firstDate, maxDate, xBrushMax]
+    [minDate, maxDate, xBrushMax]
   );
 
   const brushPriceScale = useMemo(
@@ -154,8 +173,8 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
   const brushRef = useRef<BaseBrush | null>(null);
 
   const initialBrushPosition = {
-    start: { x: brushDateScale(getDate(filteredData[0])) },
-    end: { x: brushDateScale(new Date()) },
+    start: { x: brushDateScale(firstDate) },
+    end: { x: brushDateScale(maxDate.current) },
   };
 
   const onBrushChange = (domain: Bounds | null) => {
