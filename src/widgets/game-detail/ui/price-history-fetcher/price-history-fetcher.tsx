@@ -39,10 +39,7 @@ export default function PriceHistoryContainer({
     );
   }
 
-  const history = [
-    ...data,
-    { startAt: new Date().toISOString(), price: data[data.length - 1].price },
-  ];
+  const history = [...data];
 
   return (
     <div className={composedRootClassName}>
