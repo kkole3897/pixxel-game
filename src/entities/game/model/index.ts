@@ -4,17 +4,16 @@ export { type GameDrm } from './game-drm';
 export { type MetaCritic } from './meta-critic';
 export { type OpenCritic, type OpenCriticTier } from './open-critic';
 export { type SteamScore } from './steam-score';
+export { type Game, type GamePreview } from './game';
 export {
-  getBestCatalog,
-  getCurrentPrice,
+  type GameCatalogItem,
+  type GameCatalogPreviewItem,
+  isCurrentPriceExpired,
+  isSalesEnded,
+  getEffectivePrice,
+  getBestCatalogItem,
   getHistoricalLowestPrice,
-  isDiscountedCatalogItem,
   isDiscounted,
-  calculateCatalogDiscountRatio,
-  getCurrentBestPrice,
-  type Game,
-  type GamePreview,
-  type GameCatalogItemPreview,
-} from './game';
-export { type GameCatalogItem } from './game-catalog';
+  getCatalogDiscountRate,
+} from './game-catalog';
 export { type PriceHistoryRecord as GamePriceHistoryRecord } from './price-history';

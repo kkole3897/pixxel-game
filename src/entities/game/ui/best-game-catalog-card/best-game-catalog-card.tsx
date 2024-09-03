@@ -46,11 +46,12 @@ export default function BestGameCatalogCard({
     hasPriceInfo,
     baseGameLink,
     baseGameTitle,
+    isBestSalesEnded,
   } = useBestGameCatalogCard(game);
 
   return (
     <div className={composedRootClassName}>
-      <div className={styles.bestMarker}>BEST</div>
+      {!isBestSalesEnded && <div className={styles.bestMarker}>BEST</div>}
       <div className={styles.mediaArea}>
         <ImageWithFallback
           src={game.mainImage}
@@ -58,7 +59,7 @@ export default function BestGameCatalogCard({
           width={0}
           height={0}
           sizes="100vw"
-          className={styles.mainImage}
+          className={styles.mainImage({ dimmed: isBestSalesEnded })}
           fallbackSrc={DefaultGameMainImage}
         />
         <div className={styles.wishArea}>{wish}</div>
@@ -69,11 +70,7 @@ export default function BestGameCatalogCard({
             <DlcBadge />
             <div className={styles.baseGameArea}>
               {baseGameLink && (
-                <Link
-                  href={baseGameLink}
-                  target="_blank"
-                  className={styles.baseGameLink}
-                >
+                <Link href={baseGameLink} className={styles.baseGameLink}>
                   {baseGameTitle}
                 </Link>
               )}
@@ -84,44 +81,48 @@ export default function BestGameCatalogCard({
           <div className={styles.dlcArea}>
             <RiErrorWarningFill size={20} />
             <div className={styles.baseGameArea}>
-              <Link
-                href={baseGameLink}
-                target="_blank"
-                className={styles.baseGameLink}
-              >
+              <Link href={baseGameLink} className={styles.baseGameLink}>
                 {baseGameTitle}
               </Link>
               의 추가 콘텐츠
             </div>
           </div>
         ) : null}
-        <div className={styles.title}>{title}</div>
+        <div className={styles.title({ dimmed: isBestSalesEnded })}>
+          {title}
+        </div>
         <div className={styles.releaseDate}>출시일: {releaseDate}</div>
       </div>
       {game.gameCatalog !== null && (
         <div className={styles.bodyArea}>
-          <div className={styles.storeArea}>
-            {storeIconMap[game.gameCatalog.store]}
-            <span className={styles.onSaleText}>{onSalesText}</span>
-          </div>
-          <div className={styles.drmArea}>
-            <span>DRM:</span>
-            {drmIconMap[game.gameCatalog.drm]}
-          </div>
-          {hasPriceInfo && (
-            <div>
-              {isDiscounted && (
-                <div className={styles.regularPriceArea}>
-                  <span className={styles.discountPercent}>
-                    {discountPercent}
-                  </span>
-                  <span className={styles.regularPrice}>
-                    {regularPriceText}
-                  </span>
+          {isBestSalesEnded ? (
+            <div className={styles.salesEndText}>판매 종료</div>
+          ) : (
+            <>
+              <div className={styles.storeArea}>
+                {storeIconMap[game.gameCatalog.store]}
+                <span className={styles.onSaleText}>{onSalesText}</span>
+              </div>
+              <div className={styles.drmArea}>
+                <span>DRM:</span>
+                {drmIconMap[game.gameCatalog.drm]}
+              </div>
+              {hasPriceInfo && (
+                <div>
+                  {isDiscounted && (
+                    <div className={styles.regularPriceArea}>
+                      <span className={styles.discountPercent}>
+                        {discountPercent}
+                      </span>
+                      <span className={styles.regularPrice}>
+                        {regularPriceText}
+                      </span>
+                    </div>
+                  )}
+                  <div className={styles.currentPrice}>{currentPriceText}</div>
                 </div>
               )}
-              <div className={styles.currentPrice}>{currentPriceText}</div>
-            </div>
+            </>
           )}
         </div>
       )}

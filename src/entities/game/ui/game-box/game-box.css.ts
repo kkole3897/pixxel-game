@@ -1,10 +1,13 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
+
+import { fontWeight, text } from '@/shared/styles/typography.css';
+import { theme } from '@/shared/styles/theme.css';
 
 export const box = style({
   display: 'flex',
   columnGap: '8px',
   height: '68px',
-  fontSize: '0.875rem',
 });
 
 export const thumbnailArea = style({
@@ -21,18 +24,36 @@ export const summaryArea = style({
   overflow: 'hidden',
 });
 
-export const thumbnailImg = style({
-  width: '100%',
-  height: '100%',
-  borderRadius: '8px',
-  objectFit: 'cover',
+export const thumbnailImg = recipe({
+  base: {
+    width: '100%',
+    height: '100%',
+    borderRadius: '8px',
+    objectFit: 'cover',
+  },
+  variants: {
+    dimmed: {
+      true: {
+        filter: 'grayscale(1)',
+      },
+    },
+  },
 });
 
-export const gameName = style({
-  overflow: 'hidden',
-  fontWeight: 'bold',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis',
+export const gameName = recipe({
+  base: {
+    overflow: 'hidden',
+    fontWeight: theme.fontWeight.bold,
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  variants: {
+    dimmed: {
+      true: {
+        color: theme.colors.gray[300],
+      },
+    },
+  },
 });
 
 export const lowestArea = style({
@@ -62,21 +83,25 @@ export const finalPriceArea = style({
   alignItems: 'center',
 });
 
-export const finalPrice = style({
-  color: '#1d4ed8',
-  fontSize: '1rem',
-  fontWeight: 'bold',
-});
+export const finalPrice = style([
+  text.base,
+  {
+    color: '#1d4ed8',
+    fontWeight: theme.fontWeight.bold,
+  },
+]);
 
-export const discountRate = style({
-  marginRight: '4px',
-  padding: '4px',
-  borderRadius: '4px',
-  backgroundColor: '#2563eb',
-  color: '#fff',
-  fontSize: '0.75rem',
-  fontWeight: '600',
-});
+export const discountRate = style([
+  text.xs,
+  {
+    marginRight: '4px',
+    padding: '4px',
+    borderRadius: '4px',
+    backgroundColor: '#2563eb',
+    color: '#fff',
+    fontWeight: theme.fontWeight.semibold,
+  },
+]);
 
 export const initalPrice = style({
   color: '#94a3b8',
@@ -89,3 +114,11 @@ export const priceArea = style({
   gap: '4px',
   marginTop: '4px',
 });
+
+export const salesEndText = style([
+  text.base,
+  {
+    color: theme.colors.gray[400],
+    fontWeight: theme.fontWeight.bold,
+  },
+]);

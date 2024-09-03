@@ -1,4 +1,5 @@
 import { createContainer, style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { theme } from '@/shared/styles/theme.css';
 import { text, fontWeight } from '@/shared/styles/typography.css';
@@ -26,16 +27,19 @@ export const thumbnailAreaSkeleton = style([
   },
 ]);
 
-export const thumbnailImage = style({
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-});
-
-export const thumbnailFallback = style({
-  width: '100%',
-  height: '100%',
-  background: theme.colors.gray[200],
+export const thumbnailImage = recipe({
+  base: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  variants: {
+    dimmed: {
+      true: {
+        filter: 'grayscale(1)',
+      },
+    },
+  },
 });
 
 export const historicalLow = style([
@@ -61,10 +65,24 @@ export const descriptionArea = style({
   boxSizing: 'content-box',
 });
 
-export const title = style([truncate(), fontWeight.medium]);
+export const title = recipe({
+  base: [
+    fontWeight.medium,
+    {
+      ...truncate,
+    },
+  ],
+  variants: {
+    dimmed: {
+      true: {
+        color: theme.colors.gray[600],
+      },
+    },
+  },
+});
 
 export const titleSkeleton = style([
-  title,
+  title(),
   {
     height: theme.lineHeight.sm,
     width: '80%',
@@ -86,6 +104,17 @@ export const storeArea = style({
   alignItems: 'center',
   '@container': {
     [`${catalogAreaContainer} (max-width: 135px)`]: visuallyHiddenRule,
+  },
+});
+
+export const storeIcon = recipe({
+  base: {},
+  variants: {
+    dimmed: {
+      true: {
+        filter: 'grayscale(1)',
+      },
+    },
   },
 });
 
@@ -150,5 +179,13 @@ export const currentPriceSkeleton = style([
     width: '72px',
     height: theme.lineHeight.base,
     backgroundColor: SKELETON_COLOR,
+  },
+]);
+
+export const salesEndText = style([
+  text.base,
+  fontWeight.bold,
+  {
+    color: theme.colors.gray[400],
   },
 ]);

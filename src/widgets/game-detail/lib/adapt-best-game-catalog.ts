@@ -1,4 +1,7 @@
-import { BestGameCatalogCardProps, getCurrentPrice } from '@/entities/game';
+import {
+  type BestGameCatalogCardProps,
+  getEffectivePrice,
+} from '@/entities/game';
 import { type GetGameResponse } from '@/shared/api/core/games';
 
 export function adaptBestCatalog(
@@ -13,6 +16,7 @@ export function adaptBestCatalog(
     regularPrice,
     currentPrice,
     currentPriceExpireAt,
+    salesEndedAt,
   } = catalogItem;
 
   const bestCatalog: BestGameCatalogCardProps['game']['gameCatalog'] = {
@@ -24,6 +28,7 @@ export function adaptBestCatalog(
     regularPrice,
     currentPrice,
     currentPriceExpireAt,
+    salesEndedAt,
   };
 
   return bestCatalog;
@@ -67,8 +72,8 @@ export function adaptBestGameCatalog(game: GetGameResponse['game']) {
       return cur;
     }
 
-    const bestPrice = getCurrentPrice(best);
-    const currentPrice = getCurrentPrice(cur);
+    const bestPrice = getEffectivePrice(best);
+    const currentPrice = getEffectivePrice(cur);
 
     if (bestPrice === null) {
       return cur;

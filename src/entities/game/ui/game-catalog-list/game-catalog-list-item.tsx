@@ -30,6 +30,7 @@ export default function GameCatalogListItem({
     currentPriceText,
     willDiscountExpire,
     discountExpireDate,
+    isSalesEnded,
   } = useGameCatalogItem(item);
 
   return (
@@ -41,7 +42,11 @@ export default function GameCatalogListItem({
           {drmIconMap[item.drm]}
         </div>
       </div>
-      {hasPriceInfo && (
+      {isSalesEnded ? (
+        <div className={styles.priceArea}>
+          <div className={styles.salesEndText}>판매 종료</div>
+        </div>
+      ) : hasPriceInfo ? (
         <div className={styles.priceArea}>
           {isDiscounted && (
             <div className={styles.regularPriceArea}>
@@ -56,7 +61,7 @@ export default function GameCatalogListItem({
             </div>
           )}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

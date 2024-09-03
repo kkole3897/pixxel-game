@@ -20,6 +20,7 @@ const gameCatalogItem: GameCatalogListItemProps['item'] = {
   regularPrice: 27800,
   currentPrice: 13900,
   currentPriceExpireAt: '2024-06-28T00:00:00+09:00',
+  salesEndedAt: null,
 };
 
 export const Default: Story = {

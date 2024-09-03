@@ -26,6 +26,7 @@ export const Thymesia: Story = {
           currentPrice: 10000,
           regularPrice: 20000,
           currentPriceExpireAt: null,
+          salesEndedAt: null,
         },
       ],
     },

@@ -1,5 +1,9 @@
 import { RelatedGameContent } from './types';
-import { getCurrentBestPrice } from '../../model';
+import {
+  getBestCatalogItem,
+  getEffectivePrice,
+  isSalesEnded,
+} from '../../model';
 
 function getCurrentBestPriceText(currentBestPrice: number | null) {
   if (currentBestPrice === null) {
@@ -16,12 +20,18 @@ function getCurrentBestPriceText(currentBestPrice: number | null) {
 export function useRelatedGameContentLink(content: RelatedGameContent) {
   const title = content.titleKo ?? content.title ?? content.publicId;
   const href = `/game/${content.publicId}`;
-  const currentBestPrice = getCurrentBestPrice(content);
+  const currentBestCatalog = getBestCatalogItem(content.gameCatalog);
+  const currentBestPrice =
+    currentBestCatalog === null ? null : getEffectivePrice(currentBestCatalog);
   const currentBestPriceText = getCurrentBestPriceText(currentBestPrice);
+  const isAllSalesEnded = content.gameCatalog.every((catalog) =>
+    isSalesEnded(catalog.salesEndedAt)
+  );
 
   return {
     title,
     href,
     currentBestPriceText,
+    isAllSalesEnded,
   };
 }

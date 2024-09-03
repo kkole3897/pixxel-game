@@ -199,6 +199,7 @@ export type Database = {
           price_updated_at: string;
           raw_catalog_meta_data: Json | null;
           regular_price: number | null;
+          sales_ended_at: string | null;
           store: Database['public']['Enums']['game_store'];
           updated_at: string | null;
           url: string;
@@ -221,6 +222,7 @@ export type Database = {
           price_updated_at?: string;
           raw_catalog_meta_data?: Json | null;
           regular_price?: number | null;
+          sales_ended_at?: string | null;
           store: Database['public']['Enums']['game_store'];
           updated_at?: string | null;
           url: string;
@@ -243,6 +245,7 @@ export type Database = {
           price_updated_at?: string;
           raw_catalog_meta_data?: Json | null;
           regular_price?: number | null;
+          sales_ended_at?: string | null;
           store?: Database['public']['Enums']['game_store'];
           updated_at?: string | null;
           url?: string;

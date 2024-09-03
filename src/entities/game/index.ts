@@ -1,8 +1,8 @@
 export {
-  getCurrentPrice,
-  isDiscountedCatalogItem,
+  getEffectivePrice,
   isDiscounted,
-  getBestCatalog,
+  getBestCatalogItem,
+  isSalesEnded,
   type GameType,
   type GameStore,
   type GameDrm,

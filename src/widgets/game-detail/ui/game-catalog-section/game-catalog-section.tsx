@@ -8,6 +8,7 @@ import {
   useLowestPriceRanksQuery,
   TrackingDateAlertBox,
   sortGameCatalogItemsByCurrentPrice,
+  isSalesEnded,
 } from '@/entities/game';
 import { adaptBestGameCatalog } from '../../lib';
 import { WishButton } from '@/features/toggle-wish';
@@ -79,6 +80,7 @@ export default function GameCatalogSection({
                 href={item.url}
                 target="_blank"
                 className={styles.catalogItemLink}
+                aria-disabled={isSalesEnded(item.salesEndedAt)}
               >
                 <GameCatalogListItem item={item} />
               </a>
