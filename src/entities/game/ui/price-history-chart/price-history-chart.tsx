@@ -97,6 +97,16 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
       },
       ...dataCopy,
     ];
+    const lastIndex = props.data.findLastIndex((d) => getDate(d) < endDate);
+    dataCopy = [
+      ...dataCopy,
+      {
+        startAt: endDate.toISOString(),
+        price:
+          props.data[lastIndex === -1 ? props.data.length - 1 : lastIndex]
+            .price,
+      },
+    ];
 
     return dataCopy;
   }, [dateRange, props.data]);
