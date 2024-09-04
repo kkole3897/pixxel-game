@@ -66,12 +66,7 @@ export const descriptionArea = style({
 });
 
 export const title = recipe({
-  base: [
-    fontWeight.medium,
-    {
-      ...truncate,
-    },
-  ],
+  base: [fontWeight.medium, truncate()],
   variants: {
     dimmed: {
       true: {
