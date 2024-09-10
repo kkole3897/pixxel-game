@@ -1,19 +1,18 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { fontWeight, text } from '@/shared/styles/typography.css';
+import { text } from '@/shared/styles/typography.css';
 import { theme } from '@/shared/styles/theme.css';
 
 export const box = style({
   display: 'flex',
   columnGap: '8px',
-  height: '68px',
 });
 
 export const thumbnailArea = style({
   flex: '0 0 100px',
   width: '100px',
-  height: '100%',
+  height: '68px',
 });
 
 export const summaryArea = style({
