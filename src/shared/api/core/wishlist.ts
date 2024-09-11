@@ -38,7 +38,7 @@ type GameCatalogItemPreviewResponse = CamelCasedPropertiesDeep<
   >
 >;
 
-type WishlistResponse = (WishlistItemResponse & {
+export type WishlistResponse = (WishlistItemResponse & {
   game:
     | (GamePreviewResponse & {
         gameCatalog: GameCatalogItemPreviewResponse[];
