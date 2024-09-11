@@ -69,23 +69,21 @@ export default function GamePreviewCard({
                   <span className={styles.salesEndText}>판매 종료</span>
                 </div>
               ) : (
-                <>
+                <div className={styles.prices}>
                   {isDiscounted && (
-                    <div className={styles.discountPercent}>
-                      {discountPercentText}
-                    </div>
-                  )}
-                  <div className={styles.prices}>
-                    {isDiscounted && (
+                    <div className={styles.regularPriceArea}>
+                      <div className={styles.discountPercent}>
+                        {discountPercentText}
+                      </div>
                       <span className={styles.regularPrice}>
                         {regularPriceText}
                       </span>
-                    )}
-                    <span className={styles.currentPrice}>
-                      {currentPriceText}
-                    </span>
-                  </div>
-                </>
+                    </div>
+                  )}
+                  <span className={styles.currentPrice}>
+                    {currentPriceText}
+                  </span>
+                </div>
               )}
             </div>
           </div>

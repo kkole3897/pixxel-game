@@ -30,7 +30,7 @@ export default async function WishListPage() {
   });
 
   return (
-    <HydrationBoundary>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <WishListFetcher />
     </HydrationBoundary>
   );

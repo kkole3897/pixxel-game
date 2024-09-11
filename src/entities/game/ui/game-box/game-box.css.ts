@@ -1,19 +1,21 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { fontWeight, text } from '@/shared/styles/typography.css';
+import { text } from '@/shared/styles/typography.css';
 import { theme } from '@/shared/styles/theme.css';
 
 export const box = style({
   display: 'flex',
+  alignItems: 'center',
   columnGap: '8px',
-  height: '68px',
+  overflow: 'hidden',
+  height: '78px',
 });
 
 export const thumbnailArea = style({
   flex: '0 0 100px',
   width: '100px',
-  height: '100%',
+  height: '68px',
 });
 
 export const summaryArea = style({
@@ -57,21 +59,18 @@ export const gameName = recipe({
 });
 
 export const lowestArea = style({
-  flex: '0 0 16px',
-  display: 'inline-block',
-  width: '16px',
-  height: '16px',
+  flexShrink: 0,
 });
 
-export const lowestText = style({
-  position: 'absolute',
-  overflow: 'hidden',
-  clip: 'rect(0, 0, 0, 0)',
-  clipPath: 'inset(50%)',
-  height: '1px',
-  width: '1px',
-  whiteSpace: 'nowrap',
-});
+export const lowestText = style([
+  text.sm,
+  {
+    padding: '2px 4px',
+    borderRadius: '4px',
+    backgroundColor: theme.colors.green[950],
+    color: theme.colors.gray[50],
+  },
+]);
 
 export const initialPriceArea = style({
   display: 'flex',
@@ -81,12 +80,13 @@ export const initialPriceArea = style({
 export const finalPriceArea = style({
   display: 'flex',
   alignItems: 'center',
+  columnGap: '4px',
 });
 
 export const finalPrice = style([
   text.base,
   {
-    color: '#1d4ed8',
+    color: theme.colors.blue[500],
     fontWeight: theme.fontWeight.bold,
   },
 ]);
@@ -95,16 +95,16 @@ export const discountRate = style([
   text.xs,
   {
     marginRight: '4px',
-    padding: '4px',
+    padding: '2px 4px',
     borderRadius: '4px',
-    backgroundColor: '#2563eb',
-    color: '#fff',
+    backgroundColor: theme.colors.blue[100],
+    color: theme.colors.blue[500],
     fontWeight: theme.fontWeight.semibold,
   },
 ]);
 
 export const initalPrice = style({
-  color: '#94a3b8',
+  color: theme.colors.gray[200],
   textDecoration: 'line-through',
 });
 

@@ -142,6 +142,7 @@ export const discountPercent = style([
     borderRadius: '4px',
     background: theme.colors.blue[100],
     color: theme.colors.blue[500],
+    fontWeight: theme.fontWeight.medium,
   },
 ]);
 
@@ -150,6 +151,12 @@ export const prices = style({
   flexDirection: 'column',
   alignItems: 'flex-end',
   gap: '2px',
+});
+
+export const regularPriceArea = style({
+  display: 'flex',
+  alignItems: 'center',
+  columnGap: '4px',
 });
 
 export const regularPrice = style([

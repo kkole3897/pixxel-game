@@ -1,0 +1,1 @@
+export { DeleteWishListButton } from './ui';

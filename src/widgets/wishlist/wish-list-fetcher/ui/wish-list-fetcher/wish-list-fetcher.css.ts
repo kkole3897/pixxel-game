@@ -7,3 +7,9 @@ export const list = style({
 export const empty = style({
   marginTop: '128px',
 });
+
+export const link = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  columnGap: '4px',
+});

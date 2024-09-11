@@ -23,7 +23,7 @@ export class Core {
 export { Games } from './games';
 export { Auth } from './auth';
 export { Users } from './users';
-export { Wishlist } from './wishlist';
+export { Wishlist, type WishlistResponse } from './wishlist';
 export type {
   GetGamesOptions,
   GameResponse,
