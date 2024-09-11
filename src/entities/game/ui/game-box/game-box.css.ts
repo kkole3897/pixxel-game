@@ -6,8 +6,10 @@ import { theme } from '@/shared/styles/theme.css';
 
 export const box = style({
   display: 'flex',
+  alignItems: 'center',
   columnGap: '8px',
   overflow: 'hidden',
+  height: '78px',
 });
 
 export const thumbnailArea = style({
