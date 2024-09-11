@@ -1,5 +1,3 @@
-import { RiArrowDownLine } from '@remixicon/react';
-
 import { useGamePreview } from '../../lib';
 import type { GamePreview } from '../../model';
 import { ImageWithFallback } from '@/shared/ui/image-with-fallback';
@@ -60,15 +58,14 @@ export default function GameBox({ game }: GameBoxProps) {
                     )}
                   </div>
                   <div className={styles.finalPriceArea}>
-                    {isHistoricalLow && (
-                      <span className={styles.lowestArea}>
-                        <span className={styles.lowestText}>역대 최저</span>
-                        <RiArrowDownLine size={16} color="#1d4ed8" />
-                      </span>
-                    )}
                     <span className={styles.finalPrice}>
                       {currentPriceText}
                     </span>
+                    {isHistoricalLow && (
+                      <span className={styles.lowestArea}>
+                        <span className={styles.lowestText}>역대 최저</span>
+                      </span>
+                    )}
                   </div>
                 </>
               )}
