@@ -1,10 +1,11 @@
 'use client';
 
-import { useGetWishListQuery } from '@/entities/wish-list';
 import { EmptyWishListGuide } from '../empty-wish-list-guide';
 import * as WishList from '../wish-list';
-import { DefaultLink } from '@/shared/ui/default-link';
+import { DeleteWishListButton } from '@/features/delete-wish-list';
+import { useGetWishListQuery } from '@/entities/wish-list';
 import { GameBox } from '@/entities/game';
+import { DefaultLink } from '@/shared/ui/default-link';
 import * as styles from './wish-list-fetcher.css';
 
 export default function WishListFetcher() {
@@ -32,8 +33,12 @@ export default function WishListFetcher() {
       {filteredWishList.map((item) => {
         return (
           <WishList.Item key={item.id}>
-            <DefaultLink href={`/game/${item.game!.publicId}`}>
+            <DefaultLink
+              href={`/game/${item.game!.publicId}`}
+              className={styles.link}
+            >
               <GameBox game={item.game!} />
+              <DeleteWishListButton targetId={item.id} />
             </DefaultLink>
           </WishList.Item>
         );
