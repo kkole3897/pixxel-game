@@ -30,7 +30,14 @@ export default function LoginPage() {
       </div>
       <div className={styles.terms}>
         로그인 시{' '}
-        <strong className={styles.termsStrongText}>서비스 이용약관</strong>과{' '}
+        <DefaultLink
+          href="/policy/service"
+          className={styles.policyLink}
+          target="_blank"
+        >
+          서비스 이용약관
+        </DefaultLink>
+        과{' '}
         <DefaultLink
           href="/policy/privacy"
           className={styles.policyLink}
