@@ -12,9 +12,9 @@ import {
 } from '@remixicon/react';
 
 import { usePrevPageStore } from '@/features/restore-prev-page';
-import * as style from './bottom-navigation.css';
+import * as style from './base-bottom-navigation.css';
 
-export default function BottomNavigation() {
+export default function BaseBottomNavigation() {
   const pathname = usePathname();
 
   const { setPathname } = usePrevPageStore((state) => state);
