@@ -1,4 +1,4 @@
-import { BaseBottomNavigation } from '@/app/layouts';
+import { BaseBottomNavigation } from '@/widgets/base-bottom-navigation';
 import { BaseHeader } from '@/widgets/base-header';
 import { SearchGameModal } from '@/widgets/search-game-modal';
 
