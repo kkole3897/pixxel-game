@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { RiHeartLine, RiLogoutBoxLine } from '@remixicon/react';
+import { RiHeartLine, RiLogoutBoxLine, RiShieldLine } from '@remixicon/react';
 
 import { logout } from '@/features/auth/logout';
 import * as styles from './menu.css';
@@ -16,6 +16,12 @@ export default function Menu() {
       <div className={styles.menuItem}>
         <Link href="/wishlist" className={styles.menuAction}>
           <RiHeartLine size={20} />찜 목록
+        </Link>
+      </div>
+      <div className={styles.menuItem}>
+        <Link href="/policy/privacy" className={styles.menuAction}>
+          <RiShieldLine size={20} />
+          개인정보 처리방침
         </Link>
       </div>
       <div className={styles.menuItem}>
