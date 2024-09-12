@@ -8,12 +8,11 @@ export const rootContainer = style({
   alignItems: 'center',
   justifyContent: 'center',
   flex: 1,
+  padding: '16px',
 });
 
 export const logoArea = style({
-  marginBottom: '24px',
-  fontSize: '2.5rem',
-  fontWeight: 'bold',
+  marginBottom: '32px',
 });
 
 export const socialLoginArea = style({
@@ -36,6 +35,12 @@ export const terms = style({
 
 export const termsStrongText = style({
   color: 'inherit',
-  fontWeight: 'inherit',
+  fontWeight: theme.fontWeight.semibold,
+  textDecoration: 'underline',
+});
+
+export const policyLink = style({
+  color: 'inherit',
+  fontWeight: theme.fontWeight.semibold,
   textDecoration: 'underline',
 });
