@@ -1,11 +1,12 @@
-import BaseHeader from '../layouts/base-header';
+import { BaseHeader } from '@/widgets/base-header';
+import { SearchGameModal } from '@/widgets/search-game-modal';
 
 export default function GameLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <BaseHeader />
+      <BaseHeader rightSlot={<SearchGameModal />} />
       {children}
     </>
   );

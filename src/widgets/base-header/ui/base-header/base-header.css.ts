@@ -15,10 +15,3 @@ export const container = style({
   background: theme.colors.gray[50],
   zIndex: 10,
 });
-
-export const indexLink = style({});
-
-export const logoImage = style({
-  display: 'block',
-  height: '24px',
-});
