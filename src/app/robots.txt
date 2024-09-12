@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /me
+Disallow: /wishlist
+Disallow: /profile
+Disallow: /oauth
+Allow: /
