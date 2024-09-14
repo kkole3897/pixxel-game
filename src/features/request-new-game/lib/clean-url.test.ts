@@ -1,4 +1,4 @@
-import { checkSteamUrl, checkEpicUrl } from './clean-url';
+import { checkSteamUrl, checkEpicUrl, cleanUrl } from './clean-url';
 
 describe('checkSteamUrl', () => {
   it('should return true for standard steam app url', () => {
@@ -35,6 +35,11 @@ describe('checkSteamUrl', () => {
   it('should return true for steam package url', () => {
     const packageUrl = 'https://store.steampowered.com/sub/1234567/My_Package';
     expect(checkSteamUrl(packageUrl)).toBe(true);
+  });
+
+  it('should return false when id is not exist', () => {
+    const unexpectedUrl = 'https://store.steampowered.com/app';
+    expect(checkSteamUrl(unexpectedUrl)).toBe(false);
   });
 
   it('should return false for non-steam url', () => {
@@ -155,5 +160,103 @@ describe('checkEpicUrl', () => {
     const unexpectedUrl =
       'https://store.epicgames.com/ko/browse?sortBy=releaseDate&sortDir=DESC&category=Game&count=40';
     expect(checkEpicUrl(unexpectedUrl)).toBe(false);
+  });
+
+  it('should return false when slug is not exist', () => {
+    const unexpectedUrl = 'https://store.epicgames.com/p';
+    expect(checkEpicUrl(unexpectedUrl)).toBe(false);
+  });
+});
+
+describe('cleanUrl', () => {
+  it('standard steam app url should return same url', () => {
+    const url = 'https://store.steampowered.com/app/1234567';
+    const store = 'steam';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(url);
+  });
+
+  it('standard steam bundle url should return same url', () => {
+    const url = 'https://store.steampowered.com/bundle/1234567';
+    const store = 'steam';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(url);
+  });
+
+  it('standard steam package url should return same url', () => {
+    const url = 'https://store.steampowered.com/sub/1234567';
+    const store = 'steam';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(url);
+  });
+
+  it('steam title slug should be removed', () => {
+    const url = 'https://store.steampowered.com/app/1234567/My_Game';
+    const store = 'steam';
+    const correctResult = 'https://store.steampowered.com/app/1234567';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(correctResult);
+  });
+
+  it('standard epic url should return same url', () => {
+    const url = 'https://store.epicgames.com/p/my-game';
+    const store = 'epic';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(url);
+  });
+
+  it('epic locale path should be removed', () => {
+    const url = 'https://store.epicgames.com/ko/p/my-game';
+    const store = 'epic';
+    const correctResult = 'https://store.epicgames.com/p/my-game';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(correctResult);
+  });
+
+  it('query string should be removed', () => {
+    const url =
+      'https://store.steampowered.com/app/1234567/My_Game?utm_source=google&utm_medium=cpc&utm_campaign=shopping&gclid=Cj0KCQjwzYGGBhCTARIsANlgoO';
+    const store = 'steam';
+    const correctResult = 'https://store.steampowered.com/app/1234567';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(correctResult);
+  });
+
+  it('trailing slash should be removed', () => {
+    const url = 'https://store.steampowered.com/app/1234567/';
+    const store = 'steam';
+    const correctResult = 'https://store.steampowered.com/app/1234567';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(correctResult);
+  });
+
+  it('invalid steam url should throw Error', () => {
+    const url = 'https://store.steampowered.com/hello/1234567/My_Game';
+    const store = 'steam';
+
+    expect(() => cleanUrl(url, store)).toThrow();
+  });
+
+  it('invalid epic url should throw Error', () => {
+    const url = 'https://store.epicgames.com/hello/my-game';
+    const store = 'epic';
+
+    expect(() => cleanUrl(url, store)).toThrow();
   });
 });
