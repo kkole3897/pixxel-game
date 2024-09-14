@@ -1,5 +1,5 @@
 export { type GameType } from './game-type';
-export { type GameStore } from './game-store';
+export { type GameStore, gameStoreSchema } from './game-store';
 export { type GameDrm } from './game-drm';
 export { type MetaCritic } from './meta-critic';
 export { type OpenCritic, type OpenCriticTier } from './open-critic';

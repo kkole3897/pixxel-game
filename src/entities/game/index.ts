@@ -3,6 +3,7 @@ export {
   isDiscounted,
   getBestCatalogItem,
   isSalesEnded,
+  gameStoreSchema,
   type GameType,
   type GameStore,
   type GameDrm,
