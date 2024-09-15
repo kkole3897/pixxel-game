@@ -52,6 +52,16 @@ describe('checkSteamUrl', () => {
       'https://store.steampowered.com/hello/1234567/My_Game';
     expect(checkSteamUrl(unexpectedUrl)).toBe(false);
   });
+
+  it('http or https protocol is optional', () => {
+    const url = 'store.steampowered.com/app/1234567/My_Game';
+    expect(checkSteamUrl(url)).toBe(true);
+  });
+
+  it('http protocol is allowed', () => {
+    const url = 'http://store.steampowered.com/app/1234567/My_Game';
+    expect(checkSteamUrl(url)).toBe(true);
+  });
 });
 
 describe('checkEpicUrl', () => {
@@ -166,6 +176,16 @@ describe('checkEpicUrl', () => {
     const unexpectedUrl = 'https://store.epicgames.com/p';
     expect(checkEpicUrl(unexpectedUrl)).toBe(false);
   });
+
+  it('http or https protocol is optional', () => {
+    const url = 'store.epicgames.com/p/my-game';
+    expect(checkEpicUrl(url)).toBe(true);
+  });
+
+  it('http protocol is allowed', () => {
+    const url = 'http://store.epicgames.com/p/my-game';
+    expect(checkEpicUrl(url)).toBe(true);
+  });
 });
 
 describe('cleanUrl', () => {
@@ -258,5 +278,25 @@ describe('cleanUrl', () => {
     const store = 'epic';
 
     expect(() => cleanUrl(url, store)).toThrow();
+  });
+
+  it('https protocol is added when missing', () => {
+    const url = 'store.steampowered.com/app/1234567';
+    const store = 'steam';
+    const correctResult = 'https://store.steampowered.com/app/1234567';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(correctResult);
+  });
+
+  it('http protocol is changed to https', () => {
+    const url = 'http://store.steampowered.com/app/1234567';
+    const store = 'steam';
+    const correctResult = 'https://store.steampowered.com/app/1234567';
+
+    const result = cleanUrl(url, store);
+
+    expect(result).toBe(correctResult);
   });
 });

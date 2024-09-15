@@ -2,10 +2,10 @@ import { InvalidUrlError } from '../model';
 import { type GameStore } from '@/entities/game';
 
 const steamUrlPattern =
-  /https:\/\/store.steampowered.com\/(?<type>(app|bundle|sub))\/(?<id>\d+)(\/.*)?/;
+  /(https?:\/\/)?store.steampowered.com\/(?<type>(app|bundle|sub))\/(?<id>\d+)(\/.*)?/;
 
 const epicUrlPattern =
-  /https:\/\/store.epicgames.com(\/(ko|en-US|ar|de|es-ES|es-MX|fr|it|ja|pl|pt-BR|ru|th|tr|zh-CN|zh-Hant))?\/p\/(?<slug>.+)(\/.*)?/;
+  /(https?:\/\/)?store.epicgames.com(\/(ko|en-US|ar|de|es-ES|es-MX|fr|it|ja|pl|pt-BR|ru|th|tr|zh-CN|zh-Hant))?\/p\/(?<slug>.+)(\/.*)?/;
 
 export function checkSteamUrl(url: string): boolean {
   return steamUrlPattern.test(url);
