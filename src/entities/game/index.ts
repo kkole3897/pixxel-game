@@ -49,3 +49,4 @@ export {
   useGetBestPriceHistoryQuery as useGetBestGamePriceHistoryQuery,
   useGetPriceHistoryQuery as useGetGamePriceHistoryQuery,
 } from './queries';
+export { GAME_STORE } from './constants';
