@@ -1,2 +1,2 @@
-export { type RequestNewGameFormData } from './request-new-game-form-data';
-export { InvalidUrlError } from './errors';
+export { UnsupportedStoreUrlError } from './errors';
+export { type RequestNewGameData } from './request-new-game-data';

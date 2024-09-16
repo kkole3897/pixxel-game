@@ -29,17 +29,6 @@ export const fieldLabel = style([
   },
 ]);
 
-export const radioGroup = style({
-  display: 'flex',
-});
-
-export const radioLabel = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  columnGap: '4px',
-  marginRight: '16px',
-});
-
 export const urlInput = style({
   width: '100%',
 });
