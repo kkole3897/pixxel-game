@@ -32,3 +32,8 @@ export const fieldLabel = style([
 export const urlInput = style({
   width: '100%',
 });
+
+export const submitArea = style({
+  display: 'flex',
+  justifyContent: 'flex-end',
+});
