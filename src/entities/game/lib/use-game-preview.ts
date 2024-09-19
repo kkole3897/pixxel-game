@@ -3,6 +3,7 @@ import {
   isSalesEnded,
   getEffectivePrice,
   getHistoricalLowestPrice,
+  getGameTitle,
   type GamePreview,
 } from '../model';
 
@@ -39,8 +40,7 @@ export function useGamePreview(gamePreview: GamePreview) {
       ? false
       : isSalesEnded(currentBestCatalog.salesEndedAt);
 
-  const gameTitle =
-    gamePreview.titleKo ?? gamePreview.title ?? gamePreview.publicId;
+  const gameTitle = getGameTitle(gamePreview);
 
   const currentPrice =
     currentBestCatalog === null || isBestSalesEnded

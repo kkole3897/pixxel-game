@@ -4,6 +4,7 @@ export {
   getBestCatalogItem,
   isSalesEnded,
   gameStoreSchema,
+  getGameTitle,
   type GameType,
   type GameStore,
   type GameDrm,
