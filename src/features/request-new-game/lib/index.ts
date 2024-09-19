@@ -4,3 +4,4 @@ export {
   RequestNewGameStoreProvider,
   useRequestNewGameStore,
 } from './use-request-new-game-store';
+export { useRequestNewGameForm } from './use-request-new-game-form';
