@@ -318,30 +318,4 @@ export class Games extends Base {
 
     return data;
   }
-
-  public async getGameIdByOriginalSlug({
-    store,
-    slug,
-  }: {
-    store: GameStore;
-    slug: string;
-  }) {
-    const { data, error } = await this.supabase
-      .from('game_catalog')
-      .select(
-        `
-        gameId: game_id
-      `
-      )
-      .eq('store', store)
-      .eq('original_slug', slug)
-      .not('game_id', 'is', null)
-      .maybeSingle<{ gameId: number }>();
-
-    if (error) {
-      throw error;
-    }
-
-    return data;
-  }
 }

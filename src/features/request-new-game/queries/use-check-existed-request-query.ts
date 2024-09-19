@@ -19,7 +19,7 @@ export function useCheckExistedRequestQuery(
         return null;
       }
 
-      return await core.newGameRequest.getRequestBytStoreInfo(payload);
+      return await core.newGameRequest.checkExistedRequest(payload);
     },
     enabled: !!payload,
   });

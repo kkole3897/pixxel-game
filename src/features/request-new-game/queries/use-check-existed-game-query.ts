@@ -19,7 +19,7 @@ export function useCheckExistedGameQuery(
         return null;
       }
 
-      return await core.games.getGameIdByOriginalSlug(payload);
+      return await core.newGameRequest.checkExistedGame(payload);
     },
     enabled: !!payload,
   });
