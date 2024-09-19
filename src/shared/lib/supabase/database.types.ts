@@ -440,8 +440,9 @@ export type Database = {
           game_id: number | null;
           id: number;
           is_valid: boolean;
+          slug: string | null;
+          store: Database['public']['Enums']['game_store'] | null;
           updated_at: string | null;
-          url: string;
         };
         Insert: {
           completed_at?: string | null;
@@ -451,8 +452,9 @@ export type Database = {
           game_id?: number | null;
           id?: number;
           is_valid?: boolean;
+          slug?: string | null;
+          store?: Database['public']['Enums']['game_store'] | null;
           updated_at?: string | null;
-          url: string;
         };
         Update: {
           completed_at?: string | null;
@@ -462,8 +464,9 @@ export type Database = {
           game_id?: number | null;
           id?: number;
           is_valid?: boolean;
+          slug?: string | null;
+          store?: Database['public']['Enums']['game_store'] | null;
           updated_at?: string | null;
-          url?: string;
         };
         Relationships: [
           {

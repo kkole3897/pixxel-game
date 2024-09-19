@@ -1,7 +1,6 @@
-import { ascending } from '@visx/vendor/d3-array';
 import { Base } from './lib/base';
 
-export type GameStoreResponse = 'steam' | 'epic';
+export type GameStore = 'steam' | 'epic';
 export type GameDrmResponse = 'steam' | 'epic';
 
 export type GetGamesOptions = {
@@ -58,7 +57,7 @@ export type GameCatalogResponse = {
   id: number;
   gameId: number | null;
   url: string;
-  store: GameStoreResponse;
+  store: GameStore;
   drm: GameDrmResponse;
   regularPrice: number | null;
   currentPrice: number | null;
@@ -312,6 +311,32 @@ export class Games extends Base {
       currentPrice: current_price, currentPriceExpireAt: current_price_expire_at, lowestPrice: lowest_price, salesEndedAt: sales_ended_at)'
       )
       .textSearch('combined_title', _query);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
+
+  public async getGameIdByOriginalSlug({
+    store,
+    slug,
+  }: {
+    store: GameStore;
+    slug: string;
+  }) {
+    const { data, error } = await this.supabase
+      .from('game_catalog')
+      .select(
+        `
+        gameId: game_id
+      `
+      )
+      .eq('store', store)
+      .eq('original_slug', slug)
+      .not('game_id', 'is', null)
+      .maybeSingle<{ gameId: number }>();
 
     if (error) {
       throw error;
