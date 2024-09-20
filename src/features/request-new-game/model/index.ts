@@ -4,3 +4,8 @@ export {
   createRequestNewGameStore,
   type RequestNewGameStore,
 } from './request-new-game-store';
+export { type RequestNewGameStatus } from './request-new-game-status';
+export {
+  type RequestNewGameLog,
+  getRequestNewGameStatus,
+} from './request-new-game-log';

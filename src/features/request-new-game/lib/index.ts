@@ -5,3 +5,4 @@ export {
   useRequestNewGameStore,
 } from './use-request-new-game-store';
 export { useRequestNewGameForm } from './use-request-new-game-form';
+export { formatRequestNewGameStatus } from './format-request-new-game-status';
