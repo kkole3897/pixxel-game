@@ -8,7 +8,6 @@ export type RequestNewGameLog = {
   completedAt: string | null; // utc 0 datetime format
   createdAt: string; // utc 0 datetime format
   title: string;
-  mainImage: string | null;
 };
 
 export function getRequestNewGameStatus(

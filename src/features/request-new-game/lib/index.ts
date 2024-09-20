@@ -7,3 +7,4 @@ export {
 export { useRequestNewGameForm } from './use-request-new-game-form';
 export { formatRequestNewGameStatus } from './format-request-new-game-status';
 export { toStoreUrl } from './to-store-url';
+export { formatRequestTime } from './format-request-time';
