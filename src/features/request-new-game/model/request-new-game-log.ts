@@ -16,13 +16,3 @@ export function getRequestNewGameStatus(
 ): RequestNewGameStatus {
   return log.completedAt ? 'completed' : 'processing';
 }
-
-export function toOriginalUrl(log: Pick<RequestNewGameLog, 'store' | 'slug'>) {
-  if (log.store === 'steam') {
-    return `https://store.steampowered.com/${log.slug}`;
-  } else if (log.store === 'epic') {
-    return `https://store.epicgames.com/p/${log.slug}`;
-  }
-
-  throw new Error(`Unsupported store: ${log.store}`);
-}
