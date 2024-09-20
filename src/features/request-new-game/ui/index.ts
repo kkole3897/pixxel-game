@@ -1,1 +1,1 @@
-export { RequestNewGameForm } from './request-new-game-form';
+export { CheckRequestNewGameForm } from './check-request-new-game-form';

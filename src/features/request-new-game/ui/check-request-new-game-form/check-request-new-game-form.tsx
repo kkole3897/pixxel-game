@@ -2,15 +2,15 @@
 
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
-import * as styles from './request-new-game-form.css';
+import * as styles from './check-request-new-game-form.css';
 
-type RequestNewGameFormProps = {
+type CheckRequestNewGameFormProps = {
   onSubmit?: (data: { url: string }) => void;
 };
 
-export default function RequestNewGameForm({
+export default function CheckRequestNewGameForm({
   onSubmit,
-}: RequestNewGameFormProps) {
+}: CheckRequestNewGameFormProps) {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
