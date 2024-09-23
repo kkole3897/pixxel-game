@@ -431,67 +431,6 @@ export type Database = {
           },
         ];
       };
-      new_game_request: {
-        Row: {
-          completed_at: string | null;
-          created_at: string;
-          deleted_at: string | null;
-          game_catalog_id: number | null;
-          game_id: number | null;
-          id: number;
-          is_valid: boolean;
-          slug: string | null;
-          store: Database['public']['Enums']['game_store'] | null;
-          updated_at: string | null;
-        };
-        Insert: {
-          completed_at?: string | null;
-          created_at?: string;
-          deleted_at?: string | null;
-          game_catalog_id?: number | null;
-          game_id?: number | null;
-          id?: number;
-          is_valid?: boolean;
-          slug?: string | null;
-          store?: Database['public']['Enums']['game_store'] | null;
-          updated_at?: string | null;
-        };
-        Update: {
-          completed_at?: string | null;
-          created_at?: string;
-          deleted_at?: string | null;
-          game_catalog_id?: number | null;
-          game_id?: number | null;
-          id?: number;
-          is_valid?: boolean;
-          slug?: string | null;
-          store?: Database['public']['Enums']['game_store'] | null;
-          updated_at?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'game_tracking_request_game_id_fkey';
-            columns: ['game_id'];
-            isOneToOne: false;
-            referencedRelation: 'game';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'game_tracking_request_game_id_fkey';
-            columns: ['game_id'];
-            isOneToOne: false;
-            referencedRelation: 'game_effective_price_updated_at_view';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'new_game_request_game_catalog_id_fkey';
-            columns: ['game_catalog_id'];
-            isOneToOne: false;
-            referencedRelation: 'game_catalog';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       open_critic: {
         Row: {
           created_at: string;
@@ -580,6 +519,70 @@ export type Database = {
             columns: ['id'];
             isOneToOne: true;
             referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      requested_game: {
+        Row: {
+          completed_at: string | null;
+          created_at: string;
+          deleted_at: string | null;
+          failed_at: string | null;
+          game_catalog_id: number | null;
+          game_id: number | null;
+          id: number;
+          slug: string;
+          store: Database['public']['Enums']['game_store'];
+          title: string;
+          updated_at: string | null;
+        };
+        Insert: {
+          completed_at?: string | null;
+          created_at?: string;
+          deleted_at?: string | null;
+          failed_at?: string | null;
+          game_catalog_id?: number | null;
+          game_id?: number | null;
+          id?: number;
+          slug: string;
+          store: Database['public']['Enums']['game_store'];
+          title: string;
+          updated_at?: string | null;
+        };
+        Update: {
+          completed_at?: string | null;
+          created_at?: string;
+          deleted_at?: string | null;
+          failed_at?: string | null;
+          game_catalog_id?: number | null;
+          game_id?: number | null;
+          id?: number;
+          slug?: string;
+          store?: Database['public']['Enums']['game_store'];
+          title?: string;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'game_tracking_request_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'game_tracking_request_game_id_fkey';
+            columns: ['game_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_effective_price_updated_at_view';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'new_game_request_game_catalog_id_fkey';
+            columns: ['game_catalog_id'];
+            isOneToOne: false;
+            referencedRelation: 'game_catalog';
             referencedColumns: ['id'];
           },
         ];

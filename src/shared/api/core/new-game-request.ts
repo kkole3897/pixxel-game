@@ -18,8 +18,10 @@ type CheckExistedGameResponse = {
 export class NewGameRequest extends Base {
   public async checkExistedRequest(requestData: RequestData) {
     const { data, error } = await this.supabase
-      .from('new_game_request')
-      .select('id, store, slug, completedAt: completed_at')
+      .from('requested_game')
+      .select(
+        'id, store, slug, completedAt: completed_at, createdAt: created_at, title, failedAt: failed_at'
+      )
       .eq('store', requestData.store)
       .eq('slug', requestData.slug)
       .maybeSingle();

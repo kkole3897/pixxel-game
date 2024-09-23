@@ -1,7 +1,6 @@
 import { createStore } from 'zustand/vanilla';
 
 import { type RequestedGameStoreIdentifier } from './requested-game-store-identifier';
-import { UnsupportedStoreUrlError } from './errors';
 
 export type GeneratedStoreIdentifierState = {
   storeIdentifier: RequestedGameStoreIdentifier | null;
