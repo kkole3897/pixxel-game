@@ -3,9 +3,9 @@ import cn from 'classnames';
 import { RiExternalLinkLine } from '@remixicon/react';
 import Image from 'next/image';
 
-import { type RequestNewGameLog, getRequestNewGameStatus } from '../../model';
+import { type RequestedGame, getRequestedGameStatus } from '../../model';
 import {
-  formatRequestNewGameStatus,
+  formatRequestedGameStatus,
   toStoreUrl,
   formatRequestTime,
 } from '../../lib';
@@ -16,7 +16,7 @@ import * as styles from './existed-request-card.css';
 
 export type ExistedRequestCardProps = {
   log: Pick<
-    RequestNewGameLog,
+    RequestedGame,
     'slug' | 'store' | 'createdAt' | 'completedAt' | 'title'
   >;
   className?: string;
@@ -27,8 +27,8 @@ export default function ExistedRequestCard({
   className,
 }: ExistedRequestCardProps) {
   const composedClassName = cn(className, styles.card);
-  const status = getRequestNewGameStatus(log);
-  const statusText = formatRequestNewGameStatus(status);
+  const status = getRequestedGameStatus(log);
+  const statusText = formatRequestedGameStatus(status);
   const storeUrl = toStoreUrl(log);
   const requestTime = formatRequestTime(log.createdAt);
 

@@ -1,1 +1,1 @@
-export { REQUEST_NEW_GAME_STATUS } from './request-new-game-status';
+export { REQUESTED_GAME_STATUS } from './requested-game-status';
