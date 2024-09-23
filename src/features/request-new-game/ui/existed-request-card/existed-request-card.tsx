@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { type RequestedGame, getRequestedGameStatus } from '../../model';
 import {
   formatRequestedGameStatus,
-  toStoreUrl,
+  revertStoreIdentifierToUrl,
   formatRequestTime,
 } from '../../lib';
 import { DefaultLink } from '@/shared/ui/default-link';
@@ -29,7 +29,7 @@ export default function ExistedRequestCard({
   const composedClassName = cn(className, styles.card);
   const status = getRequestedGameStatus(log);
   const statusText = formatRequestedGameStatus(status);
-  const storeUrl = toStoreUrl(log);
+  const storeUrl = revertStoreIdentifierToUrl(log);
   const requestTime = formatRequestTime(log.createdAt);
 
   const mainImageMap = {

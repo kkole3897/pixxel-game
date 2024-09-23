@@ -14,8 +14,7 @@ export const field = style([
   text.base,
   {
     display: 'flex',
-    alignItems: 'center',
-    columnGap: '8px',
+    flexDirection: 'column',
   },
 ]);
 
@@ -26,6 +25,7 @@ export const fieldLabel = style([
     width: '80px',
     fontWeight: theme.fontWeight.semibold,
     cursor: 'default',
+    marginBottom: '4px',
   },
 ]);
 
@@ -37,3 +37,12 @@ export const submitArea = style({
   display: 'flex',
   justifyContent: 'flex-end',
 });
+
+export const errorMessage = style([
+  text.sm,
+  {
+    marginTop: '4px',
+    color: theme.colors.red[800],
+    fontWeight: theme.fontWeight.medium,
+  },
+]);

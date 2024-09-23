@@ -5,12 +5,10 @@ import { UnsupportedStoreUrlError } from './errors';
 
 export type GeneratedStoreIdentifierState = {
   storeIdentifier: RequestedGameStoreIdentifier | null;
-  error: UnsupportedStoreUrlError | null;
 };
 
 export type GeneratedStoreIdentifierActions = {
-  setStoreIdentifier: (payload: RequestedGameStoreIdentifier) => void;
-  setError: (error: UnsupportedStoreUrlError | null) => void;
+  setStoreIdentifier: (payload: RequestedGameStoreIdentifier | null) => void;
 };
 
 export type GeneratedStoreIdentifierStore = GeneratedStoreIdentifierState &
@@ -18,7 +16,6 @@ export type GeneratedStoreIdentifierStore = GeneratedStoreIdentifierState &
 
 export const defaultInitState: GeneratedStoreIdentifierState = {
   storeIdentifier: null,
-  error: null,
 };
 
 export const createGeneratedStoreIdentifierStore = (
@@ -26,13 +23,8 @@ export const createGeneratedStoreIdentifierStore = (
 ) => {
   return createStore<GeneratedStoreIdentifierStore>((set) => ({
     ...initState,
-    setStoreIdentifier: (
-      storeIdentifier: RequestedGameStoreIdentifier | null
-    ) => {
-      set((state) => ({ ...state, storeIdentifier, error: null }));
-    },
-    setError: (error: UnsupportedStoreUrlError | null) => {
-      set((state) => ({ ...state, error, storeIdentifier: null }));
+    setStoreIdentifier: (storeIdentifier) => {
+      set((state) => ({ ...state, storeIdentifier }));
     },
   }));
 };

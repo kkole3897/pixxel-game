@@ -4,6 +4,10 @@ export {
   ExistedRequestCard,
 } from './ui';
 export {
-  useRequestNewGameForm,
   GeneratedStoreIdentifierStoreProvider,
+  useGeneratedStoreIdentifierStore,
 } from './lib';
+export {
+  useCheckExistedGameQuery,
+  useCheckExistedRequestQuery,
+} from './queries';
