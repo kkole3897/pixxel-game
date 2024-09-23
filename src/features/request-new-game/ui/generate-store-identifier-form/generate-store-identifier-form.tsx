@@ -2,23 +2,17 @@
 
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
-import * as styles from './check-request-new-game-form.css';
+import * as styles from './generate-store-identifier-form.css';
 
-type CheckRequestNewGameFormProps = {
+type GenerateStoreIdentifierForm = {
   onSubmit?: (data: { url: string }) => void;
 };
 
-export default function CheckRequestNewGameForm({
+export default function GenerateStoreIdentifierForm({
   onSubmit,
-}: CheckRequestNewGameFormProps) {
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+}: GenerateStoreIdentifierForm) {
+  const handleSubmit: React.EventHandler<React.FormEvent> = (event) => {
     event.preventDefault();
-
-    if (onSubmit) {
-      const formData = new FormData(event.currentTarget);
-      const data = Object.fromEntries(formData.entries()) as { url: string };
-      onSubmit(data);
-    }
   };
 
   return (

@@ -1,2 +1,9 @@
-export { CheckRequestNewGameForm } from './ui';
-export { useRequestNewGameForm, RequestNewGameStoreProvider } from './lib';
+export {
+  GenerateStoreIdentifierForm,
+  ExistedGameLink,
+  ExistedRequestCard,
+} from './ui';
+export {
+  useRequestNewGameForm,
+  GeneratedStoreIdentifierStoreProvider,
+} from './lib';
