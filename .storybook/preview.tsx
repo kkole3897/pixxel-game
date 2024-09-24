@@ -1,9 +1,7 @@
-import React from 'react';
 import type { Preview } from '@storybook/react';
-import cn from 'classnames';
 
 import '../src/app/styles/globals.css';
-import { base, serif } from '../src/shared/fonts/fonts';
+import './font.css';
 
 const preview: Preview = {
   tags: ['autodocs'],
@@ -15,15 +13,6 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story) => {
-      return (
-        <div className={cn(base.className, base.variable, serif.variable)}>
-          <Story />
-        </div>
-      );
-    },
-  ],
 };
 
 export default preview;
