@@ -534,7 +534,7 @@ export type Database = {
           id: number;
           slug: string;
           store: Database['public']['Enums']['game_store'];
-          title: string;
+          title: string | null;
           updated_at: string | null;
         };
         Insert: {
@@ -547,7 +547,7 @@ export type Database = {
           id?: number;
           slug: string;
           store: Database['public']['Enums']['game_store'];
-          title: string;
+          title?: string | null;
           updated_at?: string | null;
         };
         Update: {
@@ -560,7 +560,7 @@ export type Database = {
           id?: number;
           slug?: string;
           store?: Database['public']['Enums']['game_store'];
-          title?: string;
+          title?: string | null;
           updated_at?: string | null;
         };
         Relationships: [

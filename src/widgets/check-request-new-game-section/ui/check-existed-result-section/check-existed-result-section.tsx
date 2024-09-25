@@ -64,7 +64,7 @@ export default function CheckExistedResultSection({
         <div></div>
       ) : existedRequestData ? (
         <div>
-          <ExistedRequestCard log={existedRequestData} />
+          <ExistedRequestCard request={existedRequestData} />
           <div className={styles.resultDescription}>
             동일한 요청이 존재합니다.
           </div>

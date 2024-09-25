@@ -14,7 +14,8 @@ type Story = StoryObj<typeof ExistedRequestCard>;
 
 export const Completed: Story = {
   args: {
-    log: {
+    request: {
+      id: 1,
       slug: 'app/1343240',
       store: 'steam',
       createdAt: '2024-09-20T00:00:00Z',
@@ -26,7 +27,8 @@ export const Completed: Story = {
 
 export const Processing: Story = {
   args: {
-    log: {
+    request: {
+      id: 1,
       slug: 'app/1343240',
       store: 'steam',
       createdAt: '2024-09-20T00:00:00Z',
@@ -38,7 +40,8 @@ export const Processing: Story = {
 
 export const Epic: Story = {
   args: {
-    log: {
+    request: {
+      id: 1,
       slug: 'thymesia-f4f399',
       store: 'epic',
       createdAt: '2024-09-20T00:00:00Z',

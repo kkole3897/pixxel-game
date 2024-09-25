@@ -15,22 +15,24 @@ import EpicHomeImage from '~/public/images/epic-home-image-480x270.jpg';
 import * as styles from './existed-request-card.css';
 
 export type ExistedRequestCardProps = {
-  log: Pick<
+  request: Pick<
     RequestedGame,
-    'slug' | 'store' | 'createdAt' | 'completedAt' | 'title'
+    'slug' | 'store' | 'createdAt' | 'completedAt' | 'title' | 'id'
   >;
   className?: string;
 };
 
 export default function ExistedRequestCard({
-  log,
+  request,
   className,
 }: ExistedRequestCardProps) {
   const composedClassName = cn(className, styles.card);
-  const status = getRequestedGameStatus(log);
+  const status = getRequestedGameStatus(request);
   const statusText = formatRequestedGameStatus(status);
-  const storeUrl = revertStoreIdentifierToUrl(log);
-  const requestTime = formatRequestTime(log.createdAt);
+  const storeUrl = revertStoreIdentifierToUrl(request);
+  const requestTime = formatRequestTime(request.createdAt);
+
+  const title = `[${request.id}] ${request.title ?? ''}`;
 
   const mainImageMap = {
     steam: SteamHomeImage,
@@ -41,8 +43,8 @@ export default function ExistedRequestCard({
     <DefaultLink href={storeUrl} target="_blank" className={composedClassName}>
       <div className={styles.mediaArea}>
         <Image
-          src={mainImageMap[log.store]}
-          alt={log.store}
+          src={mainImageMap[request.store]}
+          alt={request.store}
           width={480}
           height={270}
           className={styles.mainImage}
@@ -52,7 +54,7 @@ export default function ExistedRequestCard({
         <div className={styles.tagArea}>
           <span className={styles.statusBadge({ status })}>{statusText}</span>
         </div>
-        <div className={styles.title}>{log.title}</div>
+        <div className={styles.title}>{title}</div>
         <div className={styles.descriptionArea}>
           <dl>
             <div className={styles.descriptionListItem}>
