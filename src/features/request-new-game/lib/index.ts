@@ -10,3 +10,4 @@ export {
 export { useGenerateStoreIdentifierFormState } from './use-generate-store-identifier-form-state';
 export { formatRequestedGameStatus } from './format-requested-game-status';
 export { formatRequestTime } from './format-request-time';
+export { useCreateRequestedGameFormState } from './use-create-requested-game-form-state';

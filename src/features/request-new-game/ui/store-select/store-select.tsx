@@ -9,7 +9,8 @@ import { Select } from '@/shared/ui/select';
 import * as styles from './store-select.css';
 
 type StoreSelectProps = {
-  defaultValue: GameStore;
+  id?: string;
+  value: GameStore;
 };
 
 const storeIconMap = {
@@ -17,9 +18,9 @@ const storeIconMap = {
   [GAME_STORE.Epic]: <EpicFillBase size={28} />,
 };
 
-export default function StoreSelect({ defaultValue }: StoreSelectProps) {
+export default function StoreSelect(props: StoreSelectProps) {
   return (
-    <Select.Root defaultValue={defaultValue} disabled>
+    <Select.Root {...props} open={false} required name="store">
       <Select.Trigger className={styles.selectTrigger}>
         <Select.Value />
       </Select.Trigger>

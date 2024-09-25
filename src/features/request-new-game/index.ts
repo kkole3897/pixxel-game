@@ -2,6 +2,7 @@ export {
   GenerateStoreIdentifierForm,
   ExistedGameLink,
   ExistedRequestCard,
+  CreateRequestedGameForm,
 } from './ui';
 export {
   GeneratedStoreIdentifierStoreProvider,

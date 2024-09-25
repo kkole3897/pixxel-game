@@ -1,0 +1,47 @@
+import { style } from '@vanilla-extract/css';
+
+import { text } from '@/shared/styles/typography.css';
+import { theme } from '@/shared/styles/theme.css';
+
+export const formInner = style({
+  width: '100%',
+  maxWidth: '480px',
+  margin: '0 auto',
+});
+
+export const field = style({
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '4px',
+
+  selectors: {
+    '& + &': {
+      marginTop: '8px',
+    },
+  },
+});
+
+export const label = style([text.base]);
+
+export const fieldHelperText = style({
+  color: theme.colors.gray[500],
+});
+
+export const submitArea = style({
+  marginTop: '32px',
+});
+
+export const submitButton = style({
+  width: '100%',
+});
+
+export const notice = style([
+  text.base,
+  {
+    margin: '16px 0 32px',
+    padding: '8px 12px',
+    borderRadius: '6px',
+    backgroundColor: theme.colors.sky[100],
+    color: theme.colors.sky[950],
+  },
+]);
