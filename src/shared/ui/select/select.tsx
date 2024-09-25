@@ -73,7 +73,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         >
           <ScrollArea.Root className={styles.contentScrollArea}>
             <PrimitiveSelect.Viewport asChild>
-              <ScrollArea.Viewport className={styles.viewport}>
+              <ScrollArea.Viewport
+                className={styles.viewport}
+                style={{ overflowY: undefined }}
+              >
                 {children}
               </ScrollArea.Viewport>
             </PrimitiveSelect.Viewport>
