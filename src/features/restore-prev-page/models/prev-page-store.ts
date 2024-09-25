@@ -17,10 +17,10 @@ export const defaultInitState: PrevPageState = {
 export const createPrevPageStore = (
   initState: PrevPageState = defaultInitState
 ) => {
-  return createStore<PrevPageStore>((set, get) => ({
+  return createStore<PrevPageStore>((set) => ({
     ...initState,
     setPathname: (pathname: string) => {
-      set({ pathname });
+      set((state) => ({ ...state, pathname }));
     },
   }));
 };
