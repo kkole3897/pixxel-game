@@ -10,7 +10,7 @@ type Size = 'lg' | 'md';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
-   * @defaultValue `primary`
+   * @defaultValue `solid`
    */
   variant?: ButtonVariant;
   /**
