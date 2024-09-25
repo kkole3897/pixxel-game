@@ -4,7 +4,7 @@ import { CommonSvgIconProps } from '../types';
 
 interface CheckLineProps extends CommonSvgIconProps {
   /**
-   * @default '#000000'
+   * @default 'currentColor'
    */
   color?: string;
 
@@ -15,7 +15,7 @@ interface CheckLineProps extends CommonSvgIconProps {
 }
 
 const CheckLine = forwardRef<SVGSVGElement, CheckLineProps>(
-  ({ size = 24, color = '#000000', ...props } = {}, forwardedRef) => {
+  ({ size = 24, color = 'currentColor', ...props } = {}, forwardedRef) => {
     return (
       <svg
         width={size}
