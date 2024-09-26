@@ -1,6 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes';
 
 import { base as baseLayer } from '@/shared/styles/layer.css';
+import { theme } from '@/shared/styles/theme.css';
 
 export const button = recipe({
   base: {
@@ -9,7 +10,7 @@ export const button = recipe({
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '11px 19px',
+        padding: '0 19px',
         border: '1px solid transparent',
         borderRadius: '8px',
         fontWeight: 600,
@@ -18,7 +19,7 @@ export const button = recipe({
 
         selectors: {
           '&:focus-visible': {
-            boxShadow: '0 0 0 2px #9CBFE8',
+            boxShadow: `0 0 0 2px ${theme.colors.blue[200]}`,
           },
           '&:disabled': {
             cursor: 'default',
@@ -32,16 +33,18 @@ export const button = recipe({
       md: {
         '@layer': {
           [baseLayer]: {
-            fontSize: '0.875rem',
-            lineHeight: '1.25rem',
+            height: '44px',
+            fontSize: theme.fontSize.sm,
+            lineHeight: theme.lineHeight.sm,
           },
         },
       },
       lg: {
         '@layer': {
           [baseLayer]: {
-            fontSize: '1rem',
-            lineHeight: '1.5rem',
+            height: '48px',
+            fontSize: theme.fontSize.base,
+            lineHeight: theme.lineHeight.base,
           },
         },
       },
@@ -50,23 +53,23 @@ export const button = recipe({
       solid: {
         '@layer': {
           [baseLayer]: {
-            borderColor: '#3786fb',
-            backgroundColor: '#3786fb',
-            color: '#fff',
+            borderColor: theme.colors.blue[500],
+            backgroundColor: theme.colors.blue[500],
+            color: theme.colors.blue[50],
 
             selectors: {
               '&:hover': {
-                borderColor: '#397fd1',
-                backgroundColor: '#397fd1',
+                borderColor: theme.colors.blue[400],
+                backgroundColor: theme.colors.blue[400],
               },
               '&:active': {
-                borderColor: '#064c9e',
-                backgroundColor: '#064c9e',
+                borderColor: theme.colors.blue[600],
+                backgroundColor: theme.colors.blue[600],
               },
               '&:disabled': {
-                borderColor: '#cccdd0',
-                backgroundColor: '#cccdd0',
-                color: '#999ca1',
+                borderColor: theme.colors.gray[200],
+                backgroundColor: theme.colors.gray[200],
+                color: theme.colors.gray[400],
               },
             },
           },
@@ -75,22 +78,22 @@ export const button = recipe({
       ghost: {
         '@layer': {
           [baseLayer]: {
-            borderColor: '#3786fb',
+            borderColor: theme.colors.blue[500],
             backgroundColor: 'transparent',
-            color: '#3786fb',
+            color: theme.colors.blue[500],
 
             selectors: {
               '&:hover': {
-                borderColor: '#397fd1',
-                color: '#397fd1',
+                borderColor: theme.colors.blue[400],
+                color: theme.colors.blue[400],
               },
               '&:active': {
-                borderColor: '#064c9e',
-                color: '#064c9e',
+                borderColor: theme.colors.blue[600],
+                color: theme.colors.blue[600],
               },
               '&:disabled': {
-                borderColor: '#cccdd0',
-                color: '#b3b5b9',
+                borderColor: theme.colors.gray[200],
+                color: theme.colors.gray[200],
               },
             },
           },
@@ -100,17 +103,17 @@ export const button = recipe({
         '@layer': {
           [baseLayer]: {
             backgroundColor: 'transparent',
-            color: '#3786fb',
+            color: theme.colors.blue[500],
 
             selectors: {
               '&:hover': {
-                color: '#397fd1',
+                color: theme.colors.blue[400],
               },
               '&:active': {
-                color: '#064c9e',
+                color: theme.colors.blue[600],
               },
               '&:disabled': {
-                color: '#b3b5b9',
+                color: theme.colors.gray[300],
               },
             },
           },
