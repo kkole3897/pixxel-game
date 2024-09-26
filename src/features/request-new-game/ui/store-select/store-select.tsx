@@ -11,6 +11,7 @@ import * as styles from './store-select.css';
 type StoreSelectProps = {
   id?: string;
   value: GameStore;
+  onChange?: (store: GameStore) => void;
 };
 
 const storeIconMap = {
@@ -18,9 +19,9 @@ const storeIconMap = {
   [GAME_STORE.Epic]: <EpicFillBase size={28} />,
 };
 
-export default function StoreSelect(props: StoreSelectProps) {
+export default function StoreSelect({ onChange, ...props }: StoreSelectProps) {
   return (
-    <Select.Root {...props} open={false} required name="store">
+    <Select.Root {...props} required name="store" onValueChange={onChange}>
       <Select.Trigger className={styles.selectTrigger}>
         <Select.Value />
       </Select.Trigger>

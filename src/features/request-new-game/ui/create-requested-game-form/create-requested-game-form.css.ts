@@ -35,9 +35,10 @@ export const submitButton = style({
   width: '100%',
 });
 
-export const notice = style([
+export const noticeBox = style([
   text.base,
   {
+    display: 'flex',
     margin: '16px 0 32px',
     padding: '8px 12px',
     borderRadius: '6px',
@@ -45,3 +46,8 @@ export const notice = style([
     color: theme.colors.sky[950],
   },
 ]);
+
+export const noticeLink = style({
+  color: theme.colors.blue[600],
+  textDecoration: 'underline',
+});

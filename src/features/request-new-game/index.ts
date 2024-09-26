@@ -7,8 +7,11 @@ export {
 export {
   GeneratedStoreIdentifierStoreProvider,
   useGeneratedStoreIdentifierStore,
+  convertCreateRequestedFormStateToData,
+  type CreateRequestedGameFormState,
 } from './lib';
 export {
   useCheckExistedGameQuery,
   useCheckExistedRequestQuery,
+  useCreateRequestedGameMutation,
 } from './queries';

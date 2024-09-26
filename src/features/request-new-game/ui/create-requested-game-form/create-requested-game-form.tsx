@@ -1,38 +1,44 @@
 'use client';
 
 import { StoreSelect } from '../store-select';
-import { useCreateRequestedGameFormState } from '../../lib';
+import {
+  useCreateRequestedGameFormState,
+  revertStoreIdentifierToUrl,
+  type CreateRequestedGameFormState,
+} from '../../lib';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
+import { DefaultLink } from '@/shared/ui/default-link';
 import * as styles from './create-requested-game-form.css';
 
 type CreateRquestedGameFormProps = {
   className?: string;
+  initialState: CreateRequestedGameFormState;
+  onSubmit?: (data: CreateRequestedGameFormState) => void;
+  onChange?: (data: CreateRequestedGameFormState) => void;
 };
 
 export default function CreateRequestedGameForm({
   className,
+  initialState,
+  onSubmit,
 }: CreateRquestedGameFormProps) {
-  const {
-    formState,
-    handleChangeInput,
-    isFormRequired,
-    storeIdentifier,
-    handleSubmit,
-  } = useCreateRequestedGameFormState();
-
-  if (!isFormRequired) {
-    return null;
-  }
+  const { handleChangeInput, handleSubmit, formState, handleChangeStore } =
+    useCreateRequestedGameFormState(initialState);
+  const url = revertStoreIdentifierToUrl(formState);
 
   return (
-    <form className={className} onSubmit={handleSubmit}>
+    <form className={className} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formInner}>
         <div className={styles.field}>
           <label htmlFor="store" className={styles.label}>
             스토어
           </label>
-          <StoreSelect id="store" value={storeIdentifier!.store} />
+          <StoreSelect
+            id="store"
+            value={formState.store}
+            onChange={handleChangeStore}
+          />
         </div>
         <div className={styles.field}>
           <label htmlFor="slug" className={styles.label}>
@@ -41,13 +47,27 @@ export default function CreateRequestedGameForm({
           <Input
             id="slug"
             name="slug"
-            value={storeIdentifier!.slug}
-            readOnly
+            value={formState.slug}
             required
+            onChange={handleChangeInput}
           />
         </div>
-        <div className={styles.notice}>
-          💡스토어와 slug는 입력하신 url을 토대로 자동으로 생성되었습니다.
+        <div className={styles.noticeBox}>
+          <div>💡</div>
+          <p>
+            스토어와 slug는 입력하신 url을 토대로 자동으로 생성되었습니다.{' '}
+            <br />
+            임의로 변경할 경우 수집에 실패할 수 있습니다.
+            <br />
+            <DefaultLink
+              href={url}
+              target="_blank"
+              className={styles.noticeLink}
+            >
+              {url}
+            </DefaultLink>
+            이 의도한 페이지가 아닐 경우에만 변경해주세요.
+          </p>
         </div>
         <div className={styles.field}>
           <label htmlFor="title" className={styles.label}>

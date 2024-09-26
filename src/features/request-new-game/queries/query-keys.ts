@@ -9,4 +9,5 @@ export const requestNewGameQueryKeys = createQueryKeys('requestNewGame', {
   checkExistedRequest: (payload: { store: GameStore; slug: string } | null) => [
     { payload },
   ],
+  createRequestedGame: null,
 });

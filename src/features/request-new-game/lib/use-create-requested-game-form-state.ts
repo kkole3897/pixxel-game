@@ -1,73 +1,46 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
-import { useGeneratedStoreIdentifierStore } from './use-generated-store-identifier-store';
-import {
-  useCheckExistedGameQuery,
-  useCheckExistedRequestQuery,
-} from '../queries';
+import { RequestedGameStoreIdentifier } from '../model';
 
-export function useCreateRequestedGameFormState() {
-  const storeIdentifier = useGeneratedStoreIdentifierStore(
-    (state) => state.storeIdentifier
-  );
-  const { data: existedGameData, isSuccess: isCheckExistedGameSuccess } =
-    useCheckExistedGameQuery(storeIdentifier);
-  const { data: existedRequestData, isSuccess: isCheckExistedRequestSuccess } =
-    useCheckExistedRequestQuery(storeIdentifier);
+export type FormState = RequestedGameStoreIdentifier & { title: string };
 
-  const [formState, setFormState] = useState({
-    title: '',
-  });
+export function useCreateRequestedGameFormState(initialState: FormState) {
+  const [formState, setFormState] = useState<FormState>(initialState);
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({
-      ...formState,
-      [event.target.name]: event.target.value,
-    });
-  };
+  useEffect(() => {
+    setFormState(initialState);
+  }, [initialState]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit =
+    (onSubmit?: (data: FormState) => void) =>
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-    if (storeIdentifier === null) {
-      throw new Error('storeIdentifier is required');
-    }
-
-    const formData = {
-      ...formState,
-      ...storeIdentifier,
+      onSubmit?.(formState);
     };
 
-    console.log(formData);
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const isFormRequired = useMemo(() => {
-    if (
-      !storeIdentifier ||
-      existedGameData ||
-      existedRequestData ||
-      !isCheckExistedGameSuccess ||
-      !isCheckExistedRequestSuccess
-    ) {
-      return false;
-    }
-
-    return true;
-  }, [
-    storeIdentifier,
-    existedGameData,
-    existedRequestData,
-    isCheckExistedGameSuccess,
-    isCheckExistedRequestSuccess,
-  ]);
+  const handleChangeStore = (store: RequestedGameStoreIdentifier['store']) => {
+    setFormState((prev) => ({
+      ...prev,
+      store,
+    }));
+  };
 
   return {
     formState,
-    handleChangeInput,
     handleSubmit,
-    isFormRequired,
-    storeIdentifier,
+    handleChangeInput,
+    handleChangeStore,
   };
 }
