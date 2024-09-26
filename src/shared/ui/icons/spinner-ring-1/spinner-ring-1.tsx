@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { CommonSvgIconProps } from '../types';
 
-type SpinnerRing180Props = CommonSvgIconProps & {
+type SpinnerRing1Props = CommonSvgIconProps & {
   /**
    * @default 24
    */
@@ -12,7 +12,7 @@ type SpinnerRing180Props = CommonSvgIconProps & {
   color?: string;
 };
 
-const SpinnerRing180 = forwardRef<SVGSVGElement, SpinnerRing180Props>(
+const SpinnerRing1 = forwardRef<SVGSVGElement, SpinnerRing1Props>(
   ({ size = 24, color = 'currentColor', ...props }, forwardedRef) => {
     return (
       <svg
@@ -38,6 +38,6 @@ const SpinnerRing180 = forwardRef<SVGSVGElement, SpinnerRing180Props>(
   }
 );
 
-SpinnerRing180.displayName = 'SpinnerRing180';
+SpinnerRing1.displayName = 'SpinnerRing1';
 
-export default SpinnerRing180;
+export default SpinnerRing1;
