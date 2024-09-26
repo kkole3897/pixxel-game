@@ -20,11 +20,15 @@ export function useGenerateStoreIdentifierFormState() {
 
   const { storeIdentifier, setStoreIdentifier } =
     useGeneratedStoreIdentifierStore((state) => state);
-  const { isStale: isCheckExistedGameStale, refetch: refetchCheckExistedGame } =
-    useCheckExistedGameQuery(storeIdentifier);
+  const {
+    isStale: isCheckExistedGameStale,
+    refetch: refetchCheckExistedGame,
+    isFetching: isCheckExistedGameFetching,
+  } = useCheckExistedGameQuery(storeIdentifier);
   const {
     isStale: isCheckExistedRequestStale,
     refetch: refetchCheckExistedRequest,
+    isFetching: isCheckExistedRequestFetching,
   } = useCheckExistedRequestQuery(storeIdentifier);
 
   const handleSubmit: React.EventHandler<React.FormEvent> = (event) => {
@@ -60,10 +64,14 @@ export function useGenerateStoreIdentifierFormState() {
     setUrl(event.target.value);
   };
 
+  const isFetching =
+    isCheckExistedGameFetching || isCheckExistedRequestFetching;
+
   return {
     handleSubmit,
     urlError,
     handleUrlChange,
     urlInputRef,
+    isFetching,
   };
 }

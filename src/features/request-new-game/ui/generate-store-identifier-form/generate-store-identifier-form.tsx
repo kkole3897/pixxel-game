@@ -1,40 +1,48 @@
 'use client';
 
+import { RiArrowRightSLine } from '@remixicon/react';
+
 import { useGenerateStoreIdentifierFormState } from '../../lib';
 import { Input } from '@/shared/ui/input';
-import { Button } from '@/shared/ui/button';
+import { LoadingButton } from '@/shared/ui/loading-button';
 import * as styles from './generate-store-identifier-form.css';
 
 export default function GenerateStoreIdentifierForm() {
-  const { handleSubmit, handleUrlChange, urlError, urlInputRef } =
+  const { handleSubmit, handleUrlChange, urlError, urlInputRef, isFetching } =
     useGenerateStoreIdentifierFormState();
 
   return (
-    <form method="POST" autoComplete="off" onSubmit={handleSubmit}>
+    <form autoComplete="off" onSubmit={handleSubmit}>
       <div className={styles.formInner}>
-        <div className={styles.field}>
-          <label className={styles.fieldLabel} htmlFor="url">
-            Url
-          </label>
-          <Input
-            id="url"
-            name="url"
-            className={styles.urlInput}
-            required
-            onChange={handleUrlChange}
-            isInvalid={!!urlError}
-            ref={urlInputRef}
-            placeholder="url을 입력해주세요"
-          />
-          {urlError && (
-            <div className={styles.errorMessage}>
-              지원하지 않는 url 형식을 입력했습니다.
-            </div>
-          )}
+        <div className={styles.searchArea}>
+          <div className={styles.field}>
+            <Input
+              id="url"
+              name="url"
+              className={styles.urlInput}
+              required
+              onChange={handleUrlChange}
+              isInvalid={!!urlError}
+              ref={urlInputRef}
+              placeholder="url을 입력해주세요"
+            />
+          </div>
+          <div className={styles.submitArea}>
+            <LoadingButton
+              type="submit"
+              isLoading={isFetching}
+              className={styles.submitButton}
+            >
+              <RiArrowRightSLine />
+              <span className={styles.submitButtonLabel}>확인하기</span>
+            </LoadingButton>
+          </div>
         </div>
-        <div className={styles.submitArea}>
-          <Button type="submit">확인하기</Button>
-        </div>
+        {urlError && (
+          <div className={styles.errorMessage}>
+            지원하지 않는 url 형식을 입력했습니다.
+          </div>
+        )}
       </div>
     </form>
   );

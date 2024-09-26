@@ -2,12 +2,11 @@ import { style } from '@vanilla-extract/css';
 
 import { text } from '@/shared/styles/typography.css';
 import { theme } from '@/shared/styles/theme.css';
+import { visuallyHidden } from '@/shared/styles/utils.css';
 
 export const formInner = style({
   display: 'flex',
   flexDirection: 'column',
-  rowGap: '16px',
-  alignItems: 'top',
 });
 
 export const field = style([
@@ -15,27 +14,19 @@ export const field = style([
   {
     display: 'flex',
     flexDirection: 'column',
-  },
-]);
-
-export const fieldLabel = style([
-  text.base,
-  {
-    display: 'block',
-    width: '80px',
-    fontWeight: theme.fontWeight.semibold,
-    cursor: 'default',
-    marginBottom: '4px',
+    flex: 1,
+    height: '100%',
   },
 ]);
 
 export const urlInput = style({
   width: '100%',
+  height: '100%',
 });
 
 export const submitArea = style({
-  display: 'flex',
-  justifyContent: 'flex-end',
+  flexShrink: 0,
+  height: '100%',
 });
 
 export const errorMessage = style([
@@ -46,3 +37,17 @@ export const errorMessage = style([
     fontWeight: theme.fontWeight.medium,
   },
 ]);
+
+export const searchArea = style({
+  display: 'flex',
+  columnGap: '8px',
+  height: '40px',
+});
+
+export const submitButton = style({
+  height: '100%',
+  width: '40px',
+  padding: 0,
+});
+
+export const submitButtonLabel = style([visuallyHidden]);
