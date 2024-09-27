@@ -12,10 +12,10 @@ import { convertUrlToStoreIdentifier } from './convert-url-to-store-identifier';
 import { useGeneratedStoreIdentifierStore } from './use-generated-store-identifier-store';
 
 export const SUCCESS_TYPE = {
-  existedGame: 0,
-  existedRequest: 1,
-  requestAvailable: 2,
-};
+  existedGame: 'existedGame',
+  existedRequest: 'existedRequest',
+  requestAvailable: 'requestAvailable',
+} as const;
 
 type SuccessType = (typeof SUCCESS_TYPE)[keyof typeof SUCCESS_TYPE];
 

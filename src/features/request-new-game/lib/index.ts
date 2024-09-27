@@ -9,6 +9,7 @@ export {
 } from './use-generated-store-identifier-store';
 export {
   useGenerateStoreIdentifierFormState,
+  SUCCESS_TYPE as GENERATE_STORE_IDENTIFIER_SUCCESS_TYPE,
   type UseGenerateStoreIdentifierFormStateOptions,
 } from './use-generate-store-identifier-form-state';
 export { formatRequestedGameStatus } from './format-requested-game-status';

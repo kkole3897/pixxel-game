@@ -10,7 +10,7 @@ import { Input } from '@/shared/ui/input';
 import { LoadingButton } from '@/shared/ui/loading-button';
 import * as styles from './generate-store-identifier-form.css';
 
-type GenerateStoreIdentifierFormProps =
+export type GenerateStoreIdentifierFormProps =
   UseGenerateStoreIdentifierFormStateOptions;
 
 export default function GenerateStoreIdentifierForm({

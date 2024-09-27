@@ -1,7 +1,5 @@
 'use client';
 
-import cn from 'classnames';
-
 import {
   useGeneratedStoreIdentifierStore,
   useGetExistedGameQuery,
@@ -18,8 +16,6 @@ type CheckExistedResultProps = {
 export default function CheckExistedResult({
   className,
 }: CheckExistedResultProps) {
-  const composedClassName = cn(className, styles.section);
-
   const storeIdentifier = useGeneratedStoreIdentifierStore(
     (state) => state.storeIdentifier
   );
@@ -29,7 +25,7 @@ export default function CheckExistedResult({
 
   if (existedGame) {
     return (
-      <div className={composedClassName}>
+      <div className={className}>
         <ExistedGameLink game={existedGame.game} />
         <div className={styles.resultDescription}>
           이미 등록된 게임이 있습니다.
@@ -38,7 +34,7 @@ export default function CheckExistedResult({
     );
   } else if (existedRequest) {
     return (
-      <div className={composedClassName}>
+      <div className={className}>
         <ExistedRequestCard request={existedRequest} />
         <div className={styles.resultDescription}>
           동일한 요청이 존재합니다.
