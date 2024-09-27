@@ -7,11 +7,14 @@ import { Core } from '@/shared/api/core';
 
 const core = new Core(createClient());
 
-export function useCheckExistedGameQuery(
-  payload: { store: GameStore; slug: string } | null
+export function useGetExistedRequestQuery(
+  payload: {
+    store: GameStore;
+    slug: string;
+  } | null
 ) {
   return useQuery({
-    queryKey: requestNewGameQueryKeys.checkExistedGame(payload).queryKey,
+    ...requestNewGameQueryKeys.getExistedRequest(payload),
     queryFn: async ({ queryKey }) => {
       const { payload } = queryKey[2];
 
@@ -19,7 +22,7 @@ export function useCheckExistedGameQuery(
         return null;
       }
 
-      return await core.newGameRequest.checkExistedGame(payload);
+      return await core.newGameRequest.checkExistedRequest(payload);
     },
     enabled: !!payload,
   });

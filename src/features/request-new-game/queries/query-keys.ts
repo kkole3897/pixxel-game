@@ -3,11 +3,13 @@ import { createQueryKeys } from '@lukemorales/query-key-factory';
 import { GameStore } from '@/entities/game';
 
 export const requestNewGameQueryKeys = createQueryKeys('requestNewGame', {
-  checkExistedGame: (payload: { store: GameStore; slug: string } | null) => [
+  getExistedGame: (payload: { store: GameStore; slug: string } | null) => [
     { payload },
   ],
-  checkExistedRequest: (payload: { store: GameStore; slug: string } | null) => [
+  getExistedRequest: (payload: { store: GameStore; slug: string } | null) => [
     { payload },
   ],
+  checkExistedGame: null,
+  checkExistedRequest: null,
   createRequestedGame: null,
 });

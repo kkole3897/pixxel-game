@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 import { UnsupportedStoreUrlError } from '../model';
 import {
-  useCheckExistedGameQuery,
-  useCheckExistedRequestQuery,
+  useCheckExistedGameMutation,
+  useCheckExistedRequestMutation,
 } from '../queries';
 import { convertUrlToStoreIdentifier } from './convert-url-to-store-identifier';
 import { useGeneratedStoreIdentifierStore } from './use-generated-store-identifier-store';
@@ -18,33 +18,34 @@ export function useGenerateStoreIdentifierFormState() {
   );
   const urlInputRef = React.useRef<HTMLInputElement>(null);
 
-  const { storeIdentifier, setStoreIdentifier } =
-    useGeneratedStoreIdentifierStore((state) => state);
+  const { setStoreIdentifier } = useGeneratedStoreIdentifierStore(
+    (state) => state
+  );
   const {
-    isStale: isCheckExistedGameStale,
-    refetch: refetchCheckExistedGame,
-    isFetching: isCheckExistedGameFetching,
-  } = useCheckExistedGameQuery(storeIdentifier);
+    mutateAsync: mutateCheckExistedGameAsync,
+    isPending: isCheckExistedGamePending,
+  } = useCheckExistedGameMutation();
   const {
-    isStale: isCheckExistedRequestStale,
-    refetch: refetchCheckExistedRequest,
-    isFetching: isCheckExistedRequestFetching,
-  } = useCheckExistedRequestQuery(storeIdentifier);
+    mutateAsync: mutateCheckExistedRequestAsync,
+    isPending: isCheckExistedRequestPending,
+  } = useCheckExistedRequestMutation();
 
-  const handleSubmit: React.EventHandler<React.FormEvent> = (event) => {
+  const isPending = isCheckExistedGamePending || isCheckExistedRequestPending;
+
+  const handleSubmit: React.EventHandler<React.FormEvent> = async (event) => {
     event.preventDefault();
 
     try {
       const data = convertUrlToStoreIdentifier(url);
       setUrlError(null);
-      setStoreIdentifier(data);
 
-      if (isCheckExistedGameStale) {
-        refetchCheckExistedGame();
+      const existedGame = await mutateCheckExistedGameAsync(data);
+
+      if (!existedGame) {
+        await mutateCheckExistedRequestAsync(data);
       }
-      if (isCheckExistedRequestStale) {
-        refetchCheckExistedRequest();
-      }
+
+      setStoreIdentifier(data);
     } catch (error) {
       setStoreIdentifier(null);
 
@@ -64,14 +65,11 @@ export function useGenerateStoreIdentifierFormState() {
     setUrl(event.target.value);
   };
 
-  const isFetching =
-    isCheckExistedGameFetching || isCheckExistedRequestFetching;
-
   return {
     handleSubmit,
     urlError,
     handleUrlChange,
     urlInputRef,
-    isFetching,
+    isPending,
   };
 }

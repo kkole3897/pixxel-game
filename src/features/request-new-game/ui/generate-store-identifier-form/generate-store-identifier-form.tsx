@@ -8,7 +8,7 @@ import { LoadingButton } from '@/shared/ui/loading-button';
 import * as styles from './generate-store-identifier-form.css';
 
 export default function GenerateStoreIdentifierForm() {
-  const { handleSubmit, handleUrlChange, urlError, urlInputRef, isFetching } =
+  const { handleSubmit, handleUrlChange, urlError, urlInputRef, isPending } =
     useGenerateStoreIdentifierFormState();
 
   return (
@@ -30,7 +30,7 @@ export default function GenerateStoreIdentifierForm() {
           <div className={styles.submitArea}>
             <LoadingButton
               type="submit"
-              isLoading={isFetching}
+              isLoading={isPending}
               className={styles.submitButton}
             >
               <RiArrowRightSLine />

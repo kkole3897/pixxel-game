@@ -11,7 +11,7 @@ export {
   type CreateRequestedGameFormState,
 } from './lib';
 export {
-  useCheckExistedGameQuery,
-  useCheckExistedRequestQuery,
+  useGetExistedGameQuery,
+  useGetExistedRequestQuery,
   useCreateRequestedGameMutation,
 } from './queries';

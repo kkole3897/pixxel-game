@@ -5,8 +5,8 @@ import cn from 'classnames';
 import {
   ExistedGameLink,
   ExistedRequestCard,
-  useCheckExistedGameQuery,
-  useCheckExistedRequestQuery,
+  useGetExistedGameQuery,
+  useGetExistedRequestQuery,
   useGeneratedStoreIdentifierStore,
 } from '@/features/request-new-game';
 import * as styles from './check-existed-result-section.css';
@@ -24,52 +24,33 @@ export default function CheckExistedResultSection({
     (state) => state
   );
 
-  const { data: existedGameData, status: checkExistedGameStatus } =
-    useCheckExistedGameQuery(storeIdentifier);
-  const { data: existedRequestData, status: checkExistedRequestStatus } =
-    useCheckExistedRequestQuery(storeIdentifier);
+  const { data: existedGameData } = useGetExistedGameQuery(storeIdentifier);
+  const { data: existedRequestData } =
+    useGetExistedRequestQuery(storeIdentifier);
 
-  if (
-    checkExistedGameStatus === 'pending' &&
-    checkExistedRequestStatus === 'pending'
-  ) {
-    // TODO: 로딩 처리
-    return null;
-  }
-
-  if (
-    checkExistedGameStatus === 'success' &&
-    existedGameData === null &&
-    checkExistedRequestStatus === 'success' &&
-    existedRequestData === null
-  ) {
-    return null;
-  }
-
-  return (
-    <div className={composedClassName}>
-      {checkExistedGameStatus === 'pending' ? null : checkExistedGameStatus ===
-        'error' ? (
-        <div></div>
-      ) : existedGameData ? (
+  if (existedGameData) {
+    return (
+      <div className={composedClassName}>
         <div>
           <ExistedGameLink game={existedGameData.game} />
           <div className={styles.resultDescription}>
             이미 등록된 게임이 있습니다.
           </div>
         </div>
-      ) : null}
-      {checkExistedRequestStatus ===
-      'pending' ? null : checkExistedRequestStatus === 'error' ? (
-        <div></div>
-      ) : existedRequestData ? (
+      </div>
+    );
+  } else if (existedRequestData) {
+    return (
+      <div className={composedClassName}>
         <div>
           <ExistedRequestCard request={existedRequestData} />
           <div className={styles.resultDescription}>
             동일한 요청이 존재합니다.
           </div>
         </div>
-      ) : null}
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
