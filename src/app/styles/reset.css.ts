@@ -52,7 +52,11 @@ globalStyle(
 );
 
 globalStyle('*, *::before, *::after', {
-  boxSizing: 'border-box',
+  '@layer': {
+    [reset]: {
+      boxSizing: 'border-box',
+    },
+  },
 });
 
 globalStyle('html', {
@@ -134,7 +138,7 @@ globalStyle('table', {
   },
 });
 
-globalStyle('img', {
+globalStyle('img, svg', {
   '@layer': {
     [reset]: {
       verticalAlign: 'top',
