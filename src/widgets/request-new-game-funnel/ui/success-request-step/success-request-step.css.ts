@@ -7,17 +7,18 @@ export const container = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  padding: '48px 12px',
 });
 
 export const title = style([
   text.lg,
   {
-    fontWeight: theme.fontWeight.bold,
+    fontWeight: theme.fontWeight.semibold,
   },
 ]);
 
 export const cardArea = style({
-  marginTop: '16px',
+  marginTop: '24px',
 });
 
 export const confirmArea = style({
@@ -28,4 +29,8 @@ export const confirmArea = style({
 
 export const confirmButton = style({
   width: '100%',
+});
+
+export const checkAnimationArea = style({
+  marginBottom: '8px',
 });

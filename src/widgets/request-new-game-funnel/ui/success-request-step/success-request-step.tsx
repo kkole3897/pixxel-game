@@ -6,6 +6,7 @@ import {
   ExistedRequestCard,
 } from '@/features/request-new-game';
 import { Button } from '@/shared/ui/button';
+import { CheckCircle } from '@/shared/ui/lottie';
 
 import * as styles from './success-request-step.css';
 
@@ -31,6 +32,9 @@ export default function SuccessRequestStep({
 
   return (
     <div className={styles.container}>
+      <div className={styles.checkAnimationArea}>
+        <CheckCircle />
+      </div>
       <h2 className={styles.title}>요청을 완료했습니다.</h2>
       <div className={styles.cardArea}>
         <ExistedRequestCard request={data} />

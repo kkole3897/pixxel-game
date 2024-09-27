@@ -57,7 +57,7 @@ export default function CreateRequestedGameForm({
         </div>
         <div className={styles.noticeBox}>
           <div>💡</div>
-          <p>
+          <p className={styles.noticeText}>
             스토어와 slug는 입력하신 url을 토대로 자동으로 생성되었습니다.{' '}
             <br />
             임의로 변경할 경우 수집에 실패할 수 있습니다.

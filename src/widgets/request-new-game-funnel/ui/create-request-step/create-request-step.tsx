@@ -12,6 +12,7 @@ import {
 } from '@/features/request-new-game';
 import { Button } from '@/shared/ui/button';
 import { LoadingDialog } from '@/shared/ui/loading-dialog';
+import * as styles from './create-request-step.css';
 
 type CreateRequestStepProps = {
   onNext?: () => void;
@@ -52,14 +53,22 @@ export default function CreateRequestStep({
   // TODO: 중복 오류 처리
   // TODO: 그 이외의 에러일 경우 toast 처리
   return (
-    <div>
-      <Button variant="text" onClick={() => onPrev?.()}>
-        <RiArrowLeftSLine />
-      </Button>
-      <CreateRequestedGameForm
-        initialState={initialState}
-        onSubmit={handleSubmit}
-      />
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <Button
+          variant="text"
+          onClick={() => onPrev?.()}
+          className={styles.backButton}
+        >
+          <RiArrowLeftSLine />
+        </Button>
+      </div>
+      <div className={styles.formArea}>
+        <CreateRequestedGameForm
+          initialState={initialState}
+          onSubmit={handleSubmit}
+        />
+      </div>
       <LoadingDialog open={isPending} />
     </div>
   );

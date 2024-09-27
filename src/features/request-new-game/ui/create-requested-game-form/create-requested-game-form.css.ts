@@ -5,7 +5,6 @@ import { theme } from '@/shared/styles/theme.css';
 
 export const formInner = style({
   width: '100%',
-  maxWidth: '480px',
   margin: '0 auto',
 });
 
@@ -50,4 +49,8 @@ export const noticeBox = style([
 export const noticeLink = style({
   color: theme.colors.blue[600],
   textDecoration: 'underline',
+});
+
+export const noticeText = style({
+  wordBreak: 'break-word',
 });
