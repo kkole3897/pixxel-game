@@ -17,5 +17,6 @@ export {
   useGetExistedGameQuery,
   useGetExistedRequestQuery,
   useCreateRequestedGameMutation,
+  requestNewGameQueryKeys,
 } from './queries';
 export { type CreateRequestedGameData } from './model';

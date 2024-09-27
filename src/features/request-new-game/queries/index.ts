@@ -3,3 +3,4 @@ export { useGetExistedRequestQuery } from './use-get-existed-request-query';
 export { useCreateRequestedGameMutation } from './use-create-requested-game-mutation';
 export { useCheckExistedGameMutation } from './use-check-existed-game-mutation';
 export { useCheckExistedRequestMutation } from './use-check-existed-request-mutation';
+export { requestNewGameQueryKeys } from './query-keys';

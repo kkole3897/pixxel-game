@@ -1,11 +1,13 @@
 'use client';
 
 import { RiArrowLeftSLine } from '@remixicon/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   CreateRequestedGameForm,
   useGeneratedStoreIdentifierStore,
   useCreateRequestedGameMutation,
+  requestNewGameQueryKeys,
   type CreateRquestedGameFormProps,
 } from '@/features/request-new-game';
 import { Button } from '@/shared/ui/button';
@@ -20,6 +22,8 @@ export default function CreateRequestStep({
   onNext,
   onPrev,
 }: CreateRequestStepProps) {
+  const queryClient = useQueryClient();
+
   const storeIdentifier = useGeneratedStoreIdentifierStore(
     (state) => state.storeIdentifier
   );
@@ -38,6 +42,10 @@ export default function CreateRequestStep({
     data
   ) => {
     await mutateAsync(data);
+    await queryClient.invalidateQueries({
+      queryKey:
+        requestNewGameQueryKeys.getExistedRequest(storeIdentifier).queryKey,
+    });
     onNext?.();
   };
 
