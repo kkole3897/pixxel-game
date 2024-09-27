@@ -11,7 +11,21 @@ import {
 import { convertUrlToStoreIdentifier } from './convert-url-to-store-identifier';
 import { useGeneratedStoreIdentifierStore } from './use-generated-store-identifier-store';
 
-export function useGenerateStoreIdentifierFormState() {
+export const SUCCESS_TYPE = {
+  existedGame: 0,
+  existedRequest: 1,
+  requestAvailable: 2,
+};
+
+type SuccessType = (typeof SUCCESS_TYPE)[keyof typeof SUCCESS_TYPE];
+
+export type UseGenerateStoreIdentifierFormStateOptions = {
+  onSuccess?: (successType: SuccessType) => void;
+};
+
+export function useGenerateStoreIdentifierFormState({
+  onSuccess,
+}: UseGenerateStoreIdentifierFormStateOptions = {}) {
   const [url, setUrl] = useState('');
   const [urlError, setUrlError] = useState<UnsupportedStoreUrlError | null>(
     null
@@ -41,8 +55,16 @@ export function useGenerateStoreIdentifierFormState() {
 
       const existedGame = await mutateCheckExistedGameAsync(data);
 
-      if (!existedGame) {
-        await mutateCheckExistedRequestAsync(data);
+      if (existedGame) {
+        onSuccess?.(SUCCESS_TYPE.existedGame);
+      } else {
+        const existedRequest = await mutateCheckExistedRequestAsync(data);
+
+        if (existedRequest) {
+          onSuccess?.(SUCCESS_TYPE.existedRequest);
+        } else {
+          onSuccess?.(SUCCESS_TYPE.requestAvailable);
+        }
       }
 
       setStoreIdentifier(data);
