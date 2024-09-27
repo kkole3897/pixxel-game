@@ -4,6 +4,7 @@ export {
   ExistedRequestCard,
   CreateRequestedGameForm,
   type GenerateStoreIdentifierFormProps,
+  type CreateRquestedGameFormProps,
 } from './ui';
 export {
   GeneratedStoreIdentifierStoreProvider,
@@ -17,3 +18,4 @@ export {
   useGetExistedRequestQuery,
   useCreateRequestedGameMutation,
 } from './queries';
+export { type CreateRequestedGameData } from './model';

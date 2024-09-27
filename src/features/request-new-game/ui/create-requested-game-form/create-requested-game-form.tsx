@@ -11,11 +11,10 @@ import { Button } from '@/shared/ui/button';
 import { DefaultLink } from '@/shared/ui/default-link';
 import * as styles from './create-requested-game-form.css';
 
-type CreateRquestedGameFormProps = {
+export type CreateRquestedGameFormProps = {
   className?: string;
   initialState: CreateRequestedGameFormState;
   onSubmit?: (data: CreateRequestedGameFormState) => void;
-  onChange?: (data: CreateRequestedGameFormState) => void;
 };
 
 export default function CreateRequestedGameForm({
@@ -28,7 +27,11 @@ export default function CreateRequestedGameForm({
   const url = revertStoreIdentifierToUrl(formState);
 
   return (
-    <form className={className} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={className}
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+    >
       <div className={styles.formInner}>
         <div className={styles.field}>
           <label htmlFor="store" className={styles.label}>

@@ -1,1 +1,4 @@
-export { default as CreateRequestedGameForm } from './create-requested-game-form';
+export {
+  default as CreateRequestedGameForm,
+  type CreateRquestedGameFormProps,
+} from './create-requested-game-form';

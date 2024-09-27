@@ -8,14 +8,20 @@ import {
 } from '@/features/request-new-game';
 import * as styles from './generate-identifier-step.css';
 
-export default function GenerateIdentifierStep() {
+type GenerateIdentifierStepProps = {
+  onNext?: () => void;
+};
+
+export default function GenerateIdentifierStep({
+  onNext,
+}: GenerateIdentifierStepProps) {
   const handleSuccess: GenerateStoreIdentifierFormProps['onSuccess'] = (
     successType
   ) => {
     if (
       successType === GENERATE_STORE_IDENTIFIER_SUCCESS_TYPE.requestAvailable
     ) {
-      // TODO: 다음 스텝으로 이동
+      onNext?.();
       return;
     }
   };
