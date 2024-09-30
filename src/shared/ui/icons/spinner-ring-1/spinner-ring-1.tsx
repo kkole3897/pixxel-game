@@ -3,11 +3,11 @@ import { CommonSvgIconProps } from '../types';
 
 type SpinnerRing1Props = CommonSvgIconProps & {
   /**
-   * @default 24
+   * @defaultValue 24
    */
   size?: number;
   /**
-   * @default `currentColor`
+   * @defaultValue `currentColor`
    */
   color?: string;
 };

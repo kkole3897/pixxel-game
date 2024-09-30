@@ -4,12 +4,12 @@ import { CommonSvgIconProps } from '../types';
 
 interface SpeechBubbleProps extends CommonSvgIconProps {
   /**
-   * @default '#000000'
+   * @defaultValue '#000000'
    */
   color?: string;
 
   /**
-   * @default 24
+   * @defaultValue 24
    */
   size?: string | number;
   className?: string;

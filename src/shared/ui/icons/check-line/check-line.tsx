@@ -4,12 +4,12 @@ import { CommonSvgIconProps } from '../types';
 
 interface CheckLineProps extends CommonSvgIconProps {
   /**
-   * @default 'currentColor'
+   * @defaultValue 'currentColor'
    */
   color?: string;
 
   /**
-   * @default 24
+   * @defaultValue 24
    */
   size?: string | number;
 }

@@ -11,7 +11,7 @@ export const truncate = (
 
 type ClampLineOptions = {
   /**
-   * @default 'ellipsis'
+   * @defaultValue 'ellipsis'
    */
   textOverflow?: StyleRule['textOverflow'];
 };

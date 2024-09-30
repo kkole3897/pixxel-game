@@ -16,7 +16,7 @@ export const overlay = style({
   position: 'fixed',
   inset: 0,
   backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  zIndex: 1,
+  zIndex: 20,
   animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
 });
 
@@ -40,7 +40,7 @@ export const content = style({
   maxWidth: '280px',
   borderRadius: '20px',
   backgroundColor: '#fff',
-  zIndex: 2,
+  zIndex: 21,
   boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.10)',
   animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
 

@@ -4,7 +4,7 @@ import { CommonSvgIconProps } from '../types';
 
 interface SteamFillBaseProps extends CommonSvgIconProps {
   /**
-   * @default 24
+   * @defaultValue 24
    */
   size?: string | number;
 }

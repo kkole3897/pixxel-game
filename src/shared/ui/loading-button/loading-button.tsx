@@ -6,7 +6,7 @@ import { SpinnerRing1 } from '@/shared/ui/icons';
 type LoadingButtonProps = ButtonProps & {
   isLoading?: boolean;
   /**
-   * @default SpinnerRing1
+   * @defaultValue SpinnerRing1
    */
   spinner?: React.ReactNode;
 };

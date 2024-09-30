@@ -6,19 +6,19 @@ export type GameDrmResponse = 'steam' | 'epic';
 export type GetGamesOptions = {
   ids?: number[];
   /**
-   * @default 0
+   * @defaultValue 0
    */
   from?: number;
   /**
-   * @default 99
+   * @defaultValue 99
    */
   to?: number;
   /**
-   * @default 'effective_price_updated_at
+   * @defaultValue 'effective_price_updated_at
    */
   sortBy?: 'effective_price_updated_at';
   /**
-   * @default false
+   * @defaultValue false
    */
   ascending?: boolean;
 };
@@ -144,7 +144,7 @@ export type GetPriceHistoryResponse = Pick<GameResponse, 'id' | 'publicId'> & {
 
 type GetLowestPriceRanksOptions = {
   /**
-   * @default 2
+   * @defaultValue 2
    */
   limit?: number;
 };
