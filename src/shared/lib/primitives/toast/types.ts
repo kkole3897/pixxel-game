@@ -22,6 +22,6 @@ export type ToastElement = React.ReactNode;
 export type ToastData = {
   id: string;
   el: ToastElement;
-  toasterId: string;
   options: ToastOptions;
+  placement: Placement;
 };
