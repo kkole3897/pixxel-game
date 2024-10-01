@@ -14,6 +14,7 @@ type SwipeDirection = 'left' | 'right' | 'up' | 'down';
 export type ToastGroupContext = {
   id: string;
   placement: Placement;
+  limit: number | null;
 };
 
 export type ToastGroupOptions = Omit<ToastGroupContext, 'id'>;

@@ -26,6 +26,7 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
       className,
       hotkey = ['F8'],
       label = setDefaultLabel(placement, hotkey),
+      limit = null,
       ...props
     },
     forwardedRef
@@ -59,6 +60,7 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
       addGroup(placement, {
         id: idRef.current,
         placement,
+        limit,
       });
       isMounted.current = true;
     }, []);
