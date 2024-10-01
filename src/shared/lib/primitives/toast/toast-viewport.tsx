@@ -3,17 +3,17 @@
 import { forwardRef, useEffect, useRef } from 'react';
 import { nanoid } from 'nanoid';
 
-import type { Placement } from './types';
+import type { Placement, ToastGroupOptions } from './types';
 import { useToastStore } from './use-toast-store';
 
 type ToastViewportProps = Omit<
   React.ComponentPropsWithoutRef<'div'>,
   'role' | 'children' | 'aria-label'
-> & {
-  placement: Placement;
-  hotkey?: string[];
-  label?: string;
-};
+> &
+  ToastGroupOptions & {
+    hotkey?: string[];
+    label?: string;
+  };
 
 function setDefaultLabel(placement: Placement, hotkey: string[]) {
   return `${placement} Notifications (${hotkey.join(' + ')})`;
@@ -32,35 +32,34 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
   ) => {
     const idRef = useRef(nanoid());
 
-    const [
-      addPlacement,
-      removePlacement,
-      hasPlacement,
-      getToastsByPlacementId,
-    ] = useToastStore((state) => [
-      state.addPlacement,
-      state.removePlacement,
-      state.hasPlacement,
-      state.getToastsByPlacementId,
-    ]);
+    const [addGroup, removeGroup, isPlacementAssigned, getToastsByGroupId] =
+      useToastStore((state) => [
+        state.addGroup,
+        state.removeGroup,
+        state.isPlacementAssigned,
+        state.getToastsByGroupId,
+      ]);
 
     const isMounted = useRef(false);
-    const toasts = getToastsByPlacementId(idRef.current);
+    const toasts = getToastsByGroupId(idRef.current);
 
     useEffect(() => {
       if (isMounted.current) {
         return () => {
-          removePlacement(placement);
+          removeGroup(placement);
         };
       }
 
-      if (hasPlacement(placement)) {
+      if (isPlacementAssigned(placement)) {
         throw new Error(
           `ToastViewport with placement "${placement}" already exists`
         );
       }
 
-      addPlacement(placement, idRef.current);
+      addGroup(placement, {
+        id: idRef.current,
+        placement,
+      });
       isMounted.current = true;
     }, []);
 
@@ -73,7 +72,7 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
         aria-label={label}
       >
         {toasts.map((toast) => (
-          <div key={toast.id}>{toast.el}</div>
+          <div key={toast.id}>{toast.id}</div>
         ))}
       </div>
     );

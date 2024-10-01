@@ -1,27 +1,27 @@
 import { createStore } from 'zustand/vanilla';
 import { devtools } from 'zustand/middleware';
 
-import { ToastData, Placement } from './types';
+import { ToastData, Placement, ToastGroupContext } from './types';
 
 export type ToastState = {
   toasts: Map<string, ToastData>;
-  placements: Map<Placement, string>;
+  groups: Map<Placement, ToastGroupContext>;
 };
 
 export type ToastActions = {
   addToast: (toast: ToastData) => void;
   removeToast: (id: string) => void;
-  addPlacement: (placement: Placement, viewportId: string) => void;
-  removePlacement: (placement: Placement) => void;
-  hasPlacement: (placement: Placement) => boolean;
-  getToastsByPlacementId: (id: string) => ToastData[];
+  addGroup: (placement: Placement, groupContext: ToastGroupContext) => void;
+  removeGroup: (placement: Placement) => void;
+  isPlacementAssigned: (placement: Placement) => boolean;
+  getToastsByGroupId: (id: string) => ToastData[];
 };
 
 export type ToastStore = ToastState & ToastActions;
 
 export const defaultInitState: ToastState = {
   toasts: new Map(),
-  placements: new Map(),
+  groups: new Map(),
 };
 
 export const createToastStore = (initState: ToastState = defaultInitState) => {
@@ -42,7 +42,7 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
               updatedToasts.delete(toast.id);
               return { ...state, toasts: updatedToasts };
             });
-          }, toast.options.duration ?? 5000);
+          }, toast.duration ?? 5000);
         },
         removeToast: (id) => {
           set((state) => {
@@ -57,40 +57,40 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
             return { ...state, toasts: updatedToasts };
           });
         },
-        addPlacement: (placement, viewportId) => {
+        addGroup: (placement, groupContext) => {
           set((state) => {
-            const hasPlacement = state.placements.has(placement);
+            const isPlacementAssigned = state.groups.has(placement);
 
-            if (hasPlacement) {
+            if (isPlacementAssigned) {
               return state;
             }
 
-            const updatedPlacements = new Map(state.placements);
-            updatedPlacements.set(placement, viewportId);
-            return { ...state, placements: updatedPlacements };
+            const updatedPlacements = new Map(state.groups);
+            updatedPlacements.set(placement, groupContext);
+            return { ...state, groups: updatedPlacements };
           });
         },
-        removePlacement: (placement) => {
+        removeGroup: (placement) => {
           set((state) => {
-            const hasPlacement = state.placements.has(placement);
+            const isPlacementAssigned = state.groups.has(placement);
 
-            if (!hasPlacement) {
+            if (!isPlacementAssigned) {
               return state;
             }
 
-            const updatedPlacements = new Map(state.placements);
+            const updatedPlacements = new Map(state.groups);
             updatedPlacements.delete(placement);
-            return { ...state, placements: updatedPlacements };
+            return { ...state, groups: updatedPlacements };
           });
         },
-        hasPlacement: (placement) => {
-          const { placements } = get();
-          return placements.has(placement);
+        isPlacementAssigned: (placement) => {
+          const { groups } = get();
+          return groups.has(placement);
         },
-        getToastsByPlacementId: (id) => {
-          const { placements } = get();
-          const placement = Array.from(placements.entries()).find(
-            ([, value]) => value === id
+        getToastsByGroupId: (id: string) => {
+          const { groups } = get();
+          const placement = Array.from(groups.entries()).find(
+            ([, value]) => value.id === id
           );
 
           if (!placement) {
