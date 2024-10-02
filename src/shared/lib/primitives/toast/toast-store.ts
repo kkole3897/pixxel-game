@@ -19,6 +19,8 @@ export type ToastActions = {
   removeGroup: (placement: Placement) => void;
   isPlacementAssigned: (placement: Placement) => boolean;
   getToastsByGroupId: (id: string) => ToastData[];
+  getToastsByToasterId: (id: string) => ToastData[];
+  getRootNodeByPlacement: (placement: Placement) => HTMLElement | null;
 };
 
 export type ToastStore = ToastState & ToastActions;
@@ -39,23 +41,24 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
           const id = nanoid();
 
           set((state) => {
-            const updatedToasts = new Map(state.toasts);
-            updatedToasts.set(id, { ...toast, id, createdAt });
-            return { ...state, toasts: updatedToasts };
-          });
+            const updatedToasts = new Map(state.toasts).set(id, {
+              ...toast,
+              id,
+              createdAt,
+            });
 
-          if (toast.duration === null) {
-            return;
-          }
+            let timers = state.timers;
 
-          const timer = setTimeout(() => {
-            get().removeToast(id);
-          }, toast.duration);
+            if (toast.duration !== null) {
+              const timer = setTimeout(() => {
+                get().removeToast(id);
+              }, toast.duration);
 
-          set((state) => {
-            const updatedTimers = new Map(state.timers);
-            updatedTimers.set(id, timer);
-            return { ...state, timers: updatedTimers };
+              const updatedTimers = new Map(timers).set(id, timer);
+              timers = updatedTimers;
+            }
+
+            return { toasts: updatedToasts, timers };
           });
         },
         pauseToast: (id) => {
@@ -80,7 +83,7 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
 
             const updatedTimers = new Map(state.timers);
             updatedTimers.delete(id);
-            return { ...state, timers: updatedTimers };
+            return { timers: updatedTimers };
           });
         },
         resumeToast: (id) => {
@@ -113,7 +116,7 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
               toasts.set(id, { ...toast, createdAt });
             }
 
-            return { ...state, timers: updatedTimers, toasts };
+            return { timers: updatedTimers, toasts };
           });
         },
         removeToast: (id) => {
@@ -133,10 +136,10 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
               clearTimeout(timer);
               const updatedTimers = new Map(state.timers);
               updatedTimers.delete(id);
-              return { ...state, toasts: updatedToasts, timers: updatedTimers };
+              return { toasts: updatedToasts, timers: updatedTimers };
             }
 
-            return { ...state, toasts: updatedToasts };
+            return { toasts: updatedToasts };
           });
         },
         addGroup: (placement, groupContext) => {
@@ -149,7 +152,7 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
 
             const updatedPlacements = new Map(state.groups);
             updatedPlacements.set(placement, groupContext);
-            return { ...state, groups: updatedPlacements };
+            return { groups: updatedPlacements };
           });
         },
         removeGroup: (placement) => {
@@ -162,7 +165,7 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
 
             const updatedPlacements = new Map(state.groups);
             updatedPlacements.delete(placement);
-            return { ...state, groups: updatedPlacements };
+            return { groups: updatedPlacements };
           });
         },
         isPlacementAssigned: (placement) => {
@@ -185,6 +188,24 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
           return Array.from(toasts.values()).filter(
             (toast) => toast.placement === placementKey
           );
+        },
+        getToastsByToasterId: (id: string) => {
+          const { toasts } = get();
+          const filteredToasts = Array.from(toasts.values()).filter(
+            (toast) => toast.toasterId === id
+          );
+
+          return filteredToasts;
+        },
+        getRootNodeByPlacement: (placement) => {
+          const { groups } = get();
+          const group = groups.get(placement);
+
+          if (!group) {
+            return null;
+          }
+
+          return group.node;
         },
       }),
       { name: 'ToastStore' }

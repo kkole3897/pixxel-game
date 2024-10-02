@@ -15,6 +15,7 @@ export type ToastGroupContext = {
   id: string;
   placement: Placement;
   limit: number | null;
+  node: HTMLElement | null;
 };
 
 export type ToastGroupOptions = SetOptional<
@@ -46,10 +47,11 @@ export type ToastContext = {
   pauseOnFocusLoss: boolean;
   swipeDirections: SwipeDirection[];
   createdAt: number;
+  toasterId: string;
 };
 
 export type ToastOptions = Omit<ToastContext, 'createdAt' | 'id'>;
 
 export type ToastElement = React.ReactNode;
 
-export type ToastData = ToastContext & {};
+export type ToastData<T = any> = ToastContext & Partial<T>;

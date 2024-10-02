@@ -1,8 +1,11 @@
+'use client';
+
 /* eslint-disable react-hooks/rules-of-hooks */
 import { nanoid } from 'nanoid';
+import { useRef } from 'react';
 
 import { useToastStore } from './use-toast-store';
-import type { ToasterOptions, ToastOptions } from './types';
+import type { ToasterOptions, ToastOptions, Placement } from './types';
 import {
   DEFAULT_DURATION,
   DEFAULT_REMOVE_DEPLAY,
@@ -11,7 +14,15 @@ import {
   DEFAULT_SWIPER_DIRECTION,
 } from './constants';
 
+export type CreateToasterReturn = {
+  id: string;
+  placement: Placement;
+  create: (options?: Partial<ToastOptions>) => void;
+};
+
 export function createToaster(options: ToasterOptions) {
+  const toasterId = useRef(nanoid());
+
   const addToast = useToastStore((store) => store.addToast);
   const {
     placement: sharedPlacement,
@@ -55,10 +66,14 @@ export function createToaster(options: ToasterOptions) {
 
     addToast({
       ...mergedOptions,
+      swipeDirections: ['right'],
+      toasterId: toasterId.current,
     });
   }
 
   return {
+    id: toasterId.current,
+    placement: sharedPlacement,
     create,
   };
 }

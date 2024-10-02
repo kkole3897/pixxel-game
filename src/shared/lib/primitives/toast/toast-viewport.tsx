@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 
 import type { Placement, ToastGroupOptions } from './types';
 import { useToastStore } from './use-toast-store';
+import { useComposedRefs } from '@/shared/lib/react';
 
 type ToastViewportProps = Omit<
   React.ComponentPropsWithoutRef<'div'>,
@@ -16,7 +17,7 @@ type ToastViewportProps = Omit<
   };
 
 function setDefaultLabel(placement: Placement, hotkey: string[]) {
-  return `${placement} Notifications (${hotkey.join(' + ')})`;
+  return `${placement} Notifications (${hotkey.join('+')})`;
 }
 
 export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
@@ -31,8 +32,10 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
     forwardedRef
   ) => {
     const idRef = useRef(nanoid());
+    const nodeRef = useRef<HTMLDivElement | null>(null);
+    const refs = useComposedRefs(forwardedRef, nodeRef);
 
-    const [addGroup, removeGroup, isPlacementAssigned, getToastsByGroupId] =
+    const [addGroup, removeGroup, isPlacementAssigned] =
       useToastStore((state) => [
         state.addGroup,
         state.removeGroup,
@@ -41,7 +44,6 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
       ]);
 
     const isMounted = useRef(false);
-    const toasts = getToastsByGroupId(idRef.current);
 
     useEffect(() => {
       if (isMounted.current) {
@@ -60,6 +62,7 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
         id: idRef.current,
         placement,
         limit,
+        node: nodeRef.current,
       });
       isMounted.current = true;
     }, []);
@@ -67,14 +70,11 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
     return (
       <div
         {...props}
-        ref={forwardedRef}
+        ref={refs}
         data-placement={placement}
         role="region"
         aria-label={label}
       >
-        {toasts.map((toast) => (
-          <div key={toast.id}>{toast.id}</div>
-        ))}
       </div>
     );
   }
