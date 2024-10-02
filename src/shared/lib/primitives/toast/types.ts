@@ -1,4 +1,4 @@
-import type { SetRequired } from 'type-fest';
+import type { SetOptional, SetRequired } from 'type-fest';
 
 export type Placement =
   | 'top'
@@ -17,7 +17,10 @@ export type ToastGroupContext = {
   limit: number | null;
 };
 
-export type ToastGroupOptions = Omit<ToastGroupContext, 'id'>;
+export type ToastGroupOptions = SetOptional<
+  Omit<ToastGroupContext, 'id'>,
+  'limit'
+>;
 
 export type ToasterContext = {
   id: string;
@@ -42,9 +45,10 @@ export type ToastContext = {
   pauseOnHover: boolean;
   pauseOnFocusLoss: boolean;
   swipeDirections: SwipeDirection[];
+  createdAt: number;
 };
 
-export type ToastOptions = Partial<Omit<ToastContext, 'id'>>;
+export type ToastOptions = Omit<ToastContext, 'createdAt' | 'id'>;
 
 export type ToastElement = React.ReactNode;
 

@@ -22,7 +22,7 @@ export function createToaster(options: ToasterOptions) {
     swipeDirections: sharedSwipeDirections = [DEFAULT_SWIPER_DIRECTION],
   } = options;
 
-  function create(options: ToastOptions = {}) {
+  function create(options: Partial<ToastOptions> = {}) {
     const placement =
       options.placement !== undefined ? options.placement : sharedPlacement;
     const duration =
@@ -55,7 +55,6 @@ export function createToaster(options: ToasterOptions) {
 
     addToast({
       ...mergedOptions,
-      id: nanoid(),
     });
   }
 

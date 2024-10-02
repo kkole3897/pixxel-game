@@ -23,7 +23,6 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
   (
     {
       placement,
-      className,
       hotkey = ['F8'],
       label = setDefaultLabel(placement, hotkey),
       limit = null,
@@ -67,9 +66,9 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
 
     return (
       <div
+        {...props}
         ref={forwardedRef}
         data-placement={placement}
-        {...props}
         role="region"
         aria-label={label}
       >
