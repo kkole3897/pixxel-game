@@ -19,7 +19,7 @@ export type ToastGroupContext = {
 };
 
 export type ToastGroupOptions = SetOptional<
-  Omit<ToastGroupContext, 'id'>,
+  Omit<ToastGroupContext, 'id' | 'node'>,
   'limit'
 >;
 

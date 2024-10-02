@@ -16,16 +16,17 @@ export const Toaster = ({ toaster, children }: ToasterProps) => {
     const [getToastsByToasterId, getRootNodeByPlacement] = useToastStore((store) => [store.getToastsByToasterId, store.getRootNodeByPlacement]);
 
     const toasts = getToastsByToasterId(toaster.id);
-    const rootNode = getRootNodeByPlacement(toaster.placement);
 
     return (
-      <Portal container={rootNode}>
+      <>
         {toasts.map((toast) => (
-          <ToastActor key={toast.id} value={toast}>
-            {(context) => children(context)}
-          </ToastActor>
+          <Portal key={toast.id} container={getRootNodeByPlacement(toast.placement)}>
+            <ToastActor value={toast}>
+              {(context) => children(context)}
+            </ToastActor>
+          </Portal>
         ))}
-      </Portal>
+      </>
     );
   }
 
