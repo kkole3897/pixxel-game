@@ -33,9 +33,8 @@ export function createToaster(options: ToasterOptions) {
     swipeDirections: sharedSwipeDirections = [DEFAULT_SWIPER_DIRECTION],
   } = options;
 
-  function create(options: Partial<ToastOptions> = {}) {
-    const placement =
-      options.placement !== undefined ? options.placement : sharedPlacement;
+  function create(options: Partial<Omit<ToastOptions, 'placement'>> = {}) {
+    const placement = sharedPlacement;
     const duration =
       options.duration !== undefined ? options.duration : sharedDuration;
     const removeDelay =

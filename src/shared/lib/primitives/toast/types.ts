@@ -48,9 +48,10 @@ export type ToastContext = {
   swipeDirections: SwipeDirection[];
   createdAt: number;
   toasterId: string;
+  isPaused: boolean;
 };
 
-export type ToastOptions = Omit<ToastContext, 'createdAt' | 'id'>;
+export type ToastOptions = Omit<ToastContext, 'createdAt' | 'id' | 'isPaused'>;
 
 export type ToastElement = React.ReactNode;
 

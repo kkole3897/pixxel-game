@@ -40,7 +40,6 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
         state.addGroup,
         state.removeGroup,
         state.isPlacementAssigned,
-        state.getToastsByGroupId,
       ]);
 
     const isMounted = useRef(false);

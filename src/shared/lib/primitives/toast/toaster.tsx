@@ -13,20 +13,30 @@ type ToasterBaseProps = {
 type ToasterProps = ToasterBaseProps;
 
 export const Toaster = ({ toaster, children }: ToasterProps) => {
-    const [getToastsByToasterId, getRootNodeByPlacement] = useToastStore((store) => [store.getToastsByToasterId, store.getRootNodeByPlacement]);
+    const [getToastsByToasterId, getRootNodeByPlacement, pauseToastsByPlacement, resumeToasts] = useToastStore((store) => [store.getToastsByToasterId, store.getRootNodeByPlacement, store.pauseToastsByPlacement, store.resumeToasts]);
 
     const toasts = getToastsByToasterId(toaster.id);
 
+    const rootNode = getRootNodeByPlacement(toaster.placement);
+
+    const handleMouseEnter = () => {
+      pauseToastsByPlacement(toaster.placement);
+    }
+
+    const handleMouseLeave = () => {
+      resumeToasts();
+    }
+
     return (
-      <>
-        {toasts.map((toast) => (
-          <Portal key={toast.id} container={getRootNodeByPlacement(toast.placement)}>
-            <ToastActor value={toast}>
+      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <Portal container={rootNode}>
+          {toasts.map((toast) => (
+            <ToastActor value={toast} key={toast.id}>
               {(context) => children(context)}
             </ToastActor>
-          </Portal>
-        ))}
-      </>
+          ))}
+        </Portal>
+      </div>
     );
   }
 
@@ -37,8 +47,8 @@ type ToastActorProps = {
 
 function ToastActor({ children, value }: ToastActorProps) {
   return (
-    <div>
+    <>
       {children(value)}
-    </div>
+    </>
   )
 }
