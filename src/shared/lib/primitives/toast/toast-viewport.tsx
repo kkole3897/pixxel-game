@@ -11,36 +11,27 @@ type ToastViewportProps = Omit<
   React.ComponentPropsWithoutRef<'div'>,
   'role' | 'children' | 'aria-label'
 > &
+  // TODO: 키보드 접근성 지원 hotkey 추가
   ToastGroupOptions & {
-    hotkey?: string[];
     label?: string;
   };
 
-function setDefaultLabel(placement: Placement, hotkey: string[]) {
-  return `${placement} Notifications (${hotkey.join('+')})`;
+function setDefaultLabel(placement: Placement) {
+  return `${placement} Notifications`;
 }
 
 export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
   (
-    {
-      placement,
-      hotkey = ['F8'],
-      label = setDefaultLabel(placement, hotkey),
-      limit = null,
-      ...props
-    },
+    { placement, label = setDefaultLabel(placement), ...props },
     forwardedRef
   ) => {
     const idRef = useRef(nanoid());
     const nodeRef = useRef<HTMLDivElement | null>(null);
     const refs = useComposedRefs(forwardedRef, nodeRef);
 
-    const [addGroup, removeGroup, isPlacementAssigned] =
-      useToastStore((state) => [
-        state.addGroup,
-        state.removeGroup,
-        state.isPlacementAssigned,
-      ]);
+    const [addGroup, removeGroup, isPlacementAssigned] = useToastStore(
+      (state) => [state.addGroup, state.removeGroup, state.isPlacementAssigned]
+    );
 
     const isMounted = useRef(false);
 
@@ -60,7 +51,6 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
       addGroup(placement, {
         id: idRef.current,
         placement,
-        limit,
         node: nodeRef.current,
       });
       isMounted.current = true;
@@ -73,8 +63,7 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
         data-placement={placement}
         role="region"
         aria-label={label}
-      >
-      </div>
+      ></div>
     );
   }
 );

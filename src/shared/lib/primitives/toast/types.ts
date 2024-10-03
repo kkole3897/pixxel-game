@@ -11,17 +11,14 @@ export type Placement =
 
 type SwipeDirection = 'left' | 'right' | 'up' | 'down';
 
+// TODO: 최대 토스트 갯수 추가 (limit)
 export type ToastGroupContext = {
   id: string;
   placement: Placement;
-  limit: number | null;
   node: HTMLElement | null;
 };
 
-export type ToastGroupOptions = SetOptional<
-  Omit<ToastGroupContext, 'id' | 'node'>,
-  'limit'
->;
+export type ToastGroupOptions = Omit<ToastGroupContext, 'id' | 'node'>;
 
 export type ToasterContext = {
   id: string;
