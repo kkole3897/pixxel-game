@@ -29,7 +29,8 @@ export type ToasterContext = {
   duration: number | null;
   removeDelay: number;
   pauseOnHover: boolean;
-  pauseOnFocusLoss: boolean;
+  pauseOnFocus: boolean;
+  pauseOnPageIdle: boolean;
   swipeDirections: SwipeDirection[];
 };
 
@@ -50,7 +51,8 @@ export type ToastContext = {
   duration: number | null;
   removeDelay: number;
   pauseOnHover: boolean;
-  pauseOnFocusLoss: boolean;
+  pauseOnFocus: boolean;
+  pauseOnPageIdle: boolean;
   swipeDirections: SwipeDirection[];
   createdAt: number;
   toasterId: string;

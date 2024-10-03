@@ -76,7 +76,6 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
           const { toasts } = get();
 
           const toast = toasts.get(id);
-          console.log(toast);
 
           if (!toast || toast.status !== 'visible') {
             return;

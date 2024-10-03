@@ -10,8 +10,9 @@ import {
   DEFAULT_DURATION,
   DEFAULT_REMOVE_DEPLAY,
   DEFAULT_PAUSE_ON_HOVER,
-  DEFAULT_PAUSE_ON_FOCUS_LOSS,
+  DEFAULT_PAUSE_ON_FOCUS,
   DEFAULT_SWIPER_DIRECTION,
+  DEFAULT_PAUSE_ON_PAGE_IDLE,
 } from './constants';
 
 export type CreateToasterReturn = {
@@ -29,8 +30,9 @@ export function createToaster(options: ToasterOptions) {
     duration: sharedDuration = DEFAULT_DURATION,
     removeDelay: sharedRemoveDelay = DEFAULT_REMOVE_DEPLAY,
     pauseOnHover: sharedPauseOnHover = DEFAULT_PAUSE_ON_HOVER,
-    pauseOnFocusLoss: sharedPauseOnFocusLoss = DEFAULT_PAUSE_ON_FOCUS_LOSS,
+    pauseOnFocus: sharedPauseOnFocus = DEFAULT_PAUSE_ON_FOCUS,
     swipeDirections: sharedSwipeDirections = [DEFAULT_SWIPER_DIRECTION],
+    pauseOnPageIdle: sharedPauseOnPageIdle = DEFAULT_PAUSE_ON_PAGE_IDLE,
   } = options;
 
   function create(options: Partial<Omit<ToastOptions, 'placement'>> = {}) {
@@ -45,22 +47,27 @@ export function createToaster(options: ToasterOptions) {
       options.pauseOnHover !== undefined
         ? options.pauseOnHover
         : sharedPauseOnHover;
-    const pauseOnFocusLoss =
-      options.pauseOnFocusLoss !== undefined
-        ? options.pauseOnFocusLoss
-        : sharedPauseOnFocusLoss;
+    const pauseOnFocus =
+      options.pauseOnFocus !== undefined
+        ? options.pauseOnFocus
+        : sharedPauseOnFocus;
     const swipeDirections =
       options.swipeDirections !== undefined
         ? options.swipeDirections
         : sharedSwipeDirections;
+    const pauseOnPageIdle =
+      options.pauseOnPageIdle !== undefined
+        ? options.pauseOnPageIdle
+        : sharedPauseOnPageIdle;
 
     const mergedOptions = {
       placement,
       duration,
       removeDelay,
       pauseOnHover,
-      pauseOnFocusLoss,
+      pauseOnFocus,
       swipeDirections,
+      pauseOnPageIdle,
     };
 
     createToast({

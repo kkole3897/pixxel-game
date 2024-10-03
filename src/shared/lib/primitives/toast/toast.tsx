@@ -32,7 +32,10 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
       }
 
       setIsFocused(true);
-      pauseToast(context.id);
+
+      if (context.pauseOnFocus) {
+        pauseToast(context.id);
+      }
     };
 
     const onFocus: React.FocusEventHandler<HTMLDivElement> = (event) => {
@@ -50,7 +53,7 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
 
       setIsFocused(false);
 
-      if (!isHovered) {
+      if (!isHovered && context.pauseOnFocus) {
         resumeToast(context.id);
       }
     };
@@ -90,7 +93,7 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
 
       setIsHovered(false);
 
-      if (!isFocused) {
+      if (!isFocused && context.pauseOnHover) {
         resumeToast(context.id);
       }
     };

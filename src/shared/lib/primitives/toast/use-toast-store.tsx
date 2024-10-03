@@ -1,6 +1,12 @@
 'use client';
 
-import { type ReactNode, createContext, useRef, useContext } from 'react';
+import {
+  type ReactNode,
+  createContext,
+  useRef,
+  useContext,
+  useLayoutEffect,
+} from 'react';
 import { useStore } from 'zustand';
 
 import { type ToastStore, createToastStore } from './toast-store';
@@ -24,6 +30,7 @@ export const ToastStoreProvider = ({ children }: ToastStoreProviderProps) => {
   return (
     <ToastStoreContext.Provider value={storeRef.current}>
       {children}
+      <TrackDocumentVisibility />
     </ToastStoreContext.Provider>
   );
 };
@@ -37,3 +44,41 @@ export const useToastStore = <T,>(selector: (store: ToastStore) => T): T => {
 
   return useStore(toastStoreContext, selector);
 };
+
+function TrackDocumentVisibility() {
+  const [toasts, pauseToast, resumeToast] = useToastStore((store) => [
+    store.toasts,
+    store.pauseToast,
+    store.resumeToast,
+  ]);
+
+  useLayoutEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        toasts.forEach((toast) => {
+          if (!toast.pauseOnPageIdle) {
+            return;
+          }
+
+          pauseToast(toast.id);
+        });
+      } else {
+        toasts.forEach((toast) => {
+          if (!toast.pauseOnPageIdle) {
+            return;
+          }
+
+          resumeToast(toast.id);
+        });
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  });
+
+  return null;
+}
