@@ -2,19 +2,24 @@ import { createStore } from 'zustand/vanilla';
 import { devtools } from 'zustand/middleware';
 import { nanoid } from 'nanoid';
 
-import { ToastData, Placement, ToastGroupContext, ToastOptions } from './types';
+import {
+  ToastData,
+  Placement,
+  ToastGroupContext,
+  ToastOptions,
+  ToastStatus,
+} from './types';
 
 export type ToastState = {
   toasts: Map<string, ToastData>;
   groups: Map<Placement, ToastGroupContext>;
-  timers: Map<string, NodeJS.Timeout>;
 };
 
 export type ToastActions = {
-  addToast: (toast: ToastOptions) => void;
+  createToast: (toast: ToastOptions) => void;
   pauseToast: (id: string) => void;
   resumeToast: (id: string) => void;
-  removeToast: (id: string) => void;
+  destroyToast: (id: string) => void;
   addGroup: (placement: Placement, groupContext: ToastGroupContext) => void;
   removeGroup: (placement: Placement) => void;
   isPlacementAssigned: (placement: Placement) => boolean;
@@ -24,6 +29,7 @@ export type ToastActions = {
   pauseToastsByGroupId: (id: string) => void;
   resumeToasts: () => void;
   pauseToastsByPlacement: (placement: Placement) => void;
+  setToastDestroying: (id: string) => void;
 };
 
 export type ToastStore = ToastState & ToastActions;
@@ -31,7 +37,6 @@ export type ToastStore = ToastState & ToastActions;
 export const defaultInitState: ToastState = {
   toasts: new Map(),
   groups: new Map(),
-  timers: new Map(),
 };
 
 export const createToastStore = (initState: ToastState = defaultInitState) => {
@@ -39,121 +44,109 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
     devtools(
       (set, get) => ({
         ...initState,
-        addToast: (toast) => {
+        createToast: (toast) => {
           const createdAt = Date.now();
           const id = nanoid();
+          let timer: NodeJS.Timeout | null = null;
+          let status: ToastStatus = 'visible:persist';
+          let isPaused = true;
+
+          if (toast.duration !== null) {
+            status = 'visible';
+            isPaused = false;
+            timer = setTimeout(() => {
+              get().setToastDestroying(id);
+            }, toast.duration);
+          }
 
           set((state) => {
             const updatedToasts = new Map(state.toasts).set(id, {
               ...toast,
               id,
               createdAt,
-              isPaused: false,
+              isPaused,
+              timer,
+              status,
             });
 
-            let timers = state.timers;
-
-            if (toast.duration !== null) {
-              const timer = setTimeout(() => {
-                get().removeToast(id);
-              }, toast.duration);
-
-              const updatedTimers = new Map(timers).set(id, timer);
-              timers = updatedTimers;
-            }
-
-            return { toasts: updatedToasts, timers };
+            return { toasts: updatedToasts };
           });
         },
         pauseToast: (id) => {
-          let { timers, toasts } = get();
+          const { toasts } = get();
 
-          const timer = timers.get(id);
           const toast = toasts.get(id);
+          console.log(toast);
 
-          if (!timer && !toast) {
+          if (!toast || toast.status !== 'visible') {
             return;
           }
 
-          if (timer) {
-            clearTimeout(timer);
-            const updatedTimers = new Map(timers);
-            updatedTimers.delete(id);
-            timers = updatedTimers;
+          if (!toast.timer) {
+            return;
           }
 
-          if (toast && !toast.isPaused && toast.duration !== null) {
-            const remaining = toast.duration - (Date.now() - toast.createdAt);
+          clearTimeout(toast.timer);
+          const remaining = toast.duration! - (Date.now() - toast.createdAt);
 
-            const updatedToasts = new Map(toasts).set(id, {
-              ...toast,
-              isPaused: true,
-              duration: remaining,
-            });
-            toasts = updatedToasts;
-          }
+          const updatedToasts = new Map(toasts).set(id, {
+            ...toast,
+            isPaused: true,
+            duration: remaining,
+            status: 'visible:persist',
+          });
 
           set(() => {
-            return { toasts, timers };
+            return { toasts: updatedToasts };
           });
         },
         resumeToast: (id) => {
-          let { toasts, timers } = get();
+          const { toasts } = get();
           const toast = toasts.get(id);
 
-          if (!toast || toast.duration === null || !toast.isPaused) {
+          if (
+            !toast ||
+            toast.status !== 'visible:persist' ||
+            toast.duration === null
+          ) {
             return;
           }
 
-          let timer = timers.get(id);
-
-          if (timer) {
-            clearTimeout(timer);
-          }
-
-          timer = setTimeout(() => {
-            get().removeToast(id);
+          const timer = setTimeout(() => {
+            get().setToastDestroying(id);
           }, toast.duration);
+          const createdAt = Date.now();
 
-          set((state) => {
-            const timers = new Map(state.timers).set(id, timer);
-
-            const createdAt = Date.now();
-
-            toasts = new Map(toasts).set(id, {
+          set(() => {
+            const updatedToasts = new Map(toasts).set(id, {
               ...toast,
               createdAt,
               isPaused: false,
+              timer,
+              status: 'visible',
             });
 
-            return { timers, toasts };
+            return { toasts: updatedToasts };
           });
         },
-        removeToast: (id) => {
-          let { toasts, timers } = get();
+        destroyToast: (id) => {
+          let { toasts } = get();
 
           const toast = toasts.get(id);
-          const timer = timers.get(id);
 
-          if (!toast && !timer) {
+          if (!toast || toast.status !== 'destroying') {
             return;
           }
 
-          if (timer) {
-            clearTimeout(timer);
-            const updatedTimers = new Map(timers);
-            updatedTimers.delete(id);
-            timers = updatedTimers;
+          if (toast.timer) {
+            clearTimeout(toast.timer);
           }
 
-          if (toast) {
-            const updatedToasts = new Map(toasts);
-            updatedToasts.delete(id);
-            toasts = updatedToasts;
-          }
+          const updatedToasts = new Map(toasts);
+          updatedToasts.delete(id);
 
           set(() => {
-            return { toasts, timers };
+            return { toasts: updatedToasts };
           });
         },
         addGroup: (placement, groupContext) => {
@@ -242,6 +235,36 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
             if (toast.placement === placement) {
               get().pauseToast(toast.id);
             }
+          });
+        },
+        setToastDestroying: (id) => {
+          const { toasts } = get();
+          const toast = toasts.get(id);
+
+          if (
+            !toast ||
+            (toast.status !== 'visible' && toast.status !== 'visible:persist')
+          ) {
+            return;
+          }
+
+          if (toast.timer) {
+            clearTimeout(toast.timer);
+          }
+
+          const timer = setTimeout(() => {
+            get().destroyToast(id);
+          }, toast.removeDelay);
+
+          const updatedToasts = new Map(toasts).set(id, {
+            ...toast,
+            timer,
+            status: 'destroying',
+            isPaused: false,
+          });
+
+          set(() => {
+            return { toasts: updatedToasts };
           });
         },
       }),

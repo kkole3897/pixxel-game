@@ -38,6 +38,12 @@ export type ToasterOptions = SetRequired<
   'placement'
 >;
 
+export type ToastStatus =
+  | 'visible'
+  | 'visible:persist'
+  | 'destroying'
+  | 'destroyed';
+
 export type ToastContext = {
   id: string;
   placement: Placement;
@@ -49,9 +55,14 @@ export type ToastContext = {
   createdAt: number;
   toasterId: string;
   isPaused: boolean;
+  status: ToastStatus;
+  timer: NodeJS.Timeout | null;
 };
 
-export type ToastOptions = Omit<ToastContext, 'createdAt' | 'id' | 'isPaused'>;
+export type ToastOptions = Omit<
+  ToastContext,
+  'createdAt' | 'id' | 'isPaused' | 'status' | 'timer'
+>;
 
 export type ToastElement = React.ReactNode;
 

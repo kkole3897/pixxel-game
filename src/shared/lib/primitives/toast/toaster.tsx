@@ -14,32 +14,16 @@ type ToasterBaseProps = {
 type ToasterProps = ToasterBaseProps;
 
 export const Toaster = ({ toaster, children }: ToasterProps) => {
-  const [
-    getToastsByToasterId,
-    getRootNodeByPlacement,
-    pauseToastsByPlacement,
-    resumeToasts,
-  ] = useToastStore((store) => [
-    store.getToastsByToasterId,
-    store.getRootNodeByPlacement,
-    store.pauseToastsByPlacement,
-    store.resumeToasts,
-  ]);
+  const [getToastsByToasterId, getRootNodeByPlacement] = useToastStore(
+    (store) => [store.getToastsByToasterId, store.getRootNodeByPlacement]
+  );
 
   const toasts = getToastsByToasterId(toaster.id);
 
   const rootNode = getRootNodeByPlacement(toaster.placement);
 
-  const handleMouseEnter = () => {
-    pauseToastsByPlacement(toaster.placement);
-  };
-
-  const handleMouseLeave = () => {
-    resumeToasts();
-  };
-
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div>
       <Portal container={rootNode}>
         {toasts.map((toast) => (
           <ToastActor value={toast} key={toast.id}>

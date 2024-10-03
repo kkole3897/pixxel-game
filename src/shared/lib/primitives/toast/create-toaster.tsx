@@ -23,7 +23,7 @@ export type CreateToasterReturn = {
 export function createToaster(options: ToasterOptions) {
   const toasterId = useRef(nanoid());
 
-  const addToast = useToastStore((store) => store.addToast);
+  const createToast = useToastStore((store) => store.createToast);
   const {
     placement: sharedPlacement,
     duration: sharedDuration = DEFAULT_DURATION,
@@ -63,7 +63,7 @@ export function createToaster(options: ToasterOptions) {
       swipeDirections,
     };
 
-    addToast({
+    createToast({
       ...mergedOptions,
       swipeDirections: ['right'],
       toasterId: toasterId.current,

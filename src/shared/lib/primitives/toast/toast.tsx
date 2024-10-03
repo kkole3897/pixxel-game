@@ -1,4 +1,4 @@
-import React, { forwardRef, MouseEventHandler, use } from 'react';
+import React, { forwardRef, MouseEventHandler, useState } from 'react';
 
 import { useToastContext } from './use-toast-context';
 import { useToastStore } from './use-toast-store';
@@ -11,13 +11,102 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
       'aria-live': ariaLive = 'polite',
       'aria-atomic': ariaAtomic = 'true',
       role = 'status',
+      tabIndex = 0,
       ...rest
     } = props;
 
     const context = useToastContext();
+    const [pauseToast, resumeToast] = useToastStore((store) => [
+      store.pauseToast,
+      store.resumeToast,
+    ]);
 
-    const { isPaused } = context;
-    const dataPaused = isPaused ? 'true' : undefined;
+    const [isFocused, setIsFocused] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleFocusDefault: React.FocusEventHandler<HTMLDivElement> = (
+      event
+    ) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      setIsFocused(true);
+      pauseToast(context.id);
+    };
+
+    const onFocus: React.FocusEventHandler<HTMLDivElement> = (event) => {
+      [props.onFocus, handleFocusDefault].forEach((handler) => {
+        handler?.(event);
+      });
+    };
+
+    const handleBlurDefault: React.FocusEventHandler<HTMLDivElement> = (
+      event
+    ) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      setIsFocused(false);
+
+      if (!isHovered) {
+        resumeToast(context.id);
+      }
+    };
+
+    const onBlur: React.FocusEventHandler<HTMLDivElement> = (event) => {
+      [props.onBlur, handleBlurDefault].forEach((handler) => {
+        handler?.(event);
+      });
+    };
+
+    const handleMouseEnterDefault: MouseEventHandler<HTMLDivElement> = (
+      event
+    ) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      setIsHovered(true);
+
+      if (context.pauseOnHover) {
+        pauseToast(context.id);
+      }
+    };
+
+    const onMouseEnter: MouseEventHandler<HTMLDivElement> = (event) => {
+      [props.onMouseEnter, handleMouseEnterDefault].forEach((handler) => {
+        handler?.(event);
+      });
+    };
+
+    const handleMouseLeaveDefault: MouseEventHandler<HTMLDivElement> = (
+      event
+    ) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      setIsHovered(false);
+
+      if (!isFocused) {
+        resumeToast(context.id);
+      }
+    };
+
+    const onMouseLeave: MouseEventHandler<HTMLDivElement> = (event) => {
+      [props.onMouseLeave, handleMouseLeaveDefault].forEach((handler) => {
+        handler?.(event);
+      });
+    };
+
+    const { isPaused, status } = context;
+    const dataPaused = isPaused ? '' : undefined;
+    const dataState =
+      status === 'visible' || status === 'visible:persist'
+        ? 'opened'
+        : 'closed';
 
     return (
       <div
@@ -27,6 +116,12 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
         aria-live={ariaLive}
         role={role}
         data-paused={dataPaused}
+        data-state={dataState}
+        tabIndex={tabIndex}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
     );
   }
@@ -65,7 +160,9 @@ export const Close = forwardRef<HTMLButtonElement, ToastCloseProps>(
     } = props;
 
     const { id } = useToastContext();
-    const removeToast = useToastStore((store) => store.removeToast);
+    const setToastDestroying = useToastStore(
+      (store) => store.setToastDestroying
+    );
 
     const handleClickDefault: MouseEventHandler<HTMLButtonElement> = (
       event
@@ -74,7 +171,7 @@ export const Close = forwardRef<HTMLButtonElement, ToastCloseProps>(
         return;
       }
 
-      removeToast(id);
+      setToastDestroying(id);
     };
 
     // TODO: merge event handlers 함수 따로 만들기
@@ -107,7 +204,9 @@ export const Action = forwardRef<HTMLButtonElement, ToastActionProps>(
 
     const { id } = useToastContext();
 
-    const removeToast = useToastStore((store) => store.removeToast);
+    const setToastDestroying = useToastStore(
+      (store) => store.setToastDestroying
+    );
 
     const handleClickDefault: MouseEventHandler<HTMLButtonElement> = (
       event
@@ -116,7 +215,7 @@ export const Action = forwardRef<HTMLButtonElement, ToastActionProps>(
         return;
       }
 
-      removeToast(id);
+      setToastDestroying(id);
     };
 
     const onClicks = [props.onClick, handleClickDefault];
