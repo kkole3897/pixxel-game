@@ -1,4 +1,4 @@
-import type { SetOptional, SetRequired } from 'type-fest';
+import type { SetRequired } from 'type-fest';
 
 export type Placement =
   | 'top'
@@ -29,6 +29,7 @@ export type ToasterContext = {
   pauseOnFocus: boolean;
   pauseOnPageIdle: boolean;
   swipeDirections: SwipeDirection[];
+  swipeThreshold: number;
 };
 
 export type ToasterOptions = SetRequired<
@@ -56,6 +57,7 @@ export type ToastContext = {
   isPaused: boolean;
   status: ToastStatus;
   timer: NodeJS.Timeout | null;
+  swipeThreshold: number;
 };
 
 export type ToastOptions = Omit<

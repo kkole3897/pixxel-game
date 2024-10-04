@@ -1,7 +1,9 @@
-import React, { forwardRef, MouseEventHandler, useState } from 'react';
+import React, { forwardRef, MouseEventHandler, useState, useRef } from 'react';
+import cn from 'classnames';
 
 import { useToastContext } from './use-toast-context';
 import { useToastStore } from './use-toast-store';
+import * as styles from './toast.css';
 
 type ToastRootProps = React.ComponentPropsWithoutRef<'div'>;
 
@@ -12,14 +14,16 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
       'aria-atomic': ariaAtomic = 'true',
       role = 'status',
       tabIndex = 0,
+      className,
       ...rest
     } = props;
 
+    const composedClassName = cn(className, styles.root);
+
     const context = useToastContext();
-    const [pauseToast, resumeToast] = useToastStore((store) => [
-      store.pauseToast,
-      store.resumeToast,
-    ]);
+    const [pauseToast, resumeToast, setToastDestroying] = useToastStore(
+      (store) => [store.pauseToast, store.resumeToast, store.setToastDestroying]
+    );
 
     const [isFocused, setIsFocused] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -111,6 +115,125 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
         ? 'opened'
         : 'closed';
 
+    const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
+    const swipeDeltaRef = useRef<{ x: number; y: number } | null>(null);
+    const swipeAxisRef = useRef<'x' | 'y' | null>(null);
+
+    const handlePointerDownDefault: React.PointerEventHandler<
+      HTMLDivElement
+    > = (event) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      pointerStartRef.current = { x: event.clientX, y: event.clientY };
+      (event.target as HTMLElement).setPointerCapture(event.pointerId);
+    };
+
+    const onPointerDown: React.PointerEventHandler<HTMLDivElement> = (
+      event
+    ) => {
+      [props.onPointerDown, handlePointerDownDefault].forEach((handler) => {
+        handler?.(event);
+      });
+    };
+
+    const handlePointerMoveDefault: React.PointerEventHandler<
+      HTMLDivElement
+    > = (event) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      if (!pointerStartRef.current) {
+        return;
+      }
+
+      let x = event.clientX - pointerStartRef.current.x;
+      let y = event.clientY - pointerStartRef.current.y;
+
+      if (!context.swipeDirections.includes('left')) {
+        x = Math.max(0, x);
+      }
+
+      if (!context.swipeDirections.includes('right')) {
+        x = Math.min(0, x);
+      }
+
+      if (!context.swipeDirections.includes('up')) {
+        y = Math.max(0, y);
+      }
+
+      if (!context.swipeDirections.includes('down')) {
+        y = Math.min(0, y);
+      }
+
+      if (!swipeDeltaRef.current) {
+        if (x !== 0) {
+          swipeAxisRef.current = 'x';
+        } else {
+          swipeAxisRef.current = 'y';
+        }
+        swipeDeltaRef.current = { x, y };
+      }
+
+      if (swipeAxisRef.current === 'x') {
+        y = 0;
+      } else {
+        x = 0;
+      }
+
+      swipeDeltaRef.current = { x, y };
+
+      event.currentTarget.style.setProperty(
+        '--toast-swipe-x',
+        `${swipeDeltaRef.current.x}px`
+      );
+      event.currentTarget.style.setProperty(
+        '--toast-swipe-y',
+        `${swipeDeltaRef.current.y}px`
+      );
+    };
+
+    const onPointerMove: React.PointerEventHandler<HTMLDivElement> = (
+      event
+    ) => {
+      [props.onPointerMove, handlePointerMoveDefault].forEach((handler) => {
+        handler?.(event);
+      });
+    };
+
+    const handlePointerUpDefault: React.PointerEventHandler<HTMLDivElement> = (
+      event
+    ) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      const absDX = Math.abs(swipeDeltaRef.current!.x);
+      const absDY = Math.abs(swipeDeltaRef.current!.y);
+      const maxDelta = Math.max(absDX, absDY);
+
+      pointerStartRef.current = null;
+      swipeDeltaRef.current = null;
+      swipeAxisRef.current = null;
+      (event.target as HTMLElement).releasePointerCapture(event.pointerId);
+
+      if (maxDelta >= context.swipeThreshold) {
+        setToastDestroying(context.id);
+        return;
+      }
+
+      event.currentTarget.style.removeProperty('--toast-swipe-x');
+      event.currentTarget.style.removeProperty('--toast-swipe-y');
+    };
+
+    const onPointerUp: React.PointerEventHandler<HTMLDivElement> = (event) => {
+      [props.onPointerUp, handlePointerUpDefault].forEach((handler) => {
+        handler?.(event);
+      });
+    };
+
     return (
       <div
         {...rest}
@@ -125,6 +248,10 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
         onBlur={onBlur}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        className={composedClassName}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
       />
     );
   }

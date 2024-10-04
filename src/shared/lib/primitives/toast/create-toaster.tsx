@@ -13,6 +13,7 @@ import {
   DEFAULT_PAUSE_ON_FOCUS,
   DEFAULT_SWIPER_DIRECTION,
   DEFAULT_PAUSE_ON_PAGE_IDLE,
+  DEFAULT_SWIPER_THRESHOLD,
 } from './constants';
 
 export type CreateToasterReturn = {
@@ -33,6 +34,7 @@ export function createToaster(options: ToasterOptions) {
     pauseOnFocus: sharedPauseOnFocus = DEFAULT_PAUSE_ON_FOCUS,
     swipeDirections: sharedSwipeDirections = [DEFAULT_SWIPER_DIRECTION],
     pauseOnPageIdle: sharedPauseOnPageIdle = DEFAULT_PAUSE_ON_PAGE_IDLE,
+    swipeThreshold: sharedSwipeThreshold = DEFAULT_SWIPER_THRESHOLD,
   } = options;
 
   function create(options: Partial<Omit<ToastOptions, 'placement'>> = {}) {
@@ -59,6 +61,10 @@ export function createToaster(options: ToasterOptions) {
       options.pauseOnPageIdle !== undefined
         ? options.pauseOnPageIdle
         : sharedPauseOnPageIdle;
+    const swipeThreshold =
+      options.swipeThreshold !== undefined
+        ? options.swipeThreshold
+        : sharedSwipeThreshold;
 
     const mergedOptions = {
       placement,
@@ -68,11 +74,11 @@ export function createToaster(options: ToasterOptions) {
       pauseOnFocus,
       swipeDirections,
       pauseOnPageIdle,
+      swipeThreshold,
     };
 
     createToast({
       ...mergedOptions,
-      swipeDirections: ['right'],
       toasterId: toasterId.current,
     });
   }
