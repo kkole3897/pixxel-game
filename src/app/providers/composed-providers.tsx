@@ -2,6 +2,9 @@
 
 import ReactQueryProvider from './react-query';
 import StoreProviders from './store-providers';
+import { ToastStoreProvider } from '@/shared/lib/primitives/toast';
+import { TopEndToastViewport } from '@/shared/ui/top-end-toast-viewport';
+import { TopToastViewport } from '@/shared/ui/top-toast-viewport';
 
 export default function ComposedProviders({
   children,
@@ -10,7 +13,13 @@ export default function ComposedProviders({
 }) {
   return (
     <ReactQueryProvider>
-      <StoreProviders>{children}</StoreProviders>
+      <StoreProviders>
+        <ToastStoreProvider>
+          {children}
+          <TopEndToastViewport />
+          <TopToastViewport />
+        </ToastStoreProvider>
+      </StoreProviders>
     </ReactQueryProvider>
   );
 }

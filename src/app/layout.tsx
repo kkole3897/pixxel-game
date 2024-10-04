@@ -37,8 +37,8 @@ export default function RootLayout({
   return (
     <html lang="ko" className={cn(base.variable, serif.variable)}>
       <body>
-        <JenniferFrontScript />
         <Providers>
+          <JenniferFrontScript />
           <div className="page">{children}</div>
         </Providers>
       </body>
