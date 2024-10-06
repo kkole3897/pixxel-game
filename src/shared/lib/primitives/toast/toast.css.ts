@@ -7,7 +7,6 @@ export const root = style({
     [base]: {
       userSelect: 'none',
       touchAction: 'none',
-      transform: 'translate(var(--toast-swipe-x), var(--toast-swipe-y))',
     },
   },
 });
