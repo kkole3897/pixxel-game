@@ -210,8 +210,8 @@ export const Root = forwardRef<HTMLDivElement, ToastRootProps>(
         return;
       }
 
-      const absDX = Math.abs(swipeDeltaRef.current!.x);
-      const absDY = Math.abs(swipeDeltaRef.current!.y);
+      const absDX = Math.abs(swipeDeltaRef.current?.x ?? 0);
+      const absDY = Math.abs(swipeDeltaRef.current?.y ?? 0);
       const maxDelta = Math.max(absDX, absDY);
 
       pointerStartRef.current = null;
