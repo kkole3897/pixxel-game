@@ -20,6 +20,7 @@ export const Completed: Story = {
       store: 'steam',
       createdAt: '2024-09-20T00:00:00Z',
       completedAt: '2024-09-21T00:00:00Z',
+      failedAt: null,
       title: '티메시아',
     },
   },
@@ -33,6 +34,21 @@ export const Processing: Story = {
       store: 'steam',
       createdAt: '2024-09-20T00:00:00Z',
       completedAt: null,
+      failedAt: null,
+      title: '티메시아',
+    },
+  },
+};
+
+export const Failed: Story = {
+  args: {
+    request: {
+      id: 1,
+      slug: 'app/1343240',
+      store: 'steam',
+      createdAt: '2024-09-20T00:00:00Z',
+      completedAt: null,
+      failedAt: '2024-09-21T00:00:00Z',
       title: '티메시아',
     },
   },
@@ -47,6 +63,7 @@ export const Epic: Story = {
       createdAt: '2024-09-20T00:00:00Z',
       completedAt: null,
       title: '티메시아',
+      failedAt: null,
     },
   },
 };

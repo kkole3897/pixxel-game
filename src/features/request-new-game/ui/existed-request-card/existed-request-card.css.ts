@@ -59,6 +59,10 @@ export const statusBadge = recipe({
         backgroundColor: '#ceebff',
         color: theme.colors.blue[500],
       },
+      failed: {
+        backgroundColor: theme.colors.red[100],
+        color: theme.colors.red[800],
+      },
     },
   },
 });

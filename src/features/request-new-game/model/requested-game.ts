@@ -8,10 +8,15 @@ export type RequestedGame = {
   completedAt: string | null; // utc 0 datetime format
   createdAt: string; // utc 0 datetime format
   title: string | null;
+  failedAt: string | null; // utc 0 datetime format
 };
 
 export function getRequestedGameStatus(
-  log: Pick<RequestedGame, 'completedAt'>
+  requestedGame: Pick<RequestedGame, 'completedAt' | 'failedAt'>
 ): RequestedGameStatus {
-  return log.completedAt ? 'completed' : 'processing';
+  if (requestedGame.failedAt) {
+    return 'failed';
+  }
+
+  return requestedGame.completedAt ? 'completed' : 'processing';
 }

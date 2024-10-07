@@ -8,6 +8,7 @@ import {
   formatRequestedGameStatus,
   revertStoreIdentifierToUrl,
   formatRequestTime,
+  formatRequestedGameTitle,
 } from '../../lib';
 import { DefaultLink } from '@/shared/ui/default-link';
 import SteamHomeImage from '~/public/images/steam-home-image-480x270.jpg';
@@ -17,7 +18,7 @@ import * as styles from './existed-request-card.css';
 export type ExistedRequestCardProps = {
   request: Pick<
     RequestedGame,
-    'slug' | 'store' | 'createdAt' | 'completedAt' | 'title' | 'id'
+    'slug' | 'store' | 'createdAt' | 'completedAt' | 'title' | 'id' | 'failedAt'
   >;
   className?: string;
 };
@@ -31,8 +32,7 @@ export default function ExistedRequestCard({
   const statusText = formatRequestedGameStatus(status);
   const storeUrl = revertStoreIdentifierToUrl(request);
   const requestTime = formatRequestTime(request.createdAt);
-
-  const title = `[${request.id}] ${request.title ?? ''}`;
+  const title = formatRequestedGameTitle(request);
 
   const mainImageMap = {
     steam: SteamHomeImage,
