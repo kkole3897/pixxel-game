@@ -14,9 +14,15 @@ export type RequestedGame = {
 export function getRequestedGameStatus(
   requestedGame: Pick<RequestedGame, 'completedAt' | 'failedAt'>
 ): RequestedGameStatus {
-  if (requestedGame.failedAt) {
+  if (requestedGame.completedAt && requestedGame.failedAt) {
+    return requestedGame.completedAt > requestedGame.failedAt
+      ? 'completed'
+      : 'failed';
+  } else if (requestedGame.completedAt) {
+    return 'completed';
+  } else if (requestedGame.failedAt) {
     return 'failed';
   }
 
-  return requestedGame.completedAt ? 'completed' : 'processing';
+  return 'processing';
 }
