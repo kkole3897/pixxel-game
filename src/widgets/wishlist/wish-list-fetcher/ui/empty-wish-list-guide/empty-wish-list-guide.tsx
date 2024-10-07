@@ -1,7 +1,6 @@
-import Link from 'next/link';
-import { RiArrowRightSLine } from '@remixicon/react';
 import cn from 'classnames';
 
+import { RightArrowLink } from '@/shared/ui/right-arrow-link';
 import * as styles from './empty-wish-list-guide.css';
 
 type EmptyWishListGuideProps = {
@@ -17,10 +16,7 @@ export default function EmptyWishListGuide({
     <div className={composedRootClassName}>
       <div className={styles.description}>찜한 게임이 없습니다.</div>
       <div className={styles.linkArea}>
-        <Link href="/" className={styles.link}>
-          <span>둘러보기</span>
-          <RiArrowRightSLine />
-        </Link>
+        <RightArrowLink href="/">둘러보기</RightArrowLink>
       </div>
     </div>
   );
