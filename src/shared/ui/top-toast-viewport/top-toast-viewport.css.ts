@@ -2,10 +2,10 @@ import { style } from '@vanilla-extract/css';
 
 export const viewport = style({
   position: 'fixed',
-  top: 0,
+  top: '16px',
   left: '50%',
   display: 'flex',
+  alignItems: 'center',
   flexDirection: 'column',
-  padding: '16px',
   transform: 'translateX(-50%)',
 });
