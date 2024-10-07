@@ -271,7 +271,7 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
           });
         },
       }),
-      { name: 'ToastStore' }
+      { name: 'ToastStore', enabled: process.env.NODE_ENV === 'development' }
     )
   );
 };
