@@ -16,13 +16,17 @@ import {
   DEFAULT_SWIPER_THRESHOLD,
 } from './constants';
 
-export type CreateToasterReturn = {
+type CreateToastOptions<T> = Partial<Omit<ToastOptions, 'placement'>> & T;
+
+export type CreateToasterReturn<T> = {
   id: string;
   placement: Placement;
-  create: (options?: Partial<ToastOptions>) => void;
+  create: (options: CreateToastOptions<T>) => void;
 };
 
-export function createToaster(options: ToasterOptions) {
+export function createToaster<T extends Record<string, any>>(
+  options: ToasterOptions
+): CreateToasterReturn<T> {
   const toasterId = useRef(nanoid());
 
   const createToast = useToastStore((store) => store.createToast);
@@ -37,34 +41,19 @@ export function createToaster(options: ToasterOptions) {
     swipeThreshold: sharedSwipeThreshold = DEFAULT_SWIPER_THRESHOLD,
   } = options;
 
-  function create(options: Partial<Omit<ToastOptions, 'placement'>> = {}) {
+  function create(options: CreateToastOptions<T>) {
+    const {
+      duration = sharedDuration,
+      removeDelay = sharedRemoveDelay,
+      pauseOnHover = sharedPauseOnHover,
+      pauseOnFocus = sharedPauseOnFocus,
+      swipeDirections = sharedSwipeDirections,
+      pauseOnPageIdle = sharedPauseOnPageIdle,
+      swipeThreshold = sharedSwipeThreshold,
+      ...restOptions
+    } = options;
+
     const placement = sharedPlacement;
-    const duration =
-      options.duration !== undefined ? options.duration : sharedDuration;
-    const removeDelay =
-      options.removeDelay !== undefined
-        ? options.removeDelay
-        : sharedRemoveDelay;
-    const pauseOnHover =
-      options.pauseOnHover !== undefined
-        ? options.pauseOnHover
-        : sharedPauseOnHover;
-    const pauseOnFocus =
-      options.pauseOnFocus !== undefined
-        ? options.pauseOnFocus
-        : sharedPauseOnFocus;
-    const swipeDirections =
-      options.swipeDirections !== undefined
-        ? options.swipeDirections
-        : sharedSwipeDirections;
-    const pauseOnPageIdle =
-      options.pauseOnPageIdle !== undefined
-        ? options.pauseOnPageIdle
-        : sharedPauseOnPageIdle;
-    const swipeThreshold =
-      options.swipeThreshold !== undefined
-        ? options.swipeThreshold
-        : sharedSwipeThreshold;
 
     const mergedOptions = {
       placement,
@@ -75,6 +64,7 @@ export function createToaster(options: ToasterOptions) {
       swipeDirections,
       pauseOnPageIdle,
       swipeThreshold,
+      ...restOptions,
     };
 
     createToast({
