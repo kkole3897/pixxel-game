@@ -3,6 +3,7 @@ export {
   ExistedGameLink,
   ExistedRequestCard,
   CreateRequestedGameForm,
+  IntroductionLink as RequestNewGameIntroductionLink,
   type GenerateStoreIdentifierFormProps,
   type CreateRquestedGameFormProps,
 } from './ui';
