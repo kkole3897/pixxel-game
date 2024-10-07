@@ -8,4 +8,5 @@ export const viewport = style({
   alignItems: 'center',
   flexDirection: 'column',
   transform: 'translateX(-50%)',
+  zIndex: 10,
 });

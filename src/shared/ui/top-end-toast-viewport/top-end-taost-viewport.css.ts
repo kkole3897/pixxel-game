@@ -8,4 +8,5 @@ export const viewport = style({
   top: 0,
   right: 0,
   padding: '16px',
+  zIndex: 10,
 });
