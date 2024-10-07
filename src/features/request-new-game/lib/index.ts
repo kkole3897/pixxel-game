@@ -19,3 +19,4 @@ export {
   type FormState as CreateRequestedGameFormState,
 } from './use-create-requested-game-form-state';
 export { convertCreateRequestedFormStateToData } from './convert-create-requested-form-state-to-data';
+export { formatRequestedGameTitle } from './format-requested-game-title';
