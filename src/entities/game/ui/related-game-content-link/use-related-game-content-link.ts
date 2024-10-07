@@ -3,6 +3,7 @@ import {
   getBestCatalogItem,
   getEffectivePrice,
   isSalesEnded,
+  getGameTitle,
 } from '../../model';
 
 function getCurrentBestPriceText(currentBestPrice: number | null) {
@@ -18,7 +19,7 @@ function getCurrentBestPriceText(currentBestPrice: number | null) {
 }
 
 export function useRelatedGameContentLink(content: RelatedGameContent) {
-  const title = content.titleKo ?? content.title ?? content.publicId;
+  const title = getGameTitle(content);
   const href = `/game/${content.publicId}`;
   const currentBestCatalog = getBestCatalogItem(content.gameCatalog);
   const currentBestPrice =

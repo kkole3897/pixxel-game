@@ -40,3 +40,7 @@ export interface GamePreview
   > {
   gameCatalog: GameCatalogPreviewItem[];
 }
+
+export function getTitle(game: Pick<Game, 'title' | 'titleKo' | 'publicId'>) {
+  return game.titleKo ?? game.title ?? game.publicId;
+}

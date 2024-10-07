@@ -9,7 +9,7 @@ import { useRecord } from './hooks/use-record';
 export type LowestPriceRankItemProps = {
   record: Record;
   /**
-   * @default 1
+   * @defaultValue 1
    */
   rank?: number;
   className?: string;

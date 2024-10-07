@@ -8,7 +8,7 @@ import DefaultAvatarImage from '~/public/images/user-avatar-640x640.png';
 export type AvatarCircleProps = {
   user: Pick<User, 'avatarUrl' | 'name'>;
   /**
-   * @default 48
+   * @defaultValue 48
    */
   size?: number;
   className?: string;

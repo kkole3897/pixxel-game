@@ -1,5 +1,4 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-
 import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import remarkGfm from 'remark-gfm';

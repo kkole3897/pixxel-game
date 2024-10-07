@@ -11,3 +11,7 @@ export const container = style([
     textAlign: 'center',
   },
 ]);
+
+export const linkArea = style({
+  marginTop: '12px',
+});

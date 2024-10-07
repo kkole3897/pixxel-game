@@ -3,7 +3,7 @@ import { CommonSvgIconProps } from '../types';
 
 type GoogleFileBaseProps = CommonSvgIconProps & {
   /**
-   * @default 24
+   * @defaultValue 24
    */
   size?: number;
 };

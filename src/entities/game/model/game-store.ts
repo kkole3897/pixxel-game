@@ -1,3 +1,7 @@
+import z from 'zod';
+
 import { GAME_STORE } from '../constants/game-store';
 
-export type GameStore = (typeof GAME_STORE)[keyof typeof GAME_STORE];
+export const gameStoreSchema = z.nativeEnum(GAME_STORE);
+
+export type GameStore = z.infer<typeof gameStoreSchema>;

@@ -14,10 +14,6 @@ export const base = localFont({
     },
     {
       path: '../../../public/fonts/Pretendard-ExtraBold.subset.woff2',
-      weight: '900',
-    },
-    {
-      path: '../../../public/fonts/Pretendard-ExtraBold.subset.woff2',
       weight: '800',
     },
     {
@@ -73,10 +69,6 @@ export const serif = localFont({
   src: [
     {
       path: '../../../public/fonts/Pretendard-Black.subset.woff2',
-      weight: '900',
-    },
-    {
-      path: '../../../public/fonts/Pretendard-ExtraBold.subset.woff2',
       weight: '900',
     },
     {

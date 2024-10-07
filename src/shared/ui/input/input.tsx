@@ -26,7 +26,7 @@ export interface InputRootProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
   type?: InputType;
   /**
-   * @default `md`
+   * @defaultValue `md`
    */
   size?: Size;
   isInvalid?: boolean;
@@ -72,7 +72,7 @@ Input.displayName = 'Input';
 
 export interface InputSlotProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
-   * @default `right`
+   * @defaultValue `right`
    */
   side?: 'left' | 'right';
 }

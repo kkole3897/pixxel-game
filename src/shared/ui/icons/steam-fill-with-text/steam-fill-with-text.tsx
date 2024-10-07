@@ -4,19 +4,19 @@ import { CommonSvgIconProps } from '../types';
 
 interface SteamFillWithTextProps extends CommonSvgIconProps {
   /**
-   * @default 192
+   * @defaultValue 192
    */
   width?: number | string;
   /**
-   * @default 58
+   * @defaultValue 58
    */
   height?: number | string;
   /**
-   * @default '#231F20'
+   * @defaultValue '#231F20'
    */
   color?: string;
   /**
-   * @default 'width'
+   * @defaultValue 'width'
    */
   scaleBy?: 'width' | 'height';
 }

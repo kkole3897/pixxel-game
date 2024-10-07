@@ -3,6 +3,8 @@ export {
   isDiscounted,
   getBestCatalogItem,
   isSalesEnded,
+  gameStoreSchema,
+  getGameTitle,
   type GameType,
   type GameStore,
   type GameDrm,
@@ -48,3 +50,4 @@ export {
   useGetBestPriceHistoryQuery as useGetBestGamePriceHistoryQuery,
   useGetPriceHistoryQuery as useGetGamePriceHistoryQuery,
 } from './queries';
+export { GAME_STORE } from './constants';

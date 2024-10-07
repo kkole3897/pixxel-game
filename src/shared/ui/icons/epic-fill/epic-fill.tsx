@@ -4,11 +4,11 @@ import { CommonSvgIconProps } from '../types';
 
 export interface EpicFillProps extends CommonSvgIconProps {
   /**
-   * @default 24
+   * @defaultValue 24
    */
   size?: string | number;
   /**
-   * @default #000000
+   * @defaultValue #000000
    */
   color?: string;
 }

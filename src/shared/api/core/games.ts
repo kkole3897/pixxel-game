@@ -1,25 +1,24 @@
-import { ascending } from '@visx/vendor/d3-array';
 import { Base } from './lib/base';
 
-export type GameStoreResponse = 'steam' | 'epic';
+export type GameStore = 'steam' | 'epic';
 export type GameDrmResponse = 'steam' | 'epic';
 
 export type GetGamesOptions = {
   ids?: number[];
   /**
-   * @default 0
+   * @defaultValue 0
    */
   from?: number;
   /**
-   * @default 99
+   * @defaultValue 99
    */
   to?: number;
   /**
-   * @default 'effective_price_updated_at
+   * @defaultValue 'effective_price_updated_at
    */
   sortBy?: 'effective_price_updated_at';
   /**
-   * @default false
+   * @defaultValue false
    */
   ascending?: boolean;
 };
@@ -58,7 +57,7 @@ export type GameCatalogResponse = {
   id: number;
   gameId: number | null;
   url: string;
-  store: GameStoreResponse;
+  store: GameStore;
   drm: GameDrmResponse;
   regularPrice: number | null;
   currentPrice: number | null;
@@ -145,7 +144,7 @@ export type GetPriceHistoryResponse = Pick<GameResponse, 'id' | 'publicId'> & {
 
 type GetLowestPriceRanksOptions = {
   /**
-   * @default 2
+   * @defaultValue 2
    */
   limit?: number;
 };

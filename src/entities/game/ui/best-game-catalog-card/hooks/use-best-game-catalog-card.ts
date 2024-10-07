@@ -6,6 +6,7 @@ import {
   isDiscounted as isDiscountedCatalogItem,
   isSalesEnded,
   getCatalogDiscountRate,
+  getGameTitle,
 } from '../../../model';
 
 function formatReleaseDate({
@@ -59,7 +60,7 @@ function formatPrice(price: number | null) {
 }
 
 export function useBestGameCatalogCard(game: BestGameCatalog) {
-  const title = game.titleKo ?? game.title ?? game.publicId;
+  const title = getGameTitle(game);
   const releaseDate = formatReleaseDate(game);
   const isBestSalesEnded =
     game.gameCatalog === null

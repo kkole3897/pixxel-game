@@ -8,9 +8,9 @@ import * as styles from './button.css';
 type ButtonVariant = 'solid' | 'ghost' | 'text';
 type Size = 'lg' | 'md';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
-   * @defaultValue `primary`
+   * @defaultValue `solid`
    */
   variant?: ButtonVariant;
   /**

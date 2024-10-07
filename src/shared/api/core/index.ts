@@ -5,18 +5,21 @@ import { Games } from './games';
 import { Auth } from './auth';
 import { Users } from './users';
 import { Wishlist } from './wishlist';
+import { NewGameRequest } from './new-game-request';
 
 export class Core {
   public readonly games: Games;
   public readonly auth: Auth;
   public readonly users: Users;
   public readonly wishlist: Wishlist;
+  public readonly newGameRequest: NewGameRequest;
 
   constructor(supabase: SupabaseClient<Database>) {
     this.games = new Games(supabase);
     this.auth = new Auth(supabase);
     this.users = new Users(supabase);
     this.wishlist = new Wishlist(supabase);
+    this.newGameRequest = new NewGameRequest(supabase);
   }
 }
 
@@ -28,5 +31,6 @@ export type {
   GetGamesOptions,
   GameResponse,
   PriceHistoryRecordResponse,
-  GameStoreResponse,
+  GameStore as GameStoreResponse,
 } from './games';
+export { NewGameRequest } from './new-game-request';

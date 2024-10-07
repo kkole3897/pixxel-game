@@ -5,3 +5,5 @@ export { EpicFillBase } from './epic-fill-base';
 export { SteamFillWithText } from './steam-fill-with-text';
 export { EpicFill } from './epic-fill';
 export { GoogleFillBase } from './google-fill-base';
+export { SpinnerRing1 } from './spinner-ring-1';
+export { BouncingDots1 } from './bouncing-dots-1';

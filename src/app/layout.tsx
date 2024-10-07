@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import cn from 'classnames';
 
-import './styles/globals.css';
-import { ReactQueryProvider, StoreProviders } from './providers';
+import { Providers } from './providers';
 import { base, serif } from '@/shared/fonts';
 import { JenniferFrontScript } from '@/shared/ui/jennifer-front-script';
+import './styles/globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pixxelgame.com'),
@@ -37,12 +37,10 @@ export default function RootLayout({
   return (
     <html lang="ko" className={cn(base.variable, serif.variable)}>
       <body>
-        <JenniferFrontScript />
-        <ReactQueryProvider>
-          <StoreProviders>
-            <div className="page">{children}</div>
-          </StoreProviders>
-        </ReactQueryProvider>
+        <Providers>
+          <JenniferFrontScript />
+          <div className="page">{children}</div>
+        </Providers>
       </body>
     </html>
   );
