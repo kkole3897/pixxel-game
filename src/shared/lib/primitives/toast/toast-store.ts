@@ -16,7 +16,7 @@ export type ToastState = {
 };
 
 export type ToastActions = {
-  createToast: (toast: ToastOptions) => void;
+  createToast: <T extends Record<string, any>>(toast: ToastOptions & T) => void;
   pauseToast: (id: string) => void;
   resumeToast: (id: string) => void;
   destroyToast: (id: string) => void;
@@ -24,7 +24,9 @@ export type ToastActions = {
   removeGroup: (placement: Placement) => void;
   isPlacementAssigned: (placement: Placement) => boolean;
   getToastsByGroupId: (id: string) => ToastData[];
-  getToastsByToasterId: (id: string) => ToastData[];
+  getToastsByToasterId: <T extends Record<string, any>>(
+    id: string
+  ) => ToastData<T>[];
   getRootNodeByPlacement: (placement: Placement) => HTMLElement | null;
   pauseToastsByGroupId: (id: string) => void;
   resumeToasts: () => void;
@@ -195,10 +197,12 @@ export const createToastStore = (initState: ToastState = defaultInitState) => {
             (toast) => toast.placement === placementKey
           );
         },
-        getToastsByToasterId: (id: string) => {
+        getToastsByToasterId: <T extends Record<string, any>>(
+          id: string
+        ): ToastData<T>[] => {
           const { toasts } = get();
           const filteredToasts = Array.from(toasts.values()).filter(
-            (toast) => toast.toasterId === id
+            (toast): toast is ToastData<T> => toast.toasterId === id
           );
 
           return filteredToasts;

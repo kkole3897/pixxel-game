@@ -65,6 +65,4 @@ export type ToastOptions = Omit<
   'createdAt' | 'id' | 'isPaused' | 'status' | 'timer'
 >;
 
-export type ToastElement = React.ReactNode;
-
-export type ToastData<T = any> = ToastContext & Partial<T>;
+export type ToastData<T extends Record<string, any> = {}> = ToastContext & T;
