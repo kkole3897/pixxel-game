@@ -14,12 +14,12 @@ type Story = StoryObj<typeof StoreSelect>;
 
 export const Steam: Story = {
   args: {
-    defaultValue: 'steam',
+    value: 'steam',
   },
 };
 
 export const Epic: Story = {
   args: {
-    defaultValue: 'epic',
+    value: 'epic',
   },
 };
