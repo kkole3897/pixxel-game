@@ -16,8 +16,8 @@ export default function IntroductionLink() {
       <Image
         src={Megaphone}
         alt="request new game introduction icon"
-        width="60"
-        height="60"
+        width="96"
+        height="96"
         className={styles.mainIcon}
       />
       <div className={styles.descriptionArea}>
