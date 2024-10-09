@@ -234,7 +234,8 @@ export class Games extends Base {
       .rpc('get_best_price_history_by_game_public_id', {
         game_public_id: gamePublicId,
       })
-      .select('startAt: start_at, price: min_price');
+      .select('startAt: start_at, price: min_price')
+      .order('start_at');
 
     if (!!error) {
       throw error;
