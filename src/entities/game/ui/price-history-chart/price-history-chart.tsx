@@ -241,7 +241,7 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
       <svg width={width} height={height}>
         <Group left={margin.left} top={margin.top}>
           {tooltipOpen && (
-            <Group top={-margin.top} left={-margin.left}>
+            <Group left={-margin.left}>
               <Line
                 from={{ x: tooltipLeft, y: 0 }}
                 to={{ x: tooltipLeft, y: topChartHeight }}
