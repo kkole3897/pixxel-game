@@ -9,6 +9,7 @@ export const wishButton = recipe({
     justifyContent: 'center',
     width: '32px',
     height: '32px',
+    padding: 0,
     borderRadius: '50%',
     border: 0,
     background: 'rgba(1, 7, 21, 0.65)',
