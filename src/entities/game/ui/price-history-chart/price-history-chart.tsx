@@ -4,7 +4,7 @@ import { useRef, useState, useMemo } from 'react';
 import { scaleTime, scaleLinear } from '@visx/scale';
 import { Brush } from '@visx/brush';
 import { Group } from '@visx/group';
-import { useParentSize } from '@visx/responsive';
+import { useParentSize, useScreenSize } from '@visx/responsive';
 import { AxisBottom, AxisRight, AxisTop } from '@visx/axis';
 import { max, extent, bisector, min } from '@visx/vendor/d3-array';
 import { curveStepAfter } from '@visx/curve';
@@ -17,9 +17,10 @@ import {
   TooltipWithBounds,
   useTooltipInPortal,
 } from '@visx/tooltip';
-import dayjs from '@/shared/lib/dayjs';
 import { GridRows } from '@visx/grid';
+import { NumberValue } from '@visx/vendor/d3-scale';
 
+import dayjs from '@/shared/lib/dayjs';
 import * as styles from './price-history-chart.css';
 
 type PriceHistoryRecord = {
@@ -37,6 +38,13 @@ function getValue(record: PriceHistoryRecord) {
 
 const bisectDate = bisector<PriceHistoryRecord, Date>((d) => getDate(d)).left;
 
+function tickFormatDateKorean(date: Date | NumberValue) {
+  const _date = new Date(date?.valueOf() ?? date);
+  const formatted = dayjs(_date).tz().format('MM.DD');
+
+  return formatted;
+}
+
 interface PriceHistoryChartProps {
   data: PriceHistoryRecord[];
 }
@@ -48,20 +56,22 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
   const { parentRef, width } = useParentSize({
     initialSize: { width: initialWidth },
   });
+  const { width: screenWidth } = useScreenSize();
+  const xAxisNumTicks = screenWidth < 768 ? 4 : 7;
 
   const brushHeight = 40;
   const rowGap = 30;
   const margin = {
     top: 20,
     left: 20,
-    right: 80,
+    right: 60,
     bottom: 20,
   };
   const brushMargin = {
     top: 10,
     bottom: 15,
     left: 20,
-    right: 80,
+    right: 60,
   };
   const innerHeight = height - margin.top - margin.bottom;
   const topChartHeight = innerHeight - brushHeight - rowGap;
@@ -202,11 +212,24 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
   const handleTooltip = (
     event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>
   ) => {
-    const { x } = localPoint(event) || { x: 0 };
-    const x0 = dateScale.invert(x);
-    const index = bisectDate(props.data, x0, 1);
+    const point = localPoint(event) || { x: 0 };
+
+    if (!point) {
+      hideTooltip();
+      return;
+    }
+
+    const x0 = dateScale.invert(point.x - margin.left);
+    const index = bisectDate(props.data, x0);
+
+    if (index >= props.data.length || index <= 0) {
+      hideTooltip();
+      return;
+    }
+
     const d0 = props.data[index - 1];
     const d1 = props.data[index];
+
     let d = d0;
     if (d1 && getDate(d1)) {
       d =
@@ -216,10 +239,16 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
           : d0;
     }
 
+    if (filteredData.length === 0) {
+      hideTooltip();
+      return;
+    }
+
     if (
       getDate(d) < getDate(filteredData[0]) ||
       getDate(filteredData[filteredData.length - 1]) < getDate(d)
     ) {
+      hideTooltip();
       return;
     }
 
@@ -239,7 +268,7 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
       <svg width={width} height={height}>
         <Group left={margin.left} top={margin.top}>
           {tooltipOpen && (
-            <Group top={-margin.top} left={-margin.left}>
+            <Group left={-margin.left}>
               <Line
                 from={{ x: tooltipLeft, y: 0 }}
                 to={{ x: tooltipLeft, y: topChartHeight }}
@@ -296,7 +325,7 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             scale={dateScale}
             stroke="#b3b5b9"
             top={topChartHeight}
-            numTicks={5}
+            numTicks={xAxisNumTicks}
             tickStroke="#b3b5b9"
             tickLabelProps={() => ({
               dx: -12,
@@ -305,6 +334,7 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
               fontSize: 10,
               fontFamily: 'Pretendard, sans-serif',
             })}
+            tickFormat={tickFormatDateKorean}
           />
           <AxisRight
             scale={priceScale}

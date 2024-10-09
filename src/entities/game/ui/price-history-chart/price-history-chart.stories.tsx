@@ -37,3 +37,24 @@ export const OverDateRangeLimit: Story = {
     ],
   },
 };
+
+const generateDates = (startDate: string, endDate: string, price: number) => {
+  const result = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= new Date(endDate)) {
+    result.push({
+      startAt: currentDate.toISOString().split('.')[0] + '+00:00',
+      price,
+    });
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return result;
+}
+
+export const DenseDates: Story = {
+  args: {
+    data: generateDates('2024-08-01 00:00:00+00', '2024-10-09 00:00:00+00', 10000),
+  },
+};
