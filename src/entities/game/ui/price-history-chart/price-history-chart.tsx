@@ -4,7 +4,7 @@ import { useRef, useState, useMemo } from 'react';
 import { scaleTime, scaleLinear } from '@visx/scale';
 import { Brush } from '@visx/brush';
 import { Group } from '@visx/group';
-import { useParentSize } from '@visx/responsive';
+import { useParentSize, useScreenSize } from '@visx/responsive';
 import { AxisBottom, AxisRight, AxisTop } from '@visx/axis';
 import { max, extent, bisector, min } from '@visx/vendor/d3-array';
 import { curveStepAfter } from '@visx/curve';
@@ -17,9 +17,9 @@ import {
   TooltipWithBounds,
   useTooltipInPortal,
 } from '@visx/tooltip';
-import dayjs from '@/shared/lib/dayjs';
 import { GridRows } from '@visx/grid';
 
+import dayjs from '@/shared/lib/dayjs';
 import * as styles from './price-history-chart.css';
 
 type PriceHistoryRecord = {
@@ -48,20 +48,22 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
   const { parentRef, width } = useParentSize({
     initialSize: { width: initialWidth },
   });
+  const { width: screenWidth } = useScreenSize();
+  const xAxisNumTicks = screenWidth < 768 ? 4 : 10;
 
   const brushHeight = 40;
   const rowGap = 30;
   const margin = {
     top: 20,
     left: 20,
-    right: 80,
+    right: 60,
     bottom: 20,
   };
   const brushMargin = {
     top: 10,
     bottom: 15,
     left: 20,
-    right: 80,
+    right: 60,
   };
   const innerHeight = height - margin.top - margin.bottom;
   const topChartHeight = innerHeight - brushHeight - rowGap;
@@ -296,7 +298,7 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             scale={dateScale}
             stroke="#b3b5b9"
             top={topChartHeight}
-            numTicks={5}
+            numTicks={xAxisNumTicks}
             tickStroke="#b3b5b9"
             tickLabelProps={() => ({
               dx: -12,
