@@ -19,6 +19,7 @@ export default function IntroductionLink() {
         width="96"
         height="96"
         className={styles.mainIcon}
+        unoptimized
       />
       <div className={styles.descriptionArea}>
         <p>찾으시는 게임이 없으신가요?</p>
