@@ -18,7 +18,6 @@ import {
   useTooltipInPortal,
 } from '@visx/tooltip';
 import { GridRows } from '@visx/grid';
-import { NumberValue } from '@visx/vendor/d3-scale';
 
 import dayjs from '@/shared/lib/dayjs';
 import * as styles from './price-history-chart.css';
@@ -37,13 +36,6 @@ function getValue(record: PriceHistoryRecord) {
 }
 
 const bisectDate = bisector<PriceHistoryRecord, Date>((d) => getDate(d)).left;
-
-function tickFormatDateKorean(date: Date | NumberValue) {
-  const _date = new Date(date?.valueOf() ?? date);
-  const formatted = dayjs(_date).tz().format('MM.DD');
-
-  return formatted;
-}
 
 interface PriceHistoryChartProps {
   data: PriceHistoryRecord[];
@@ -334,7 +326,6 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
               fontSize: 10,
               fontFamily: 'Pretendard, sans-serif',
             })}
-            tickFormat={tickFormatDateKorean}
           />
           <AxisRight
             scale={priceScale}
