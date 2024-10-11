@@ -74,3 +74,10 @@ export const OverwhelminglyNegative: Story = {
     totalCount: 500,
   },
 };
+
+export const NoReviews: Story = {
+  args: {
+    positive: 0,
+    totalCount: 0,
+  },
+};
