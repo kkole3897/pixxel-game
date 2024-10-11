@@ -390,6 +390,20 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             stroke="#3786fb"
             strokeWidth={1}
           />
+          <AxisTop
+            scale={brushDateScale}
+            stroke="rgba(0, 0, 0, 0.1)"
+            top={0}
+            numTicks={0}
+            tickStroke="transparent"
+          />
+          <AxisBottom
+            scale={brushDateScale}
+            stroke="rgba(0, 0, 0, 0.1)"
+            top={yBrushMax}
+            numTicks={0}
+            tickStroke="transparent"
+          />
           <Brush
             xScale={brushDateScale}
             yScale={brushPriceScale}
@@ -403,20 +417,6 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             disableDraggingOverlay
             useWindowMoveEvents
             selectedBoxStyle={{ fill: '#cccdd0', fillOpacity: 0.5 }}
-          />
-          <AxisTop
-            scale={brushDateScale}
-            stroke="#b3b5b9"
-            top={0}
-            numTicks={0}
-            tickStroke="transparent"
-          />
-          <AxisBottom
-            scale={brushDateScale}
-            stroke="#b3b5b9"
-            top={yBrushMax}
-            numTicks={0}
-            tickStroke="transparent"
           />
         </Group>
         {tooltipOpen && <Group></Group>}
