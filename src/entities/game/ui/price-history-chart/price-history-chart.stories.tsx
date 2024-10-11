@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import PriceHistoryChart from './price-history-chart';
+import dayjs from '@/shared/lib/dayjs';
 
 const meta: Meta<typeof PriceHistoryChart> = {
   title: 'Entities/Game/PriceHistoryChart',
@@ -51,10 +52,38 @@ const generateDates = (startDate: string, endDate: string, price: number) => {
   }
 
   return result;
-}
+};
 
 export const DenseDates: Story = {
   args: {
-    data: generateDates('2024-08-01 00:00:00+00', '2024-10-09 00:00:00+00', 10000),
+    data: generateDates(
+      '2024-08-01 00:00:00+00',
+      '2024-10-09 00:00:00+00',
+      10000
+    ),
+  },
+};
+
+export const OnlyCurrentTime: Story = {
+  args: {
+    data: [{ startAt: dayjs().toISOString(), price: 10000 }],
+  },
+};
+
+export const DiffWithinDay: Story = {
+  args: {
+    data: [
+      { startAt: dayjs().subtract(1, 'hours').toISOString(), price: 10000 },
+      { startAt: dayjs().toISOString(), price: 10000 },
+    ],
+  },
+};
+
+export const DiffOverDay: Story = {
+  args: {
+    data: [
+      { startAt: dayjs().subtract(1, 'days').toISOString(), price: 10000 },
+      { startAt: dayjs().toISOString(), price: 10000 },
+    ],
   },
 };

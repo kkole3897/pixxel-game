@@ -18,6 +18,8 @@ import {
   useTooltipInPortal,
 } from '@visx/tooltip';
 import { GridRows } from '@visx/grid';
+import type { NumberValue } from '@visx/vendor/d3-scale';
+import { utcTickInterval } from '@visx/vendor/d3-time';
 
 import dayjs from '@/shared/lib/dayjs';
 import * as styles from './price-history-chart.css';
@@ -255,6 +257,42 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
     showTooltip(tooltipPos);
   };
 
+  function generateDateTickInterval() {
+    const startDate = dayjs(dateRange[0]);
+    const endDate = dayjs(dateRange[1]);
+    const diffDays = endDate.diff(startDate, 'days');
+
+    if (diffDays === 0) {
+      return utcTickInterval(new Date(dateRange[0]), new Date(dateRange[1]), 1);
+    }
+
+    if (diffDays <= xAxisNumTicks) {
+      return utcTickInterval(
+        new Date(dateRange[0]),
+        new Date(dateRange[1]),
+        diffDays
+      );
+    }
+
+    return utcTickInterval(
+      new Date(dateRange[0]),
+      new Date(dateRange[1]),
+      xAxisNumTicks
+    );
+  }
+
+  function formatDateTicks(date: Date | NumberValue) {
+    const startDate = dayjs(dateRange[0]);
+    const endDate = dayjs(dateRange[1]);
+    const diffDays = endDate.diff(startDate, 'days');
+
+    if (diffDays === 0) {
+      return dayjs(date.valueOf()).tz().format('HH:mm');
+    }
+
+    return dayjs(date.valueOf()).tz().format('MM.DD');
+  }
+
   return (
     <div ref={parentRef} className={styles.container}>
       <svg width={width} height={height}>
@@ -317,7 +355,6 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             scale={dateScale}
             stroke="#b3b5b9"
             top={topChartHeight}
-            numTicks={xAxisNumTicks}
             tickStroke="#b3b5b9"
             tickLabelProps={() => ({
               dx: -12,
@@ -326,6 +363,8 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
               fontSize: 10,
               fontFamily: 'Pretendard, sans-serif',
             })}
+            tickValues={dateScale.ticks(generateDateTickInterval()!)}
+            tickFormat={formatDateTicks}
           />
           <AxisRight
             scale={priceScale}
@@ -351,6 +390,20 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             stroke="#3786fb"
             strokeWidth={1}
           />
+          <AxisTop
+            scale={brushDateScale}
+            stroke="rgba(0, 0, 0, 0.1)"
+            top={0}
+            numTicks={0}
+            tickStroke="transparent"
+          />
+          <AxisBottom
+            scale={brushDateScale}
+            stroke="rgba(0, 0, 0, 0.1)"
+            top={yBrushMax}
+            numTicks={0}
+            tickStroke="transparent"
+          />
           <Brush
             xScale={brushDateScale}
             yScale={brushPriceScale}
@@ -364,20 +417,6 @@ export default function PriceHistoryChart(props: PriceHistoryChartProps) {
             disableDraggingOverlay
             useWindowMoveEvents
             selectedBoxStyle={{ fill: '#cccdd0', fillOpacity: 0.5 }}
-          />
-          <AxisTop
-            scale={brushDateScale}
-            stroke="#b3b5b9"
-            top={0}
-            numTicks={0}
-            tickStroke="transparent"
-          />
-          <AxisBottom
-            scale={brushDateScale}
-            stroke="#b3b5b9"
-            top={yBrushMax}
-            numTicks={0}
-            tickStroke="transparent"
           />
         </Group>
         {tooltipOpen && <Group></Group>}
