@@ -7,7 +7,8 @@ type Grade =
   | 'Negative'
   | 'MostlyNegative'
   | 'VeryNegative'
-  | 'OverwhelminglyNegative';
+  | 'OverwhelminglyNegative'
+  | 'Empty';
 
 export function useGrade({
   positive,
@@ -16,9 +17,13 @@ export function useGrade({
   positive: number;
   totalCount: number;
 }) {
-  const percent = (positive / totalCount) * 100;
+  const percent = totalCount <= 0 ? 0 : (positive / totalCount) * 100;
 
   function getGrade(percent: number, totalCount: number): Grade {
+    if (totalCount <= 0) {
+      return 'Empty';
+    }
+
     if (totalCount >= 500 && percent >= 95) {
       return 'OverwhelminglyPositive';
     } else if (totalCount >= 500 && percent < 20) {
@@ -71,6 +76,7 @@ export function useGradeFormat({
     MostlyNegative: '대체로 부정적',
     VeryNegative: '매우 부정적',
     OverwhelminglyNegative: '압도적으로 부정적',
+    Empty: '평가 없음',
   };
   const gradeText = gradeTextMap[grade];
   const totalCountText = `${totalCount.toLocaleString()}명`;
