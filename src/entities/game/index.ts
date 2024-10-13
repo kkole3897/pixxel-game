@@ -15,6 +15,8 @@ export {
   type GamePreview,
   type Game,
   type GameCatalogItem,
+  type SteamSlugType,
+  type EpicSlugType,
 } from './model';
 export { formatReleaseDate, sortGameCatalogItemsByCurrentPrice } from './lib';
 export {
@@ -50,4 +52,4 @@ export {
   useGetBestPriceHistoryQuery as useGetBestGamePriceHistoryQuery,
   useGetPriceHistoryQuery as useGetGamePriceHistoryQuery,
 } from './queries';
-export { GAME_STORE } from './constants';
+export { GAME_STORE, STEAM_SLUG_TYPE, EPIC_SLUG_TYPE } from './constants';
