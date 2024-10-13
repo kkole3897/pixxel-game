@@ -58,7 +58,7 @@ export const Epic: Story = {
   args: {
     request: {
       id: 1,
-      slug: 'thymesia-f4f399',
+      slug: 'p/thymesia-f4f399',
       store: 'epic',
       createdAt: '2024-09-20T00:00:00Z',
       completedAt: null,
