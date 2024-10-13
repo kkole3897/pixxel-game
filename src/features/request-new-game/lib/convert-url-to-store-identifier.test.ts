@@ -1,4 +1,7 @@
-import { convertUrlToStoreIdentifier } from './convert-url-to-store-identifier';
+import {
+  convertUrlToStoreIdentifier,
+  revertStoreIdentifierToUrl,
+} from './convert-url-to-store-identifier';
 
 describe('convertUrlToStoreIdentifier common', () => {
   it('should throw error when url is empty', () => {
@@ -243,5 +246,83 @@ describe('convertUrlToStoreIdentifier epic', () => {
   it('should throw error when path is not supported', () => {
     const url = 'https://store.epicgames.com/unsupported/slug';
     expect(() => convertUrlToStoreIdentifier(url)).toThrow();
+  });
+});
+
+describe('revertStoreIdentifierToUrl', () => {
+  describe('common', () => {
+    it('should throw error when store is not supported', () => {
+      const storeIdentifier = { store: 'unsupported', slug: 'slug' };
+      expect(() => revertStoreIdentifierToUrl(storeIdentifier)).toThrow();
+    });
+  });
+
+  describe('steam', () => {
+    it('should return correct url for steam app', () => {
+      const storeIdentifier = { store: 'steam', slug: 'app/123456' };
+      const correctResult = 'https://store.steampowered.com/app/123456';
+
+      const result = revertStoreIdentifierToUrl(storeIdentifier);
+      expect(result).toEqual(correctResult);
+    });
+
+    it('should return correct url for steam bundle', () => {
+      const storeIdentifier = { store: 'steam', slug: 'bundle/123456' };
+      const correctResult = 'https://store.steampowered.com/bundle/123456';
+
+      const result = revertStoreIdentifierToUrl(storeIdentifier);
+      expect(result).toEqual(correctResult);
+    });
+
+    it('should return correct url for steam pacakge', () => {
+      const storeIdentifier = { store: 'steam', slug: 'sub/123456' };
+      const correctResult = 'https://store.steampowered.com/sub/123456';
+
+      const result = revertStoreIdentifierToUrl(storeIdentifier);
+      expect(result).toEqual(correctResult);
+    });
+
+    it('should throw error when type is not supported', () => {
+      const storeIdentifier = { store: 'steam', slug: 'type/1234' };
+      expect(() => revertStoreIdentifierToUrl(storeIdentifier)).toThrow();
+    });
+
+    it('should throw error when id is missing', () => {
+      const storeIdentifier = { store: 'steam', slug: 'app/' };
+      expect(() => revertStoreIdentifierToUrl(storeIdentifier)).toThrow();
+    });
+
+    it('should throw error when id is not a number', () => {
+      const storeIdentifier = { store: 'steam', slug: 'app/abc' };
+      expect(() => revertStoreIdentifierToUrl(storeIdentifier)).toThrow();
+    });
+  });
+
+  describe('epic', () => {
+    it('should return correct url for epic', () => {
+      const storeIdentifier = { store: 'epic', slug: 'p/slug' };
+      const correctResult = 'https://store.epicgames.com/p/slug';
+
+      const result = revertStoreIdentifierToUrl(storeIdentifier);
+      expect(result).toEqual(correctResult);
+    });
+
+    it('should return correct url for epic bundles', () => {
+      const storeIdentifier = { store: 'epic', slug: 'bundles/slug' };
+      const correctResult = 'https://store.epicgames.com/bundles/slug';
+
+      const result = revertStoreIdentifierToUrl(storeIdentifier);
+      expect(result).toEqual(correctResult);
+    });
+
+    it('should throw error when type is not supported', () => {
+      const storeIdentifier = { store: 'epic', slug: 'type/slug' };
+      expect(() => revertStoreIdentifierToUrl(storeIdentifier)).toThrow();
+    });
+
+    it('should throw error when slug is missing', () => {
+      const storeIdentifier = { store: 'epic', slug: 'p/' };
+      expect(() => revertStoreIdentifierToUrl(storeIdentifier)).toThrow();
+    });
   });
 });

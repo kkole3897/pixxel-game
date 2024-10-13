@@ -41,13 +41,36 @@ export function convertUrlToStoreIdentifier(
   throw new UnsupportedStoreUrlError(url);
 }
 
+function checkSteamSlug(slug: string): boolean {
+  const pattern = /^(?<type>(app|bundle|sub))\/(?<id>\d+)$/;
+
+  return pattern.test(slug);
+}
+
+function checkEpicSlug(slug: string): boolean {
+  const pattern = /^(?<type>(p|bundles))\/(?<slug>.+)$/;
+
+  return pattern.test(slug);
+}
+
 export function revertStoreIdentifierToUrl({
   slug,
   store,
-}: RequestedGameStoreIdentifier): string {
+}: {
+  store: string;
+  slug: string;
+}): string {
   if (store === 'steam') {
+    if (!checkSteamSlug(slug)) {
+      throw new Error(`Invalid slug for steam: ${slug}`);
+    }
+
     return `https://store.steampowered.com/${slug}`;
   } else if (store === 'epic') {
+    if (!checkEpicSlug(slug)) {
+      throw new Error(`Invalid slug for epic: ${slug}`);
+    }
+
     return `https://store.epicgames.com/${slug}`;
   }
 
