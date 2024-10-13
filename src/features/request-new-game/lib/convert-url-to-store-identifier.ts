@@ -7,7 +7,7 @@ const steamUrlPattern =
   /(https?:\/\/)?store.steampowered.com\/(?<type>(app|bundle|sub))\/(?<id>\d+)(\/.*)?/;
 
 const epicUrlPattern =
-  /(https?:\/\/)?store.epicgames.com(\/(ko|en-US|ar|de|es-ES|es-MX|fr|it|ja|pl|pt-BR|ru|th|tr|zh-CN|zh-Hant))?\/p\/(?<slug>.+)(\/.*)?/;
+  /(https?:\/\/)?store.epicgames.com(\/(ko|en-US|ar|de|es-ES|es-MX|fr|it|ja|pl|pt-BR|ru|th|tr|zh-CN|zh-Hant))?\/(?<type>(p|bundles))\/(?<slug>.+)(\/.*)?/;
 
 function getIndentifierFromSteamUrl(url: string): RequestedGameStoreIdentifier {
   const { type: gameType, id } = steamUrlPattern.exec(url)!.groups!;
@@ -21,11 +21,11 @@ function getIndentifierFromSteamUrl(url: string): RequestedGameStoreIdentifier {
 function getStoreIdentifierFromEpicUrl(
   url: string
 ): RequestedGameStoreIdentifier {
-  const { slug } = epicUrlPattern.exec(url)!.groups!;
+  const { slug, type: gameType } = epicUrlPattern.exec(url)!.groups!;
 
   return {
     store: 'epic',
-    slug,
+    slug: `${gameType}/${slug}`,
   };
 }
 
@@ -48,7 +48,7 @@ export function revertStoreIdentifierToUrl({
   if (store === 'steam') {
     return `https://store.steampowered.com/${slug}`;
   } else if (store === 'epic') {
-    return `https://store.epicgames.com/p/${slug}`;
+    return `https://store.epicgames.com/${slug}`;
   }
 
   throw new Error(`Unsupported store: ${store}`);
