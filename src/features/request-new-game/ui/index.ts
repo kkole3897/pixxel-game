@@ -10,3 +10,4 @@ export {
 } from './create-requested-game-form';
 export { StoreSelect } from './store-select';
 export { IntroductionLink } from './introduction-link';
+export { SlugTypeSelect } from './slug-type-select';
