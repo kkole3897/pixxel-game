@@ -1,5 +1,8 @@
 export { UnsupportedStoreUrlError } from './errors';
-export { type CreateRequestedGameData } from './create-requested-game-data';
+export {
+  type CreateRequestedGameData,
+  createRequestedGameDataSchema,
+} from './create-requested-game-data';
 export {
   createGeneratedStoreIdentifierStore,
   type GeneratedStoreIdentifierStore,
