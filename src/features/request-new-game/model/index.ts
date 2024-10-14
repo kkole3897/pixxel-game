@@ -5,5 +5,9 @@ export {
   type GeneratedStoreIdentifierStore,
 } from './generated-store-identifier-store';
 export { type RequestedGameStatus } from './requested-game-status';
-export { type RequestedGame, getRequestedGameStatus } from './requested-game';
+export {
+  type RequestedGame,
+  getRequestedGameStatus,
+  requestedGameSchema,
+} from './requested-game';
 export { type RequestedGameStoreIdentifier } from './requested-game-store-identifier';
