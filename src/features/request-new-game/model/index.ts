@@ -10,4 +10,7 @@ export {
   getRequestedGameStatus,
   requestedGameSchema,
 } from './requested-game';
-export { type RequestedGameStoreIdentifier } from './requested-game-store-identifier';
+export {
+  type RequestedGameStoreIdentifier,
+  requestedGameStoreIdentifierSchema,
+} from './requested-game-store-identifier';

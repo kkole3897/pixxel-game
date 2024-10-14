@@ -1,7 +1,7 @@
 import z from 'zod';
 
-import { RequestedGameStatus } from './requested-game-status';
-import { GAME_STORE } from '@/entities/game';
+import { requestedGameStoreIdentifierSchema } from './requested-game-store-identifier';
+import { type RequestedGameStatus } from './requested-game-status';
 
 const baseRequestedGameSchema = z.object({
   id: z.number(),
@@ -11,18 +11,9 @@ const baseRequestedGameSchema = z.object({
   failedAt: z.string().datetime().nullable(),
 });
 
-const requestedSteamGameSchema = z.object({
-  store: z.literal(GAME_STORE.Steam),
-  slug: z.string().regex(/^(app|sub|bundle)\/(\d+)$/),
-});
-
-const requestedEpicGameSchema = z.object({
-  store: z.literal(GAME_STORE.Epic),
-  slug: z.string().regex(/^(p|bundles)\/(.+)$/),
-});
-
-export const requestedGameSchema = baseRequestedGameSchema.and(
-  z.union([requestedSteamGameSchema, requestedEpicGameSchema])
+export const requestedGameSchema = z.intersection(
+  baseRequestedGameSchema,
+  requestedGameStoreIdentifierSchema
 );
 
 export type RequestedGame = z.infer<typeof requestedGameSchema>;
