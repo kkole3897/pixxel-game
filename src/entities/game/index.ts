@@ -5,6 +5,8 @@ export {
   isSalesEnded,
   gameStoreSchema,
   getGameTitle,
+  isSteamSlugType,
+  isEpicSlugType,
   type GameType,
   type GameStore,
   type GameDrm,
