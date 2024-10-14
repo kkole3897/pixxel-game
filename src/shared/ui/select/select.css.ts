@@ -29,7 +29,7 @@ export const trigger = style([
           '&:focus': {
             borderColor: theme.colors.blue[400],
             outline: 'none',
-            boxShadow: '0 0 0 2px #CEDFF4',
+            boxShadow: '0 0 0 3px #cedff4',
           },
           '&[data-placeholder]': {
             color: theme.colors.gray[700],
@@ -37,6 +37,16 @@ export const trigger = style([
           '&[data-disabled]': {
             borderColor: theme.colors.gray[200],
             color: theme.colors.gray[500],
+          },
+          '&[aria-invalid="true"]': {
+            borderColor: '#ec7878',
+          },
+          '&[aria-invalid="true"]:hover': {
+            borderColor: '#e01e1e',
+          },
+          '&[aria-invalid="true"]:focus': {
+            borderColor: '#e01e1e',
+            boxShadow: '0 0 0 3px #f9d2d2',
           },
         },
       },
