@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 import { createSlugTypeSelectOptions } from '../../lib';
 import { type GameStore, type SteamSlugType, type EpicSlugType } from '@/entities/game';
@@ -11,25 +11,30 @@ export type SlugTypeSelectProps = {
   defaultValue?: SteamSlugType | EpicSlugType;
   name?: string;
   required?: boolean;
+  id?: string;
+  className?: string;
+  value? : SteamSlugType | EpicSlugType;
+  onChange?: (value: SteamSlugType | EpicSlugType) => void;
 }
 
-export default function SlugTypeSelect({ store, defaultValue, ...props }: SlugTypeSelectProps) {
+export default function SlugTypeSelect({ store, defaultValue, value: valueProp, onChange, ...props }: SlugTypeSelectProps) {
   const prevStore = useRef(store);
   const options = createSlugTypeSelectOptions(store);
 
-  const [value, setValue] = useState<SteamSlugType | EpicSlugType>(defaultValue ?? options[0].value);
+  const [value, setValue] = useState<SteamSlugType | EpicSlugType>(valueProp ?? defaultValue ?? options[0].value);
   const isValid = options.some((option) => option.value === value);
 
   const handleValueChange = (value: SteamSlugType | EpicSlugType) => {
     setValue(value);
-  }
+    onChange?.(value);
+  };
 
   useEffect(() => {
     if (store === 'steam' && prevStore.current !== store) {
-      setValue('app')
+      handleValueChange('app')
       prevStore.current = store;
     } else if (store === 'epic' && prevStore.current !== store) {
-      setValue('p');
+      handleValueChange('p');
       prevStore.current = store;
     }
   }, [store]);
