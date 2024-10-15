@@ -11,6 +11,9 @@ export function useCreateRequestedGameMutation() {
   return useMutation({
     mutationKey: requestNewGameQueryKeys.createRequestedGame.queryKey,
     mutationFn: (data: CreateRequestedGameData) =>
-      core.newGameRequest.createRequestedGame(data),
+      core.newGameRequest.createRequestedGame({
+        ...data,
+        title: data.title ?? null,
+      }),
   });
 }
