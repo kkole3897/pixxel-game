@@ -30,6 +30,7 @@ export default function GameBox({ game }: GameBoxProps) {
           width="200"
           height="136"
           fallbackSrc={DefaultGameMainImage}
+          priority
         />
       </div>
       <div className={styles.summaryArea}>
