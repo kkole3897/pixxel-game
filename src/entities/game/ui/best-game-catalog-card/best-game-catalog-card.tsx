@@ -61,6 +61,7 @@ export default function BestGameCatalogCard({
           sizes="100vw"
           className={styles.mainImage({ dimmed: isBestSalesEnded })}
           fallbackSrc={DefaultGameMainImage}
+          priority
         />
         <div className={styles.wishArea}>{wish}</div>
       </div>

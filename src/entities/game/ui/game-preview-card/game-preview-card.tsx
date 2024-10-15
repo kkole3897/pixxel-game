@@ -47,6 +47,7 @@ export default function GamePreviewCard({
           className={styles.thumbnailImage({ dimmed: isBestSalesEnded })}
           sizes="50vw"
           fallbackSrc={DefaultGameMainImage}
+          priority
         />
         {isHistoricalLow && (
           <div className={styles.historicalLow}>역대 최저</div>
