@@ -54,3 +54,8 @@ export const noticeLink = style({
 export const noticeText = style({
   wordBreak: 'break-word',
 });
+
+export const errorMessage = style({
+  marginTop: '4px',
+  color: theme.colors.red[900],
+});

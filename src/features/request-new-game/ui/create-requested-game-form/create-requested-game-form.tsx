@@ -1,11 +1,12 @@
 'use client';
 
 import { StoreSelect } from '../store-select';
+import { SlugTypeSelect } from '../slug-type-select'
 import {
   useCreateRequestedGameFormState,
   revertStoreIdentifierToUrl,
-  type CreateRequestedGameFormState,
 } from '../../lib';
+import { type RequestedGameStoreIdentifier, type CreateRequestedGameData } from '../../model';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
 import { DefaultLink } from '@/shared/ui/default-link';
@@ -13,18 +14,17 @@ import * as styles from './create-requested-game-form.css';
 
 export type CreateRquestedGameFormProps = {
   className?: string;
-  initialState: CreateRequestedGameFormState;
-  onSubmit?: (data: CreateRequestedGameFormState) => void;
+  storeIdentifier: RequestedGameStoreIdentifier;
+  onSubmit?: (data: CreateRequestedGameData) => void;
 };
 
 export default function CreateRequestedGameForm({
   className,
-  initialState,
+  storeIdentifier,
   onSubmit,
 }: CreateRquestedGameFormProps) {
-  const { handleChangeInput, handleSubmit, formState, handleChangeStore } =
-    useCreateRequestedGameFormState(initialState);
-  const url = revertStoreIdentifierToUrl(formState);
+  const { handleChangeInput, handleSubmit, formState, handleSelectStore, storeUrl, handleSelectSlugType, errors, errorCatagory } =
+    useCreateRequestedGameFormState(storeIdentifier);
 
   return (
     <form
@@ -40,12 +40,25 @@ export default function CreateRequestedGameForm({
           <StoreSelect
             id="store"
             value={formState.store}
-            onChange={handleChangeStore}
+            onChange={handleSelectStore}
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="type" className={styles.label}>
+            페이지 타입
+          </label>
+          <SlugTypeSelect
+            id="type"
+            name="slugType"
+            store={formState.store}
+            value={formState.slugType}
+            required
+            onChange={handleSelectSlugType}
           />
         </div>
         <div className={styles.field}>
           <label htmlFor="slug" className={styles.label}>
-            slug
+            페이지 ID
           </label>
           <Input
             id="slug"
@@ -53,21 +66,29 @@ export default function CreateRequestedGameForm({
             value={formState.slug}
             required
             onChange={handleChangeInput}
+            isInvalid={errors.slug !== null}
           />
+          {
+            errors.slug === errorCatagory.slug.requiredError ? (
+              <div className={styles.errorMessage}>필수로 입력해야 합니다.</div>
+            ) : errors.slug === errorCatagory.slug.steamFormatError ? (
+              <div className={styles.errorMessage}>숫자만 입력해주세요.</div>
+            ) : null
+          }
         </div>
         <div className={styles.noticeBox}>
           <div>💡</div>
           <p className={styles.noticeText}>
-            스토어와 slug는 입력하신 url을 토대로 자동으로 생성되었습니다.{' '}
+            스토어와 페이지 관련 정보는 입력하신 url을 토대로 자동으로 생성되었습니다.{' '}
             <br />
             임의로 변경할 경우 수집에 실패할 수 있습니다.
             <br />
             <DefaultLink
-              href={url}
+              href={storeUrl}
               target="_blank"
               className={styles.noticeLink}
             >
-              {url}
+              {storeUrl}
             </DefaultLink>
             이 의도한 페이지가 아닐 경우에만 변경해주세요.
           </p>

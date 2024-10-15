@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { RiArrowLeftSLine } from '@remixicon/react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { PostgrestError } from '@supabase/supabase-js';
@@ -34,11 +33,6 @@ export default function CreateRequestStep({
       state.setStoreIdentifier,
     ]);
   const { mutateAsync, isPending } = useCreateRequestedGameMutation();
-
-  const initialState = useRef<CreateRquestedGameFormProps['initialState']>({
-    ...(!storeIdentifier ? { store: 'steam', slug: '' } : storeIdentifier),
-    title: '',
-  });
 
   if (!storeIdentifier) {
     return null;
@@ -96,7 +90,7 @@ export default function CreateRequestStep({
       </div>
       <div className={styles.formArea}>
         <CreateRequestedGameForm
-          initialState={initialState.current}
+          storeIdentifier={storeIdentifier}
           onSubmit={handleSubmit}
         />
       </div>
