@@ -17,3 +17,9 @@ export {
   getCatalogDiscountRate,
 } from './game-catalog';
 export { type PriceHistoryRecord as GamePriceHistoryRecord } from './price-history';
+export {
+  type SteamSlugType,
+  type EpicSlugType,
+  isEpicSlugType,
+  isSteamSlugType,
+} from './slug-type';

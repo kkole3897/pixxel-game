@@ -20,3 +20,4 @@ export {
 } from './use-create-requested-game-form-state';
 export { convertCreateRequestedFormStateToData } from './convert-create-requested-form-state-to-data';
 export { formatRequestedGameTitle } from './format-requested-game-title';
+export { createSlugTypeSelectOptions } from './create-slug-type-select-options';

@@ -7,7 +7,7 @@ const steamUrlPattern =
   /(https?:\/\/)?store.steampowered.com\/(?<type>(app|bundle|sub))\/(?<id>\d+)(\/.*)?/;
 
 const epicUrlPattern =
-  /(https?:\/\/)?store.epicgames.com(\/(ko|en-US|ar|de|es-ES|es-MX|fr|it|ja|pl|pt-BR|ru|th|tr|zh-CN|zh-Hant))?\/p\/(?<slug>.+)(\/.*)?/;
+  /(https?:\/\/)?store.epicgames.com(\/(ko|en-US|ar|de|es-ES|es-MX|fr|it|ja|pl|pt-BR|ru|th|tr|zh-CN|zh-Hant))?\/(?<type>(p|bundles))\/(?<slug>.+)(\/.*)?/;
 
 function getIndentifierFromSteamUrl(url: string): RequestedGameStoreIdentifier {
   const { type: gameType, id } = steamUrlPattern.exec(url)!.groups!;
@@ -21,11 +21,11 @@ function getIndentifierFromSteamUrl(url: string): RequestedGameStoreIdentifier {
 function getStoreIdentifierFromEpicUrl(
   url: string
 ): RequestedGameStoreIdentifier {
-  const { slug } = epicUrlPattern.exec(url)!.groups!;
+  const { slug, type: gameType } = epicUrlPattern.exec(url)!.groups!;
 
   return {
     store: 'epic',
-    slug,
+    slug: `${gameType}/${slug}`,
   };
 }
 
@@ -41,14 +41,37 @@ export function convertUrlToStoreIdentifier(
   throw new UnsupportedStoreUrlError(url);
 }
 
+function checkSteamSlug(slug: string): boolean {
+  const pattern = /^(?<type>(app|bundle|sub))\/(?<id>\d+)$/;
+
+  return pattern.test(slug);
+}
+
+function checkEpicSlug(slug: string): boolean {
+  const pattern = /^(?<type>(p|bundles))\/(?<slug>.+)$/;
+
+  return pattern.test(slug);
+}
+
 export function revertStoreIdentifierToUrl({
   slug,
   store,
-}: RequestedGameStoreIdentifier): string {
+}: {
+  store: string;
+  slug: string;
+}): string {
   if (store === 'steam') {
+    if (!checkSteamSlug(slug)) {
+      throw new Error(`Invalid slug for steam: ${slug}`);
+    }
+
     return `https://store.steampowered.com/${slug}`;
   } else if (store === 'epic') {
-    return `https://store.epicgames.com/p/${slug}`;
+    if (!checkEpicSlug(slug)) {
+      throw new Error(`Invalid slug for epic: ${slug}`);
+    }
+
+    return `https://store.epicgames.com/${slug}`;
   }
 
   throw new Error(`Unsupported store: ${store}`);

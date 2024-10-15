@@ -61,7 +61,7 @@ const Input = forwardRef<HTMLInputElement, InputRootProps>(
         onClick={handleClickContainer}
         style={style}
       >
-        <input ref={composedRefs} className={styles.input} {...rest} />
+        <input {...rest} ref={composedRefs} className={styles.input} aria-invalid={isInvalid} />
         {children}
       </div>
     );
