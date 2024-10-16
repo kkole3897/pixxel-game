@@ -22,6 +22,8 @@ type PageProps = {
   params: { gameId: string };
 };
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -51,7 +53,6 @@ export async function generateMetadata({
 export default async function GameDetailPage({ params }: PageProps) {
   const queryClient = new QueryClient();
   const core = new Core(createClient());
-
   await queryClient.prefetchQuery({
     queryKey: gameQueryKeys.detail(params.gameId).queryKey,
     queryFn: () => core.games.getGame(params.gameId),

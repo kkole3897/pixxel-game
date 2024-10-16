@@ -1,8 +1,8 @@
 'use client';
 
 import { useMemo, useRef, useState, useId, useEffect } from 'react';
+import sanitizeHtml from 'sanitize-html';
 import { RiArrowDownWideLine, RiArrowUpWideLine } from '@remixicon/react';
-import DOMPurify from 'isomorphic-dompurify';
 
 import * as styles from './description.css';
 import { useGameDetailQuery } from '@/entities/game';
@@ -16,7 +16,9 @@ const MAX_HEIGHT = 850;
 export default function Description({ gamePublicId }: Props) {
   const { data } = useGameDetailQuery(gamePublicId);
 
-  const cleanContent = DOMPurify.sanitize(data?.game.description ?? '');
+  const cleanContent = sanitizeHtml(data?.game.description ?? '', {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+  }).replaceAll('\\r\\n', '');
 
   const collapsibleId = useId();
 
