@@ -6,7 +6,7 @@ import { gameDrmSchema } from '@/entities/game';
 
 const baseLibraryItemSchema = z.object({
   id: z.number(),
-  playTime: z.number(),
+  playTime: z.number().default(0),
   isCleared: z.boolean().default(false),
   playStatus: playStatusSchema.default('playing'),
   memo: z.string().nullable(),
