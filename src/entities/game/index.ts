@@ -7,6 +7,7 @@ export {
   getGameTitle,
   isSteamSlugType,
   isEpicSlugType,
+  gameDrmSchema,
   type GameType,
   type GameStore,
   type GameDrm,
