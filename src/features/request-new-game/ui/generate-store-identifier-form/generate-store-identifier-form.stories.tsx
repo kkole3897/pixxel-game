@@ -12,13 +12,15 @@ const meta: Meta = {
   component: GenerateStoreIdentifierForm,
   decorators: [
     (Story) => {
-      return <QueryClientProvider client={queryClient}>
-        <GeneratedStoreIdentifierStoreProvider>
-          <Story />
-        </GeneratedStoreIdentifierStoreProvider>
-      </QueryClientProvider>;
+      return (
+        <QueryClientProvider client={queryClient}>
+          <GeneratedStoreIdentifierStoreProvider>
+            <Story />
+          </GeneratedStoreIdentifierStoreProvider>
+        </QueryClientProvider>
+      );
     },
-  ]
+  ],
 };
 
 export default meta;

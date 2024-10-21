@@ -1,12 +1,15 @@
 'use client';
 
 import { StoreSelect } from '../store-select';
-import { SlugTypeSelect } from '../slug-type-select'
+import { SlugTypeSelect } from '../slug-type-select';
 import {
   useCreateRequestedGameFormState,
   revertStoreIdentifierToUrl,
 } from '../../lib';
-import { type RequestedGameStoreIdentifier, type CreateRequestedGameData } from '../../model';
+import {
+  type RequestedGameStoreIdentifier,
+  type CreateRequestedGameData,
+} from '../../model';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
 import { DefaultLink } from '@/shared/ui/default-link';
@@ -23,8 +26,16 @@ export default function CreateRequestedGameForm({
   storeIdentifier,
   onSubmit,
 }: CreateRquestedGameFormProps) {
-  const { handleChangeInput, handleSubmit, formState, handleSelectStore, storeUrl, handleSelectSlugType, errors, errorCatagory } =
-    useCreateRequestedGameFormState(storeIdentifier);
+  const {
+    handleChangeInput,
+    handleSubmit,
+    formState,
+    handleSelectStore,
+    storeUrl,
+    handleSelectSlugType,
+    errors,
+    errorCatagory,
+  } = useCreateRequestedGameFormState(storeIdentifier);
 
   return (
     <form
@@ -68,19 +79,17 @@ export default function CreateRequestedGameForm({
             onChange={handleChangeInput}
             isInvalid={errors.slug !== null}
           />
-          {
-            errors.slug === errorCatagory.slug.requiredError ? (
-              <div className={styles.errorMessage}>필수로 입력해야 합니다.</div>
-            ) : errors.slug === errorCatagory.slug.steamFormatError ? (
-              <div className={styles.errorMessage}>숫자만 입력해주세요.</div>
-            ) : null
-          }
+          {errors.slug === errorCatagory.slug.requiredError ? (
+            <div className={styles.errorMessage}>필수로 입력해야 합니다.</div>
+          ) : errors.slug === errorCatagory.slug.steamFormatError ? (
+            <div className={styles.errorMessage}>숫자만 입력해주세요.</div>
+          ) : null}
         </div>
         <div className={styles.noticeBox}>
           <div>💡</div>
           <p className={styles.noticeText}>
-            스토어와 페이지 관련 정보는 입력하신 url을 토대로 자동으로 생성되었습니다.{' '}
-            <br />
+            스토어와 페이지 관련 정보는 입력하신 url을 토대로 자동으로
+            생성되었습니다. <br />
             임의로 변경할 경우 수집에 실패할 수 있습니다.
             <br />
             <DefaultLink
