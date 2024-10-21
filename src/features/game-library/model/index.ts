@@ -1,18 +1,8 @@
 export {
   libraryItemSchema,
-  autoLibraryItemSchema,
-  manualLibraryItemSchema,
+  additionalLibraryItemSchema,
   type LibraryItem,
-  type AutoLibraryItem,
-  type ManualLibraryItem,
+  type AdditionalLibraryItem,
 } from './library-item';
 
-export {
-  createAutoLibraryItemDataSchema,
-  type CreateAutoLibraryItemData,
-} from './create-auto-library-item-data';
-
-export {
-  createManualLibraryItemDataSchema,
-  type CreateManualLibraryItemData,
-} from './create-manual-library-item-data';
+export { type PlayStatus } from './play-status';
