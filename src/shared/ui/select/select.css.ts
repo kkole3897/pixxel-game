@@ -110,12 +110,6 @@ export const content = style({
     [base]: {
       width: 'var(--radix-select-trigger-width)',
       maxHeight: 'var(--radix-select-content-available-height)',
-      padding: '12px 0',
-      borderRadius: '8px',
-      backgroundColor: theme.colors.gray[50],
-      boxShadow:
-        '0 -1px 30px -6px rgba(0, 0, 0, 0.04), 0 6px 20px -2px rgba(0, 0, 0, 0.10)',
-      zIndex: 1,
     },
   },
 });
@@ -167,20 +161,6 @@ export const item = style([
         fontWeight: theme.fontWeight.regular,
         outline: 'none',
         cursor: 'default',
-
-        selectors: {
-          '&[data-highlighted]': {
-            backgroundColor: theme.colors.gray[100],
-          },
-          '&[data-state="checked"]': {
-            backgroundColor: theme.colors.blue[100],
-            color: theme.colors.blue[500],
-          },
-          '&[data-disabled]': {
-            backgroundColor: theme.colors.gray[100],
-            color: theme.colors.gray[400],
-          },
-        },
       },
     },
   },
