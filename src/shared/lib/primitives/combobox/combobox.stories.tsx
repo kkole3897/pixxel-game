@@ -33,3 +33,31 @@ export const Multiple = () => (
     </Combobox.Content>
   </Combobox.Root>
 );
+
+export const Disabled = () => (
+  <Combobox.Root disabled>
+    <Combobox.Control>
+      <Combobox.Input />
+    </Combobox.Control>
+    <Combobox.Content>
+      <Combobox.Item value="A">A</Combobox.Item>
+      <Combobox.Item value="B">B</Combobox.Item>
+      <Combobox.Item value="C">C</Combobox.Item>
+    </Combobox.Content>
+  </Combobox.Root>
+);
+
+export const WithDisabledItems = () => (
+  <Combobox.Root>
+    <Combobox.Control>
+      <Combobox.Input />
+    </Combobox.Control>
+    <Combobox.Content>
+      <Combobox.Item value="A">A</Combobox.Item>
+      <Combobox.Item value="B" disabled>
+        B
+      </Combobox.Item>
+      <Combobox.Item value="C">C</Combobox.Item>
+    </Combobox.Content>
+  </Combobox.Root>
+);
