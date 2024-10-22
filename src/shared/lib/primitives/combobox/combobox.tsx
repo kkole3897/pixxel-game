@@ -202,7 +202,35 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
         onFocus={handleFocus}
         onKeyDown={(event) => {
           if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
-            context.setIsOpened(true);
+            if (!context.isOpened) {
+              context.setIsOpened(true);
+            } else if (!context.activeValue) {
+              const items = Array.from(context.itemMap.values()).filter(
+                (item) => !item.disabled
+              );
+              const item =
+                event.key === 'ArrowDown' ? items[0] : items[items.length - 1];
+
+              if (item) {
+                context.setActiveValue(item.value);
+              }
+            } else {
+              const items = Array.from(context.itemMap.values()).filter(
+                (item) => !item.disabled
+              );
+              const currentIndex = items.findIndex(
+                (item) => item.value === context.activeValue
+              );
+              const nextIndex =
+                event.key === 'ArrowDown'
+                  ? Math.min(currentIndex + 1, items.length - 1)
+                  : Math.max(currentIndex - 1, 0);
+              const nextItem = items[nextIndex];
+
+              if (nextItem) {
+                context.setActiveValue(nextItem.value);
+              }
+            }
           } else if (event.key === 'Escape') {
             context.setIsOpened(false);
           }
