@@ -19,6 +19,7 @@ import type {
 } from '@radix-ui/react-popover';
 import { Slot } from '@radix-ui/react-slot';
 
+import { useControllableState } from '../lib';
 import { composeEventHandlers, composeRefs } from '@/shared/lib/react';
 
 function generateContentId(rootId: string) {
@@ -29,27 +30,27 @@ function generateItemId(rootId: string, value: string) {
   return `combobox-${rootId}-item-${value}`;
 }
 
-type UseComboboxContext = {
-  isOpened: boolean;
-  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+type ComboboxContextValue = {
+  isOpened?: boolean;
+  setIsOpened: (isOpened: boolean) => void;
   isDisabled: boolean;
-  values: string[];
-  setValues: React.Dispatch<React.SetStateAction<string[]>>;
+  values?: string[];
+  setValues: (value: string[]) => void;
   multiple: boolean;
   itemMap: Map<
     React.RefObject<HTMLElement>,
     { ref: React.RefObject<HTMLElement>; value: string; disabled: boolean }
   >;
   controlElement: HTMLElement | null;
-  setControlElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  setControlElement: (element: HTMLElement | null) => void;
   id: string;
   activeValue: string | null;
-  setActiveValue: React.Dispatch<React.SetStateAction<string | null>>;
+  setActiveValue: (value: string | null) => void;
   inputElement: HTMLElement | null;
-  setInputElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  setInputElement: (element: HTMLElement | null) => void;
 };
 
-const ComboboxContext = createContext<UseComboboxContext | undefined>(
+const ComboboxContext = createContext<ComboboxContextValue | undefined>(
   undefined
 );
 
@@ -64,13 +65,13 @@ function useComboboxContext() {
   return context;
 }
 
-type ComboboxProps = Omit<
-  PrimitivePopoverProps,
-  'open' | 'onOpenChange' | 'modal'
-> & {
+type ComboboxProps = Omit<PrimitivePopoverProps, 'modal'> & {
   className?: string;
   disabled?: boolean;
   multiple?: boolean;
+  defaultValue?: string[];
+  value?: string[];
+  onValueChange?: (value: string[]) => void;
 };
 
 const Combobox = ({
@@ -79,11 +80,24 @@ const Combobox = ({
   defaultOpen,
   disabled = false,
   multiple = false,
+  defaultValue,
+  value,
+  open,
+  onValueChange,
+  onOpenChange,
   ...props
 }: ComboboxProps) => {
-  const [isOpened, setIsOpened] = useState(defaultOpen ?? false);
-  const [values, setValues] = useState<string[]>([]);
-  const itemMap = useRef<UseComboboxContext['itemMap']>(new Map()).current;
+  const [isOpened, setIsOpened] = useControllableState({
+    defaultValue: defaultOpen,
+    value: open,
+    onChange: onOpenChange,
+  });
+  const [values, setValues] = useControllableState({
+    defaultValue: defaultValue,
+    value: value,
+    onChange: onValueChange,
+  });
+  const itemMap = useRef<ComboboxContextValue['itemMap']>(new Map()).current;
   const [controlElement, setControlElement] = useState<HTMLElement | null>(
     null
   );
@@ -107,6 +121,12 @@ const Combobox = ({
     inputElement,
     setInputElement,
   };
+
+  useEffect(() => {
+    if (!isOpened) {
+      setActiveValue(null);
+    }
+  }, [isOpened]);
 
   return (
     <ComboboxProvider value={context}>
@@ -147,6 +167,7 @@ type ComboboxInputProps = {
   asChild?: boolean;
   children?: React.ReactNode;
   placeholder?: string;
+  name?: string;
   'aria-controls'?: string;
   'aria-activedescendant'?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -187,6 +208,98 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       context.setIsOpened(true);
     };
 
+    const handleArrowDownKeyDown = () => {
+      if (!context.isOpened) {
+        context.setIsOpened(true);
+      } else if (!context.activeValue) {
+        const items = Array.from(context.itemMap.values()).filter(
+          (item) => !item.disabled
+        );
+        const item = items[0];
+
+        if (item) {
+          context.setActiveValue(item.value);
+        }
+      } else {
+        const items = Array.from(context.itemMap.values()).filter(
+          (item) => !item.disabled
+        );
+        const currentIndex = items.findIndex(
+          (item) => item.value === context.activeValue
+        );
+        const nextIndex = Math.min(currentIndex + 1, items.length - 1);
+        const nextItem = items[nextIndex];
+
+        if (nextItem) {
+          context.setActiveValue(nextItem.value);
+        }
+      }
+    };
+
+    const handleArrowUpKeyDown = () => {
+      if (!context.isOpened) {
+        context.setIsOpened(true);
+      } else if (!context.activeValue) {
+        const items = Array.from(context.itemMap.values()).filter(
+          (item) => !item.disabled
+        );
+        const item = items[items.length - 1];
+
+        if (item) {
+          context.setActiveValue(item.value);
+        }
+      } else {
+        const items = Array.from(context.itemMap.values()).filter(
+          (item) => !item.disabled
+        );
+        const currentIndex = items.findIndex(
+          (item) => item.value === context.activeValue
+        );
+        const nextIndex = Math.max(currentIndex - 1, 0);
+        const nextItem = items[nextIndex];
+
+        if (nextItem) {
+          context.setActiveValue(nextItem.value);
+        }
+      }
+    };
+
+    const handleEcapeKeyDown = () => {
+      context.setIsOpened(false);
+    };
+
+    const handleEnterKeyDown = (
+      event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      if (!context.isOpened) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (context.activeValue) {
+        if (context.multiple) {
+          if (!context.values) {
+            context.setValues([context.activeValue]);
+            return;
+          }
+
+          if (context.values.includes(context.activeValue)) {
+            const newValues = context.values.filter(
+              (prevValue) => prevValue !== context.activeValue
+            );
+
+            context.setValues(newValues);
+          } else {
+            context.setValues([...context.values, context.activeValue]);
+          }
+        } else {
+          context.setValues([context.activeValue]);
+          context.setIsOpened(false);
+        }
+      }
+    };
+
     return (
       <Component
         {...props}
@@ -201,63 +314,14 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
         onChange={handleChange}
         onFocus={handleFocus}
         onKeyDown={(event) => {
-          if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
-            if (!context.isOpened) {
-              context.setIsOpened(true);
-            } else if (!context.activeValue) {
-              const items = Array.from(context.itemMap.values()).filter(
-                (item) => !item.disabled
-              );
-              const item =
-                event.key === 'ArrowDown' ? items[0] : items[items.length - 1];
-
-              if (item) {
-                context.setActiveValue(item.value);
-              }
-            } else {
-              const items = Array.from(context.itemMap.values()).filter(
-                (item) => !item.disabled
-              );
-              const currentIndex = items.findIndex(
-                (item) => item.value === context.activeValue
-              );
-              const nextIndex =
-                event.key === 'ArrowDown'
-                  ? Math.min(currentIndex + 1, items.length - 1)
-                  : Math.max(currentIndex - 1, 0);
-              const nextItem = items[nextIndex];
-
-              if (nextItem) {
-                context.setActiveValue(nextItem.value);
-              }
-            }
+          if (event.key === 'ArrowDown') {
+            handleArrowDownKeyDown();
+          } else if (event.key === 'ArrowUp') {
+            handleArrowUpKeyDown();
           } else if (event.key === 'Escape') {
-            context.setIsOpened(false);
+            handleEcapeKeyDown();
           } else if (event.key === 'Enter') {
-            if (!context.isOpened) {
-              return;
-            }
-
-            event.preventDefault();
-
-            if (context.activeValue) {
-              if (context.multiple) {
-                context.setValues((prevValues) => {
-                  if (prevValues.includes(context.activeValue!)) {
-                    return prevValues.filter(
-                      (prevValue) => prevValue !== context.activeValue
-                    );
-                  } else {
-                    return [...prevValues, context.activeValue!];
-                  }
-                });
-              } else {
-                context.setValues([context.activeValue]);
-              }
-            }
-
-            context.setActiveValue(null);
-            context.setIsOpened(false);
+            handleEnterKeyDown(event);
           }
         }}
       />
@@ -372,7 +436,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
       });
     });
 
-    const isChecked = context.values.includes(value);
+    const isChecked = !!context.values?.includes(value);
     const isActive = context.activeValue === value;
 
     const handleSelect = () => {
@@ -380,20 +444,24 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         return;
       }
 
-      if (isChecked) {
-        context.setValues((prevValues) => {
-          return prevValues.filter((prevValue) => prevValue !== value);
-        });
-        context.setActiveValue(null);
-      } else if (context.multiple) {
-        context.setValues((prevValues) => {
-          return [...prevValues, value];
-        });
-        context.setActiveValue(value);
+      if (context.multiple) {
+        if (!context.values) {
+          context.setValues([value]);
+          return;
+        }
+
+        if (context.values.includes(value)) {
+          const newValues = context.values.filter(
+            (prevValue) => prevValue !== value
+          );
+
+          context.setValues(newValues);
+        } else {
+          context.setValues([...context.values, value]);
+        }
       } else {
         context.setValues([value]);
         context.setIsOpened(false);
-        context.setActiveValue(null);
       }
     };
 
