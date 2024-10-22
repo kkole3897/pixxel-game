@@ -137,7 +137,7 @@ const Combobox = ({
   );
 };
 
-Combobox.displayName = 'ComboboxRoot';
+Combobox.displayName = 'PrimitiveComboboxRoot';
 
 type ComboboxControlProps = PrimitivePopoverAnchorProps;
 
@@ -161,7 +161,7 @@ const ComboboxControl = forwardRef<HTMLDivElement, ComboboxControlProps>(
   }
 );
 
-ComboboxControl.displayName = 'ComboboxControl';
+ComboboxControl.displayName = 'PrimitiveComboboxControl';
 
 type ComboboxInputProps = {
   asChild?: boolean;
@@ -329,7 +329,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
   }
 );
 
-ComboboxInput.displayName = 'ComboboxInput';
+ComboboxInput.displayName = 'PrimitiveComboboxInput';
 
 type ComboboxContentProps = Omit<
   PrimitivePopoverContentProps,
@@ -412,7 +412,7 @@ const ComboboxContent = forwardRef<HTMLDivElement, ComboboxContentProps>(
   }
 );
 
-ComboboxContent.displayName = 'ComboboxContent';
+ComboboxContent.displayName = 'PrimitiveComboboxContent';
 
 type ComboboxItemProps = PropsWithChildren<{
   id?: string;
@@ -517,7 +517,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
   }
 );
 
-ComboboxItem.displayName = 'ComboboxItem';
+ComboboxItem.displayName = 'PrimitiveComboboxItem';
 
 const Root = Combobox;
 const Control = ComboboxControl;
