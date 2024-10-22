@@ -7,8 +7,9 @@ import React, {
   useState,
   useRef,
   useEffect,
-  type PropsWithChildren,
   useCallback,
+  useId,
+  type PropsWithChildren,
 } from 'react';
 import * as PrimitivePopover from '@radix-ui/react-popover';
 import type {
@@ -19,6 +20,14 @@ import type {
 import { Slot } from '@radix-ui/react-slot';
 
 import { composeEventHandlers, composeRefs } from '@/shared/lib/react';
+
+function generateContentId(rootId: string) {
+  return `combobox-${rootId}-content`;
+}
+
+function generateItemId(rootId: string, value: string) {
+  return `combobox-${rootId}-item-${value}`;
+}
 
 type UseComboboxContext = {
   isOpened: boolean;
@@ -33,6 +42,11 @@ type UseComboboxContext = {
   >;
   controlElement: HTMLElement | null;
   setControlElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  id: string;
+  activeValue: string | null;
+  setActiveValue: React.Dispatch<React.SetStateAction<string | null>>;
+  inputElement: HTMLElement | null;
+  setInputElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 };
 
 const ComboboxContext = createContext<UseComboboxContext | undefined>(
@@ -73,6 +87,9 @@ const Combobox = ({
   const [controlElement, setControlElement] = useState<HTMLElement | null>(
     null
   );
+  const id = useRef(useId()).current;
+  const [activeValue, setActiveValue] = useState<string | null>(null);
+  const [inputElement, setInputElement] = useState<HTMLElement | null>(null);
 
   const context = {
     isOpened,
@@ -84,6 +101,11 @@ const Combobox = ({
     itemMap,
     controlElement,
     setControlElement,
+    id,
+    activeValue,
+    setActiveValue,
+    inputElement,
+    setInputElement,
   };
 
   return (
@@ -124,14 +146,34 @@ ComboboxControl.displayName = 'ComboboxControl';
 type ComboboxInputProps = {
   asChild?: boolean;
   children?: React.ReactNode;
+  placeholder?: string;
+  'aria-controls'?: string;
+  'aria-activedescendant'?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
-  ({ asChild, onChange: onChangeProp, ...props }, forwardedRef) => {
+  (
+    {
+      asChild,
+      onChange: onChangeProp,
+      'aria-controls': ariaControlsProp,
+      'aria-activedescendant': ariaActiveDescendantProp,
+      ...props
+    },
+    forwardedRef
+  ) => {
     const Component = asChild ? Slot : 'input';
-
     const context = useComboboxContext();
+    const contentId = generateContentId(context.id);
+    const ariaControls = ariaControlsProp ?? contentId;
+    const ariaActiveDescendant =
+      ariaActiveDescendantProp ?? !context.activeValue
+        ? undefined
+        : generateItemId(context.id, context.activeValue);
+    const composedRefs = composeRefs(forwardedRef, (node) => {
+      context.setInputElement(node);
+    });
 
     const handleChange = composeEventHandlers(onChangeProp, (event) => {
       if (event.defaultPrevented) {
@@ -148,9 +190,16 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
     return (
       <Component
         {...props}
-        ref={forwardedRef}
+        ref={composedRefs}
+        role="combobox"
         disabled={context.isDisabled}
+        autoComplete="off"
+        aria-controls={ariaControls}
+        aria-expanded={context.isOpened ? 'true' : 'false'}
+        aria-activedescendant={ariaActiveDescendant}
         data-disabled={context.isDisabled ? '' : undefined}
+        onChange={handleChange}
+        onFocus={handleFocus}
         onKeyDown={(event) => {
           if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
             context.setIsOpened(true);
@@ -158,8 +207,6 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
             context.setIsOpened(false);
           }
         }}
-        onChange={handleChange}
-        onFocus={handleFocus}
       />
     );
   }
@@ -167,16 +214,35 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
 
 ComboboxInput.displayName = 'ComboboxInput';
 
-type ComboboxContentProps = Omit<PrimitivePopoverContentProps, 'tabIndex'>;
+type ComboboxContentProps = Omit<
+  PrimitivePopoverContentProps,
+  'tabIndex' | 'role'
+> & {
+  role?: 'listbox' | 'tree' | 'grid' | 'dialog';
+};
 
 const ComboboxContent = forwardRef<HTMLDivElement, ComboboxContentProps>(
   (
-    { children, onPointerDownOutside, onOpenAutoFocus, ...props },
+    {
+      children,
+      onPointerDownOutside,
+      onOpenAutoFocus,
+      id: idProp,
+      role = 'listbox',
+      onFocus,
+      ...props
+    },
     forwardedRef
   ) => {
-    const context = useComboboxContext();
+    const {
+      controlElement,
+      setIsOpened,
+      id: rootId,
+      inputElement,
+    } = useComboboxContext();
     const [content, setContent] = useState<HTMLDivElement | null>(null);
     const compusedRef = composeRefs(forwardedRef, (node) => setContent(node));
+    const id = idProp ?? generateContentId(rootId);
 
     const handleOpenAutoFocus = composeEventHandlers(
       onOpenAutoFocus,
@@ -191,29 +257,36 @@ const ComboboxContent = forwardRef<HTMLDivElement, ComboboxContentProps>(
     > = useCallback(
       (event) => {
         const target = event.target as Element | null;
-        const isInControl = target && context.controlElement?.contains(target);
+        const isInControl = target && controlElement?.contains(target);
         const isInContent = target && content?.contains(target);
 
         if (isInControl || isInContent) {
           event.preventDefault();
         } else {
-          context.setIsOpened(false);
+          setIsOpened(false);
         }
       },
-      [context.controlElement, content]
+      [controlElement, content, setIsOpened]
     );
+
+    const handleFocus = composeEventHandlers(onFocus, (event) => {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      inputElement?.focus();
+    });
 
     return (
       <PrimitivePopover.Portal>
         <PrimitivePopover.Content
-          ref={compusedRef}
           {...props}
+          ref={compusedRef}
+          id={id}
+          role={role}
           onInteractOutside={handleInteractOutside}
           onOpenAutoFocus={handleOpenAutoFocus}
-          onKeyDown={() => {
-            console.log('content keydown');
-          }}
-          role="listbox"
+          onFocus={handleFocus}
         >
           {children}
         </PrimitivePopover.Content>
@@ -232,11 +305,11 @@ type ComboboxItemProps = PropsWithChildren<{
 }>;
 
 const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
-  ({ value, children, disabled, ...props }, forwardedRef) => {
+  ({ value, children, disabled, id: idProp, ...props }, forwardedRef) => {
     const context = useComboboxContext();
     const ref = useRef<HTMLDivElement>(null);
-
     const composedRefs = composeRefs(forwardedRef, ref);
+    const id = idProp ?? generateItemId(context.id, value);
 
     useEffect(() => {
       context.itemMap.set(ref as React.RefObject<HTMLElement>, {
@@ -247,7 +320,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
     });
 
     const isChecked = context.values.includes(value);
-    const [isActive, setIsActive] = useState(false);
+    const isActive = context.activeValue === value;
 
     const handleSelect = () => {
       if (context.isDisabled || disabled) {
@@ -258,13 +331,16 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         context.setValues((prevValues) => {
           return prevValues.filter((prevValue) => prevValue !== value);
         });
+        context.setActiveValue(null);
       } else if (context.multiple) {
         context.setValues((prevValues) => {
           return [...prevValues, value];
         });
+        context.setActiveValue(value);
       } else {
         context.setValues([value]);
         context.setIsOpened(false);
+        context.setActiveValue(null);
       }
     };
 
@@ -273,8 +349,9 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
     return (
       <div
         {...props}
-        role="option"
         ref={composedRefs}
+        id={id}
+        role="option"
         tabIndex={disabled ? undefined : -1}
         data-highlighted={isActive ? '' : undefined}
         aria-selected={isChecked && isActive}
@@ -300,16 +377,18 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
           if (disabled) {
             return;
           } else if (pointerTypeRef.current === 'mouse') {
-            setIsActive(true);
+            context.setActiveValue(value);
           }
         }}
         onPointerLeave={() => {
-          setIsActive(false);
+          context.setActiveValue(null);
         }}
         onFocus={() => {
-          setIsActive(true);
+          context.setActiveValue(value);
         }}
-        onBlur={() => setIsActive(false)}
+        onBlur={() => {
+          context.setActiveValue(null);
+        }}
       >
         {children}
       </div>
