@@ -233,6 +233,31 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
             }
           } else if (event.key === 'Escape') {
             context.setIsOpened(false);
+          } else if (event.key === 'Enter') {
+            if (!context.isOpened) {
+              return;
+            }
+
+            event.preventDefault();
+
+            if (context.activeValue) {
+              if (context.multiple) {
+                context.setValues((prevValues) => {
+                  if (prevValues.includes(context.activeValue!)) {
+                    return prevValues.filter(
+                      (prevValue) => prevValue !== context.activeValue
+                    );
+                  } else {
+                    return [...prevValues, context.activeValue!];
+                  }
+                });
+              } else {
+                context.setValues([context.activeValue]);
+              }
+            }
+
+            context.setActiveValue(null);
+            context.setIsOpened(false);
           }
         }}
       />
