@@ -334,8 +334,8 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       <Component
         {...props}
         ref={composedRefs}
+        value={value ?? ''}
         role="combobox"
-        value={value}
         disabled={context.isDisabled}
         autoComplete="off"
         aria-controls={ariaControls}
