@@ -9,4 +9,9 @@ export {
   Input,
   Content,
   Item,
+  type ComboboxProps,
+  type ComboboxControlProps,
+  type ComboboxInputProps,
+  type ComboboxContentProps,
+  type ComboboxItemProps,
 } from './combobox';

@@ -65,7 +65,7 @@ function useComboboxContext() {
   return context;
 }
 
-type ComboboxProps = Omit<PrimitivePopoverProps, 'modal'> & {
+export type ComboboxProps = Omit<PrimitivePopoverProps, 'modal'> & {
   className?: string;
   disabled?: boolean;
   multiple?: boolean;
@@ -139,7 +139,7 @@ const Combobox = ({
 
 Combobox.displayName = 'PrimitiveComboboxRoot';
 
-type ComboboxControlProps = PrimitivePopoverAnchorProps;
+export type ComboboxControlProps = PrimitivePopoverAnchorProps;
 
 const ComboboxControl = forwardRef<HTMLDivElement, ComboboxControlProps>(
   ({ children, ...props }, forwardedRef) => {
@@ -163,21 +163,27 @@ const ComboboxControl = forwardRef<HTMLDivElement, ComboboxControlProps>(
 
 ComboboxControl.displayName = 'PrimitiveComboboxControl';
 
-type ComboboxInputProps = {
+export type ComboboxInputProps = {
   asChild?: boolean;
   children?: React.ReactNode;
   placeholder?: string;
   name?: string;
+  defaultValue?: string;
+  value?: string;
   'aria-controls'?: string;
   'aria-activedescendant'?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onValueChange?: (value: string) => void;
 };
 
 const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
   (
     {
       asChild,
+      defaultValue,
+      value: valueProp,
       onChange: onChangeProp,
+      onValueChange,
       'aria-controls': ariaControlsProp,
       'aria-activedescendant': ariaActiveDescendantProp,
       ...props
@@ -186,6 +192,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
   ) => {
     const Component = asChild ? Slot : 'input';
     const context = useComboboxContext();
+    const { values, multiple } = context;
     const contentId = generateContentId(context.id);
     const ariaControls = ariaControlsProp ?? contentId;
     const ariaActiveDescendant =
@@ -195,6 +202,11 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
     const composedRefs = composeRefs(forwardedRef, (node) => {
       context.setInputElement(node);
     });
+    const [value, setValue] = useControllableState({
+      defaultValue,
+      value: valueProp,
+      onChange: onValueChange,
+    });
 
     const handleChange = composeEventHandlers(onChangeProp, (event) => {
       if (event.defaultPrevented) {
@@ -202,11 +214,20 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       }
 
       context.setIsOpened(true);
+      setValue(event.target.value);
     });
 
     const handleFocus = () => {
       context.setIsOpened(true);
     };
+
+    useEffect(() => {
+      if (!multiple) {
+        if (values && values.length === 1) {
+          setValue(values[0]);
+        }
+      }
+    }, [values, multiple, setValue]);
 
     const handleArrowDownKeyDown = () => {
       if (!context.isOpened) {
@@ -305,6 +326,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
         {...props}
         ref={composedRefs}
         role="combobox"
+        value={value}
         disabled={context.isDisabled}
         autoComplete="off"
         aria-controls={ariaControls}
@@ -331,7 +353,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
 
 ComboboxInput.displayName = 'PrimitiveComboboxInput';
 
-type ComboboxContentProps = Omit<
+export type ComboboxContentProps = Omit<
   PrimitivePopoverContentProps,
   'tabIndex' | 'role'
 > & {
@@ -414,7 +436,7 @@ const ComboboxContent = forwardRef<HTMLDivElement, ComboboxContentProps>(
 
 ComboboxContent.displayName = 'PrimitiveComboboxContent';
 
-type ComboboxItemProps = PropsWithChildren<{
+export type ComboboxItemProps = PropsWithChildren<{
   id?: string;
   className?: string;
   disabled?: boolean;
