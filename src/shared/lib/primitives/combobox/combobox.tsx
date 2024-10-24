@@ -247,7 +247,11 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       setValue(newValue);
     }, [values, setValue, itemMap]);
 
-    const handleArrowDownKeyDown = () => {
+    const handleArrowDownKeyDown = (
+      event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      event.preventDefault();
+
       if (!context.isOpened) {
         context.setIsOpened(true);
       } else if (!context.activeValue) {
@@ -275,7 +279,10 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       }
     };
 
-    const handleArrowUpKeyDown = () => {
+    const handleArrowUpKeyDown = (
+      event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      event.preventDefault();
       if (!context.isOpened) {
         context.setIsOpened(true);
       } else if (!context.activeValue) {
@@ -355,9 +362,9 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
         onFocus={handleFocus}
         onKeyDown={(event) => {
           if (event.key === 'ArrowDown') {
-            handleArrowDownKeyDown();
+            handleArrowDownKeyDown(event);
           } else if (event.key === 'ArrowUp') {
-            handleArrowUpKeyDown();
+            handleArrowUpKeyDown(event);
           } else if (event.key === 'Escape') {
             handleEcapeKeyDown();
           } else if (event.key === 'Enter') {
@@ -481,7 +488,11 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         disabled: !!disabled,
         label,
       });
-    });
+
+      return () => {
+        context.itemMap.delete(ref as React.RefObject<HTMLElement>);
+      };
+    }, []);
 
     const isChecked = !!context.values?.includes(value);
     const isActive = context.activeValue === value;
