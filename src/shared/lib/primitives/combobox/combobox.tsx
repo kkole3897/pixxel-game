@@ -39,7 +39,12 @@ type ComboboxContextValue = {
   multiple: boolean;
   itemMap: Map<
     React.RefObject<HTMLElement>,
-    { ref: React.RefObject<HTMLElement>; value: string; disabled: boolean, label?: string }
+    {
+      ref: React.RefObject<HTMLElement>;
+      value: string;
+      disabled: boolean;
+      label?: string;
+    }
   >;
   controlElement: HTMLElement | null;
   setControlElement: (element: HTMLElement | null) => void;
@@ -50,7 +55,10 @@ type ComboboxContextValue = {
   setInputElement: (element: HTMLElement | null) => void;
 };
 
-function selectedValuesToString(itemMap: ComboboxContextValue['itemMap'], values: string[]) {
+function selectedValuesToString(
+  itemMap: ComboboxContextValue['itemMap'],
+  values: string[]
+) {
   if (values.length > 1 || values.length === 0) {
     return '';
   }
@@ -182,6 +190,7 @@ export type ComboboxInputProps = {
   name?: string;
   defaultValue?: string;
   value?: string;
+  className?: string;
   'aria-controls'?: string;
   'aria-activedescendant'?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -455,7 +464,10 @@ export type ComboboxItemProps = PropsWithChildren<{
 }>;
 
 const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
-  ({ value, children, disabled, id: idProp, label, asChild, ...props }, forwardedRef) => {
+  (
+    { value, children, disabled, id: idProp, label, asChild, ...props },
+    forwardedRef
+  ) => {
     const context = useComboboxContext();
     const ref = useRef<HTMLDivElement>(null);
     const composedRefs = composeRefs(forwardedRef, ref);
