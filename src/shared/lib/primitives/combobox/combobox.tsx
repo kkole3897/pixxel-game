@@ -39,7 +39,7 @@ type ComboboxContextValue = {
   multiple: boolean;
   itemMap: Map<
     React.RefObject<HTMLElement>,
-    { ref: React.RefObject<HTMLElement>; value: string; disabled: boolean }
+    { ref: React.RefObject<HTMLElement>; value: string; disabled: boolean, label?: string }
   >;
   controlElement: HTMLElement | null;
   setControlElement: (element: HTMLElement | null) => void;
@@ -49,6 +49,18 @@ type ComboboxContextValue = {
   inputElement: HTMLElement | null;
   setInputElement: (element: HTMLElement | null) => void;
 };
+
+function selectedValuesToString(itemMap: ComboboxContextValue['itemMap'], values: string[]) {
+  if (values.length > 1 || values.length === 0) {
+    return '';
+  }
+
+  const items = Array.from(itemMap.values());
+
+  const selectedItem = items.find((item) => item.value === values[0]);
+
+  return !selectedItem ? '' : selectedItem.label ?? selectedItem.value;
+}
 
 const ComboboxContext = createContext<ComboboxContextValue | undefined>(
   undefined
@@ -192,7 +204,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
   ) => {
     const Component = asChild ? Slot : 'input';
     const context = useComboboxContext();
-    const { values, multiple } = context;
+    const { values, itemMap } = context;
     const contentId = generateContentId(context.id);
     const ariaControls = ariaControlsProp ?? contentId;
     const ariaActiveDescendant =
@@ -203,7 +215,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       context.setInputElement(node);
     });
     const [value, setValue] = useControllableState({
-      defaultValue,
+      defaultValue: defaultValue,
       value: valueProp,
       onChange: onValueChange,
     });
@@ -222,12 +234,9 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
     };
 
     useEffect(() => {
-      if (!multiple) {
-        if (values && values.length === 1) {
-          setValue(values[0]);
-        }
-      }
-    }, [values, multiple, setValue]);
+      const newValue = selectedValuesToString(itemMap, values ?? []);
+      setValue(newValue);
+    }, [values, setValue, itemMap]);
 
     const handleArrowDownKeyDown = () => {
       if (!context.isOpened) {
@@ -441,10 +450,11 @@ export type ComboboxItemProps = PropsWithChildren<{
   className?: string;
   disabled?: boolean;
   value: string;
+  label?: string;
 }>;
 
 const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
-  ({ value, children, disabled, id: idProp, ...props }, forwardedRef) => {
+  ({ value, children, disabled, id: idProp, label, ...props }, forwardedRef) => {
     const context = useComboboxContext();
     const ref = useRef<HTMLDivElement>(null);
     const composedRefs = composeRefs(forwardedRef, ref);
@@ -455,6 +465,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         ref,
         value,
         disabled: !!disabled,
+        label,
       });
     });
 
@@ -498,6 +509,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         tabIndex={disabled ? undefined : -1}
         data-highlighted={isActive ? '' : undefined}
         aria-selected={isChecked && isActive}
+        aria-label={label}
         data-state={isChecked ? 'checked' : 'unchecked'}
         aria-disabled={disabled || undefined}
         data-disabled={disabled ? '' : undefined}

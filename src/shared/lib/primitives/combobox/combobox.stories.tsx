@@ -10,7 +10,7 @@ const meta: Meta = {
 export default meta;
 
 export const Single = () => (
-  <Combobox.Root defaultValue={['a']}>
+  <Combobox.Root defaultValue={['A']}>
     <Combobox.Control>
       <Combobox.Input />
     </Combobox.Control>
