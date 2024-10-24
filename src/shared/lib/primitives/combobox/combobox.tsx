@@ -451,14 +451,16 @@ export type ComboboxItemProps = PropsWithChildren<{
   disabled?: boolean;
   value: string;
   label?: string;
+  asChild?: boolean;
 }>;
 
 const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
-  ({ value, children, disabled, id: idProp, label, ...props }, forwardedRef) => {
+  ({ value, children, disabled, id: idProp, label, asChild, ...props }, forwardedRef) => {
     const context = useComboboxContext();
     const ref = useRef<HTMLDivElement>(null);
     const composedRefs = composeRefs(forwardedRef, ref);
     const id = idProp ?? generateItemId(context.id, value);
+    const Component = asChild ? Slot : 'div';
 
     useEffect(() => {
       context.itemMap.set(ref as React.RefObject<HTMLElement>, {
@@ -501,7 +503,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
     const pointerTypeRef = useRef<React.PointerEvent['pointerType']>('touch');
 
     return (
-      <div
+      <Component
         {...props}
         ref={composedRefs}
         id={id}
@@ -546,7 +548,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         }}
       >
         {children}
-      </div>
+      </Component>
     );
   }
 );
