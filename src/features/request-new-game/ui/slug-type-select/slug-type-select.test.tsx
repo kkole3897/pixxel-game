@@ -1,5 +1,7 @@
 import { act, render, getByText, screen } from '@testing-library/react';
-import userEvent, { PointerEventsCheckLevel } from '@testing-library/user-event';
+import userEvent, {
+  PointerEventsCheckLevel,
+} from '@testing-library/user-event';
 
 import SlugTypeSelect, { type SlugTypeSelectProps } from './slug-type-select';
 
@@ -14,7 +16,7 @@ function renderSlugTypeSelect(props: SlugTypeSelectProps) {
     await act(async () => {
       await userEvent.click(Select());
     });
-  }
+  };
 
   return {
     Select,
@@ -24,14 +26,14 @@ function renderSlugTypeSelect(props: SlugTypeSelectProps) {
   };
 }
 
-describe("<SlugTypeSelect />", () => {
+describe('<SlugTypeSelect />', () => {
   beforeEach(() => {
     /**
- * JSDOM doesn't implement PointerEvent so we need to mock our own implementation
- * Default to mouse left click interaction
- * https://github.com/radix-ui/primitives/issues/1822
- * https://github.com/jsdom/jsdom/pull/2666
- */
+     * JSDOM doesn't implement PointerEvent so we need to mock our own implementation
+     * Default to mouse left click interaction
+     * https://github.com/radix-ui/primitives/issues/1822
+     * https://github.com/jsdom/jsdom/pull/2666
+     */
     class MockPointerEvent extends Event {
       button: number;
       ctrlKey: boolean;
@@ -63,7 +65,7 @@ describe("<SlugTypeSelect />", () => {
     });
   });
 
-  describe("steam", () => {
+  describe('steam', () => {
     it('should render steam options when opened', async () => {
       const { Select, clickSelect } = renderSlugTypeSelect({
         store: 'steam',
@@ -75,10 +77,14 @@ describe("<SlugTypeSelect />", () => {
 
       const options = screen.getAllByRole('option');
 
-      expect(options.map((option) => option.textContent)).toEqual(['app', 'sub', 'bundle']);
+      expect(options.map((option) => option.textContent)).toEqual([
+        'app',
+        'sub',
+        'bundle',
+      ]);
     });
 
-    it('app should be selected by default',() => {
+    it('app should be selected by default', () => {
       const { Select } = renderSlugTypeSelect({
         store: 'steam',
       });
@@ -96,7 +102,7 @@ describe("<SlugTypeSelect />", () => {
     });
   });
 
-  describe("epic", () => {
+  describe('epic', () => {
     it('should render epic options when opened', async () => {
       const { Select, clickSelect } = renderSlugTypeSelect({
         store: 'epic',
@@ -107,10 +113,13 @@ describe("<SlugTypeSelect />", () => {
       await clickSelect();
 
       const options = screen.getAllByRole('option');
-      expect(options.map((option) => option.textContent)).toEqual(['p', 'bundles']);
+      expect(options.map((option) => option.textContent)).toEqual([
+        'p',
+        'bundles',
+      ]);
     });
 
-    it('app should be selected by default',() => {
+    it('app should be selected by default', () => {
       const { Select } = renderSlugTypeSelect({
         store: 'epic',
       });
@@ -128,7 +137,7 @@ describe("<SlugTypeSelect />", () => {
     });
   });
 
-  describe("switching", () => {
+  describe('switching', () => {
     it('should be default value if store is switched', () => {
       const { Select, rerender } = renderSlugTypeSelect({
         store: 'steam',

@@ -12,6 +12,7 @@ import { RiArrowDownSLine, RiArrowUpSLine } from '@remixicon/react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 
 import { CheckLine } from '@/shared/ui/icons/check-line';
+import * as SelectableCollection from '@/shared/ui/selectable-collection';
 import * as styles from './select.css';
 
 export const Root = PrimitiveSelect.Root;
@@ -70,20 +71,23 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           className={composedClassName}
           position="popper"
           ref={forwardedRef}
+          asChild
         >
-          <ScrollArea.Root className={styles.contentScrollArea}>
-            <PrimitiveSelect.Viewport asChild>
-              <ScrollArea.Viewport
-                className={styles.viewport}
-                style={{ overflowY: undefined }}
-              >
-                {children}
-              </ScrollArea.Viewport>
-            </PrimitiveSelect.Viewport>
-            <ScrollArea.Scrollbar className={styles.contentScrollbar}>
-              <ScrollArea.Thumb className={styles.contentScrollThumb} />
-            </ScrollArea.Scrollbar>
-          </ScrollArea.Root>
+          <SelectableCollection.Root>
+            <ScrollArea.Root className={styles.contentScrollArea}>
+              <PrimitiveSelect.Viewport asChild>
+                <ScrollArea.Viewport
+                  className={styles.viewport}
+                  style={{ overflowY: undefined }}
+                >
+                  {children}
+                </ScrollArea.Viewport>
+              </PrimitiveSelect.Viewport>
+              <ScrollArea.Scrollbar className={styles.contentScrollbar}>
+                <ScrollArea.Thumb className={styles.contentScrollThumb} />
+              </ScrollArea.Scrollbar>
+            </ScrollArea.Root>
+          </SelectableCollection.Root>
         </PrimitiveSelect.Content>
       </PrimitiveSelect.Portal>
     );
@@ -106,12 +110,15 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         {...props}
         className={composedClassName}
         ref={forwardedRef}
+        asChild
       >
-        {left}
-        <PrimitiveSelect.ItemText asChild>
-          <div className={styles.itemContent}>{children}</div>
-        </PrimitiveSelect.ItemText>
-        {right}
+        <SelectableCollection.Item>
+          {left}
+          <PrimitiveSelect.ItemText asChild>
+            <div className={styles.itemContent}>{children}</div>
+          </PrimitiveSelect.ItemText>
+          {right}
+        </SelectableCollection.Item>
       </PrimitiveSelect.Item>
     );
   }
