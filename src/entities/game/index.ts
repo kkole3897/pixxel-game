@@ -21,7 +21,11 @@ export {
   type SteamSlugType,
   type EpicSlugType,
 } from './model';
-export { formatReleaseDate, sortGameCatalogItemsByCurrentPrice } from './lib';
+export {
+  formatReleaseDate,
+  sortGameCatalogItemsByCurrentPrice,
+  formatDrm,
+} from './lib';
 export {
   GameBox,
   MetaScore,
