@@ -33,6 +33,22 @@ export const textarea = recipe({
             color: theme.colors.gray[200],
             cursor: 'default',
           },
+          '&::-webkit-scrollbar': {
+            width: '12px',
+            height: '12px',
+          },
+          '&::-webkit-scrollbar-track,\
+          &::-webkit-scrollbar-thumb': {
+            backgroundClip: 'content-box',
+            border: '4px solid transparent',
+            borderRadius: '12px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: theme.colors.gray[100],
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: theme.colors.gray[200],
+          },
         },
       },
     },
