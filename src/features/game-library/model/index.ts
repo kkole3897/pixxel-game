@@ -4,5 +4,5 @@ export {
   type LibraryItem,
   type AdditionalLibraryItem,
 } from './library-item';
-
 export { type PlayStatus } from './play-status';
+export { type SuggestedGame } from './suggested-game';

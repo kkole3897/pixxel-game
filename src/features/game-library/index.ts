@@ -1,1 +1,1 @@
-export { AutoLibraryLink, ManualLibraryLink } from './ui';
+export { AutoLibraryLink, ManualLibraryLink, FindGameForm } from './ui';
