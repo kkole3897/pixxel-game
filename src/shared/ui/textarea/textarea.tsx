@@ -8,7 +8,7 @@ type TextareaProps = Omit<
   'aria-invalid'
 > & {
   isInvalid?: boolean;
-  size: 'md' | 'lg';
+  size?: 'md' | 'lg';
 };
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
