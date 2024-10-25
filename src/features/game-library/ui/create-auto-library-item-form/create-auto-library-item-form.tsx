@@ -1,12 +1,11 @@
 'use client';
-import { useState } from 'react';
+
 import cn from 'classnames';
-import { nanoid } from 'nanoid';
 import { RiDeleteBinLine, RiAddCircleLine } from '@remixicon/react';
 import z from 'zod';
 
 import { PLAY_STATUS } from '../../constants';
-import { formatPlayStatus } from '../../lib';
+import { formatPlayStatus, useAdditionalInfoFieldArray } from '../../lib';
 import { type PlayStatus, type CreateAutoLibraryItemData } from '../../model';
 import { formatDrm, type GameDrm } from '@/entities/game';
 import { Select } from '@/shared/ui/select';
@@ -110,16 +109,11 @@ export default function CreateAutoLibraryItemForm({
   availableDrms,
   onSubmit,
 }: CreateAutoLibraryItemFormProps) {
+  const { fields, generateName, append, remove, update } =
+    useAdditionalInfoFieldArray({
+      defaultValue: [{ isCustomDrm: false }],
+    });
   const playStatusItems = Object.values(PLAY_STATUS);
-  const [controlledInstance, setControlledInstance] = useState<{
-    [K: string]: {
-      isCustomDrm: boolean;
-    };
-  }>({
-    [nanoid()]: {
-      isCustomDrm: false,
-    },
-  });
 
   const handleSubmit =
     (onSubmit?: CreateAutoLibraryItemFormProps['onSubmit']) =>
@@ -135,8 +129,8 @@ export default function CreateAutoLibraryItemForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        {Object.keys(controlledInstance).map((id, index) => (
-          <fieldset key={id} className={styles.instanceGroup}>
+        {fields.map((field, index) => (
+          <fieldset key={field.id} className={styles.instanceGroup}>
             <div className={styles.instanceHeader}>
               <legend className={styles.instanceLegend}>
                 인스턴스 {index + 1}
@@ -144,20 +138,20 @@ export default function CreateAutoLibraryItemForm({
             </div>
             <div className={styles.instanceContent}>
               <div className={styles.field}>
-                <label htmlFor={`drm-${id}`} className={styles.label}>
+                <label htmlFor={`drm-${field.id}`} className={styles.label}>
                   DRM
                 </label>
-                {controlledInstance[id].isCustomDrm ? (
+                {field.isCustomDrm ? (
                   <Input.Root
-                    id={`drm-${id}`}
-                    name={`instance.${index}.drm`}
+                    id={`drm-${field.id}`}
+                    name={generateName(index, 'drm')}
                     className={styles.control}
                     required
                   />
                 ) : (
-                  <Select.Root name={`instance.${index}.drm`} required>
+                  <Select.Root name={generateName(index, 'drm')} required>
                     <Select.Trigger
-                      id={`drm-${id}`}
+                      id={`drm-${field.id}`}
                       className={styles.selectTrigger}
                     >
                       <Select.Value />
@@ -174,33 +168,29 @@ export default function CreateAutoLibraryItemForm({
                 )}
                 <div className={cn(styles.subField, styles.checkboxGroup)}>
                   <Checkbox
-                    id={`drm-manual-${id}`}
-                    name={`instance.${index}.isCustomDrm`}
+                    id={`drm-manual-${field.id}`}
+                    name={generateName(index, 'isCustomDrm')}
                     value="true"
-                    checked={controlledInstance[id].isCustomDrm}
-                    onCheckedChange={() =>
-                      setControlledInstance((prev) => {
-                        const { ...prevCopy } = prev;
-
-                        prevCopy[id] = {
-                          ...prevCopy[id],
-                          isCustomDrm: !prevCopy[id].isCustomDrm,
-                        };
-
-                        return prevCopy;
-                      })
-                    }
+                    checked={field.isCustomDrm}
+                    onCheckedChange={() => {
+                      update(index, { isCustomDrm: !field.isCustomDrm });
+                    }}
                   />
-                  <label htmlFor={`drm-manual-${id}`}>직접 입력하기</label>
+                  <label htmlFor={`drm-manual-${field.id}`}>
+                    직접 입력하기
+                  </label>
                 </div>
               </div>
               <div className={styles.field}>
-                <label htmlFor={`play-time-${id}`} className={styles.label}>
+                <label
+                  htmlFor={`play-time-${field.id}`}
+                  className={styles.label}
+                >
                   플레이 시간
                 </label>
                 <Input.Root
-                  id={`play-time-${id}`}
-                  name={`instance.${index}.playTime`}
+                  id={`play-time-${field.id}`}
+                  name={generateName(index, 'playTime')}
                   type="number"
                   inputMode="numeric"
                   className={styles.control}
@@ -209,12 +199,15 @@ export default function CreateAutoLibraryItemForm({
                 </Input.Root>
               </div>
               <div className={styles.field}>
-                <label htmlFor={`play-status-${id}`} className={styles.label}>
+                <label
+                  htmlFor={`play-status-${field.id}`}
+                  className={styles.label}
+                >
                   플레이 상태
                 </label>
-                <Select.Root name={`instance.${index}.playStatus`}>
+                <Select.Root name={generateName(index, 'playStatus')}>
                   <Select.Trigger
-                    id={`play-status-${id}`}
+                    id={`play-status-${field.id}`}
                     className={styles.selectTrigger}
                   >
                     <Select.Value />
@@ -230,38 +223,32 @@ export default function CreateAutoLibraryItemForm({
                 </Select.Root>
                 <div className={cn(styles.subField, styles.checkboxGroup)}>
                   <Checkbox
-                    id={`cleared-${id}`}
-                    name={`instance.${index}.isCleared`}
+                    id={`cleared-${field.id}`}
+                    name={generateName(index, 'isCleared')}
                     value="true"
                   />
-                  <label htmlFor={`cleared-${id}`}>클리어</label>
+                  <label htmlFor={`cleared-${field.id}`}>클리어</label>
                 </div>
               </div>
               <div className={styles.field}>
-                <label htmlFor={`memo-${id}`} className={styles.label}>
+                <label htmlFor={`memo-${field.id}`} className={styles.label}>
                   메모
                 </label>
                 <Textarea
-                  id={`memo-${id}`}
-                  name={`instance.${index}.memo`}
+                  id={`memo-${field.id}`}
+                  name={generateName(index, 'memo')}
                   className={styles.control}
                 />
               </div>
             </div>
             <div className={styles.instanceFooter}>
-              {Object.keys(controlledInstance).length > 1 && (
+              {fields.length > 1 && (
                 <Button
                   type="button"
                   variant="text"
                   className={styles.deleteInstanceButton}
                   aria-label={`인스턴스 ${index + 1} 삭제`}
-                  onClick={() =>
-                    setControlledInstance((prev) => {
-                      const { [id]: _, ...rest } = prev;
-
-                      return rest;
-                    })
-                  }
+                  onClick={() => remove(index)}
                 >
                   <RiDeleteBinLine size={20} />
                 </Button>
@@ -274,12 +261,7 @@ export default function CreateAutoLibraryItemForm({
             type="button"
             variant="ghost"
             onClick={() => {
-              setControlledInstance((prev) => ({
-                ...prev,
-                [nanoid()]: {
-                  isCustomDrm: false,
-                },
-              }));
+              append({ isCustomDrm: false });
             }}
           >
             <RiAddCircleLine
