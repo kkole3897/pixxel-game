@@ -3,26 +3,28 @@ import z from 'zod';
 import { playStatusSchema } from './play-status';
 import { gameDrmSchema } from '@/entities/game';
 
-const libraryDrmSchema = z.object({
+export const libraryDrmSchema = z.object({
   isCustomDrm: z.literal(false),
   drm: gameDrmSchema,
 });
 
-const customLibraryDrmSchema = z.object({
+export const customLibraryDrmSchema = z.object({
   isCustomDrm: z.literal(true),
   drm: z.string(),
 });
 
+export const baseAdditionalLibraryItemSchema = z.object({
+  id: z.number(),
+  playStatus: playStatusSchema.nullable(),
+  playTime: z.number().default(0),
+  isCleared: z.boolean().default(false),
+  memo: z.string().nullable(),
+  libraryId: z.number(),
+});
+
 export const additionalLibraryItemSchema = z
   .discriminatedUnion('isCustomDrm', [libraryDrmSchema, customLibraryDrmSchema])
-  .and(
-    z.object({
-      playStatus: playStatusSchema,
-      playTime: z.number().default(0),
-      isCleared: z.boolean().default(false),
-      memo: z.string().nullable(),
-    })
-  );
+  .and(baseAdditionalLibraryItemSchema);
 
 export const libraryItemSchema = z.object({
   id: z.number(),
