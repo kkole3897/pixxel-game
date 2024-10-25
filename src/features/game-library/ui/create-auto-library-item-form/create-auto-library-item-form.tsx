@@ -3,9 +3,11 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { nanoid } from 'nanoid';
 import { RiDeleteBinLine, RiAddCircleLine } from '@remixicon/react';
+import z from 'zod';
 
 import { PLAY_STATUS } from '../../constants';
 import { formatPlayStatus } from '../../lib';
+import { type PlayStatus, type CreateAutoLibraryItemData } from '../../model';
 import { formatDrm, type GameDrm } from '@/entities/game';
 import { Select } from '@/shared/ui/select';
 import * as Input from '@/shared/ui/input';
@@ -15,13 +17,98 @@ import { Textarea } from '@/shared/ui/textarea';
 import * as styles from './create-auto-library-item-form.css';
 
 type CreateAutoLibraryItemFormProps = {
-  publicId: string;
   availableDrms: GameDrm[];
+  onSubmit?: (data: Omit<CreateAutoLibraryItemData, 'gameId'>) => void;
 };
 
+const instanceTransformer = z
+  .object({
+    isCustomDrm: z
+      .literal('true')
+      .optional()
+      .transform((value) => {
+        return value === 'true';
+      }),
+    drm: z.string(),
+    playTime: z
+      .string()
+      .regex(/^\d*$/)
+      .transform((value) => {
+        if (!value) {
+          return 0;
+        }
+
+        return parseInt(value, 10);
+      }),
+    playStatus: z.string().transform((value) => {
+      if (!value) {
+        return null;
+      }
+
+      return value as PlayStatus;
+    }),
+    isCleared: z
+      .literal('true')
+      .optional()
+      .transform((value) => value === 'true'),
+    memo: z.string().transform((value) => {
+      if (!value) {
+        return null;
+      }
+
+      return value;
+    }),
+  })
+  .transform((value) => {
+    if (value.isCustomDrm === false) {
+      const drm = value.drm as GameDrm;
+
+      return {
+        ...value,
+        drm,
+        isCustomDrm: false,
+      } as const;
+    }
+
+    return {
+      ...value,
+      isCustomDrm: true,
+    } as const;
+  });
+
+function transformRawInstance(rawInstance: unknown) {
+  return instanceTransformer.parse(rawInstance);
+}
+
+function formDataToCreateLibraryItemData(
+  formData: FormData
+): Omit<CreateAutoLibraryItemData, 'gameId'> {
+  const data = Object.fromEntries(formData.entries());
+
+  const rawInstances = Object.entries(data).reduce<
+    { [key: string]: FormDataEntryValue }[]
+  >((acc, [key, value]) => {
+    const [_, _index, field] = key.split('.');
+
+    const index = parseInt(_index, 10);
+    const instanceData: { [key: string]: FormDataEntryValue } =
+      acc[index] || {};
+
+    instanceData[field] = value;
+
+    acc[index] = instanceData;
+
+    return acc;
+  }, []);
+
+  return {
+    additionalInfo: rawInstances.map(transformRawInstance),
+  };
+}
+
 export default function CreateAutoLibraryItemForm({
-  publicId,
   availableDrms,
+  onSubmit,
 }: CreateAutoLibraryItemFormProps) {
   const playStatusItems = Object.values(PLAY_STATUS);
   const [controlledInstance, setControlledInstance] = useState<{
@@ -34,16 +121,20 @@ export default function CreateAutoLibraryItemForm({
     },
   });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    console.log(Object.fromEntries(formData));
-  };
+  const handleSubmit =
+    (onSubmit?: CreateAutoLibraryItemFormProps['onSubmit']) =>
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+
+      const data = formDataToCreateLibraryItemData(formData);
+
+      onSubmit?.(data);
+    };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <input type="text" name="publicId" defaultValue={publicId} hidden />
         {Object.keys(controlledInstance).map((id, index) => (
           <fieldset key={id} className={styles.instanceGroup}>
             <div className={styles.instanceHeader}>

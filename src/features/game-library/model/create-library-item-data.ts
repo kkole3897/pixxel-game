@@ -1,7 +1,6 @@
 import z from 'zod';
 
 import {
-  libraryItemSchema,
   libraryDrmSchema,
   customLibraryDrmSchema,
   baseAdditionalLibraryItemSchema,
@@ -16,15 +15,33 @@ export const createAdditionalLibraryItemDataSchema = z
     })
   );
 
-export const createLibraryItemDataSchema = libraryItemSchema
-  .omit({
-    id: true,
-    additionalInfo: true,
-  })
-  .extend({
-    additionalInfo: z.array(createAdditionalLibraryItemDataSchema),
+const createBaseLibraryItemDataSchema = z.object({
+  additionalInfo: z.array(createAdditionalLibraryItemDataSchema).default([]),
+});
+
+export const createAutoLibraryItemDataSchema =
+  createBaseLibraryItemDataSchema.extend({
+    gameId: z.number(),
   });
 
+export const createManualLibraryItemDataSchema =
+  createBaseLibraryItemDataSchema.extend({
+    title: z.string(),
+    mainImage: z.string().url().nullable(),
+  });
+
+export const createLibraryItemDataSchema = z.union([
+  createAutoLibraryItemDataSchema,
+  createManualLibraryItemDataSchema,
+]);
+
+export type CreateLibraryItemData = z.infer<typeof createLibraryItemDataSchema>;
+export type CreateAutoLibraryItemData = z.infer<
+  typeof createAutoLibraryItemDataSchema
+>;
+export type CreateManualLibraryItemData = z.infer<
+  typeof createManualLibraryItemDataSchema
+>;
 export type CreateAdditionalLibraryItemData = z.infer<
   typeof createAdditionalLibraryItemDataSchema
 >;

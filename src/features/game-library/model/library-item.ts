@@ -26,13 +26,24 @@ export const additionalLibraryItemSchema = z
   .discriminatedUnion('isCustomDrm', [libraryDrmSchema, customLibraryDrmSchema])
   .and(baseAdditionalLibraryItemSchema);
 
-export const libraryItemSchema = z.object({
+const baseLibraryItemSchema = z.object({
   id: z.number(),
-  title: z.string().nullable(),
-  mainImage: z.string().url().nullable(),
-  gameId: z.number().nullable(),
   additionalInfo: z.array(additionalLibraryItemSchema).default([]),
 });
+
+export const autoLibraryItemSchema = baseLibraryItemSchema.extend({
+  gameId: z.number(),
+});
+
+export const manualLibraryItemSchema = baseLibraryItemSchema.extend({
+  title: z.string(),
+  mainImage: z.string().url().nullable(),
+});
+
+export const libraryItemSchema = z.union([
+  autoLibraryItemSchema,
+  manualLibraryItemSchema,
+]);
 
 export type LibraryItem = z.infer<typeof libraryItemSchema>;
 export type AdditionalLibraryItem = z.infer<typeof additionalLibraryItemSchema>;

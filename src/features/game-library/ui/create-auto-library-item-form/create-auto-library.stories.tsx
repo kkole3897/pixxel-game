@@ -14,7 +14,6 @@ type Story = StoryObj<typeof CreateAutoLibraryItemForm>;
 
 export const Default: Story = {
   args: {
-    publicId: 'public_id_1',
     availableDrms: ['steam', 'epic'],
   },
 };
