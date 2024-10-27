@@ -13,7 +13,7 @@ export const customLibraryDrmSchema = z.object({
   drm: z.string(),
 });
 
-export const baseAdditionalLibraryItemSchema = z.object({
+export const basePlayRecordSchema = z.object({
   id: z.number(),
   playStatus: playStatusSchema.nullable(),
   playTime: z.number().default(0),
@@ -22,13 +22,13 @@ export const baseAdditionalLibraryItemSchema = z.object({
   libraryId: z.number(),
 });
 
-export const additionalLibraryItemSchema = z
+export const playRecordSchema = z
   .discriminatedUnion('isCustomDrm', [libraryDrmSchema, customLibraryDrmSchema])
-  .and(baseAdditionalLibraryItemSchema);
+  .and(basePlayRecordSchema);
 
 const baseLibraryItemSchema = z.object({
   id: z.number(),
-  additionalInfo: z.array(additionalLibraryItemSchema).default([]),
+  playRecords: z.array(playRecordSchema).default([]),
 });
 
 export const autoLibraryItemSchema = baseLibraryItemSchema.extend({
@@ -46,4 +46,6 @@ export const libraryItemSchema = z.union([
 ]);
 
 export type LibraryItem = z.infer<typeof libraryItemSchema>;
-export type AdditionalLibraryItem = z.infer<typeof additionalLibraryItemSchema>;
+export type PlayRecord = z.infer<typeof playRecordSchema>;
+export type LibraryDrm = z.infer<typeof libraryDrmSchema>;
+export type CustomLibraryDrm = z.infer<typeof customLibraryDrmSchema>;

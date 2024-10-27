@@ -1,17 +1,22 @@
 export {
   libraryItemSchema,
-  additionalLibraryItemSchema,
+  playRecordSchema,
+  libraryDrmSchema,
+  customLibraryDrmSchema,
+  basePlayRecordSchema,
   type LibraryItem,
-  type AdditionalLibraryItem,
+  type PlayRecord,
+  type LibraryDrm,
+  type CustomLibraryDrm,
 } from './library-item';
 export { type PlayStatus } from './play-status';
 export { type SuggestedGame } from './suggested-game';
 export {
-  createAdditionalLibraryItemDataSchema,
+  createPlayRecordDataSchema,
   createAutoLibraryItemDataSchema,
   createManualLibraryItemDataSchema,
   createLibraryItemDataSchema,
-  type CreateAdditionalLibraryItemData,
+  type CreatePlayRecordData,
   type CreateAutoLibraryItemData,
   type CreateLibraryItemData,
   type CreateManualLibraryItemData,

@@ -3,20 +3,20 @@ import z from 'zod';
 import {
   libraryDrmSchema,
   customLibraryDrmSchema,
-  baseAdditionalLibraryItemSchema,
+  basePlayRecordSchema,
 } from './library-item';
 
-export const createAdditionalLibraryItemDataSchema = z
+export const createPlayRecordDataSchema = z
   .discriminatedUnion('isCustomDrm', [libraryDrmSchema, customLibraryDrmSchema])
   .and(
-    baseAdditionalLibraryItemSchema.omit({
+    basePlayRecordSchema.omit({
       id: true,
       libraryId: true,
     })
   );
 
 const createBaseLibraryItemDataSchema = z.object({
-  additionalInfo: z.array(createAdditionalLibraryItemDataSchema).default([]),
+  playRecords: z.array(createPlayRecordDataSchema).default([]),
 });
 
 export const createAutoLibraryItemDataSchema =
@@ -42,6 +42,4 @@ export type CreateAutoLibraryItemData = z.infer<
 export type CreateManualLibraryItemData = z.infer<
   typeof createManualLibraryItemDataSchema
 >;
-export type CreateAdditionalLibraryItemData = z.infer<
-  typeof createAdditionalLibraryItemDataSchema
->;
+export type CreatePlayRecordData = z.infer<typeof createPlayRecordDataSchema>;
