@@ -17,9 +17,15 @@ export const Default = () => (
       <Combobox.Input />
     </Combobox.Control>
     <Combobox.Content>
-      <Combobox.Item value='1' label="Item 1">Item 1</Combobox.Item>
-      <Combobox.Item value='2' label="Item 2">Item 2</Combobox.Item>
-      <Combobox.Item value='3' label="Item 3">Item 3</Combobox.Item>
+      <Combobox.Item value="1" label="Item 1">
+        Item 1
+      </Combobox.Item>
+      <Combobox.Item value="2" label="Item 2">
+        Item 2
+      </Combobox.Item>
+      <Combobox.Item value="3" label="Item 3">
+        Item 3
+      </Combobox.Item>
     </Combobox.Content>
   </Combobox.Root>
 );
@@ -29,16 +35,22 @@ export const WithIconInput = () => (
     <Combobox.Control>
       <Combobox.Input asChild>
         <Input.Root>
-          <Input.Slot side='left'>
+          <Input.Slot side="left">
             <RiSearchLine />
           </Input.Slot>
         </Input.Root>
       </Combobox.Input>
     </Combobox.Control>
     <Combobox.Content>
-      <Combobox.Item value='1' label="Item 1">Item 1</Combobox.Item>
-      <Combobox.Item value='2' label="Item 2">Item 2</Combobox.Item>
-      <Combobox.Item value='3' label="Item 3">Item 3</Combobox.Item>
+      <Combobox.Item value="1" label="Item 1">
+        Item 1
+      </Combobox.Item>
+      <Combobox.Item value="2" label="Item 2">
+        Item 2
+      </Combobox.Item>
+      <Combobox.Item value="3" label="Item 3">
+        Item 3
+      </Combobox.Item>
     </Combobox.Content>
   </Combobox.Root>
 );
@@ -49,9 +61,15 @@ export const Multiple = () => (
       <Combobox.Input />
     </Combobox.Control>
     <Combobox.Content>
-      <Combobox.Item value='1' label="Item 1">Item 1</Combobox.Item>
-      <Combobox.Item value='2' label="Item 2">Item 2</Combobox.Item>
-      <Combobox.Item value='3' label="Item 3">Item 3</Combobox.Item>
+      <Combobox.Item value="1" label="Item 1">
+        Item 1
+      </Combobox.Item>
+      <Combobox.Item value="2" label="Item 2">
+        Item 2
+      </Combobox.Item>
+      <Combobox.Item value="3" label="Item 3">
+        Item 3
+      </Combobox.Item>
     </Combobox.Content>
   </Combobox.Root>
 );
