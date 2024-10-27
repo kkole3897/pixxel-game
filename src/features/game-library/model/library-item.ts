@@ -10,15 +10,24 @@ export const libraryDrmSchema = z.object({
 
 export const customLibraryDrmSchema = z.object({
   isCustomDrm: z.literal(true),
-  drm: z.string(),
+  drm: z.string().min(1),
 });
 
 export const basePlayRecordSchema = z.object({
   id: z.number(),
   playStatus: playStatusSchema.nullable(),
-  playTime: z.number().default(0),
+  playTime: z.number().min(0).default(0),
   isCleared: z.boolean().default(false),
-  memo: z.string().nullable(),
+  memo: z
+    .string()
+    .nullable()
+    .transform((value) => {
+      if (typeof value === 'string' && value.trim() === '') {
+        return null;
+      }
+
+      return value;
+    }),
   libraryId: z.number(),
 });
 

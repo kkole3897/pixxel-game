@@ -15,8 +15,8 @@ export const createPlayRecordDataSchema = z
     })
   );
 
-const createBaseLibraryItemDataSchema = z.object({
-  playRecords: z.array(createPlayRecordDataSchema).default([]),
+export const createBaseLibraryItemDataSchema = z.object({
+  playRecords: z.array(createPlayRecordDataSchema).nonempty(),
 });
 
 export const createAutoLibraryItemDataSchema =
@@ -43,3 +43,6 @@ export type CreateManualLibraryItemData = z.infer<
   typeof createManualLibraryItemDataSchema
 >;
 export type CreatePlayRecordData = z.infer<typeof createPlayRecordDataSchema>;
+export type CreateBaseLibraryItemData = z.infer<
+  typeof createBaseLibraryItemDataSchema
+>;

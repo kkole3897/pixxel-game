@@ -5,7 +5,12 @@ import { RiDeleteBinLine, RiAddCircleLine } from '@remixicon/react';
 import { Controller } from 'react-hook-form';
 
 import { PLAY_STATUS } from '../../constants';
-import { formatPlayStatus, usePlayRecordsFieldArray } from '../../lib';
+import {
+  formatPlayStatus,
+  usePlayRecordsFieldArray,
+  useCreateAutoLibraryItemForm,
+  type CreateValidAutoLibraryItemFormValues,
+} from '../../lib';
 import { PlayStatus, type CreateAutoLibraryItemData } from '../../model';
 import { formatDrm, type GameDrm } from '@/entities/game';
 import { Select } from '@/shared/ui/select';
@@ -17,7 +22,7 @@ import * as styles from './create-auto-library-item-form.css';
 
 type CreateAutoLibraryItemFormProps = {
   availableDrms: GameDrm[];
-  onSubmit?: (data: Omit<CreateAutoLibraryItemData, 'gameId'>) => void;
+  onSubmit?: (data: CreateValidAutoLibraryItemFormValues) => void;
 };
 
 export default function CreateAutoLibraryItemForm({
@@ -25,15 +30,14 @@ export default function CreateAutoLibraryItemForm({
   onSubmit,
 }: CreateAutoLibraryItemFormProps) {
   const {
-    fields,
-    append,
-    remove,
-    register,
-    createHandleSubmit,
     control,
-    setValue,
+    createHandleSubmit,
+    register,
     watch,
-  } = usePlayRecordsFieldArray({
+    formState: { errors },
+    setValue,
+    clearErrors,
+  } = useCreateAutoLibraryItemForm({
     defaultValues: {
       playRecords: [
         {
@@ -42,15 +46,20 @@ export default function CreateAutoLibraryItemForm({
           playTime: 0,
           isCleared: false,
           playStatus: null,
-          memo: '',
+          memo: null,
         },
       ],
     },
   });
+
+  const { fields, append, remove } = usePlayRecordsFieldArray({
+    control,
+  });
+
   const playStatusItems = Object.values(PLAY_STATUS);
 
-  const handleValidSubmit = (data: any) => {
-    console.log(data);
+  const handleValidSubmit = (data: CreateValidAutoLibraryItemFormValues) => {
+    onSubmit?.(data);
   };
 
   return (
@@ -66,48 +75,63 @@ export default function CreateAutoLibraryItemForm({
             <div className={styles.instanceContent}>
               <div className={styles.field}>
                 <label htmlFor={`drm-${field.id}`} className={styles.label}>
-                  DRM
+                  DRM <span className={styles.requiredMark}>*</span>
                 </label>
                 {watch(`playRecords.${index}.isCustomDrm`) ? (
-                  <Input.Root
-                    {...register(`playRecords.${index}.drm`, {
-                      required: true,
-                      minLength: 1,
-                    })}
-                    id={`drm-${field.id}`}
-                    className={styles.control}
-                  />
-                ) : (
-                  <Controller
-                    control={control}
-                    name={`playRecords.${index}.drm`}
-                    rules={{ required: true }}
-                    render={({ field: { value, name } }) => (
-                      <Select.Root
-                        name={name}
-                        value={value ?? ''}
-                        required
-                        onValueChange={(value) => {
-                          setValue(name, value as GameDrm);
-                        }}
-                      >
-                        <Select.Trigger
-                          id={`drm-${field.id}`}
-                          className={styles.selectTrigger}
-                        >
-                          <Select.Value />
-                          <Select.Icon />
-                        </Select.Trigger>
-                        <Select.Content sideOffset={8}>
-                          {availableDrms.map((drm) => (
-                            <Select.Item key={drm} value={drm}>
-                              {formatDrm(drm)}
-                            </Select.Item>
-                          ))}
-                        </Select.Content>
-                      </Select.Root>
+                  <>
+                    <Input.Root
+                      {...register(`playRecords.${index}.drm`, {
+                        required: true,
+                        minLength: 1,
+                      })}
+                      id={`drm-${field.id}`}
+                      className={styles.control}
+                    />
+                    {errors.playRecords?.[index]?.drm && (
+                      <p className={styles.errorMessage}>
+                        필수 입력 항목입니다.
+                      </p>
                     )}
-                  />
+                  </>
+                ) : (
+                  <>
+                    <Controller
+                      control={control}
+                      name={`playRecords.${index}.drm`}
+                      rules={{ required: true }}
+                      render={({ field: { value, name } }) => (
+                        <Select.Root
+                          name={name}
+                          value={value ?? ''}
+                          required
+                          onValueChange={(value) => {
+                            setValue(name, value as GameDrm);
+                            clearErrors(name);
+                          }}
+                        >
+                          <Select.Trigger
+                            id={`drm-${field.id}`}
+                            className={styles.selectTrigger}
+                          >
+                            <Select.Value />
+                            <Select.Icon />
+                          </Select.Trigger>
+                          <Select.Content sideOffset={8}>
+                            {availableDrms.map((drm) => (
+                              <Select.Item key={drm} value={drm}>
+                                {formatDrm(drm)}
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select.Root>
+                      )}
+                    />
+                    {errors.playRecords?.[index]?.drm && (
+                      <p className={styles.errorMessage}>
+                        필수 선택 항목입니다.
+                      </p>
+                    )}
+                  </>
                 )}
                 <div className={cn(styles.subField, styles.checkboxGroup)}>
                   <Controller
@@ -145,15 +169,26 @@ export default function CreateAutoLibraryItemForm({
                 </label>
                 <Input.Root
                   {...register(`playRecords.${index}.playTime`, {
+                    min: 0,
                     valueAsNumber: true,
+                    onBlur: (event) => {
+                      if (event.target.value === '') {
+                        setValue(`playRecords.${index}.playTime`, 0);
+                      }
+                    },
                   })}
                   id={`play-time-${field.id}`}
                   type="number"
-                  inputMode="numeric"
+                  step="0.1"
                   className={styles.control}
                 >
                   <Input.Slot side="right">시간</Input.Slot>
                 </Input.Root>
+                {errors.playRecords?.[index]?.playTime && (
+                  <p className={styles.errorMessage}>
+                    0보다 크거나 같아야 합니다.
+                  </p>
+                )}
               </div>
               <div className={styles.field}>
                 <label

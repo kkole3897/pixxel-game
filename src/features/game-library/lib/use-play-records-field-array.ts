@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useFieldArray, type Control, type ArrayPath } from 'react-hook-form';
 import z from 'zod';
 
 import {
@@ -10,13 +10,13 @@ import {
 } from '../model';
 import { gameDrmSchema } from '@/entities/game';
 
-const libraryDrmFormValuesSchema = libraryDrmSchema.extend({
+const libraryDrmFieldValuesSchema = libraryDrmSchema.extend({
   drm: gameDrmSchema.nullable(),
 });
 
-const playRecordFormValuesSchema = z
+export const playRecordFieldValuesSchema = z
   .discriminatedUnion('isCustomDrm', [
-    libraryDrmFormValuesSchema,
+    libraryDrmFieldValuesSchema,
     customLibraryDrmSchema,
   ])
   .and(
@@ -26,41 +26,19 @@ const playRecordFormValuesSchema = z
     })
   );
 
-type PlayRecordFormValues = z.infer<typeof playRecordFormValuesSchema>;
+export type PlayRecordFieldValues = z.infer<typeof playRecordFieldValuesSchema>;
 
-type FormValues = {
-  playRecords: PlayRecordFormValues[];
+type BaseFormValues = {
+  playRecords: PlayRecordFieldValues[];
 };
 
-type usePlayRecordsFieldArrayOptions = {
-  defaultValues?: FormValues;
-};
-
-export function usePlayRecordsFieldArray({
-  defaultValues,
-}: usePlayRecordsFieldArrayOptions) {
-  const {
+export function usePlayRecordsFieldArray<T extends BaseFormValues>({
+  control,
+}: {
+  control: Control<T>;
+}) {
+  return useFieldArray<T>({
     control,
-    register,
-    handleSubmit: createHandleSubmit,
-    watch,
-    setValue,
-  } = useForm<FormValues>({
-    defaultValues,
+    name: 'playRecords' as ArrayPath<T>,
   });
-  const { fields, append, remove } = useFieldArray<FormValues>({
-    control,
-    name: 'playRecords',
-  });
-
-  return {
-    fields,
-    append,
-    remove,
-    register,
-    createHandleSubmit,
-    control,
-    watch,
-    setValue,
-  };
 }

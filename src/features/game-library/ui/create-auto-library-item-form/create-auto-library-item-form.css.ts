@@ -98,3 +98,12 @@ export const deleteInstanceButton = style({
 export const addInstanceButtonIcon = style({
   marginRight: '4px',
 });
+
+export const requiredMark = style({
+  color: theme.colors.red[900],
+});
+
+export const errorMessage = style({
+  marginTop: '4px',
+  color: theme.colors.red[900],
+});

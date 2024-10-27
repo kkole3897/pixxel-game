@@ -16,8 +16,10 @@ export {
   createAutoLibraryItemDataSchema,
   createManualLibraryItemDataSchema,
   createLibraryItemDataSchema,
+  createBaseLibraryItemDataSchema,
   type CreatePlayRecordData,
   type CreateAutoLibraryItemData,
   type CreateLibraryItemData,
   type CreateManualLibraryItemData,
+  type CreateBaseLibraryItemData,
 } from './create-library-item-data';
