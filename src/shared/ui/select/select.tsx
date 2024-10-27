@@ -1,3 +1,5 @@
+'use client';
+
 import React, { forwardRef } from 'react';
 import * as PrimitiveSelect from '@radix-ui/react-select';
 import type {

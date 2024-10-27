@@ -1,2 +1,2 @@
 export { formatPlayStatus } from './format-play-status';
-export { useAdditionalInfoFieldArray } from './use-additional-info-field-array';
+export { usePlayRecordsFieldArray } from './use-play-records-field-array';

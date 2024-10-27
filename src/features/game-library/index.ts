@@ -3,4 +3,5 @@ export {
   ManualLibraryLink,
   FindGameForm,
   SelectGameResult,
+  CreateAutoLibraryItemForm,
 } from './ui';
