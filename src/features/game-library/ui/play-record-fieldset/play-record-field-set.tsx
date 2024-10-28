@@ -51,9 +51,23 @@ function PlayRecordFieldsetContent({
   return <div className={composedClassName}>{children}</div>;
 }
 
+type PlayRecordFieldsetFooterProps = React.PropsWithChildren<{
+  className?: string;
+}>;
+
+function PlayRecordFieldsetFooter({
+  className,
+  children,
+}: PlayRecordFieldsetFooterProps) {
+  const composedClassName = cn(styles.footer, className);
+
+  return <div className={composedClassName}>{children}</div>;
+}
+
 const Root = PlayRecordFieldset;
 const Header = PlayRecordFieldsetHeader;
 const Content = PlayRecordFieldsetContent;
 const Legend = PlayRecordFieldsetLegend;
+const Footer = PlayRecordFieldsetFooter;
 
-export { Root, Header, Content, Legend };
+export { Root, Header, Content, Legend, Footer };

@@ -71,7 +71,7 @@ export default function CreateAutoLibraryItemForm({
         {fields.map((field, index) => (
           <PlayRecordFieldset.Root key={field.id}>
             <PlayRecordFieldset.Header>
-              <PlayRecordFieldset.Legend className={styles.playRecordLegend}>
+              <PlayRecordFieldset.Legend>
                 플레이 {index + 1}
               </PlayRecordFieldset.Legend>
             </PlayRecordFieldset.Header>
@@ -258,7 +258,7 @@ export default function CreateAutoLibraryItemForm({
                 </LibraryField.Control>
               </LibraryField.Root>
             </PlayRecordFieldset.Content>
-            <div className={styles.playRecordFooter}>
+            <PlayRecordFieldset.Footer>
               {fields.length > 1 && (
                 <Button
                   type="button"
@@ -270,7 +270,7 @@ export default function CreateAutoLibraryItemForm({
                   <RiDeleteBinLine size={20} />
                 </Button>
               )}
-            </div>
+            </PlayRecordFieldset.Footer>
           </PlayRecordFieldset.Root>
         ))}
         <div className={styles.actionArea}>

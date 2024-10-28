@@ -30,3 +30,9 @@ export const legend = style([
     fontWeight: theme.fontWeight.semibold,
   },
 ]);
+
+export const footer = style({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  padding: `16px ${innerPaddingX}`,
+});
