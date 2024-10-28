@@ -3,30 +3,9 @@ import { style } from '@vanilla-extract/css';
 import { text } from '@/shared/styles/typography.css';
 import { theme } from '@/shared/styles/theme.css';
 
-export const field = style({
-  selectors: {
-    '& + &': {
-      marginTop: '16px',
-    },
-  },
-});
-
 export const subField = style({
   marginTop: '4px',
 });
-
-export const control = style({
-  width: '100%',
-});
-
-export const label = style([
-  text.base,
-  {
-    display: 'inline-block',
-    marginBottom: '4px',
-    fontWeight: theme.fontWeight.medium,
-  },
-]);
 
 export const checkboxGroup = style({
   display: 'flex',
@@ -44,7 +23,7 @@ export const selectTrigger = style({
   height: '40px',
 });
 
-export const instanceGroup = style({
+export const playRecordGroup = style({
   border: `1px solid ${theme.colors.gray[200]}`,
   borderRadius: '8px',
 
@@ -55,30 +34,30 @@ export const instanceGroup = style({
   },
 });
 
-const instancePaddingX = '16px';
+const playRecordPaddingX = '16px';
 
-export const instanceHeader = style({
-  padding: instancePaddingX,
+export const playRecordHeader = style({
+  padding: playRecordPaddingX,
 });
 
-export const instanceContent = style({
-  padding: `0 ${instancePaddingX}`,
+export const playRecordContent = style({
+  padding: `0 ${playRecordPaddingX}`,
 });
 
-export const instanceFooter = style({
+export const playRecordFooter = style({
   display: 'flex',
   justifyContent: 'flex-end',
-  padding: instancePaddingX,
+  padding: playRecordPaddingX,
 });
 
-export const instanceLegend = style([
+export const playRecordLegend = style([
   text.lg,
   {
     fontWeight: theme.fontWeight.semibold,
   },
 ]);
 
-export const deleteInstanceButton = style({
+export const deletePlayRecordButton = style({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -95,15 +74,17 @@ export const deleteInstanceButton = style({
   },
 });
 
-export const addInstanceButtonIcon = style({
+export const addPlayRecordButtonIcon = style({
   marginRight: '4px',
 });
 
-export const requiredMark = style({
-  color: theme.colors.red[900],
+export const checkboxControl = style({
+  width: '16px',
 });
 
-export const errorMessage = style({
-  marginTop: '4px',
-  color: theme.colors.red[900],
+export const checkboxLabel = style({
+  margin: 0,
+  fontSize: theme.fontSize.sm,
+  fontWeight: theme.fontWeight.regular,
+  lineHeight: theme.lineHeight.sm,
 });

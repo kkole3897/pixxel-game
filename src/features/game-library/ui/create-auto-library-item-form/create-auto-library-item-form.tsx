@@ -11,7 +11,8 @@ import {
   useCreateAutoLibraryItemForm,
   type CreateValidAutoLibraryItemFormValues,
 } from '../../lib';
-import { PlayStatus, type CreateAutoLibraryItemData } from '../../model';
+import { PlayStatus } from '../../model';
+import * as LibraryField from '../library-field';
 import { formatDrm, type GameDrm } from '@/entities/game';
 import { Select } from '@/shared/ui/select';
 import * as Input from '@/shared/ui/input';
@@ -29,6 +30,7 @@ export default function CreateAutoLibraryItemForm({
   availableDrms,
   onSubmit,
 }: CreateAutoLibraryItemFormProps) {
+  // TODO: server, client에서 재할당되서 hydration warning이 발생하는 문제 해결
   const {
     control,
     createHandleSubmit,
@@ -66,31 +68,31 @@ export default function CreateAutoLibraryItemForm({
     <form onSubmit={createHandleSubmit(handleValidSubmit)}>
       <div>
         {fields.map((field, index) => (
-          <fieldset key={field.id} className={styles.instanceGroup}>
-            <div className={styles.instanceHeader}>
-              <legend className={styles.instanceLegend}>
+          <fieldset key={field.id} className={styles.playRecordGroup}>
+            <div className={styles.playRecordHeader}>
+              <legend className={styles.playRecordLegend}>
                 플레이 {index + 1}
               </legend>
             </div>
-            <div className={styles.instanceContent}>
-              <div className={styles.field}>
-                <label htmlFor={`drm-${field.id}`} className={styles.label}>
-                  DRM <span className={styles.requiredMark}>*</span>
-                </label>
+            <div className={styles.playRecordContent}>
+              <LibraryField.Root name={`playRecords.${index}.drm`}>
+                <LibraryField.Label>
+                  DRM <LibraryField.RequiredIndicator />
+                </LibraryField.Label>
                 {watch(`playRecords.${index}.isCustomDrm`) ? (
                   <>
-                    <Input.Root
-                      {...register(`playRecords.${index}.drm`, {
-                        required: true,
-                        minLength: 1,
-                      })}
-                      id={`drm-${field.id}`}
-                      className={styles.control}
-                    />
+                    <LibraryField.Control>
+                      <Input.Root
+                        {...register(`playRecords.${index}.drm`, {
+                          required: true,
+                          minLength: 1,
+                        })}
+                      />
+                    </LibraryField.Control>
                     {errors.playRecords?.[index]?.drm && (
-                      <p className={styles.errorMessage}>
+                      <LibraryField.ErrorText>
                         필수 입력 항목입니다.
-                      </p>
+                      </LibraryField.ErrorText>
                     )}
                   </>
                 ) : (
@@ -109,13 +111,12 @@ export default function CreateAutoLibraryItemForm({
                             clearErrors(name);
                           }}
                         >
-                          <Select.Trigger
-                            id={`drm-${field.id}`}
-                            className={styles.selectTrigger}
-                          >
-                            <Select.Value />
-                            <Select.Icon />
-                          </Select.Trigger>
+                          <LibraryField.Control>
+                            <Select.Trigger className={styles.selectTrigger}>
+                              <Select.Value />
+                              <Select.Icon />
+                            </Select.Trigger>
+                          </LibraryField.Control>
                           <Select.Content sideOffset={8}>
                             {availableDrms.map((drm) => (
                               <Select.Item key={drm} value={drm}>
@@ -127,76 +128,70 @@ export default function CreateAutoLibraryItemForm({
                       )}
                     />
                     {errors.playRecords?.[index]?.drm && (
-                      <p className={styles.errorMessage}>
+                      <LibraryField.ErrorText>
                         필수 선택 항목입니다.
-                      </p>
+                      </LibraryField.ErrorText>
                     )}
                   </>
                 )}
-                <div className={cn(styles.subField, styles.checkboxGroup)}>
+                <LibraryField.Root
+                  name={`playRecords.${index}.isCustomDrm`}
+                  className={cn(styles.subField, styles.checkboxGroup)}
+                >
                   <Controller
                     control={control}
                     name={`playRecords.${index}.isCustomDrm`}
                     render={({ field: { value, name } }) => (
-                      <Checkbox
-                        id={`drm-manual-${field.id}`}
-                        name={name}
-                        value="true"
-                        checked={value}
-                        onCheckedChange={(isChecked) => {
-                          if (isChecked === true) {
-                            setValue(name, isChecked);
-                            setValue(`playRecords.${index}.drm`, '');
-                          } else if (isChecked === false) {
-                            setValue(name, isChecked);
-                            setValue(`playRecords.${index}.drm`, null);
-                          }
-                        }}
-                      />
+                      <LibraryField.Control className={styles.checkboxControl}>
+                        <Checkbox
+                          name={name}
+                          value="true"
+                          checked={value}
+                          onCheckedChange={(isChecked) => {
+                            if (isChecked === true) {
+                              setValue(name, isChecked);
+                              setValue(`playRecords.${index}.drm`, '');
+                            } else if (isChecked === false) {
+                              setValue(name, isChecked);
+                              setValue(`playRecords.${index}.drm`, null);
+                            }
+                          }}
+                        />
+                      </LibraryField.Control>
                     )}
                   />
-                  <label htmlFor={`drm-manual-${field.id}`}>
+                  <LibraryField.Label className={styles.checkboxLabel}>
                     직접 입력하기
-                  </label>
-                </div>
-              </div>
-              <div className={styles.field}>
-                <label
-                  htmlFor={`play-time-${field.id}`}
-                  className={styles.label}
-                >
-                  플레이 시간
-                </label>
-                <Input.Root
-                  {...register(`playRecords.${index}.playTime`, {
-                    min: 0,
-                    valueAsNumber: true,
-                    onBlur: (event) => {
-                      if (event.target.value === '') {
-                        setValue(`playRecords.${index}.playTime`, 0);
-                      }
-                    },
-                  })}
-                  id={`play-time-${field.id}`}
-                  type="number"
-                  step="0.1"
-                  className={styles.control}
-                >
-                  <Input.Slot side="right">시간</Input.Slot>
-                </Input.Root>
+                  </LibraryField.Label>
+                </LibraryField.Root>
+              </LibraryField.Root>
+              <LibraryField.Root name={`playRecords.${index}.playTime`}>
+                <LibraryField.Label>플레이 시간</LibraryField.Label>
+                <LibraryField.Control>
+                  <Input.Root
+                    {...register(`playRecords.${index}.playTime`, {
+                      min: 0,
+                      valueAsNumber: true,
+                      onBlur: (event) => {
+                        if (event.target.value === '') {
+                          setValue(`playRecords.${index}.playTime`, 0);
+                        }
+                      },
+                    })}
+                    type="number"
+                    step="0.1"
+                  >
+                    <Input.Slot side="right">시간</Input.Slot>
+                  </Input.Root>
+                </LibraryField.Control>
                 {errors.playRecords?.[index]?.playTime && (
-                  <p className={styles.errorMessage}>
+                  <LibraryField.ErrorText>
                     0보다 크거나 같아야 합니다.
-                  </p>
+                  </LibraryField.ErrorText>
                 )}
-              </div>
-              <div className={styles.field}>
-                <label
-                  htmlFor={`play-status-${field.id}`}
-                  className={styles.label}
-                >
-                  플레이 상태
-                </label>
+              </LibraryField.Root>
+              <LibraryField.Root name={`playRecords.${index}.playStatus`}>
+                <LibraryField.Label>플레이 상태</LibraryField.Label>
                 <Controller
                   control={control}
                   name={`playRecords.${index}.playStatus`}
@@ -208,13 +203,12 @@ export default function CreateAutoLibraryItemForm({
                         setValue(name, value as PlayStatus);
                       }}
                     >
-                      <Select.Trigger
-                        id={`play-status-${field.id}`}
-                        className={styles.selectTrigger}
-                      >
-                        <Select.Value />
-                        <Select.Icon />
-                      </Select.Trigger>
+                      <LibraryField.Control>
+                        <Select.Trigger className={styles.selectTrigger}>
+                          <Select.Value />
+                          <Select.Icon />
+                        </Select.Trigger>
+                      </LibraryField.Control>
                       <Select.Content>
                         {playStatusItems.map((playStatus) => (
                           <Select.Item key={playStatus} value={playStatus}>
@@ -225,45 +219,50 @@ export default function CreateAutoLibraryItemForm({
                     </Select.Root>
                   )}
                 />
-                <div className={cn(styles.subField, styles.checkboxGroup)}>
+                <LibraryField.Root
+                  name={`playRecords.${index}.isCleared`}
+                  className={cn(styles.subField, styles.checkboxGroup)}
+                >
                   <Controller
                     control={control}
                     name={`playRecords.${index}.isCleared`}
                     render={({ field: { value } }) => (
-                      <Checkbox
-                        id={`cleared-${field.id}`}
-                        value="true"
-                        checked={value}
-                        onCheckedChange={(isChecked) => {
-                          if (isChecked === 'indeterminate') {
-                            return;
-                          }
+                      <LibraryField.Control className={styles.checkboxControl}>
+                        <Checkbox
+                          value="true"
+                          checked={value}
+                          onCheckedChange={(isChecked) => {
+                            if (isChecked === 'indeterminate') {
+                              return;
+                            }
 
-                          setValue(`playRecords.${index}.isCleared`, isChecked);
-                        }}
-                      />
+                            setValue(
+                              `playRecords.${index}.isCleared`,
+                              isChecked
+                            );
+                          }}
+                        />
+                      </LibraryField.Control>
                     )}
                   />
-                  <label htmlFor={`cleared-${field.id}`}>클리어</label>
-                </div>
-              </div>
-              <div className={styles.field}>
-                <label htmlFor={`memo-${field.id}`} className={styles.label}>
-                  메모
-                </label>
-                <Textarea
-                  {...register(`playRecords.${index}.memo`)}
-                  id={`memo-${field.id}`}
-                  className={styles.control}
-                />
-              </div>
+                  <LibraryField.Label className={styles.checkboxLabel}>
+                    클리어
+                  </LibraryField.Label>
+                </LibraryField.Root>
+              </LibraryField.Root>
+              <LibraryField.Root name={`playRecords.${index}.memo`}>
+                <LibraryField.Label>메모</LibraryField.Label>
+                <LibraryField.Control>
+                  <Textarea {...register(`playRecords.${index}.memo`)} />
+                </LibraryField.Control>
+              </LibraryField.Root>
             </div>
-            <div className={styles.instanceFooter}>
+            <div className={styles.playRecordFooter}>
               {fields.length > 1 && (
                 <Button
                   type="button"
                   variant="text"
-                  className={styles.deleteInstanceButton}
+                  className={styles.deletePlayRecordButton}
                   aria-label={`플레이 ${index + 1} 삭제`}
                   onClick={() => remove(index)}
                 >
@@ -284,13 +283,13 @@ export default function CreateAutoLibraryItemForm({
                 playTime: 0,
                 isCleared: false,
                 playStatus: null,
-                memo: '',
+                memo: null,
               });
             }}
           >
             <RiAddCircleLine
               size={20}
-              className={styles.addInstanceButtonIcon}
+              className={styles.addPlayRecordButtonIcon}
             />
             플레이 정보 추가
           </Button>
