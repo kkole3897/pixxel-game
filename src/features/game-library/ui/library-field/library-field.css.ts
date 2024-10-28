@@ -32,3 +32,7 @@ export const errorText = style({
 export const requiredIndicator = style({
   color: theme.colors.red[900],
 });
+
+export const helperText = style({
+  marginTop: '4px',
+});

@@ -13,6 +13,7 @@ import {
 } from '../../lib';
 import { PlayStatus } from '../../model';
 import * as LibraryField from '../library-field';
+import { PlayRecordFieldset } from '../play-record-fieldset';
 import { formatDrm, type GameDrm } from '@/entities/game';
 import { Select } from '@/shared/ui/select';
 import * as Input from '@/shared/ui/input';
@@ -68,13 +69,13 @@ export default function CreateAutoLibraryItemForm({
     <form onSubmit={createHandleSubmit(handleValidSubmit)}>
       <div>
         {fields.map((field, index) => (
-          <fieldset key={field.id} className={styles.playRecordGroup}>
-            <div className={styles.playRecordHeader}>
-              <legend className={styles.playRecordLegend}>
+          <PlayRecordFieldset.Root key={field.id}>
+            <PlayRecordFieldset.Header>
+              <PlayRecordFieldset.Legend className={styles.playRecordLegend}>
                 플레이 {index + 1}
-              </legend>
-            </div>
-            <div className={styles.playRecordContent}>
+              </PlayRecordFieldset.Legend>
+            </PlayRecordFieldset.Header>
+            <PlayRecordFieldset.Content>
               <LibraryField.Root name={`playRecords.${index}.drm`}>
                 <LibraryField.Label>
                   DRM <LibraryField.RequiredIndicator />
@@ -256,7 +257,7 @@ export default function CreateAutoLibraryItemForm({
                   <Textarea {...register(`playRecords.${index}.memo`)} />
                 </LibraryField.Control>
               </LibraryField.Root>
-            </div>
+            </PlayRecordFieldset.Content>
             <div className={styles.playRecordFooter}>
               {fields.length > 1 && (
                 <Button
@@ -270,7 +271,7 @@ export default function CreateAutoLibraryItemForm({
                 </Button>
               )}
             </div>
-          </fieldset>
+          </PlayRecordFieldset.Root>
         ))}
         <div className={styles.actionArea}>
           <Button

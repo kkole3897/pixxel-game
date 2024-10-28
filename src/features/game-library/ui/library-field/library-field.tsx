@@ -77,11 +77,22 @@ function FieldRequiredIndicator({ className }: RequiredIndicatorProps) {
   return <span className={composedClassName}>*</span>;
 }
 
+type FieldHelperTextProps = React.PropsWithChildren<{
+  className?: string;
+}>;
+
+function FieldHelperText({ children, className }: FieldHelperTextProps) {
+  const composedClassName = cn(styles.helperText, className);
+
+  return <p className={composedClassName}>{children}</p>;
+}
+
 const Root = Field;
 const Label = FieldLabel;
 const Control = FieldControl;
 const ErrorText = FieldErrorText;
 const RequiredIndicator = FieldRequiredIndicator;
+const HelperText = FieldHelperText;
 
 export {
   Field,
@@ -94,4 +105,5 @@ export {
   Control,
   ErrorText,
   RequiredIndicator,
+  HelperText,
 };
