@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
 import { theme } from '@/shared/styles/theme.css';
+import { visuallyHidden } from '@/shared/styles/utils.css';
 
 export const subField = style({
   marginTop: '4px',
@@ -53,3 +54,9 @@ export const checkboxLabel = style({
   fontWeight: theme.fontWeight.regular,
   lineHeight: theme.lineHeight.sm,
 });
+
+export const mainImageField = style({
+  marginBottom: '16px',
+});
+
+export const fileInput = style([visuallyHidden]);

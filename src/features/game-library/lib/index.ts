@@ -4,3 +4,7 @@ export {
   useCreateAutoLibraryItemForm,
   type CreateValidAutoLibraryItemFormValues,
 } from './use-create-auto-library-item-form';
+export {
+  useCreateManualLibraryItemForm,
+  type CreateValidManualLibraryItemFormValues,
+} from './use-create-manual-library-item-form';

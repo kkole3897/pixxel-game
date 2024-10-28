@@ -35,4 +35,5 @@ export const requiredIndicator = style({
 
 export const helperText = style({
   marginTop: '4px',
+  color: theme.colors.gray[500],
 });

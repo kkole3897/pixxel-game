@@ -59,4 +59,9 @@ export {
   useGetBestPriceHistoryQuery as useGetBestGamePriceHistoryQuery,
   useGetPriceHistoryQuery as useGetGamePriceHistoryQuery,
 } from './queries';
-export { GAME_STORE, STEAM_SLUG_TYPE, EPIC_SLUG_TYPE } from './constants';
+export {
+  GAME_STORE,
+  STEAM_SLUG_TYPE,
+  EPIC_SLUG_TYPE,
+  GAME_DRM,
+} from './constants';
