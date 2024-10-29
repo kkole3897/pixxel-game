@@ -21,10 +21,10 @@ function getFilesFromEvent(context: FileUploadContextValue, event: React.ChangeE
     };
   }
 
-  if (!event.target.multiple && context.acceptedFiles.length + files.length >= 2) {
+  if (!event.target.multiple) {
     return {
-      acceptedFiles,
-      rejectedFiles: files,
+      acceptedFiles: files,
+      rejectedFiles,
     };
   }
 
@@ -71,6 +71,7 @@ function setFilesFromEvent(context: FileUploadContextValue, event: React.ChangeE
   if (context.multiple) {
     const files = [...context.acceptedFiles, ...acceptedFiles];
     setFiles(context, files, rejectedFiles);
+    return;
   }
 
   if (acceptedFiles.length) {
@@ -97,7 +98,6 @@ type FileUploadProps = React.PropsWithChildren<{
   required?: boolean;
   disabled?: boolean;
   invalid?: boolean;
-  multiple?: boolean;
   onFileChange?: (files: File[]) => void;
   onFileAccept?: (files: File[]) => void;
   onFileReject?: (files: File[]) => void;
@@ -112,7 +112,6 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(({
   required,
   disabled,
   invalid,
-  multiple = false,
   onFileChange,
   onFileAccept,
   onFileReject,
@@ -121,6 +120,7 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(({
   const inputElementRef = useRef<HTMLInputElement | null>(null);
   const [acceptedFiles, setAcceptedFiles] = useState<File[]>([]);
   const [rejectedFiles, setRejectedFiles] = useState<File[]>([]);
+  const multiple = maxFiles > 1;
 
   const contextValue = {
     name,
@@ -168,18 +168,17 @@ const FileUploadTrigger = forwardRef<HTMLButtonElement, FileUploadTriggerProps>(
 
 FileUploadTrigger.displayName = 'PrimitiveFileUploadTrigger';
 
-type FileUploadInputProps = React.PropsWithChildren<Omit<React.ComponentProps<'input'>, 'type'>>;
+type FileUploadInputProps = React.PropsWithChildren<Omit<React.ComponentProps<'input'>, 'type' | 'multiple'>>;
 
-const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps>(({ style, name: nameProp, accept: acceptProp, multiple: multipleProp, onChange, ...props }, forwardedRef) => {
+const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps>(({ style, name: nameProp, accept: acceptProp, onChange, ...props }, forwardedRef) => {
   const context = useFileUploadContext();
-  const { inputElementRef, name: nameContext, accept: acceptContext, multiple: multipleContext } = context;
+  const { inputElementRef, name: nameContext, accept: acceptContext, multiple } = context;
 
   const ref = composeRefs(forwardedRef, inputElementRef);
 
   const mergedStyle = { ...visuallyHiddenStyle, ...style };
   const mergedName = nameProp ?? nameContext;
   const mergedAccept = acceptProp ?? acceptContext;
-  const mergedMultiple = multipleProp ?? multipleContext;
 
   const handleChange = composeEventHandlers(onChange, (event) => {
     if (event.defaultPrevented) {
@@ -189,7 +188,7 @@ const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps>(({ st
     setFilesFromEvent(context, event);
   });
 
-  return <input {...props} ref={ref} type="file" style={mergedStyle} name={mergedName} accept={mergedAccept} multiple={mergedMultiple} onChange={handleChange} />;
+  return <input {...props} ref={ref} type="file" style={mergedStyle} name={mergedName} accept={mergedAccept} multiple={multiple} onChange={handleChange} />;
 });
 
 FileUploadInput.displayName = 'PrimitiveFileUploadInput';
@@ -223,7 +222,7 @@ const FileUploadItem = forwardRef<HTMLLIElement, FileUploadItemProps>(({ childre
   const fileUploadContext = useFileUploadContext();
 
   const removeFile = () => {
-    const newFiles = fileUploadContext.acceptedFiles.filter((file) => file !== file);
+    const newFiles = fileUploadContext.acceptedFiles.filter((acceptedFile) => acceptedFile !== file);
 
     fileUploadContext.setAcceptedFiles(newFiles);
     fileUploadContext.onFileChange?.(newFiles);
