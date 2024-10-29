@@ -38,6 +38,7 @@ export const playRecordSchema = z
 const baseLibraryItemSchema = z.object({
   id: z.number(),
   playRecords: z.array(playRecordSchema).default([]),
+  publicId: z.string().uuid(),
 });
 
 export const autoLibraryItemSchema = baseLibraryItemSchema.extend({

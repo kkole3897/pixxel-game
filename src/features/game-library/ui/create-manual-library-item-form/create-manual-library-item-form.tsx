@@ -3,6 +3,7 @@
 import { Controller } from 'react-hook-form';
 import cn from 'classnames';
 import { RiDeleteBinLine, RiAddCircleLine } from '@remixicon/react';
+import { v4 as uuidv4 } from 'uuid';
 
 import * as LibraryField from '../library-field';
 import { PlayRecordFieldset } from '../play-record-fieldset';
@@ -42,6 +43,7 @@ export default function CreateManualLibraryItemForm({
     defaultValues: {
       title: '',
       mainImage: null,
+      publicId: uuidv4(),
       playRecords: [
         {
           drm: null,

@@ -28,6 +28,7 @@ export const createManualLibraryItemDataSchema =
   createBaseLibraryItemDataSchema.extend({
     title: z.string(),
     mainImage: z.string().url().nullable(),
+    publicId: z.string().uuid(),
   });
 
 export const createLibraryItemDataSchema = z.union([

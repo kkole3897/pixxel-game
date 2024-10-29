@@ -11,6 +11,7 @@ type FormValues = {
   title: string;
   mainImage: string | null;
   playRecords: PlayRecordFieldValues[];
+  publicId: string;
 };
 
 type UseCreateManualLibraryItemFormOptions = {
