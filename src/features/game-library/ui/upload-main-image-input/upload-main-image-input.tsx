@@ -43,34 +43,15 @@ export default function UploadMainImageInput({
       maxFileSize={52_428_800}
       onFileChange={handleFilesChange}
     >
-      <FileUpload.Trigger className={styles.trigger}>
-        <FileUpload.Context>
-          {({ acceptedFiles }) => {
-            const file = acceptedFiles[0];
+      <FileUpload.Trigger className={styles.trigger} />
+      <FileUpload.Context>
+        {({ acceptedFiles }) => {
+          const file = acceptedFiles[0];
 
-            if (file && url) {
-              return (
-                <FileUpload.Item file={file} className={styles.item} asChild>
-                  <div>
-                    <Image
-                      src={url}
-                      alt=""
-                      width={180}
-                      height={180}
-                      className={styles.image}
-                    />
-                    <FileUpload.DeleteItemTrigger
-                      className={styles.deleteItemTrigger}
-                      onClick={handleClickDelete}
-                    >
-                      <RiCloseLine size={20} />
-                    </FileUpload.DeleteItemTrigger>
-                  </div>
-                </FileUpload.Item>
-              );
-            } else if (url) {
-              return (
-                <div className={styles.item}>
+          if (file && url) {
+            return (
+              <FileUpload.Item file={file} className={styles.item} asChild>
+                <div>
                   <Image
                     src={url}
                     alt=""
@@ -78,45 +59,66 @@ export default function UploadMainImageInput({
                     height={180}
                     className={styles.image}
                   />
-                  <button
-                    type="button"
+                  <FileUpload.Trigger className={styles.trigger} />
+                  <FileUpload.DeleteItemTrigger
                     className={styles.deleteItemTrigger}
                     onClick={handleClickDelete}
                   >
                     <RiCloseLine size={20} />
-                  </button>
+                  </FileUpload.DeleteItemTrigger>
                 </div>
-              );
-            } else if (file) {
-              return (
-                <FileUpload.Item file={file} asChild className={styles.item}>
-                  <div>
-                    <Image
-                      src={URL.createObjectURL(file)}
-                      alt=""
-                      width={180}
-                      height={180}
-                      className={styles.image}
-                    />
-                    <FileUpload.DeleteItemTrigger
-                      className={styles.deleteItemTrigger}
-                      onClick={handleClickDelete}
-                    >
-                      <RiCloseLine size={20} />
-                    </FileUpload.DeleteItemTrigger>
-                  </div>
-                </FileUpload.Item>
-              );
-            }
-
+              </FileUpload.Item>
+            );
+          } else if (url) {
             return (
-              <div className={styles.iconArea}>
-                <RiImageAddLine size={36} />
+              <div className={styles.item}>
+                <Image
+                  src={url}
+                  alt=""
+                  width={180}
+                  height={180}
+                  className={styles.image}
+                />
+                <FileUpload.Trigger className={styles.trigger} />
+                <button
+                  type="button"
+                  className={styles.deleteItemTrigger}
+                  onClick={handleClickDelete}
+                >
+                  <RiCloseLine size={20} />
+                </button>
               </div>
             );
-          }}
-        </FileUpload.Context>
-      </FileUpload.Trigger>
+          } else if (file) {
+            return (
+              <FileUpload.Item file={file} asChild className={styles.item}>
+                <div>
+                  <Image
+                    src={URL.createObjectURL(file)}
+                    alt=""
+                    width={180}
+                    height={180}
+                    className={styles.image}
+                  />
+                  <FileUpload.Trigger className={styles.trigger} />
+                  <FileUpload.DeleteItemTrigger
+                    className={styles.deleteItemTrigger}
+                    onClick={handleClickDelete}
+                  >
+                    <RiCloseLine size={20} />
+                  </FileUpload.DeleteItemTrigger>
+                </div>
+              </FileUpload.Item>
+            );
+          }
+
+          return (
+            <div className={styles.iconArea}>
+              <RiImageAddLine size={36} />
+            </div>
+          );
+        }}
+      </FileUpload.Context>
       <FileUpload.Input id={id} />
     </FileUpload.Root>
   );

@@ -4,6 +4,7 @@ import { theme } from '@/shared/styles/theme.css';
 export { visuallyHidden } from '@/shared/styles/utils.css';
 
 export const fileUpload = style({
+  position: 'relative',
   width: '180px',
   height: '180px',
   borderRadius: '8px',
@@ -13,8 +14,8 @@ export const trigger = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%',
-  height: '100%',
+  position: 'absolute',
+  inset: 0,
   padding: 0,
   border: 0,
   borderRadius: '8px',
