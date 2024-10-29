@@ -6,6 +6,7 @@ import { RiDeleteBinLine, RiAddCircleLine } from '@remixicon/react';
 
 import * as LibraryField from '../library-field';
 import { PlayRecordFieldset } from '../play-record-fieldset';
+import { UploadMainImageInput } from '../upload-main-image-input';
 import {
   usePlayRecordsFieldArray,
   useCreateManualLibraryItemForm,
@@ -58,6 +59,7 @@ export default function CreateManualLibraryItemForm({
   const playStatusItems = Object.values(PLAY_STATUS);
 
   const handleSubmit = createHandleSubmit((data) => {
+    console.log(data);
     onSubmit?.(data);
   });
 
@@ -73,20 +75,29 @@ export default function CreateManualLibraryItemForm({
           </LibraryField.Control>
         </LibraryField.Root>
         <LibraryField.Root name="mainImage" className={styles.mainImageField}>
-          <LibraryField.Label></LibraryField.Label>
+          <LibraryField.Label>메인 이미지</LibraryField.Label>
           <LibraryField.Control>
-            <input
-              type="file"
+            <Controller
+              control={control}
               name="mainImage"
-              accept="image/*"
-              className={styles.fileInput}
+              render={({ field: { name, value } }) => (
+                <UploadMainImageInput
+                  url={value}
+                  name={name}
+                  onUpload={(file) => {
+                    if (file) {
+                      setValue(name, URL.createObjectURL(file));
+                    }
+                  }}
+                  onDelete={() => {
+                    setValue(name, null);
+                  }}
+                />
+              )}
             />
           </LibraryField.Control>
           <LibraryField.HelperText>
-            * 이미지는 50MB 이하의 파일만 업로드 가능합니다.
-          </LibraryField.HelperText>
-          <LibraryField.HelperText>
-            * 권장 사이즈: 720 X 540 (px)
+            * 최대 용량: 50MB | 권장 사이즈: 720 X 540
           </LibraryField.HelperText>
         </LibraryField.Root>
         {fields.map((field, index) => (
