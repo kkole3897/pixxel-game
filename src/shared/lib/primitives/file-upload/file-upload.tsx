@@ -1,8 +1,10 @@
-import { forwardRef, useRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 
 import { FileUploadProvider, useFileUploadContext, type FileUploadContextValue } from './use-file-upload-context';
 import { isValidFileType } from './is-valid-file-type'
 import { isValidFileSize } from './is-valid-file-size';
+import { FileUploadItemProvider, useFileUploadItemContext } from './use-file-upload-item-context';
 import { visuallyHiddenStyle } from '../lib';
 import { composeRefs, composeEventHandlers } from '@/shared/lib/react';
 
@@ -192,15 +194,93 @@ const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps>(({ st
 
 FileUploadInput.displayName = 'PrimitiveFileUploadInput';
 
+type FileUploadContextProps = {
+  children: (context: FileUploadContextValue) => React.ReactNode;
+}
+
+const FileUploadContext = ({ children }: FileUploadContextProps) => children(useFileUploadContext());
+
+type FileUploadItemGroupProps = React.PropsWithChildren<React.ComponentProps<'ul'>> & {
+  asChild?: boolean;
+};
+
+const FileUploadItemGroup = forwardRef<HTMLUListElement, FileUploadItemGroupProps>(({ children, asChild, ...props }, forwardedRef) => {
+  const Component = asChild ? Slot : 'ul';
+
+  return <Component {...props} ref={forwardedRef}>{children}</Component>;
+});
+
+FileUploadItemGroup.displayName = 'PrimitiveFileUploadItemGroup';
+
+type FileUploadItemProps = React.PropsWithChildren<React.ComponentProps<'li'>> & {
+  asChild?: boolean;
+  file: File;
+};
+
+const FileUploadItem = forwardRef<HTMLLIElement, FileUploadItemProps>(({ children, asChild, file, ...props }, forwardedRef) => {
+  const Component = asChild ? Slot : 'li';
+
+  const fileUploadContext = useFileUploadContext();
+
+  const removeFile = () => {
+    const newFiles = fileUploadContext.acceptedFiles.filter((file) => file !== file);
+
+    fileUploadContext.setAcceptedFiles(newFiles);
+    fileUploadContext.onFileChange?.(newFiles);
+  }
+
+  const context = {
+    file,
+    removeFile,
+  };
+
+  return <FileUploadItemProvider value={context}>
+    <Component {...props} ref={forwardedRef}>{children}</Component>
+  </FileUploadItemProvider>;
+});
+
+FileUploadItem.displayName = 'PrimitiveFileUploadItem';
+
+type FileUploadDeleteItemTriggerProps = Omit<React.PropsWithChildren<React.ComponentProps<'button'>>, 'type'>;
+
+const FileUploadDeleteItemTrigger = forwardRef<HTMLButtonElement, FileUploadDeleteItemTriggerProps>(({ onClick, children, "aria-label": ariaLabelProp, ...props }, forwardedRef) => {
+  const { removeFile, file } = useFileUploadItemContext();
+
+  const handleClick = composeEventHandlers(onClick, (event) => {
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    removeFile();
+  });
+
+  const ariaLabel = ariaLabelProp ?? `Delete file ${file.name}`;
+
+  return <button {...props} ref={forwardedRef} type="button" aria-label={ariaLabel}  onClick={handleClick}>{children}</button>;
+});
+
+FileUploadDeleteItemTrigger.displayName = 'PrimitiveFileUploadDeleteItemTrigger';
+
 const Root = FileUpload;
 const Trigger = FileUploadTrigger;
 const Input = FileUploadInput;
+const Context = FileUploadContext;
+const ItemGroup = FileUploadItemGroup;
+const Item = FileUploadItem;
+const DeleteItemTrigger = FileUploadDeleteItemTrigger;
 
 export {
   Root,
   Trigger,
   Input,
+  Context,
+  ItemGroup,
+  Item,
+  DeleteItemTrigger,
   FileUpload,
   FileUploadTrigger,
   FileUploadInput,
+  FileUploadContext,
+  FileUploadItemGroup,
+  FileUploadItem,
 };
