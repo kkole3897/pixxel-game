@@ -31,14 +31,10 @@ function getFilesFromEvent(
     };
   }
 
-  if (!event.target.multiple) {
-    return {
-      acceptedFiles: files,
-      rejectedFiles,
-    };
-  }
-
-  if (context.maxFiles < files.length + context.acceptedFiles.length) {
+  if (
+    event.target.multiple &&
+    context.maxFiles < files.length + context.acceptedFiles.length
+  ) {
     return {
       acceptedFiles,
       rejectedFiles: files,

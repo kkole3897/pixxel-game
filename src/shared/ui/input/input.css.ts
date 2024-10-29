@@ -21,9 +21,14 @@ export const input = style({
         '&::placeholder': {
           color: '#cccdd0',
         },
-
         '&:focus': {
           outline: 'none',
+        },
+        '&[type="search"]::-webkit-search-decoration,\
+        &[type="search"]::-webkit-search-cancel-button,\
+        &[type="search"]::-webkit-search-results-button,\
+        &[type="search"]::-webkit-search-results-decoration': {
+          display: 'none',
         },
       },
     },

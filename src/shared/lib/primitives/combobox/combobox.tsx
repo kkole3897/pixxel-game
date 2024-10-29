@@ -39,7 +39,12 @@ type ComboboxContextValue = {
   multiple: boolean;
   itemMap: Map<
     React.RefObject<HTMLElement>,
-    { ref: React.RefObject<HTMLElement>; value: string; disabled: boolean, label?: string }
+    {
+      ref: React.RefObject<HTMLElement>;
+      value: string;
+      disabled: boolean;
+      label?: string;
+    }
   >;
   controlElement: HTMLElement | null;
   setControlElement: (element: HTMLElement | null) => void;
@@ -48,9 +53,15 @@ type ComboboxContextValue = {
   setActiveValue: (value: string | null) => void;
   inputElement: HTMLElement | null;
   setInputElement: (element: HTMLElement | null) => void;
+  inputValue: string;
+  setInputValue: (value: string) => void;
+  handleValueSelect: (value: string) => void;
 };
 
-function selectedValuesToString(itemMap: ComboboxContextValue['itemMap'], values: string[]) {
+function selectedValuesToString(
+  itemMap: ComboboxContextValue['itemMap'],
+  values: string[]
+) {
   if (values.length > 1 || values.length === 0) {
     return '';
   }
@@ -116,6 +127,31 @@ const Combobox = ({
   const id = useRef(useId()).current;
   const [activeValue, setActiveValue] = useState<string | null>(null);
   const [inputElement, setInputElement] = useState<HTMLElement | null>(null);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleValueSelect = (value: string) => {
+    let newValues: string[] = [];
+
+    if (multiple) {
+      if (!values) {
+        newValues = [value];
+      } else if (values.includes(value)) {
+        newValues = values.filter((prevValue) => prevValue !== value);
+      } else {
+        newValues = [...values, value];
+      }
+    } else {
+      newValues = [value];
+    }
+
+    setValues(newValues);
+
+    if (!multiple) {
+      setIsOpened(false);
+      const newInputValue = selectedValuesToString(itemMap, newValues);
+      setInputValue(newInputValue);
+    }
+  };
 
   const context = {
     isOpened,
@@ -132,6 +168,9 @@ const Combobox = ({
     setActiveValue,
     inputElement,
     setInputElement,
+    inputValue,
+    setInputValue,
+    handleValueSelect,
   };
 
   useEffect(() => {
@@ -180,22 +219,19 @@ export type ComboboxInputProps = {
   children?: React.ReactNode;
   placeholder?: string;
   name?: string;
-  defaultValue?: string;
   value?: string;
+  className?: string;
   'aria-controls'?: string;
   'aria-activedescendant'?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onValueChange?: (value: string) => void;
 };
 
 const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
   (
     {
       asChild,
-      defaultValue,
       value: valueProp,
       onChange: onChangeProp,
-      onValueChange,
       'aria-controls': ariaControlsProp,
       'aria-activedescendant': ariaActiveDescendantProp,
       ...props
@@ -204,7 +240,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
   ) => {
     const Component = asChild ? Slot : 'input';
     const context = useComboboxContext();
-    const { values, itemMap } = context;
+    const { inputValue, setInputValue, handleValueSelect } = context;
     const contentId = generateContentId(context.id);
     const ariaControls = ariaControlsProp ?? contentId;
     const ariaActiveDescendant =
@@ -214,11 +250,6 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
     const composedRefs = composeRefs(forwardedRef, (node) => {
       context.setInputElement(node);
     });
-    const [value, setValue] = useControllableState({
-      defaultValue: defaultValue,
-      value: valueProp,
-      onChange: onValueChange,
-    });
 
     const handleChange = composeEventHandlers(onChangeProp, (event) => {
       if (event.defaultPrevented) {
@@ -226,19 +257,19 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       }
 
       context.setIsOpened(true);
-      setValue(event.target.value);
+
+      setInputValue(event.target.value);
     });
 
     const handleFocus = () => {
       context.setIsOpened(true);
     };
 
-    useEffect(() => {
-      const newValue = selectedValuesToString(itemMap, values ?? []);
-      setValue(newValue);
-    }, [values, setValue, itemMap]);
+    const handleArrowDownKeyDown = (
+      event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      event.preventDefault();
 
-    const handleArrowDownKeyDown = () => {
       if (!context.isOpened) {
         context.setIsOpened(true);
       } else if (!context.activeValue) {
@@ -266,7 +297,10 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       }
     };
 
-    const handleArrowUpKeyDown = () => {
+    const handleArrowUpKeyDown = (
+      event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      event.preventDefault();
       if (!context.isOpened) {
         context.setIsOpened(true);
       } else if (!context.activeValue) {
@@ -308,25 +342,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       event.preventDefault();
 
       if (context.activeValue) {
-        if (context.multiple) {
-          if (!context.values) {
-            context.setValues([context.activeValue]);
-            return;
-          }
-
-          if (context.values.includes(context.activeValue)) {
-            const newValues = context.values.filter(
-              (prevValue) => prevValue !== context.activeValue
-            );
-
-            context.setValues(newValues);
-          } else {
-            context.setValues([...context.values, context.activeValue]);
-          }
-        } else {
-          context.setValues([context.activeValue]);
-          context.setIsOpened(false);
-        }
+        handleValueSelect(context.activeValue);
       }
     };
 
@@ -334,7 +350,7 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
       <Component
         {...props}
         ref={composedRefs}
-        value={value ?? ''}
+        value={valueProp ?? inputValue}
         role="combobox"
         disabled={context.isDisabled}
         autoComplete="off"
@@ -346,9 +362,9 @@ const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
         onFocus={handleFocus}
         onKeyDown={(event) => {
           if (event.key === 'ArrowDown') {
-            handleArrowDownKeyDown();
+            handleArrowDownKeyDown(event);
           } else if (event.key === 'ArrowUp') {
-            handleArrowUpKeyDown();
+            handleArrowUpKeyDown(event);
           } else if (event.key === 'Escape') {
             handleEcapeKeyDown();
           } else if (event.key === 'Enter') {
@@ -455,7 +471,10 @@ export type ComboboxItemProps = PropsWithChildren<{
 }>;
 
 const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
-  ({ value, children, disabled, id: idProp, label, asChild, ...props }, forwardedRef) => {
+  (
+    { value, children, disabled, id: idProp, label, asChild, ...props },
+    forwardedRef
+  ) => {
     const context = useComboboxContext();
     const ref = useRef<HTMLDivElement>(null);
     const composedRefs = composeRefs(forwardedRef, ref);
@@ -469,6 +488,10 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         disabled: !!disabled,
         label,
       });
+
+      return () => {
+        context.itemMap.delete(ref as React.RefObject<HTMLElement>);
+      };
     });
 
     const isChecked = !!context.values?.includes(value);
@@ -479,25 +502,7 @@ const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(
         return;
       }
 
-      if (context.multiple) {
-        if (!context.values) {
-          context.setValues([value]);
-          return;
-        }
-
-        if (context.values.includes(value)) {
-          const newValues = context.values.filter(
-            (prevValue) => prevValue !== value
-          );
-
-          context.setValues(newValues);
-        } else {
-          context.setValues([...context.values, value]);
-        }
-      } else {
-        context.setValues([value]);
-        context.setIsOpened(false);
-      }
+      context.handleValueSelect(value);
     };
 
     const pointerTypeRef = useRef<React.PointerEvent['pointerType']>('touch');

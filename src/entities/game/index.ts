@@ -7,6 +7,7 @@ export {
   getGameTitle,
   isSteamSlugType,
   isEpicSlugType,
+  gameDrmSchema,
   type GameType,
   type GameStore,
   type GameDrm,
@@ -20,7 +21,11 @@ export {
   type SteamSlugType,
   type EpicSlugType,
 } from './model';
-export { formatReleaseDate, sortGameCatalogItemsByCurrentPrice } from './lib';
+export {
+  formatReleaseDate,
+  sortGameCatalogItemsByCurrentPrice,
+  formatDrm,
+} from './lib';
 export {
   GameBox,
   MetaScore,
@@ -54,4 +59,9 @@ export {
   useGetBestPriceHistoryQuery as useGetBestGamePriceHistoryQuery,
   useGetPriceHistoryQuery as useGetGamePriceHistoryQuery,
 } from './queries';
-export { GAME_STORE, STEAM_SLUG_TYPE, EPIC_SLUG_TYPE } from './constants';
+export {
+  GAME_STORE,
+  STEAM_SLUG_TYPE,
+  EPIC_SLUG_TYPE,
+  GAME_DRM,
+} from './constants';
