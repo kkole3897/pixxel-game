@@ -69,3 +69,10 @@ export const deleteItemTrigger = style({
   color: '#fff',
   cursor: 'pointer',
 });
+
+export const loadingIndicator = style({
+  position: 'absolute',
+  right: '8px',
+  bottom: '8px',
+  color: '#fff',
+});

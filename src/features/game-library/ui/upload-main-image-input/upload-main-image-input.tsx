@@ -1,16 +1,19 @@
 import Image from 'next/image';
 import cn from 'classnames';
 import { RiImageAddLine, RiCloseLine } from '@remixicon/react';
-import { useEffect, useState } from 'react';
 
 import * as FileUpload from '@/shared/lib/primitives/file-upload';
+import { SpinnerRing1 } from '@/shared/ui/icons';
 import * as styles from './upload-main-image-input.css';
 
-type UploadMainImageInputProps = {
+type UploadStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export type UploadMainImageInputProps = {
   id?: string;
   className?: string;
   name?: string;
   url?: string | null;
+  status?: UploadStatus;
   onUpload?: (file: File | null) => void;
   onDelete?: () => void;
 };
@@ -21,6 +24,7 @@ export default function UploadMainImageInput({
   url,
   onUpload,
   onDelete,
+  status = 'idle',
   ...props
 }: UploadMainImageInputProps) {
   const composedClassName = cn(styles.fileUpload, className);
@@ -119,6 +123,9 @@ export default function UploadMainImageInput({
           );
         }}
       </FileUpload.Context>
+      {status === 'loading' && (
+        <SpinnerRing1 className={styles.loadingIndicator} />
+      )}
       <FileUpload.Input id={id} />
     </FileUpload.Root>
   );
