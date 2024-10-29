@@ -15,18 +15,22 @@ export const Single = () => {
       <FileUpload.Trigger>Upload a file</FileUpload.Trigger>
       <FileUpload.ItemGroup>
         <FileUpload.Context>
-          {({ acceptedFiles }) => acceptedFiles.map((file) => (
-            <FileUpload.Item key={file.name} file={file}>
-              <div>{file.name}</div>
-              <FileUpload.DeleteItemTrigger>삭제</FileUpload.DeleteItemTrigger>
-            </FileUpload.Item>
-          ))}
+          {({ acceptedFiles }) =>
+            acceptedFiles.map((file) => (
+              <FileUpload.Item key={file.name} file={file}>
+                <div>{file.name}</div>
+                <FileUpload.DeleteItemTrigger>
+                  삭제
+                </FileUpload.DeleteItemTrigger>
+              </FileUpload.Item>
+            ))
+          }
         </FileUpload.Context>
       </FileUpload.ItemGroup>
       <FileUpload.Input />
     </FileUpload.Root>
   );
-}
+};
 
 export const Multiple = () => {
   return (
@@ -34,37 +38,45 @@ export const Multiple = () => {
       <FileUpload.Trigger>Upload a file</FileUpload.Trigger>
       <FileUpload.ItemGroup>
         <FileUpload.Context>
-          {({ acceptedFiles }) => acceptedFiles.map((file) => (
-            <FileUpload.Item key={file.name} file={file}>
-              <div>{file.name}</div>
-              <FileUpload.DeleteItemTrigger>삭제</FileUpload.DeleteItemTrigger>
-            </FileUpload.Item>
-          ))}
+          {({ acceptedFiles }) =>
+            acceptedFiles.map((file) => (
+              <FileUpload.Item key={file.name} file={file}>
+                <div>{file.name}</div>
+                <FileUpload.DeleteItemTrigger>
+                  삭제
+                </FileUpload.DeleteItemTrigger>
+              </FileUpload.Item>
+            ))
+          }
         </FileUpload.Context>
       </FileUpload.ItemGroup>
       <FileUpload.Input />
     </FileUpload.Root>
   );
-}
+};
 
 export const AcceptImage = () => {
   return (
-    <FileUpload.Root maxFiles={3} accept='image/*'>
+    <FileUpload.Root maxFiles={3} accept="image/*">
       <FileUpload.Trigger>Upload a file</FileUpload.Trigger>
       <FileUpload.ItemGroup>
         <FileUpload.Context>
-          {({ acceptedFiles }) => acceptedFiles.map((file) => (
-            <FileUpload.Item key={file.name} file={file}>
-              <div>{file.name}</div>
-              <FileUpload.DeleteItemTrigger>삭제</FileUpload.DeleteItemTrigger>
-            </FileUpload.Item>
-          ))}
+          {({ acceptedFiles }) =>
+            acceptedFiles.map((file) => (
+              <FileUpload.Item key={file.name} file={file}>
+                <div>{file.name}</div>
+                <FileUpload.DeleteItemTrigger>
+                  삭제
+                </FileUpload.DeleteItemTrigger>
+              </FileUpload.Item>
+            ))
+          }
         </FileUpload.Context>
       </FileUpload.ItemGroup>
       <FileUpload.Input />
     </FileUpload.Root>
   );
-}
+};
 
 export const AcceptImageInput = () => {
   return (
@@ -72,15 +84,19 @@ export const AcceptImageInput = () => {
       <FileUpload.Trigger>Upload a file</FileUpload.Trigger>
       <FileUpload.ItemGroup>
         <FileUpload.Context>
-          {({ acceptedFiles }) => acceptedFiles.map((file) => (
-            <FileUpload.Item key={file.name} file={file}>
-              <div>{file.name}</div>
-              <FileUpload.DeleteItemTrigger>삭제</FileUpload.DeleteItemTrigger>
-            </FileUpload.Item>
-          ))}
+          {({ acceptedFiles }) =>
+            acceptedFiles.map((file) => (
+              <FileUpload.Item key={file.name} file={file}>
+                <div>{file.name}</div>
+                <FileUpload.DeleteItemTrigger>
+                  삭제
+                </FileUpload.DeleteItemTrigger>
+              </FileUpload.Item>
+            ))
+          }
         </FileUpload.Context>
       </FileUpload.ItemGroup>
-      <FileUpload.Input accept='image/*' />
+      <FileUpload.Input accept="image/*" />
     </FileUpload.Root>
   );
-}
+};
